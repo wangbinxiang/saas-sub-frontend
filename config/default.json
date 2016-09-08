@@ -1,0 +1,24 @@
+{
+  // Customer module configs 
+  "Customer": {
+    "dbConfig": {
+      "host": "localhost",
+      "port": 5984,
+      "dbName": "customers"
+    },
+    "credit": {
+      "initialLimit": 100,
+      // Set low for development 
+      "initialDays": 1
+    }
+  },
+  "apiServiceLocation": {
+    "saas": "http://120.25.161.1:8001"
+  },
+  "memcache": {
+    "host": "121.199.18.127",
+    "port": 11211
+  },
+  "cookieExpired": 86400,
+  "port": 3001
+}

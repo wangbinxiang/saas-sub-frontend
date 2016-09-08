@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云游 -- <%= title %></title>
+    <link rel="icon" href="/img/saas_icon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/appSaas.css" />
+    <link rel="stylesheet" href="/css/appSaasfix.css" />
+  </head>
+  <body <% if (typeof bodyclass != "undefined" && _.isString(bodyclass)) { %> class="<%= bodyclass %>" <% } %> >
+      <header class="top-bar" id="headerGlobal">
+          <div class="top-bar">
+              <div class="top-bar-title stat">
+                  <b><img src="/img/saas_logo.png" class="saasLogo" /></b>              
+              </div>
+              <div id="responsive-menu">
+                  <div class="top-bar-left">
+                      <ul class="dropdown menu" data-dropdown-menu>
+                      </ul>
+                  </div>
+                  <div class="top-bar-fix">
+                      <ul class="menu">
+                          <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>欢迎访问云游</b><i class="material-icons mi-expand_more"></i></a></li>
+                      </ul>
+                  </div>
+                  <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
+                      <a href="/signin">登录云游</a>
+                      <a href="/signup">免费注册</a>
+                      <a>注销</a>
+                      <a href="ChangePswd.html">修改密码</a>
+                      <hr />
+                      <a href="userInfoVal.html">资料审核</a>
+                      <a href="indexCP.html">服务管理</a>
+                      <a href="../">进入我的店铺</a>
+                  </div>
+              </div>
+          </div>
+      </header>
+      <div class="show-for-small-only small-header-margin-top"></div>
