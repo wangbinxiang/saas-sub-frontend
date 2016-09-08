@@ -1,0 +1,67 @@
+<%- include('../layout/header') -%>
+    <nav aria-label="You are here:" role="navigation" class="clearfix">
+        <ul class="breadcrumbs onionLink">
+            <li><a href="/">首页</a></li>
+            <li>
+                <span class="show-for-sr">Current: </span> 用户注册
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="row column user-margin">用户注册</h1>
+
+    <form data-abide noValidate method="post" action="/signup" >
+        <div data-abide-error class="alert callout" style="display:none">
+            <p><i class="fi-alert"></i> 注册信息输入错误，请重新核对。</p>
+        </div>
+        <div class="row">
+            <div class="small-10 medium-6 small-centered medium-centered columns">
+                <label>
+                    手机号
+                    <input type="text" name="cellPhone" placeholder="请输入手机号码" required pattern="number" />
+                    <span class="form-error">
+                        Yo, you had better fill this out, it's required. 而且必须是数字。
+                    </span>
+                </label>
+                <label>
+                    登录密码
+                    <input type="password" name="password" id="password" placeholder="请输入登录密码" required />
+                    <span class="form-error">
+                        I'm required!
+                    </span>
+                </label>
+                <p class="help-text" id="exampleHelpText"></p>
+                <label>
+                    再次输入密码
+                    <input type="password" name="rePassword" placeholder="请再次输入密码" aria-describedby="exampleHelpText2" required pattern="alpha_numeric" data-equalto="password" />
+                    <span class="form-error">
+                        Hey, passwords are supposed to match!
+                    </span>
+                </label>
+                <label>
+                    验证码
+                    <span class="input-group">
+                        <input class="input-group-field" name="code" type="number" placeholder="验证码" />
+                        <span class="input-group-button">
+                            <input type="button" class="button" value="发送手机验证码" />
+                        </span>
+                    </span>
+                </label>
+                <p class="help-text" id="exampleHelpText">键入手机收到的验证码</p>
+            </div>
+        </div>
+
+        <div class="row form-para-note"></div>
+
+        <div class="text-center form-submit-wrap">
+            <button class="button large" type="submit" value="Submit">注册</button>
+            <button class="secondary button large" type="reset" value="Reset">重置</button>
+        </div>
+
+        <div class="row form-para-note">
+            <div class="small-10 medium-6 small-centered medium-centered text-center columns">
+                <a href="/signin">已注册用户登录</a>
+            </div>
+        </div>
+    </form>
+<%- include('../layout/footer') -%>
