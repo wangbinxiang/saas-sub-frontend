@@ -14,7 +14,7 @@ export default async (ctx, next) => {
   // const { res, body } = await requestJsonApi.get('/');
   //console.log(res);
   //console.log(body);
-  ctx.cookies.set('test', 'value3');
+  // ctx.cookies.set('test', 'value3');
   // ctx.cookies.set('test2', 'value2');
 
   // if (ctx.isAuthenticated()) {
@@ -29,4 +29,13 @@ export default async (ctx, next) => {
   await ctx.render('index/index', {
     title, bodyclass, pageJs
   })
+}
+
+export async function category(ctx, next) {
+   const title = '类别';
+
+
+   await ctx.render('index/category', {
+    title 
+  });
 }
