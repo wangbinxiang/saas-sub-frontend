@@ -1,12 +1,15 @@
+import ApiServiceLocation from '../../libs/ApiServiceLocation';
 /**
- * mock数据服务地址类
+ * 数据服务地址类
  */
-class SaasApiServiceLocation {
-    constructor(location) {
-        this.location = '';
+class SaasApiServiceLocation extends ApiServiceLocation {
+    constructor(...args) {
+        super(...args)
     }
 
-    getLocation() {
-        returnapi this.location;
+    get(apiType = 'saas') {
+        return super.get(apiType)
     }
 }
+
+export default new SaasApiServiceLocation();

@@ -9,7 +9,6 @@
 	</nav>
 
 	<div id="drop" class="dropzone dropzones"></div>
-
 	<h1 class="row column user-margin">用户登录</h1>
 
 	<form data-abide novalidate method="post" action="/signin">
@@ -32,6 +31,24 @@
 						I'm required!
 					</span>
 				</label>
+				<label>
+					验证码
+					<span class="input-group">
+						<input class="input-group-field" type="number" placeholder="验证码">
+						<span class="input-group-button">
+							<input type="image" src="../../assets/img/saas_hero.png" class="imgButton" value="发送手机验证码">
+						</span>
+					</span>
+				</label>
+				<label>
+					验证码(for Quick Login)
+					<span class="input-group">
+						<input class="input-group-field" type="number" placeholder="验证码">
+						<span class="input-group-button">
+							<input type="button" class="button" value="发送手机验证码">
+						</span>
+					</span>
+				</label>
 			</div>
 		</div>
 
@@ -42,7 +59,7 @@
 						<a href="findPswd.html">找回密码</a>
 					</div>
 					<div class="small-6 text-center column">
-						<a href="/signup">免费注册</a>
+						<a href="register.html">免费注册</a>
 					</div>
 				</div>
 			</div>

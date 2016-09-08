@@ -1,4 +1,4 @@
-class userMockTranslator {
+class UserMockTranslator {
     constructor() {
         
     }
