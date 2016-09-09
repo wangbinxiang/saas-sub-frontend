@@ -105,8 +105,39 @@ export default async (ctx, next) => {
 }
 
 export async function category(ctx, next) {
-   const title = '类别';
+    const title = '类别';
+    const pageJs = webpackIsomorphicTools.assets().javascript.cata;
+    const data = {
+        "lbs":[
+              {"id": 123, "lb": "London"},
+              {"id": 124, "lb": "美食"},
+              {"id": 123, "lb": "独立成团"},
+              {"id": 124, "lb": "酒店"},
+              {"id": 123, "lb": "邮轮"},
+              {"id": 124, "lb": "购物"},
+              {"id": 123, "lb": "ChongQing"},
+              {"id": 124, "lb": "HangZhou"},
+              {"id": 125, "lb": "QingDao"}
+        ],
+        "items":[{"id":10, "title":"Tincidunt integer eu", "price": 15783, "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"},
+                  {"id":11, "title":"Tincidunt integer eu integer eu integer eu", "price": 15784, "img": "/img/170_200/150711-n-ru971-772.jpg"},
+                  {"id":12, "title":"Tincidunt integer eu", "price": 15785, "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"},
+                  {"id":13, "title":"Tincidunt integer eu integer eu", "price": 15786, "img": "/img/170_200/ecba5dd0-b6fb-406e-9b6e-08f7fc8ec60d.jpg"},
+                  {"id":14, "title":"Tincidunt integer eu", "price": 15787, "img": "/img/170_200/city_skyline.jpeg"},
+                  {"id":15, "title":"Tincidunt integer eu Tincidunt integer eu", "price": 888, "img": "/img/170_200/fcfa8905-7145-4b81-acad-255c13ae0221.jpg"},
+                  {"id":15, "title":"Tincidunt integer eu Tincidunt integer eu", "price": 888, "img": "/img/170_200/golden_gate_bridge.jpg"},
+                  {"id":15, "title":"Tincidunt integer eu Tincidunt integer eu", "price": 888, "img": "/img/170_200/horses.jpg"},
+                  {"id":10, "title":"Tincidunt integer eu", "price": 15783, "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"},
+                  {"id":11, "title":"Tincidunt integer eu integer eu integer eu", "price": 15784, "img": "/img/170_200/150711-n-ru971-772.jpg"},
+                  {"id":12, "title":"Tincidunt integer eu", "price": 15785, "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"},
+                  {"id":13, "title":"Tincidunt integer eu integer eu", "price": 15786, "img": "/img/170_200/ecba5dd0-b6fb-406e-9b6e-08f7fc8ec60d.jpg"},
+                  {"id":14, "title":"Tincidunt integer eu", "price": 15787, "img": "/img/170_200/city_skyline.jpeg"},
+                  {"id":15, "title":"Tincidunt integer eu Tincidunt integer eu", "price": 888, "img": "/img/170_200/fcfa8905-7145-4b81-acad-255c13ae0221.jpg"},
+                  {"id":15, "title":"Tincidunt integer eu Tincidunt integer eu", "price": 888, "img": "/img/170_200/golden_gate_bridge.jpg"},
+                  {"id":15, "title":"Tincidunt integer eu Tincidunt integer eu", "price": 888, "img": "/img/170_200/horses.jpg"}
+        ]
+    }
    await ctx.render('index/category', {
-    title 
+       title, pageJs, data 
   });
 }
