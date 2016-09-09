@@ -2,7 +2,7 @@
 export async function showSignUp(ctx, next) {
 
     const title = '注册';
-    const pageJs = webpackIsomorphicTools.assets().javascript.app;
+    const pageJs = webpackIsomorphicTools.assets().javascript.auth;
     // ctx.cookies.set('test', 'signUp');
     // ctx.cookies.set('test2', 'signUp2');
 
@@ -19,7 +19,7 @@ export async function showSignIn(ctx, next) {
 
     const title = '登录';
 
-    const pageJs = webpackIsomorphicTools.assets().javascript.app;
+    const pageJs = webpackIsomorphicTools.assets().javascript.auth;
     // ctx.cookies.set('test', 'signUp');
     // ctx.cookies.set('test2', 'signUp2');
 

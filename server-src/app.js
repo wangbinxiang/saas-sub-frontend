@@ -13,10 +13,7 @@ import session from 'koa-generic-session';
 import memcacheSession from 'koa-memcached';
 import passport from 'koa-passport';
 import _ from 'underscore';
-
-
-//配置文件
-import config from './config';
+import config from 'config';
 
 //注册账号验证规则
 import passportRegister from './passport'; 
@@ -34,18 +31,18 @@ const bodyparser = Bodyparser()
 // })
 
 // middlewares
-app.use(convert(bodyparser))//body数据解析中间件
+app.use(Bodyparser())//body数据解析中间件
 app.use(convert(json()))
 app.use(convert(logger()))
 
 //session
-app.keys = ['your-session-secret'];
+app.keys = ['koa-pro'];
 app.use(convert(session({
   // store: new mysqlSession(config.sessionDb),
-  store: memcacheSession(config.memcache),
+  store: memcacheSession(config.get('memcache')),
   rolling: true,
   cookie: {
-      maxage: config.cookieExpired
+      maxage: config.get('cookieExpired')
   }
 })));
 
@@ -144,7 +141,7 @@ app.on('error', async (err, ctx) => {
   console.log('error occured:', err)
 })
 
-const port = parseInt(config.port || '3000')
+const port = parseInt(config.get('port') || '3000')
 const server = http.createServer(app.callback())
 
 server.listen(port)

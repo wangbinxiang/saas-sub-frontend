@@ -43,9 +43,8 @@ server
 
 client/js/pages/*
 
-server-src/config/*
-!server-src/config/index.js
-!server-src/config/default.js
+config/production.json
+
 
 webpack-assets.json
 webpack-stats.json

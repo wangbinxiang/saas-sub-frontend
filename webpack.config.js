@@ -3,7 +3,6 @@ const glob = require('glob');
 const webpack = require('webpack');
 //webpack压缩js插件
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 
@@ -52,6 +51,12 @@ var config = {
         'NODE_ENV': JSON.stringify(env)
       }
     }),
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
+    }),
+    new webpack.optimize.CommonsChunkPlugin({ name: "commons", filename: "commons.js", minChunks: 2 }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -62,7 +67,8 @@ var config = {
       {
         test: /\.js?$/,
         loader: 'babel',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        query: { compact: false }
       }
     ]
   }

@@ -14,6 +14,6 @@ router.get('/', async (ctx, next) => {
 },  index);
 
 
-
 router.get('/category', category);
+
 export default router
