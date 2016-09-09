@@ -2,11 +2,8 @@ if (module.hot) {
     module.hot.accept()
 }
 
-import 'foundation-sites'
+import '../../../client-src/js/pages/base.js'
 
-
-
-$(document).foundation();
 require.ensure([], function(require) {
     let masonry11 = require('../../../client/js/vendors/masonry.pkgd.min')
     let dropzone = require('../../../client/js/vendors/dropzone')   
