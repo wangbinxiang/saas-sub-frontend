@@ -9,13 +9,17 @@ $('#tagFilter li a').click(function() {
 })
 
 require.ensure([], function(require) {
-    let Masonry = require('masonry-layout')
-    Foundation.onImagesLoaded($('#masonryWrap img'), function () {
-        new Masonry($('#masonryWrap'), {
-            // options
-            itemSelector: '.column',
-            percentPosition: true
-        })
-    })
-})
+    //let Masonry = require('masonry-layout')
+    //Foundation.onImagesLoaded($('#masonryWrap img'), function () {
+    //    new Masonry($('#masonryWrap'), {
+    //        // options
+    //        itemSelector: '.column',
+    //        percentPosition: true
+    //    })
+    //})
 
+    let imagesLoaded = require('imagesloaded')
+    new imagesLoaded($('#listEqualizer'), function(){
+        var equalizer = new Foundation.Equalizer($('#listEqualizer'));
+    });
+})

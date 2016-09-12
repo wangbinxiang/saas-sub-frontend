@@ -23,7 +23,7 @@
 </div>
 <% } %>
 
-<% if(data["items"].length > 0) { %>
+<!--<% if(data["items"].length > 0) { %>
 <div class="masonry-wrap-outer">
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap">
         <% for(var i = 0; i < data["items"].length; i++) { %>
@@ -40,6 +40,23 @@
         <% } %>
     </data>        
 </div>
+<% } %>-->
+
+<% if(data["items"].length > 0) { %>
+    <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
+        <% for(var i = 0; i < data["items"].length; i++) { %>
+            <div class="column">
+                <a href="detail/<%= data["items"][i].id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                    <img src="<%= data["items"][i].img %>" />
+                    <b>
+                        <%= data["items"][i].title %>
+                    </b>
+                    <span class="span--fix"><small>最低</small> ￥<strong><%= data["items"][i].price %></strong></span>
+                    <i class="small button button--fix">查看详情</i>
+                </a>
+            </div>
+        <% } %>
+    </div>
 <% } %>
 
 <div class="list-button row column">
