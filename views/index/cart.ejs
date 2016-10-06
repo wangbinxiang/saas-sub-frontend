@@ -1,0 +1,124 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="index.html">首页</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 购物车
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">购物车</h1>
+
+<div class="row column">
+    <h2>旅游线路商品</h2>
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+            <tr>
+                <th width="150">线路ID</th>
+                <th>线路名称</th>
+                <th width="150">出行时间</th>
+                <th width="150">单价(成人/儿童)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-th="线路ID">1255202</td>
+                <td data-th="线路名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="出行时间">2016-12-25</td>
+                <td data-th="单价(成人/儿童)">￥256 / -</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row text-right form-submit-wrap">
+    <a href="orderSubmit_trip.html" class="button large cartBtnRight">开始订购旅游线路&raquo;</a>
+</div>
+
+<div class="row column">
+    <h2>旅游线路商品</h2>
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+            <tr>
+                <th width="150">线路ID</th>
+                <th>线路名称</th>
+                <th width="150">出行时间</th>
+                <th width="150">单价(成人/儿童)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-th="线路ID">1255202</td>
+                <td data-th="线路名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="出行时间">2016-12-25</td>
+                <td data-th="单价(成人/儿童)">￥256 / ￥125</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row text-right form-submit-wrap">
+    <a href="orderSubmit_trip.html" class="button large cartBtnRight">开始订购旅游线路&raquo;</a>
+</div>
+
+<div class="row column">
+    <h2>普通商品</h2>
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+            <tr>
+                <th width="150">产品ID</th>
+                <th>产品名称</th>
+                <th width="150">颜色</th>
+                <th width="150">尺寸</th>
+                <th width="150">单价</th>
+                <th width="250">数量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-th="产品ID">1255202</td>
+                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="颜色">red</td>
+                <td data-th="尺寸">large</td>
+                <td data-th="单价">￥256</td>
+                <td data-th="数量">
+                    <input type="number" class="text-center" value="1" min="1" />
+                    <button class="button disabled">更新</button>
+                    <button class="button">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td data-th="产品ID">1255202</td>
+                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="颜色">red</td>
+                <td data-th="尺寸">large</td>
+                <td data-th="单价">￥256</td>
+                <td data-th="数量">
+                    <input type="number" class="text-center" value="1" min="1" />
+                    <button class="button disabled">更新</button>
+                    <button class="button">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td data-th="产品ID">1255202</td>
+                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="颜色">red</td>
+                <td data-th="尺寸">large</td>
+                <td data-th="单价">￥256</td>
+                <td data-th="数量">
+                    <input type="number" class="text-center" value="1" min="1" />
+                    <button class="button disabled">更新</button>
+                    <button class="button">删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-right cart-total">
+        购物车普通商品总计：<strong class="stat">￥2569</strong>
+    </div>
+</div>
+
+
+<div class="row form-submit-wrap text-right">
+    <a href="/orderConfirm" class="button large cartBtnRight">开始结算普通商品&raquo;</a>
+</div>
+<%- include('../layout/footer') -%>

@@ -1,0 +1,156 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="userCPOrderList.html">用户订单</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 订单详情
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">订单详情 No.157658-333</h1>
+
+<div class="row block-margin-bottom">
+    <div class="workflow-wrap">
+        <div class="workflow-bar prec1"></div>
+        <ol class="workflow-label">
+            <li class="lb passed"><b><s></s></b>提交订单</li>
+            <li class="lb passed"><b><s></s></b>支付订单</li>
+            <li class="lb"><b><s></s></b>等待收货</li>
+            <li class="lb"><b><s></s></b>完成</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row column">
+    <div class="callout alert">
+        <h4>请您尽快支付订单！</h4>
+        <p>您订单No.26733-128已完成提交，正在等待支付。</p>
+    </div>
+</div>
+
+<div class="row text-center form-submit-wrap">
+    <a href="userCPOrderDetail_1_waitingDelivery.html" class="button large">支付订单</a>
+    or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="button large" onclick="confirm('are you sure?')">确认支付</button>
+</div>
+
+<div class="row column">
+    <div class="callout success">
+        <h4>您的订单正在配送途中，请您耐心等待！</h4>
+        <p>请您在收货后点击下方的确认收货按钮。</p>
+    </div>
+</div>
+
+<div class="row text-center form-submit-wrap">
+    <a href="userCPOrderDetail_2_complete.html" class="button large">确认收货</a>
+</div>
+
+<div class="row column">
+    <div class="callout success">
+        <h4>您的订单已完成配送！</h4>
+        <p>确认收货时间为 2016-12-12 13:30:30。</p>
+    </div>
+</div>
+
+<div class="row column">
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+            <tr>
+                <th width="150">产品ID</th>
+                <th>产品名称</th>
+                <th width="150">颜色</th>
+                <th width="150">尺寸</th>
+                <th width="150">单价</th>
+                <th width="150">数量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-th="产品ID">1255202</td>
+                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="颜色">red</td>
+                <td data-th="尺寸">large</td>
+                <td data-th="单价">￥256</td>
+                <td data-th="数量">3</td>
+            </tr>
+            <tr>
+                <td data-th="产品ID">1255202</td>
+                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="颜色">red</td>
+                <td data-th="尺寸">large</td>
+                <td data-th="单价">￥256</td>
+                <td data-th="数量">1</td>
+            </tr>
+            <tr>
+                <td data-th="产品ID">1255202</td>
+                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                <td data-th="颜色">red</td>
+                <td data-th="尺寸">large</td>
+                <td data-th="单价">￥256</td>
+                <td data-th="数量">5</td>
+            </tr>
+        </tbody>
+    </table>   
+
+    <form data-abide novalidate>
+        <div data-abide-error class="alert callout" style="display: none;">
+            <p><i class="fi-alert"></i> There are some errors in your form.</p>
+        </div>
+        <fieldset class="fieldset">
+            <legend><h4>配送信息</h4></legend>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>
+                        收货人姓名
+                        Sit amet consectetur
+                    </label>
+                </div>
+                <div class="medium-6 columns">
+                    <label>
+                        联系电话
+                        83280123
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>
+                        所在地区
+                        Lianhu, Xi'an, Shannxi
+                    </label>
+                </div>
+                <div class="medium-6 columns">
+                    <label>
+                        邮政编码 710046
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <label>
+                        详细地址
+                        Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend><h4>支付方式</h4></legend>
+            <div class="row">
+                <fieldset class="columns">
+                    <label for="pokemonRed">银联</label>
+                </fieldset>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="row text-right cart-total">
+        商品小计：￥<strong class="stat">2569</strong><br />
+        运费小计：￥<strong class="stat">25</strong><br />
+        订单合计：￥<strong class="stat">2678</strong>
+    </div>
+</div>
+<%- include('../layout/footer') -%>
