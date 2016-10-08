@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import index, { category } from '../../controllers/index';
+import index, { category, orders, detail, cart, orderConfirm, order } from '../../controllers/index';
 
 const router = Router()
 
@@ -15,5 +15,11 @@ router.get('/', async (ctx, next) => {
 
 
 router.get('/category', category);
+
+router.get('/detail', detail);
+router.get('/cart', cart);
+router.get('/orderConfirm', orderConfirm);
+router.get('/orders', orders);
+router.get('/order', order);
 
 export default router

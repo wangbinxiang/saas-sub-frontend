@@ -141,3 +141,48 @@ export async function category(ctx, next) {
        title, pageJs, data 
   });
 }
+
+export async function detail(ctx, next) {
+    const title = '商品详情';
+    const pageJs = webpackIsomorphicTools.assets().javascript.detail;
+    const data = null
+    await ctx.render('index/detail', {
+        title, pageJs, data 
+    });
+}
+
+export async function cart(ctx, next) {
+    const title = '购物车';
+    const pageJs = webpackIsomorphicTools.assets().javascript.cart;
+    const data = null
+    await ctx.render('index/cart', {
+        title, pageJs, data 
+    });
+}
+
+export async function orderConfirm(ctx, next) {
+    const title = '购物车';
+    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+    const data = null
+    await ctx.render('index/orderConfirm', {
+        title, pageJs, data 
+    });
+}
+
+export async function orders(ctx, next) {
+    const title = '我的订单';
+    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+    const data = null
+    await ctx.render('index/orders', {
+        title, pageJs, data 
+    });
+}
+
+export async function order(ctx, next) {
+    const title = '订单详情';
+    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+    const data = null
+    await ctx.render('index/order', {
+        title, pageJs, data 
+    });
+}
