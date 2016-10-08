@@ -54,7 +54,8 @@ var config = {
     new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
-        "window.jQuery": "jquery"
+        "window.jQuery": "jquery",
+        ko: 'knockout'
     }),
     new webpack.optimize.CommonsChunkPlugin({ name: "commons", filename: "commons.js", minChunks: 2 }),
     new webpack.optimize.OccurenceOrderPlugin(),

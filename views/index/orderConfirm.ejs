@@ -9,7 +9,7 @@
 </nav>
 
 <h1 class="row column">提交商品订单</h1>
-
+<div id="orderConfirm">
 <div class="row column">
     <table class="stack stack--small hover listCart tableList">
         <thead>
@@ -17,60 +17,44 @@
                 <th width="150">产品ID</th>
                 <th>产品名称</th>
                 <th width="150">颜色</th>
-                <th width="150">尺寸</th>
                 <th width="150">单价</th>
                 <th width="150">数量</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data-bind="foreach: goods">
             <tr>
-                <td data-th="产品ID">1255202</td>
-                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-                <td data-th="颜色">red</td>
-                <td data-th="尺寸">large</td>
-                <td data-th="单价">￥256</td>
-                <td data-th="数量">3</td>
-            </tr>
-            <tr>
-                <td data-th="产品ID">1255202</td>
-                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-                <td data-th="颜色">red</td>
-                <td data-th="尺寸">large</td>
-                <td data-th="单价">￥256</td>
-                <td data-th="数量">1</td>
-            </tr>
-            <tr>
-                <td data-th="产品ID">1255202</td>
-                <td data-th="产品名称">This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-                <td data-th="颜色">red</td>
-                <td data-th="尺寸">large</td>
-                <td data-th="单价">￥256</td>
-                <td data-th="数量">5</td>
+                <td data-th="产品ID" data-bind="text:id"></td>
+                <td data-th="产品名称" data-bind="text:name"></td>
+                <td data-th="颜色" data-bind="text:sku"></td>
+                <td data-th="单价" data-bind="text:price"></td>
+                <td data-th="数量" data-bind="text:quantity"></td>
             </tr>
         </tbody>
     </table>   
 
-    <form data-abide novalidate>
-        <div data-abide-error class="alert callout" style="display: none;">
-            <p><i class="fi-alert"></i> There are some errors in your form.</p>
+    <form data-abide="ajax" novalidate id="formOrderConfirm">
+        <div data-abide-error class="alert callout alert-form-error" style="display: none;">
+	        <p class="row column">请填写所有表单内容</p>
         </div>
         <fieldset class="fieldset" id="fieldAddress">
             <legend><h4>配送信息</h4></legend>
-            <div class="row column checkbox-inline">
-                <input id="checkbox12" type="radio" name="adress">
-                <label for="checkbox12"><b>收货人姓名</b>, 15012345678, 山西-西安-莲湖区Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</label>
-            </div>
-            <div class="row column checkbox-inline">
-                <input id="checkbox13" type="radio" name="adress">
-                <label for="checkbox13"><b>收货人</b>, 15012345678, 山西-西安-莲湖区Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</label>
-            </div>
-            <div class="row column checkbox-inline">
-                <input id="checkbox14" type="radio" name="adress">
-                <label for="checkbox14"><b>姓名</b>, 15012345678, 山西-西安-莲湖区Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</label>
-            </div>
             <div>
-                <button class="button button-unstyle" data-open="editRole" onclick="return false;">添加新地址</button>
+                <label>请填写收货人姓名, 联系电话，详细地址和邮政编码
+                    <textarea rows="3" required></textarea>
+                    <span class="form-error">
+						请填写收货人信息
+					</span>
+                </label>                
             </div>
+            <!-- kos foreach:addresses ->
+            <div class="row column checkbox-inline">
+                <input data-bind="attr:{id: id}" type="radio" name="adress">
+                <label for="checkbox12"><b data-bind="text:name">收货人姓名</b>, <span data-bind="text: mobile + ', ' + where + ', ' + address">15012345678, 山西-西安-莲湖区Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</span></label>
+            </div>
+            <!- /ko -->
+            <!--<div>
+                <button class="button button-unstyle" data-open="editRole" onclick="return false;">添加新地址</button>
+            </div>-->
         </fieldset>
 
         <fieldset class="fieldset">
@@ -90,17 +74,17 @@
                 </fieldset>
             </div>
         </fieldset>
+
+        <div class="row text-right cart-total">
+            商品小计：￥<strong class="stat"><%= data.totalGoods %></strong><br />
+            运费小计：￥<strong class="stat"><%= data.deliveryFee %></strong><br />
+            订单合计：￥<strong class="stat"><%= data.totalGoods + data.deliveryFee %></strong>
+        </div>
+
+        <div class="row text-center form-submit-wrap">
+            <button href="/order" class="button large" data-bind="click: save">确认并提交商品订单</button>
+        </div>
     </form>
-
-    <div class="row text-right cart-total">
-        商品小计：￥<strong class="stat">2569</strong><br />
-        运费小计：￥<strong class="stat">25</strong><br />
-        订单合计：￥<strong class="stat">2678</strong>
-    </div>
-</div>
-
-<div class="row text-center form-submit-wrap">
-    <a href="/order" class="button large">确认并提交商品订单</a>
 </div>
 
 <div class="reveal small" id="editRole" data-reveal>
@@ -154,4 +138,8 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+</div>
+<script>
+    var data = <%- JSON.stringify(data) %>;
+</script>
 <%- include('../layout/footer') -%>

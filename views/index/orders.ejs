@@ -9,7 +9,7 @@
 </nav>
 
 <h1 class="row column">用户订单</h1>
-
+<div id="listOrders">
 <div class="row column">
     <table class="stack stack--small hover listCart tableList">
         <thead>
@@ -22,46 +22,18 @@
                 <th width="300">操作</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data-bind="foreach: orders">
             <tr>
-                <td data-th="订单ID">1255202</td>
-                <td data-th="订单状态">未支付</td>
-                <td data-th="总价">￥25630</td>
-                <td data-th="订购时间">2016-12-25 12:25</td>
-                <td data-th="支付时间">-</td>
+                <td data-th="订单ID" data-bind="text:id"></td>
+                <td data-th="订单状态" data-bind="text: statusNames[status - 1]"></td>
+                <td data-th="总价" data-bind="text: '￥' + total"></td>
+                <td data-th="订购时间" data-bind="text: dateOrder"></td>
+                <td data-th="支付时间" data-bind="text: datePay">-</td>
                 <td data-th="操作">
-                    <a href="userCPOrderDetail_0_waitingPay.html" class="button small">查看</a>
+                    <a href="/order" class="button small">查看</a>
+                    <!-- ko if: status == 1 -->
                     <button class="button small">支付</button>
-                </td>
-            </tr>
-            <tr>
-                <td data-th="订单ID">1255202</td>
-                <td data-th="订单状态">等待收货</td>
-                <td data-th="总价">￥25630</td>
-                <td data-th="订购时间">2016-12-25 12:25</td>
-                <td data-th="支付时间">2016-12-25 12:25</td>
-                <td data-th="操作">
-                    <a class="button small" href="userCPOrderDetail_1_waitingDelivery.html">查看</a>
-                </td>
-            </tr>
-            <tr>
-                <td data-th="订单ID">1255202</td>
-                <td data-th="订单状态">等待旅游</td>
-                <td data-th="总价">￥25630</td>
-                <td data-th="订购时间">2016-12-25 12:25</td>
-                <td data-th="支付时间">2016-12-25 12:25</td>
-                <td data-th="操作">
-                    <a class="button small" href="userCPOrderDetail_1_waitingDelivery.html">查看</a>
-                </td>
-            </tr>
-            <tr>
-                <td data-th="订单ID">1255202</td>
-                <td data-th="订单状态">已完成</td>
-                <td data-th="总价">￥25630</td>
-                <td data-th="订购时间">2016-12-25 12:25</td>
-                <td data-th="支付时间">2016-12-25 12:25</td>
-                <td data-th="操作">
-                    <a class="button small " href="userCPOrderDetail_2_complete.html">查看</a>
+                    <!-- /ko -->
                 </td>
             </tr>
         </tbody>
@@ -70,6 +42,13 @@
 
 <div class="list-button row column">
     <small>20 Items of 240 Total</small><br>
-    <a class="button large btnMore">加载更多</a>
+    <button class="button large btnMore" data-bind="click: more">加载更多</button>
 </div>
+
+</div>
+
+<script>
+    var orders = <%- JSON.stringify(data) %>;
+    var statusNames = ["未支付", "等待收货", "已完成"]
+</script>
 <%- include('../layout/footer') -%>

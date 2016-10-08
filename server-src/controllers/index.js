@@ -151,19 +151,21 @@ export async function detail(ctx, next) {
     });
 }
 
-export async function cart(ctx, next) {
-    const title = '购物车';
-    const pageJs = webpackIsomorphicTools.assets().javascript.cart;
-    const data = null
-    await ctx.render('index/cart', {
-        title, pageJs, data 
-    });
-}
-
 export async function orderConfirm(ctx, next) {
-    const title = '购物车';
+    const title = '订单确认';
     const pageJs = webpackIsomorphicTools.assets().javascript.order;
-    const data = null
+    const data = {goods:[
+            {"id": 123, "name": "Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus", "sku":'red', "price":25670, "quantity": 1230},
+            {"id": 124, "name": "Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus", "sku":'red', "price":25671, "quantity": 1231},
+            {"id": 125, "name": "Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus", "sku":'red', "price":25672, "quantity": 1232}
+    ],
+        addresses:[
+        {"id": 123, "name": "Mi id sollicitudin", "mobile":"15098765432", "where": "山西-西安-莲湖区", "address":"Sapien elit in malesuada semper mi, id sollicitudin urna fermentum"},
+        {"id": 124, "name": "Mi jd sollicitudin", "mobile":"15098765432", "where": "山西-西安-莲区", "address":"Sapien elit in malesuada semper mi, id sollicitudin urna fermentum"},
+        {"id": 125, "name": "Mi kd sollicitudin", "mobile":"15098765432", "where": "山西-西安-湖区", "address":"Sapien elit in malesuada semper mi, id sollicitudin urna fermentum"},
+        ],
+        totalGoods:1256, deliveryFee:100
+    }
     await ctx.render('index/orderConfirm', {
         title, pageJs, data 
     });
@@ -172,7 +174,12 @@ export async function orderConfirm(ctx, next) {
 export async function orders(ctx, next) {
     const title = '我的订单';
     const pageJs = webpackIsomorphicTools.assets().javascript.order;
-    const data = null
+    const data = {orders:[
+        {"id": 123, status: 1, "total": 12556, "dateOrder": "2016-06-25 12:25", "datePay": "-"},
+        {"id": 124, status: 2, "total": 125, "dateOrder": "2016-05-25 12:25", "datePay": "2016-05-25 12:25"},
+        {"id": 125, status: 3, "total": 9, "dateOrder": "2016-04-25 12:25", "datePay": "2016-04-25 12:25"}
+    ]        
+    }
     await ctx.render('index/orders', {
         title, pageJs, data 
     });
@@ -181,7 +188,18 @@ export async function orders(ctx, next) {
 export async function order(ctx, next) {
     const title = '订单详情';
     const pageJs = webpackIsomorphicTools.assets().javascript.order;
-    const data = null
+    const data = {goods:[
+            {"id": 123, "name": "Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus", "sku":'red', "price":25670, "quantity": 1230},
+            {"id": 124, "name": "Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus", "sku":'red', "price":25671, "quantity": 1231},
+            {"id": 125, "name": "Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus", "sku":'red', "price":25672, "quantity": 1232}
+    ],
+        addresses:[
+        {"id": 123, "name": "Mi id sollicitudin", "mobile":"15098765432", "where": "山西-西安-莲湖区", "address":"Sapien elit in malesuada semper mi, id sollicitudin urna fermentum"},
+        {"id": 124, "name": "Mi jd sollicitudin", "mobile":"15098765432", "where": "山西-西安-莲区", "address":"Sapien elit in malesuada semper mi, id sollicitudin urna fermentum"},
+        {"id": 125, "name": "Mi kd sollicitudin", "mobile":"15098765432", "where": "山西-西安-湖区", "address":"Sapien elit in malesuada semper mi, id sollicitudin urna fermentum"},
+        ],
+        totalGoods:1256, deliveryFee:100, step:1
+    }
     await ctx.render('index/order', {
         title, pageJs, data 
     });

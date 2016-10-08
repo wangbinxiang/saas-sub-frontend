@@ -36,6 +36,7 @@
     "imagesloaded": "^4.1.1",
     "jcarousel": "^0.3.4",
     "jquery": "^2.2.4",
+    "knockout": "^3.4.0",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",
