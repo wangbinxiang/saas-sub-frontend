@@ -1,0 +1,75 @@
+﻿<%- include('../layout/header') -%>
+
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">网站管理</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 商品分类管理
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">商品分类管理</h1>
+<div class="row column">
+    <div class="callout primary">
+        <p>商品分类管理即网站主导航管理，当分类对应的产品上架数量不为空时，该分类才在网站顶部导航显示出来。</p>
+    </div>
+</div>
+<div class="row column">
+    <input type="text" id="newGoodName" class="input-unstyle" placeholder="请输入商品分类名称" />
+    <select class="input-unstyle" id="newGoodType">
+        <option value="<%= PRODUCT_CATEGORY_COMMON %>"><%= PRODUCT_CATEGORY_LIST[PRODUCT_CATEGORY_COMMON] %></option>
+    </select>
+    <a class="button button-unstyle" data-bind="click: addType">添加新分类</a>
+</div>
+
+<div class="row column">
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+            <tr>
+                <th>商品分类名称</th>
+                <th>商品类型</th>
+                <th width="300">操作</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:types">
+            <tr>
+                <td data-th="商品分类名称" data-bind="text: name"></td>
+                <td data-th="商品类型" data-bind="text: cateTitles[category]"></td>
+                <td data-th="操作">
+                    <button class="button small" data-bind="click: $root.edit">编辑</button>
+                    <button class="button small" data-bind="click: $root.remove">删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="reveal small" id="editTitle" data-reveal>
+    <h3>编辑商品分类名称</h3>
+
+    <div class="row">
+        <label>分类名称</label>
+        <input type="text" id="editText" required />
+		<input type="hidden" id="editId" />
+		<input type="hidden" id="editCata" />
+    </div>
+    <div class="row text-center form-submit-wrap">
+        <button class="button" data-bind="click: $root.save">保存</button>
+        <button class="button secondary" data-close>取消</button>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="list-button row column">
+    <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
+</div>
+<script>
+    var data = <%- JSON.stringify(productTypes) %>;
+    var cateTitles = <%- JSON.stringify(PRODUCT_CATEGORY_LIST) %>;
+    var pageno = <%= number %>;
+    var isnext = <%= moreInfo %>;
+</script>
+<%- include('../layout/footer') -%>

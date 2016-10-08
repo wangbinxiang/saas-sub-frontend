@@ -1,0 +1,1 @@
+module.exports = {"2045":{"id":"2045","parentId":"241","name":"\u6e1d\u6c34\u533a"},"2046":{"id":"2046","parentId":"241","name":"\u5206\u5b9c\u53bf"}};

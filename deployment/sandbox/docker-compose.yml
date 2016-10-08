@@ -1,0 +1,11 @@
+service:
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: dev=front
+  tty: true
+  command:
+  - npm
+  - run
+  - pm2-docker-sandbox
+  image: registry.cn-hangzhou.aliyuncs.com/saas/saas-sub-admin-frontend:0.1.8
+  stdin_open: true

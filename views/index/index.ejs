@@ -1,0 +1,45 @@
+<%- include('../layout/header') -%>
+<h1 class="row column user-margin text-center">Welcome</h1>
+
+<!--<div class="row column">
+    <div class="callout warning">
+        <p>
+            网站暂未配置，请先开始您的<a href="#">网站基本信息配置</a>，之后<a href="/products/">添加新商品</a>即可开始您的新网站。<br />
+            这个仅当网站基本信息未配置&无没有一件商品上架时显示。
+        </p>
+    </div>
+</div>-->
+
+<h1 class="row column user-margin">管理登录</h1>
+
+<form data-abide="ajax" novalidate id="formLogin">
+    <div data-abide-error class="alert callout alert-form-error" style="display: none;" id="formAlert">
+        <p class="row column">登录信息错误，请核查后重新登录。</p>
+    </div>
+    <div class="row">
+        <div class="small-10 medium-6 small-centered medium-centered columns">
+            <label>
+                用户名
+                <input type="text" id="cellPhone" placeholder="请输入用户名" required>
+                <span class="form-error">
+                    请输入用户名。
+                </span>
+            </label>
+            <label>
+                密码
+                <input type="password" id="password" placeholder="请输入登录密码" required>
+                <span class="form-error">
+                    请输入登录密码。
+                </span>
+            </label>
+        </div>
+    </div>
+
+
+    <div class="text-center form-submit-wrap blk-margin">
+        <a class="button large" id="btnLogin">登录</a>
+        <button class="secondary button large" type="reset" value="Reset">重置</button>
+    </div>
+</form>
+
+<%- include('../layout/footer') -%>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%= typeof title !== 'undefined'? title: ''%></title>
+        <link rel="icon" href="/img/sa_logo.png" type="image/x-icon" />
+        <link rel="stylesheet" href="/css/app.css" />
+        <link rel="stylesheet" href="/css/appfix.css" />
+    </head>
+    <body>
+        <header class="top-bar" id="headerGlobal">
+            <div class="top-bar-title">
+                <strong><a style="font-size:36px; color:#000;"><!--<img src="/img/sa_logo.png" class="saLogo" />--> 网站管理</a></strong>
+                <% if(user) {%>
+                <div class="top-bar-fix">
+                    <ul class="menu">
+                        <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>管理菜单</b><i class="material-icons mi-expand_more"></i></a></li>
+                    </ul>
+                </div>
+                <% } %>
+            </div>
+            <% if(user) {%>
+            <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
+                
+                    <a href="/logout">退出登陆</a>
+                    <hr />
+                    <a href="/product-types">商品分类管理</a>
+                    <hr />
+                    <a href="/products">自有商品管理</a>
+            </div>
+            <% } %>
+                <!--<a href="index.html">Login</a>
+                <a>Logout</a>
+                <a href="hostCPChangePswd.html">修改密码</a>
+                <a href="hostCPBaseConfig.html">网站基本信息配置</a>
+                <a href="hostCPRebate.html">营销返利配置</a>
+                <a href="../" target="_blank">进入网站首页</a>
+                <hr />
+                <a href="/product-types">商品分类管理</a>
+                <a href="hostCPLabels.html">商品关键字管理</a>
+                <a href="hostCPHomeSlide.html">首页幻灯片管理</a>
+                <a href="hostCPNavs.html">网站主导航管理</a>
+                <hr />
+                <a href="hostCPUsers.html">买家管理</a>
+                <a href="hostCPRoles.html">角色管理</a>
+                <a href="hostCPEmployees.html">员工管理</a>
+                <hr />
+                <a href="/products">自有商品管理</a>
+                <a href="hostCPPurchases.html">采购商品管理</a>
+                <a href="hostCPDistributions.html">分销商品管理</a>
+                <hr />
+                <a href="hostCPOrderList.html">订单管理</a>
+                <a href="hostCPMoney.html">诚信游收支管理</a>-->
+            
+        </header>
+        <div class="show-for-small-only small-header-margin-top"></div>

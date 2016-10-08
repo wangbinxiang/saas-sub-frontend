@@ -1,0 +1,7 @@
+﻿@charset "UTF-8";
+/*.hideFail, .formErrorAlert {
+    display:none;
+}*/
+.pageHeader {
+    word-break: break-all;
+}

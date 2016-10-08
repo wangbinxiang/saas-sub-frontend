@@ -1,0 +1,2 @@
+service:
+  scale: 1
