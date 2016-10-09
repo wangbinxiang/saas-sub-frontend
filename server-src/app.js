@@ -23,6 +23,7 @@ import config from 'config';
 //config全局化
 // global.config = config;
 
+
 //注册账号验证规则
 import passportRegister from './passport'; 
 
@@ -44,7 +45,7 @@ app.use(convert(json()))
 app.use(convert(logger()))
 
 //session
-app.keys = ['saas-mian-front'];
+app.keys = ['saas-sub-frontend'];
 app.use(convert(session({
   store: memcacheSession(config.get('memcache')),
   rolling: true,
@@ -53,10 +54,13 @@ app.use(convert(session({
   }
 })));
 
+
 //passport
 passportRegister(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 // Add Webpak Dev Middleware
 import webpack from 'webpack'
@@ -111,8 +115,8 @@ app.use(convert(koaStatic(path.join(__dirname, '../client'), {
 })))
 
 
+//underscore写入全局方法
 app.use( async (ctx, next) => {
-  //underscore写入view模板全局方法
   ctx.state._ = _;
   await next();
 });
@@ -129,10 +133,6 @@ app.use(handlerHostToSubId);
 koaOnError(app, {
   template: 'views/500.ejs'
 })
-
-import inputValidationError from './middlewares/inputValidationError';
-// app.use(inputValidationError);
-
 
 
 

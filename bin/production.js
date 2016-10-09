@@ -27,4 +27,4 @@ try {
   process.exit(1)
 }
 
-console.log('app started in production mode')
+console.log('app started in production mode');

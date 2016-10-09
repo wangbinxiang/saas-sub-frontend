@@ -12,47 +12,54 @@
     <body>
         <header class="top-bar" id="headerGlobal">
             <div class="top-bar-title">
-                <strong><a style="font-size:36px; color:#000;"><!--<img src="/img/sa_logo.png" class="saLogo" />--> 网站管理</a></strong>
-                <% if(user) {%>
+                <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
+                    <span class="menu-icon dark" data-toggle></span>
+                </span>
+                <strong><a href="/"><img src="/img/sa_logo.png" class="saLogo" /></a></strong>
                 <div class="top-bar-fix">
                     <ul class="menu">
-                        <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>管理菜单</b><i class="material-icons mi-expand_more"></i></a></li>
+                        <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
+                        <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li>
+                        <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>Usernamehere</b><i class="material-icons mi-expand_more"></i></a></li>
+                        <li><a class="cart" href="shoppingCart.html"><i class="material-icons mi-shopping_cart"></i><em>99</em></a></li>
                     </ul>
                 </div>
-                <% } %>
             </div>
-            <% if(user) {%>
             <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
-                
-                    <a href="/logout">退出登陆</a>
-                    <hr />
-                    <a href="/product-types">商品分类管理</a>
-                    <hr />
-                    <a href="/products">自有商品管理</a>
-            </div>
-            <% } %>
-                <!--<a href="index.html">Login</a>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
                 <a>Logout</a>
-                <a href="hostCPChangePswd.html">修改密码</a>
-                <a href="hostCPBaseConfig.html">网站基本信息配置</a>
-                <a href="hostCPRebate.html">营销返利配置</a>
-                <a href="../" target="_blank">进入网站首页</a>
-                <hr />
-                <a href="/product-types">商品分类管理</a>
-                <a href="hostCPLabels.html">商品关键字管理</a>
+                <a href="/orders">My Orders</a>
+                <a href="userCPAddressbook.html">My Address Book</a>
+                <a href="userCPChangePswd.html">Change Password</a>
+                <!--<hr />
                 <a href="hostCPHomeSlide.html">首页幻灯片管理</a>
-                <a href="hostCPNavs.html">网站主导航管理</a>
+                <a href="hostCPLabels.html">商品关键字管理</a>
+                <a href="hostCPTypes.html">商品分类管理</a>
                 <hr />
                 <a href="hostCPUsers.html">买家管理</a>
                 <a href="hostCPRoles.html">角色管理</a>
                 <a href="hostCPEmployees.html">员工管理</a>
                 <hr />
-                <a href="/products">自有商品管理</a>
+                <a href="hostCPGoods.html">自有商品管理</a>
                 <a href="hostCPPurchases.html">采购商品管理</a>
                 <a href="hostCPDistributions.html">分销商品管理</a>
-                <hr />
-                <a href="hostCPOrderList.html">订单管理</a>
-                <a href="hostCPMoney.html">诚信游收支管理</a>-->
-            
+                <a href="hostCPOrderList.html">订单管理</a>-->
+            </div>
+            <div id="responsive-menu" class="menu-body">
+                <div class="top-bar-left top-bar-left--global">
+                    <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
+                        <!--<li><a href="detail.html" class="highlight">Tours</a></li>
+                        <li><a href="detail_alt.html">Destinations</a></li>
+                        <li><a href="list.html">Flights</a></li>-->
+                        <li><a href="/category">我的商品</a></li>
+                        <li><a href="detail_cn_trip.html">线路(详细)</a></li>
+                        <li><a href="detail_cn.html">食品(详细)</a></li>
+                        <li><a href="host/">Host Link</a></li>
+                        <li><a href="saas/">SAAS Link</a></li>                        
+                        <li><a href="saas_admin/login.html">saas_admin Link</a></li>
+                    </ul>
+                </div>
+            </div>
         </header>
         <div class="show-for-small-only small-header-margin-top"></div>

@@ -14,7 +14,8 @@
   },
   "apiServiceLocation": {
     "attachment": "http://121.199.20.221:8001",
-    "product": "http://121.199.48.143:8002/"
+    "product": "http://121.199.48.143:8002/",
+    "member": "http://121.199.48.143:8005"
   },
   "memcache": {
     "host": "121.199.20.221",

@@ -56,7 +56,7 @@ var config = {
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery",
-        ko: "knockout"
+        ko: 'knockout'
     }),
     new webpack.optimize.CommonsChunkPlugin({ name: "commons", filename: "commons.js", minChunks: 2 }),
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -69,7 +69,8 @@ var config = {
       {
         test: /\.js?$/,
         loader: 'babel',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        query: { compact: false }
       }
     ]
   }

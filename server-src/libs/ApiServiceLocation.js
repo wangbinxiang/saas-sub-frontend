@@ -42,3 +42,8 @@ export function productApiServiceLocation() {
     const productLocation = 'product';
     return getServiceLcation(productLocation);
 }
+
+export function memberApiServiceLocation() {
+    const memberLocation = 'member';
+    return getServiceLcation(memberLocation);
+}

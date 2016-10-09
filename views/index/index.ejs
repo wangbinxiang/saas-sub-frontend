@@ -1,45 +1,77 @@
 <%- include('../layout/header') -%>
-<h1 class="row column user-margin text-center">Welcome</h1>
-
-<!--<div class="row column">
-    <div class="callout warning">
-        <p>
-            网站暂未配置，请先开始您的<a href="#">网站基本信息配置</a>，之后<a href="/products/">添加新商品</a>即可开始您的新网站。<br />
-            这个仅当网站基本信息未配置&无没有一件商品上架时显示。
-        </p>
+<% if(data["ads"].length > 0) { %>
+<div class="row expanded column top-carousel">
+    <div class="jcarousel jcarousel--home">
+        <ul>
+            <% for(var i=0; i<data["ads"].length; i++) { %>
+                <li>
+                    <a href="detail/<%= data["ads"][i].id %>">
+                        <div><img src="<%= data["ads"][i].img %>" /></div>
+                        <b class="lead"><%= data["ads"][i].title %></b>
+                        <span><small>from</small><sup>￥</sup><strong><%= data["ads"][i].price %></strong><i class="fa fa-arrow-circle-o-right"></i></span>
+                    </a>
+                </li>
+			<% } %>		
+        </ul>
     </div>
-</div>-->
+    <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
+    <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
+    <div class="jcarousel-pagination"></div>
+</div>
+<% } %>
 
-<h1 class="row column user-margin">管理登录</h1>
-
-<form data-abide="ajax" novalidate id="formLogin">
-    <div data-abide-error class="alert callout alert-form-error" style="display: none;" id="formAlert">
-        <p class="row column">登录信息错误，请核查后重新登录。</p>
+<% if(data["lbs"].length > 0) { %>
+<div class="hot-bar-wrap clearfix">
+    <div class="top-bar hot-bar clearfix">
+        <ul class="dropdown menu index" data-dropdown-menu>
+            <li class="menu-text">关键字目录</li>
+            <% for(var i=0; i<data["lbs"].length; i++) { %>
+                <li><a href="cata/<%= data["lbs"][i].id %>"><%= data["lbs"][i].lb %></a></li>
+			<% } %>
+        </ul>
     </div>
-    <div class="row">
-        <div class="small-10 medium-6 small-centered medium-centered columns">
-            <label>
-                用户名
-                <input type="text" id="cellPhone" placeholder="请输入用户名" required>
-                <span class="form-error">
-                    请输入用户名。
-                </span>
-            </label>
-            <label>
-                密码
-                <input type="password" id="password" placeholder="请输入登录密码" required>
-                <span class="form-error">
-                    请输入登录密码。
-                </span>
-            </label>
+</div>
+<% } %>
+
+<% if(data["hots"].length > 0) { %>
+<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
+    <% for(var i=0; i<data["hots"].length; i++) { %>
+    <div class="column tourboard__title tourboard__title--<%= i %>">
+        <a href="cata/<%= data["hots"][i].id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <h3><%= data["hots"][i].cata %></h3>
+            <cite>(<%= data["hots"][i].total %>)</cite>
+            <i class="material-icons mi-arrow_forward"></i>
+        </a>
+    </div>
+        <% for(var j = 0; j < data["hots"][i].items.length; j++) { %>
+            <div class="column">
+                <a href="detail/<%= data["hots"][i].items[j].id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                    <img src="<%= data["hots"][i].items[j].img %>" />
+                    <b><%= data["hots"][i].items[j].title %></b>
+                    <em>
+                        <small>STARTS</small>: Tianjin, China<br />
+                        <small>End in</small>: Paris, France<br />
+                        <small>Days of Tour</small>: 12 Days
+                    </em>
+                    <span><small>from</small> ￥<strong><%= data["hots"][i].items[j].price %></strong></span>
+                </a>
+            </div>
+        <% } %>
+    <% } %>    
+</div>
+<% } %>
+
+<div class="row column bottom-search">
+    <h3>Got no ideal? Find more here</h3>
+    <div class="input-group">
+        <input class="input-group-field" type="text">
+        <div class="input-group-button">
+            <!--<a class="button">Primary Action</a>
+            <a class="dropdown button arrow-only">
+                <span class="show-for-sr">Show menu</span>
+            </a>-->
+            <input type="submit" class="button" value="Search">
         </div>
     </div>
-
-
-    <div class="text-center form-submit-wrap blk-margin">
-        <a class="button large" id="btnLogin">登录</a>
-        <button class="secondary button large" type="reset" value="Reset">重置</button>
-    </div>
-</form>
-
+</div>
 <%- include('../layout/footer') -%>
