@@ -19,7 +19,8 @@ export async function showAddOrder(ctx, next) {
 	if (result !== null) {
 
 		let { product, priceInfo, totalPrice } = result;
-
+		console.log(priceInfo);
+		console.log(totalPrice);
 		const title = '订单详情';
 	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
 	    const data = {
