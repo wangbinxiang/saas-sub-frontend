@@ -10,10 +10,11 @@ export default async(ctx, next) => {
 
     let number = ctx.query.number ? ctx.query.number : 1;
 
-    let size = ctx.query.size ? ctx.query.size : 5;
+    let size = ctx.query.size ? ctx.query.size : 500;
 
     let filters = {
-        userId: ctx._subId,
+        //userId: ctx._subId,
+        userId: 10,
         status: 0
     };
 
@@ -35,6 +36,7 @@ export default async(ctx, next) => {
         number,
         size
     }, logoWidth, logiHeight);
+
     if (result !== null) {
         let page = result.page;
         products = result.products;

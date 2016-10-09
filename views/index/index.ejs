@@ -61,17 +61,13 @@
 </div>
 <%% } %-->
 
-<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:data">
+<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
     <div class="column">
-        <a href="detail/" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <img src="" />
-            <b></b>
-            <em>
-                <small>STARTS</small>: Tianjin, China<br />
-                <small>End in</small>: Paris, France<br />
-                <small>Days of Tour</small>: 12 Days
-            </em>
-            <span><small>from</small> ￥<strong></strong></span>
+        <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <img data-bind="attr:{src: logo.url}" />
+            <b data-bind="text:name"></b>
+            <em></em>
+            <span><small>最低</small> ￥<strong data-bind="text:minPrice"></strong></span>
         </a>
     </div>
 </div>
@@ -91,9 +87,9 @@
     </div>
 </div>-->
 
-<div class="list-button row column">
+<!--<div class="list-button row column">
     <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
-</div>
+</div>-->
 
 <script>
 	var data = <%- JSON.stringify(products) %>;
