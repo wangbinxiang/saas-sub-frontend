@@ -21,7 +21,7 @@ var payment = new Payment(initConfig);
 const router = Router();
 
 
-router.get('/pay/', async (ctx, next) => {
+router.get('/pay', async (ctx, next) => {
     const openid = ctx.state.user.openId;
 
     var order = {
@@ -38,7 +38,6 @@ router.get('/pay/', async (ctx, next) => {
     let payargs = await new Promise((resolve, reject) => {
         payment.getBrandWCPayRequestParams(order, function(err, payargs){
             if (err) {
-                console.log(err);
                 reject(err);
             } else {
                 resolve(payargs);

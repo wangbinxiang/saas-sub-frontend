@@ -13,7 +13,6 @@ export default class OrderService {
 		let product = await this.productAdapter.get({
 			idList: productId
 		}, Product);
-		console.log(product);
 		if (product === null) {
 			return product;
 		} else {

@@ -15,7 +15,6 @@ export default class MemberService {
 		try {
 			member = await this.userAdapter.wechatLogin(openid, Member);
 		} catch (err) {
-			console.log(err.constructor === RequestJsonApiParamsError);
 			switch(err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
