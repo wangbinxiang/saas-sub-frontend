@@ -12,6 +12,8 @@ import routerProducts from './router/products';
 // //上传附件路由
 // import routerAttachments from './router/attachments';
 
+//订单路由
+import orderProducts from './router/order';
 
 import indexRouter from './router/index';
 import RouterAuth from './router/auth'
@@ -22,6 +24,7 @@ const router = new Router();
 // router.use('', routerIndex.routes());
 // router.use('', routerAuthenticate.routes());
 router.use('', routerProducts.routes());
+router.use('', orderProducts.routes());
 // router.use('', routerProductTypes.routes());
 // router.use('', routerAttachments.routes());
 
