@@ -40,12 +40,14 @@ router.post('/signin',
 
 );
 
-router.get('/wechat/auth', async (ctx, next) => {
+router.get('/wechat/auth/callback', async (ctx, next) => {
+    try {
         let res = await passport.authenticate('wechat')(ctx, next);
-        console.log('res');
-        console.log(res);
-        console.log(ctx.status);
-        console.log(ctx.res);
+        ctx.redirect('/');
+    } catch (err) {
+        console.log(err);
+        ctx.redirect('/');
+    }
 });
 
 //退出登录

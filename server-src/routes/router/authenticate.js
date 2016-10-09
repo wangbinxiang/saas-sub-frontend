@@ -7,6 +7,8 @@ import {
 import { requiresLogin } from '../../middlewares/authorization';
 import config from 'config';
 
+import OAuth from 'wechat-oauth';
+
 
 const router = Router();
 
@@ -26,24 +28,35 @@ const router = Router();
 // //登陆
 // router.post('/login', login);
 
-router.get('/log', async (ctx, next) => {
-	console.log(ctx.query.code);
-	console.log(ctx.query.sub);
+
+router.get('/wechat/auth', async (ctx, next) => {
+	let callbackUrl = 'http://10.dm.dianshangwan.com/log?sub=10';
+	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
+	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
+	ctx.redirect(location);
+})
+
+
+
+
+// router.get('/log', async (ctx, next) => {
+// 	console.log(ctx.query.code);
+// 	console.log(ctx.query.sub);
 	
 
-	const appId = config.get('wechat.dianshangwan.appID');
-	const appsecret = config.get('wechat.dianshangwan.appsecret');
+// 	const appId = config.get('wechat.dianshangwan.appID');
+// 	const appsecret = config.get('wechat.dianshangwan.appsecret');
 
-	//使用code换取access_token
-	//https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+// 	//使用code换取access_token
+// 	//https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
 	
-	//拉取用户信息
-	//https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+// 	//拉取用户信息
+// 	//https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
 
 
 
-	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
-});
+// 	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
+// });
 
 // //退出登录
 // router.get('/logout', logout);

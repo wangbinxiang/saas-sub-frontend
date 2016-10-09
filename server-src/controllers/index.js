@@ -3,10 +3,11 @@ import IndexService from '../models/application/IndexService';
 export default async(ctx, next) => {
     const title = '首页';
 
-    // if (ctx.isAuthenticated()) {
-    //   console.log('isAuthenticated');
-    //   ctx.logout();
-    // }
+    if (ctx.isAuthenticated()) {
+        console.log('isAuthenticated');
+        console.log(ctx.state.user);
+      // ctx.logout();
+    }
 
     let number = ctx.query.number ? ctx.query.number : 1;
 
@@ -45,7 +46,7 @@ export default async(ctx, next) => {
     }
 
     console.log(products);
-    console.log(isNext);
+    // console.log(isNext);
 
     const pageJs = webpackIsomorphicTools.assets().javascript.index;
 

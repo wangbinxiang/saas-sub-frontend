@@ -4,7 +4,7 @@ import Router from 'koa-router';
 
 // import routerIndex from './router/index';
 // //登陆
-// import routerAuthenticate from './router/authenticate';
+import routerAuthenticate from './router/authenticate';
 // //产品管理路由
 import routerProducts from './router/products';
 // //产品分类路由
@@ -22,7 +22,7 @@ import RouterAuth from './router/auth'
 const router = new Router();
 
 // router.use('', routerIndex.routes());
-// router.use('', routerAuthenticate.routes());
+router.use('', routerAuthenticate.routes());
 router.use('', routerProducts.routes());
 router.use('', orderProducts.routes());
 // router.use('', routerProductTypes.routes());

@@ -46,3 +46,9 @@ export const PRODUCT_EDIT         = Symbol();
 export const PRODUCT_DEL          = Symbol();
 //添加产品价格
 export const PRODUCT_PRICE_ADD    = Symbol();
+
+
+//用户注册
+export const MEMBER_SIGNUP        = Symbol();
+//用户登陆
+export const MEMBER_LOGIN         = Symbol();
