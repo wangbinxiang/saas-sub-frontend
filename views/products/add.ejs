@@ -1,0 +1,99 @@
+﻿<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a>网站管理</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span>新建商品
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column user-margin">新建<%= productType.name %></h1>
+
+<form data-abide="ajax" novalidate id="formGood">
+    <div data-abide-error class="alert callout alert-form-error" style="display: none;">
+        <p class="row column">商品信息输入错误，请核对后重新输入。</p>
+    </div>
+    <div class="row column">
+        <label>
+            我的商品名称
+            <input type="text" required data-bind="textInput: title" maxlength="64">
+            <span class="form-error">
+                请输入商品名称
+            </span>
+        </label>
+
+        <!--<label>商品关键字</label>
+        <div class="row expanded column filter-bar filter-bar--nohide" id="filterBar">
+            <div class="button-group multi">
+                <a class="button checked">选择全部</a>
+				<!-- ko foreach:labels
+                <a class="button" data-bind="text: title, css: { checked: checked }"></a>
+				<!-- /ko 
+            </div>
+        </div>-->
+
+        <label class="dz-wrap">
+            商品图片(最多五张/建议宽度不小于1000px)
+            <div id="goodImgsUploader" class="dropzone dropzone-single"></div>
+            <input type="text" id="imageIds" class="blk-hide" data-bind="textInput: imgs()" required>
+            <span class="form-error">
+                请上传至少一张商品图片
+            </span>
+        </label>
+        <label>
+            商品特色说明
+            <textarea class="textAuto" required data-bind="textInput: desc"></textarea>
+            <span class="form-error">
+                请输入商品特色说明
+            </span>
+        </label>
+    </div>
+    <h3 class="row column">商品描述</h3>
+
+    <div class="row column good-desc" id="goodDescWrap">
+        <!-- ko template:{name:'descTemp', foreach:details} -->
+			
+		<!-- /ko -->
+		
+        <script type="text/html" id="descTemp">
+            <!-- ko if: type == "image" -->
+			<section class="good-desc-img">
+				<img data-bind="attr: { 'src': value.url }" />
+				<a class="button good-desc-remove"><span aria-hidden="true">&times;</span></a>
+			</section>
+			<!-- /ko -->
+			<!-- ko if: type == "text" -->
+			<section class="good-desc-text" data-bind="with: value, css:{isAlert: value.isAlert}">
+                <input type="text" placeholder="段落标题(选填)，例如商品特性或使用说明" class="good-desc-text__title" data-bind="attr: { 'value': title }">
+                <label>
+                <textarea class="textAuto" placeholder="商品描述或说明" data-bind="textInput: desc" required></textarea>
+                <span class="form-error">
+                    请输入商品描述或说明
+                </span>
+                </label>
+                <input class="isAlert" data-bind="checked: isAlert" type="checkbox"><label>这是一个重要声明！</label>
+                <a class="button good-desc-remove"><span aria-hidden="true">&times;</span></a>
+            </section>
+			<!-- /ko -->
+        </script>
+
+		<section></section>
+        <div class="row column text-center good-desc-add" id="goodDescAdd">
+            <button class="button" type="button" id="goodDescImgNew">添加图片</button>
+            <button class="button" id="goodDescTextNew" id="goodDescTextNew">添加文字说明</button>
+        </div>
+    </div>   
+    <div class="text-center form-submit-wrap blk-margin blk-margin-bottom">
+        <button class="button large" id="saveGood">保存商品信息</button>
+        <a class="secondary button large" href="/products">返回商品列表</a>
+    </div>
+</form>
+
+<div class="good-desc-img-uploader dropzone" id="goodDescImgUploader"></div>
+
+<script>
+    var data = <%- JSON.stringify(data) %>;
+</script>
+
+<%- include('../layout/footer') -%>

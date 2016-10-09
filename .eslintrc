@@ -1,0 +1,18 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true
+  },
+  "rules": {
+    "func-style": [2, "declaration", { "allowArrowFunctions": true }],
+    "semi": [2, "always"],
+    "quotes": [2, "single"]
+  }
+}

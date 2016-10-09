@@ -1,0 +1,33 @@
+{
+  // Customer module configs 
+  "Customer": {
+    "dbConfig": {
+      "host": "localhost",
+      "port": 5984,
+      "dbName": "customers"
+    },
+    "credit": {
+      "initialLimit": 100,
+      // Set low for development 
+      "initialDays": 1
+    }
+  },
+  "apiServiceLocation": {
+    "attachment": "http://121.199.20.221:8001",
+    "product": "http://121.199.48.143:8002/",
+    "member": "http://121.199.48.143:8005"
+  },
+  "memcache": {
+    "host": "121.199.20.221",
+    "port": 11211
+  },
+  "cookieExpired": 86400000,
+  "port": 3010,
+  "subIdList": ["1", "10", "10001"],
+  "wechat": {
+    "dianshangwan": {
+      "appID": "wx73fc850b69d5209f",
+      "appsecret": "799126be40163fa841b5e08f5f7b1f99"
+    }
+  }
+}

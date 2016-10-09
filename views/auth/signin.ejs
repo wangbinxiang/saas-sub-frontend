@@ -1,0 +1,73 @@
+<%- include('../layout/header') -%>
+    <nav aria-label="You are here:" role="navigation" class="clearfix">
+		<ul class="breadcrumbs onionLink">
+			<li><a href="/">首页</a></li>
+			<li>
+				<span class="show-for-sr">Current: </span> 用户登录
+			</li>
+		</ul>
+	</nav>
+
+	<div id="drop" class="dropzone dropzones"></div>
+	<h1 class="row column user-margin">用户登录</h1>
+
+	<form data-abide novalidate method="post" action="/signin">
+		<div data-abide-error class="alert callout" style="display: none;">
+			<p><i class="fi-alert"></i> There are some errors in your form.</p>
+		</div>
+		<div class="row">
+			<div class="small-10 medium-6 small-centered medium-centered columns">
+				<label>
+					手机号
+					<input type="text" name="passport" placeholder="请输入手机号码" required pattern="number">
+					<span class="form-error">
+						Yo, you had better fill this out, it's required. 而且必须是数字。
+					</span>
+				</label>
+				<label>
+					密码
+					<input type="password" name="password" id="password" placeholder="请输入登录密码" required>
+					<span class="form-error">
+						I'm required!
+					</span>
+				</label>
+				<label>
+					验证码
+					<span class="input-group">
+						<input class="input-group-field" type="number" placeholder="验证码">
+						<span class="input-group-button">
+							<input type="image" src="../../assets/img/saas_hero.png" class="imgButton" value="发送手机验证码">
+						</span>
+					</span>
+				</label>
+				<label>
+					验证码(for Quick Login)
+					<span class="input-group">
+						<input class="input-group-field" type="number" placeholder="验证码">
+						<span class="input-group-button">
+							<input type="button" class="button" value="发送手机验证码">
+						</span>
+					</span>
+				</label>
+			</div>
+		</div>
+
+		<div class="row form-para-note">
+			<div class="small-10 medium-6 small-centered medium-centered columns">
+				<div class="row">
+					<div class="small-6 text-center column">
+						<a href="findPswd.html">找回密码</a>
+					</div>
+					<div class="small-6 text-center column">
+						<a href="register.html">免费注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-center form-submit-wrap">
+			<button class="button large" type="submit" value="Submit">登录</button>
+			<button class="secondary button large" type="reset" value="Reset">重置</button>
+		</div>
+	</form>
+<%- include('../layout/footer') -%>

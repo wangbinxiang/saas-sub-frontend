@@ -1,0 +1,72 @@
+﻿<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a>网站管理</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 自有商品管理
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">自有商品管理</h1>
+
+<div class="row column">
+    <a class="button button-unstyle" data-toggle="newGoodtype-dropdown">添加新商品</a>
+</div>
+
+<div class="dropdown-pane dropdown-pane-lang" id="newGoodtype-dropdown" data-dropdown data-options="closeOnClick: true;">
+    <ul class="no-bullet">
+    <% if(productTypes) { %>
+        <% for(let i in productTypes) { %>
+            <li><a href="/products/add?productTypeId=<%= productTypes[i].id %>"><%= productTypes[i].name %></a></li>
+        <% } %>
+    <% } else { %>
+        <li><a href="/product-types">添加产品分类</a></li>
+    <% } %> 
+    </ul>
+</div>
+
+<div id="productsIndex">
+<div class="row column">
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+            <tr>
+                <th width="100">商品ID</th>
+                <th width="150">缩略图</th>
+                <th>商品名称</th>
+                <th width="150">商品分类</th>
+                <!--<th width="150">自销状态</th>
+                <th width="150">分销状态</th>-->
+                <th width="200">操作</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:goods">
+            <tr>
+                <td data-th="商品ID" data-bind="text: id"></td>
+                <td><img data-bind="attr:{src:logo.url}" class="imgInTable" /></td>
+                <td data-th="商品名称"><a href="" data-bind="attr:{href: '/products/' + id}, text:name"></a></td>
+                <td data-th="商品分类" data-bind="text:cateTitles[category]"></td>
+                <!--<td data-th="自销状态">上架 <button class="button small" onclick="confirm('Are you sure?')">下架</button></td>
+                <td data-th="分销状态">停止 <a class="button small" href="hostCPDistributionLimits.html">分销</a></td>-->
+                <td>
+                    <a data-bind="attr:{href: '/products/' + id + '/prices'}" class="button small">编辑价格</a>
+                    <a data-bind="attr:{href: '/products/' + id + '/edit/'}" class="button small">编辑内容</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="list-button row column">
+    <a class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</a>
+</div>
+</div>
+
+<script>
+    var data = <%- JSON.stringify(products) %>;
+    var cateTitles = <%- JSON.stringify(PRODUCT_CATEGORY_LIST) %>;
+    var pageno = <%= number %>;
+    var isnext = <%= isNext %>;
+</script>
+
+<%- include('../layout/footer') -%>

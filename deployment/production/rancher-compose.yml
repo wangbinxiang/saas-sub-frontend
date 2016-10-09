@@ -1,0 +1,3 @@
+service:
+  upgrade_strategy:
+    start_first: true

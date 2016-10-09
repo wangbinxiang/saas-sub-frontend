@@ -1,0 +1,7 @@
+﻿@charset "UTF-8";
+.masonry-item--index span.span--fix {
+    position:static; padding-bottom:3rem
+}
+.button--fix {
+    position:absolute; right:0; bottom:0;
+}

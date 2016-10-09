@@ -1,0 +1,1 @@
+module.exports = {"2275":{"id":"2275","parentId":"272","name":"\u60e0\u519c\u53bf"},"2276":{"id":"2276","parentId":"272","name":"\u5927\u6b66\u53e3\u533a"},"2277":{"id":"2277","parentId":"272","name":"\u60e0\u519c\u533a"},"2278":{"id":"2278","parentId":"272","name":"\u9676\u4e50\u53bf"},"2279":{"id":"2279","parentId":"272","name":"\u5e73\u7f57\u53bf"}};

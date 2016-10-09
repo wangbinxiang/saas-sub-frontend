@@ -1,0 +1,65 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%= typeof title !== 'undefined'? title: ''%></title>
+        <link rel="icon" href="/img/sa_logo.png" type="image/x-icon" />
+        <link rel="stylesheet" href="/css/app.css" />
+        <link rel="stylesheet" href="/css/appfix.css" />
+    </head>
+    <body>
+        <header class="top-bar" id="headerGlobal">
+            <div class="top-bar-title">
+                <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
+                    <span class="menu-icon dark" data-toggle></span>
+                </span>
+                <strong><a href="/"><img src="/img/sa_logo.png" class="saLogo" /></a></strong>
+                <div class="top-bar-fix">
+                    <ul class="menu">
+                        <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
+                        <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li>
+                        <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>Usernamehere</b><i class="material-icons mi-expand_more"></i></a></li>
+                        <li><a class="cart" href="shoppingCart.html"><i class="material-icons mi-shopping_cart"></i><em>99</em></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+                <a>Logout</a>
+                <a href="/orders">My Orders</a>
+                <a href="userCPAddressbook.html">My Address Book</a>
+                <a href="userCPChangePswd.html">Change Password</a>
+                <!--<hr />
+                <a href="hostCPHomeSlide.html">首页幻灯片管理</a>
+                <a href="hostCPLabels.html">商品关键字管理</a>
+                <a href="hostCPTypes.html">商品分类管理</a>
+                <hr />
+                <a href="hostCPUsers.html">买家管理</a>
+                <a href="hostCPRoles.html">角色管理</a>
+                <a href="hostCPEmployees.html">员工管理</a>
+                <hr />
+                <a href="hostCPGoods.html">自有商品管理</a>
+                <a href="hostCPPurchases.html">采购商品管理</a>
+                <a href="hostCPDistributions.html">分销商品管理</a>
+                <a href="hostCPOrderList.html">订单管理</a>-->
+            </div>
+            <div id="responsive-menu" class="menu-body">
+                <div class="top-bar-left top-bar-left--global">
+                    <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
+                        <!--<li><a href="detail.html" class="highlight">Tours</a></li>
+                        <li><a href="detail_alt.html">Destinations</a></li>
+                        <li><a href="list.html">Flights</a></li>-->
+                        <li><a href="/category">我的商品</a></li>
+                        <li><a href="detail_cn_trip.html">线路(详细)</a></li>
+                        <li><a href="detail_cn.html">食品(详细)</a></li>
+                        <li><a href="host/">Host Link</a></li>
+                        <li><a href="saas/">SAAS Link</a></li>                        
+                        <li><a href="saas_admin/login.html">saas_admin Link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="show-for-small-only small-header-margin-top"></div>
