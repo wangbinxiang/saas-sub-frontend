@@ -165,7 +165,7 @@ export async function detail(ctx, next) {
     let id = ctx.params.id;
     const poductsService = new ProductsService();
     product = await poductsService.get(id);
-
+    console.log(product)
     if (product === null) {
         ctx.status = 404
         await ctx.render('404');

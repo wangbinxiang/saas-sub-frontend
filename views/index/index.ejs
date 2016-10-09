@@ -1,5 +1,5 @@
 <%- include('../layout/header') -%>
-<% if(data["ads"].length > 0) { %>
+<!--% if(data["ads"].length > 0) { %>
 <div class="row expanded column top-carousel">
     <div class="jcarousel jcarousel--home">
         <ul>
@@ -18,9 +18,9 @@
     <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
     <div class="jcarousel-pagination"></div>
 </div>
-<% } %>
+<%% } %-->
 
-<% if(data["lbs"].length > 0) { %>
+<!--% if(data["lbs"].length > 0) { %>
 <div class="hot-bar-wrap clearfix">
     <div class="top-bar hot-bar clearfix">
         <ul class="dropdown menu index" data-dropdown-menu>
@@ -31,9 +31,9 @@
         </ul>
     </div>
 </div>
-<% } %>
+<%% } %-->
 
-<% if(data["hots"].length > 0) { %>
+<!--% if(data["hots"].length > 0) { %>
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
     <% for(var i=0; i<data["hots"].length; i++) { %>
     <div class="column tourboard__title tourboard__title--<%= i %>">
@@ -59,19 +59,45 @@
         <% } %>
     <% } %>    
 </div>
-<% } %>
+<%% } %-->
 
+<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:data">
+    <div class="column">
+        <a href="detail/" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <img src="" />
+            <b></b>
+            <em>
+                <small>STARTS</small>: Tianjin, China<br />
+                <small>End in</small>: Paris, France<br />
+                <small>Days of Tour</small>: 12 Days
+            </em>
+            <span><small>from</small> ￥<strong></strong></span>
+        </a>
+    </div>
+</div>
+
+<!--
 <div class="row column bottom-search">
     <h3>Got no ideal? Find more here</h3>
     <div class="input-group">
         <input class="input-group-field" type="text">
         <div class="input-group-button">
-            <!--<a class="button">Primary Action</a>
+            <!!!--<a class="button">Primary Action</a>
             <a class="dropdown button arrow-only">
                 <span class="show-for-sr">Show menu</span>
-            </a>-->
+            </a>-_-!>
             <input type="submit" class="button" value="Search">
         </div>
     </div>
+</div>-->
+
+<div class="list-button row column">
+    <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
 </div>
+
+<script>
+	var data = <%- JSON.stringify(products) %>;
+    var pageno = <%= number %>;
+    var isnext = <%= isNext %>;
+</script>
 <%- include('../layout/footer') -%>

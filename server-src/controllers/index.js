@@ -194,7 +194,7 @@ export default async(ctx, next) => {
         }]
     }
     await ctx.render('index/index', {
-        title,
+        title, products, isNext, number,
         pageJs,
         data
     })

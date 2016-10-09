@@ -52,6 +52,11 @@ require.ensure([], function(require) {
             $('#priceStat').text($(this).attr('data-price'))
         }
     })
+
+    $('#orderNow').on('click', function(){
+        let ref = 'id=' + id + '&price=' + $('#priceLabels a.checked').index() + '&number=' + $('#orderNumber').val()
+        location.href = '/orders/add?' + ref
+    })
 })
 
 let GoodsModel = function(goods) {

@@ -21,13 +21,13 @@
                 <th width="150">数量</th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: goods">
+        <tbody>
             <tr>
-                <td data-th="产品ID" data-bind="text:id"></td>
-                <td data-th="产品名称" data-bind="text:name"></td>
-                <td data-th="颜色" data-bind="text:sku"></td>
-                <td data-th="单价" data-bind="text:price"></td>
-                <td data-th="数量" data-bind="text:quantity"></td>
+                <td data-th="产品ID"><%= product.id %></td>
+                <td data-th="产品名称"><%= product.name %></td>
+                <td data-th="颜色"><%= priceInfo.title %></td>
+                <td data-th="单价"><%= priceInfo.price %></td>
+                <td data-th="数量"><%= productNum %></td>
             </tr>
         </tbody>
     </table>   
@@ -57,7 +57,7 @@
             </div>-->
         </fieldset>
 
-        <fieldset class="fieldset">
+        <!--<fieldset class="fieldset">
             <legend><h4>支付方式</h4></legend>
             <div class="row">
                 <fieldset class="columns">
@@ -73,12 +73,10 @@
                     </div>
                 </fieldset>
             </div>
-        </fieldset>
+        </fieldset>-->
 
         <div class="row text-right cart-total">
-            商品小计：￥<strong class="stat"><%= data.totalGoods %></strong><br />
-            运费小计：￥<strong class="stat"><%= data.deliveryFee %></strong><br />
-            订单合计：￥<strong class="stat"><%= data.totalGoods + data.deliveryFee %></strong>
+            订单合计：￥<strong class="stat"><%= totalPrice %></strong>
         </div>
 
         <div class="row text-center form-submit-wrap">

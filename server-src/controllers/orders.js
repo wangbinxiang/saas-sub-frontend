@@ -66,8 +66,8 @@ export async function showAddOrder(ctx, next) {
 	        deliveryFee: 100,
 	        step: 1
 	    };
-	    await ctx.render('index/order', {
-	        title,
+	    await ctx.render('index/orderConfirm', {
+	        title, product, priceInfo, totalPrice, productNum,
 	        pageJs,
 	        data
 	    });
