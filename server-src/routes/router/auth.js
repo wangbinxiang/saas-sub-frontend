@@ -34,6 +34,7 @@ router.get('/pay', async (ctx, next) => {
       trade_type: 'JSAPI'
     };
     
+    console.log(order);
 
     let payargs = await new Promise((resolve, reject) => {
         payment.getBrandWCPayRequestParams(order, function(err, payargs){
