@@ -64,31 +64,35 @@ require.ensure([], function(require) {
 })
 
 let ProdModel = function(data){
-    var arrTypes = $.map(types, function(value, index) {
+    var arrData = $.map(data, function(value, index) {
         return [value];
     });
     
     let self = this
-    self.prods = ko.observableArray(data)
+    self.prods = ko.observableArray(arrData)
+    console.log(self.prods())
 
-    self.more = function() {
-        pageno = pageno + 1
-        $.ajax({
-            method: "GET",
-            url: "/product-types?number=" + pageno,
-            dataType: "json"
-        })
-        .done(function(respones) {
-            let types = $.map(respones.productTypes, function(value, index) {
-                return [value];
-            });
-            for(let type of types){
-                self.types.push(type)
-            }
-            self.isNext(respones.moreInfo)
-        })
-    }
+    //self.more = function() {
+    //    pageno = pageno + 1
+    //    $.ajax({
+    //        method: "GET",
+    //        url: "/product-types?number=" + pageno,
+    //        dataType: "json"
+    //    })
+    //    .done(function(respones) {
+    //        let types = $.map(respones.productTypes, function(value, index) {
+    //            return [value];
+    //        });
+    //        for(let type of types){
+    //            self.types.push(type)
+    //        }
+    //        self.isNext(respones.moreInfo)
+    //    })
+    //}
 }
+
+let prodModel = new ProdModel(data)
+ko.applyBindings(prodModel)
 
 require.ensure([], function(require) {
     let imagesLoaded = require('imagesloaded')
