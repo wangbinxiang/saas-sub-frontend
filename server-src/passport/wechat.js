@@ -26,9 +26,9 @@ export default new Strategy({
 
         let openid = profile.openid;
         let nickName = profile.nickname;
-
+        let shopId = 10;
         const memberService = new MemberService();
-        let member = await memberService.wechatLogin(openid, nickName);
+        let member = await memberService.wechatLogin(openid, nickName, shopId);
 
         if (member) {
             return done(null, member);

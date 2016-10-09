@@ -47,7 +47,7 @@ export default async(ctx, next) => {
         }
     }
 
-    console.log(products);
+    // console.log(products);
     // console.log(isNext);
 
     const pageJs = webpackIsomorphicTools.assets().javascript.index;
