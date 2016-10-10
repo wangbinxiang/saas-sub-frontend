@@ -45,7 +45,6 @@ export const PRODUCT_EDIT         = Symbol();
 //删除产品
 export const PRODUCT_DEL          = Symbol();
 //添加产品价格
-
 export const PRODUCT_PRICE_ADD    = Symbol();
 
 
@@ -59,6 +58,7 @@ export const ORDER_ADD            = Symbol();
 export const ORDER_PAY            = Symbol();
 export const ORDER_CONFIRMPAY     = Symbol();
 export const ORDER_GET            = Symbol();
+
 
 
 

@@ -44,7 +44,6 @@ export default class RequestJsonApi {
         return this.promise((resolve, reject) => {
             console.log(that.url);
             console.log(that.data);
-            
             that.client.post(that.url, that.data, that.promiseThunk(resolve, reject));
         });
     }

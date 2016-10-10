@@ -54,10 +54,11 @@ router.get('/wechat/auth', async (ctx, next) => {
 // 	//https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
 
 
-
 // 	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
 // });
 
+// 	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
+// });
 
 // //退出登录
 // router.get('/logout', logout);

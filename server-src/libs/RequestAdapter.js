@@ -14,11 +14,19 @@ export default class RequestAdapter {
         let result = null;
 
         const { header, body } = await this.requestObject.request();
+        console.log(header.statusCode);
+        console.log(body);
+        console.log(this.requestObject.getSuccessCode());
         if (header.statusCode === this.requestObject.getSuccessCode()) {
+            console.log('this.requestObject.getSuccessCode()');
             result = this.translator.toObject(body, this.activeClass);
         } else if (header.statusCode === this.requestObject.noContentCode) {
             result = null;
         } else if (header.statusCode === this.requestObject.getParamsErrorCode()) {
+            console.log('new RequestJsonApiParamsError');
+            console.log(header.statusCode);
+            console.log(this.requestObject.getParamsErrorCode());
+            console.log(header.statusCode === this.requestObject.getParamsErrorCode());
             throw new RequestJsonApiParamsError('request JsonApi no params Error');
         } else {
             throw new Error('Invalid status');

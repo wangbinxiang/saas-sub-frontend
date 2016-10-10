@@ -126,7 +126,6 @@ router.get('/wechat/auth/callback', async (ctx, next) => {
         console.log(err);
         ctx.redirect('/');
     }
-
 });
 
 //退出登录
