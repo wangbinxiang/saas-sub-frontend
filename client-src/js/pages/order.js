@@ -12,7 +12,17 @@ let ConfirmModel = function(data){
     self.save = function(){
         $('#formOrderConfirm').foundation('validateForm');
         if($('[data-invalid]').length === 0){
-            location.href='/order'
+            $.ajax({
+                method: "POST",
+                url: "/orders",
+                data: { price: price, comment: $('#comment').val(), productList: [{productId: prodId, number: productNum, priceIndex: priceOrder}] }
+            })
+            .done(function(respones) {
+                alert('success')
+            })
+            .fail(function(respones){
+                
+            })
         }
         return false
     }

@@ -67,7 +67,7 @@ export async function showAddOrder(ctx, next) {
 	        step: 1
 	    };
 	    await ctx.render('index/orderConfirm', {
-	        title, product, priceInfo, totalPrice, productNum,
+	        title, product, priceInfo, totalPrice, productNum, productId, priceOrder,
 	        pageJs,
 	        data
 	    });
@@ -105,7 +105,6 @@ export async function addOrder(ctx, next) {
 	let result = await orderService.addOrder(userId, shopId, price, comment, productList);
 
 	console.log(result);
-
 
 	ctx.body = result;
 }

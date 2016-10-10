@@ -84,10 +84,7 @@
     "request-json": "^0.6.1",
     "underscore": "^1.8.3",
     "webpack-isomorphic-tools": "^2.5.8",
-<<<<<<< HEAD
     "wechat-pay": "^0.2.4",
-=======
->>>>>>> cb02c74e07006363e1c1a8e7e246084e83df0ef3
     "yayson": "^2.0.1"
   },
   "devDependencies": {

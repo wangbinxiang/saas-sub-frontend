@@ -16,7 +16,7 @@
             <tr>
                 <th width="150">产品ID</th>
                 <th>产品名称</th>
-                <th width="150">颜色</th>
+                <th width="150">规格</th>
                 <th width="150">单价</th>
                 <th width="150">数量</th>
             </tr>
@@ -25,7 +25,7 @@
             <tr>
                 <td data-th="产品ID"><%= product.id %></td>
                 <td data-th="产品名称"><%= product.name %></td>
-                <td data-th="颜色"><%= priceInfo.title %></td>
+                <td data-th="规格"><%= priceInfo.title %></td>
                 <td data-th="单价"><%= priceInfo.price %></td>
                 <td data-th="数量"><%= productNum %></td>
             </tr>
@@ -33,14 +33,14 @@
     </table>   
 
     <form data-abide="ajax" novalidate id="formOrderConfirm">
-        <!--<div data-abide-error class="alert callout alert-form-error" style="display: none;">
+        <div data-abide-error class="alert callout alert-form-error" style="display: none;">
 	        <p class="row column">请填写所有表单内容</p>
         </div>
         <fieldset class="fieldset" id="fieldAddress">
             <legend><h4>配送信息</h4></legend>
             <div>
                 <label>请填写收货人姓名, 联系电话，详细地址和邮政编码
-                    <textarea rows="3" required></textarea>
+                    <textarea rows="3" id="comment"></textarea>
                     <span class="form-error">
 						请填写收货人信息
 					</span>
@@ -51,11 +51,11 @@
                 <input data-bind="attr:{id: id}" type="radio" name="adress">
                 <label for="checkbox12"><b data-bind="text:name">收货人姓名</b>, <span data-bind="text: mobile + ', ' + where + ', ' + address">15012345678, 山西-西安-莲湖区Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</span></label>
             </div>
-            <!- /ko --!!>
+            <!- /ko 
             <div>
                 <button class="button button-unstyle" data-open="editRole" onclick="return false;">添加新地址</button>
-            </div>
-        </fieldset>-->
+            </div>-->
+        </fieldset>
 
         <fieldset class="fieldset">
             <legend><h4>支付方式</h4></legend>
@@ -139,5 +139,9 @@
 </div>
 <script>
     var data = <%- JSON.stringify(data) %>;
+    var price = <%= totalPrice %>;
+    var prodId = <%= productId %>;
+    var priceOrder = <%= priceOrder %>;
+    var productNum = <%= productNum %>;
 </script>
 <%- include('../layout/footer') -%>
