@@ -34,8 +34,7 @@ router.get('/pay', async (ctx, next) => {
 
       console.log(result)
       const poductsService = new ProductsService();
-      let product = await poductsService.get(result.productList.order_product_id);
-
+      let product = await poductsService.get(result.productList.product_id);
       if (product) {
         let openid = ctx.state.user.openId;
         // let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
@@ -70,6 +69,9 @@ router.get('/pay', async (ctx, next) => {
             product
         });
 
+      } else {
+        ctx.status = 404
+        await ctx.render('404');
       }
     } else {
       ctx.status = 404

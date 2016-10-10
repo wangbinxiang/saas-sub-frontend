@@ -27,8 +27,8 @@ router.use('', routerProducts.routes());
 router.use('', orderProducts.routes());
 // router.use('', routerProductTypes.routes());
 // router.use('', routerAttachments.routes());
-
-router.use('', indexRouter.routes());
 router.use('', RouterAuth.routes());
+router.use('', indexRouter.routes());
+
 
 export default router;
