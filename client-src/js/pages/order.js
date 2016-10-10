@@ -19,7 +19,7 @@ let ConfirmModel = function(data){
             })
             .done(function(respones) {
                 alert('下单成功。');
-                location.href = '/pay/?id=' + respones.id;
+                location.href = '/pay?id=' + respones.id;
             })
             .fail(function(respones){
                 
