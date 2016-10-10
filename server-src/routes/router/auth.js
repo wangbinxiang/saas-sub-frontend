@@ -23,10 +23,7 @@ var payment = new Payment(initConfig);
 const router = Router();
 
 
-
-
-
-async function pay (ctx, next) {
+router.get('/pay', async (ctx, next) => {
     const orderId = ctx.query.id;
 
     const orderService = new OrderService();
@@ -79,11 +76,8 @@ async function pay (ctx, next) {
       await ctx.render('404');
     }
 
-}
+});
 
-
-router.get('/pay', pay);
-router.get('/pay2', pay);
 
 
 
