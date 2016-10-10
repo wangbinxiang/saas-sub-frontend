@@ -23,7 +23,10 @@ var payment = new Payment(initConfig);
 const router = Router();
 
 
-router.get('/pay', async (ctx, next) => {
+
+
+
+async function pay (ctx, next) {
     const orderId = ctx.query.id;
 
     const orderService = new OrderService();
@@ -39,7 +42,7 @@ router.get('/pay', async (ctx, next) => {
       if (product) {
         let openid = ctx.state.user.openId;
         // let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
-        console.log(product.prices[result.productList.product_price_index].title);
+        console.log(product.prices);
         var order = {
           body: product.name,//产品名称
           attach: product.prices[result.productList.product_price_index].title,//价格名称
@@ -76,8 +79,11 @@ router.get('/pay', async (ctx, next) => {
       await ctx.render('404');
     }
 
-});
+}
 
+
+router.get('/pay', pay);
+router.get('/pay2', pay);
 
 
 
