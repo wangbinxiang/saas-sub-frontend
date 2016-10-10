@@ -82,6 +82,21 @@ export async function showAddOrder(ctx, next) {
 
 export async function addOrder(ctx, next) {
 
+
+	// ctx.state.user = { 
+	// 	id: '17',
+	// 	cellPhone: '',
+	// 	nickName: '波风皆人',
+	// 	userName: 'GOaC1476033708',
+	// 	status: 0,
+	// 	createTime: 1476033708,
+	// 	updateTime: 1476033708,
+	// 	statusTime: 1476033708,
+	// 	openId: 'osgj-wm-CKTT4K3xJoBoxh78w73w' }
+
+
+
+	// console.log(ctx.state.user);
 	let userId = ctx.state.user.id;
 	let shopId = 10;
 

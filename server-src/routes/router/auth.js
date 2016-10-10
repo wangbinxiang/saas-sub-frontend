@@ -4,6 +4,8 @@ import { showSignUp, showSignIn } from '../../controllers/auth';
 import { Payment } from 'wechat-pay';
 import fs from 'fs';
 import path from 'path';
+import ProductsService from '../../models/application/ProductsService';
+import OrderService from '../../models/application/OrderService';
 
 const p12 = path.resolve(__dirname, '../../../config/apiclient_cert.p12');
 const p12File = fs.readFileSync(p12);
@@ -22,36 +24,57 @@ const router = Router();
 
 
 router.get('/pay', async (ctx, next) => {
-    const openid = ctx.state.user.openId;
+    const orderId = ctx.query.id;
 
-    var order = {
-      body: '1',
-      attach: '2',
-      out_trade_no: 'kfc' + (+new Date),
-      total_fee: 1,//单位为分
-      spbill_create_ip: ctx.ip,
-      openid: openid,
-      trade_type: 'JSAPI'
-    };
-    
-    console.log(order);
+    const orderService = new OrderService();
 
-    let payargs = await new Promise((resolve, reject) => {
-        payment.getBrandWCPayRequestParams(order, function(err, payargs){
-            if (err) {
-                reject(err);
-            } else {
-                resolve(payargs);
-            }
+    let result = await orderService.get(orderId);
+
+    if (result) {
+
+      console.log(result)
+      const poductsService = new ProductsService();
+      let product = await poductsService.get(result.productList.order_product_id);
+
+      if (product) {
+        // let openid = ctx.state.user.openId;
+        let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
+        console.log(product.prices[result.productList.product_price_index].title);
+        var order = {
+          body: product.name,//产品名称
+          attach: product.prices[result.productList.product_price_index].title,//价格名称
+          out_trade_no: 'dsw' + (+new Date),
+          total_fee: result.price * 100,//单位为分
+          spbill_create_ip: ctx.ip,
+          openid: openid,
+          trade_type: 'JSAPI'
+        };
+        
+        console.log(order);
+
+        let payargs = await new Promise((resolve, reject) => {
+            payment.getBrandWCPayRequestParams(order, function(err, payargs){
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(payargs);
+                }
+            });
         });
-    });
 
-    console.log(payargs);
+        console.log(payargs);
 
-    await ctx.render('pay/index', {
-        payargs
-    });
+        await ctx.render('pay/index', {
+            payargs,
+            order: result,
+            product
+        });
 
+      }
+    } else {
+      ctx.status = 404
+      await ctx.render('404');
+    }
 
 });
 
@@ -103,7 +126,6 @@ router.get('/wechat/auth/callback', async (ctx, next) => {
         console.log(err);
         ctx.redirect('/');
     }
-
 
 });
 

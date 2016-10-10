@@ -15,10 +15,11 @@ let ConfirmModel = function(data){
             $.ajax({
                 method: "POST",
                 url: "/orders",
-                data: { price: price, comment: $('#comment').val(), productList: [{productId: prodId, number: productNum, priceIndex: priceOrder}] }
+                data: { price: price, comment: $('#comment').val(), productId: prodId, number: productNum, priceIndex: priceOrder }
             })
             .done(function(respones) {
-                alert('success')
+                alert('下单成功。');
+                location.href = '/pay?id=' + respones.id;
             })
             .fail(function(respones){
                 

@@ -15,7 +15,7 @@ export default class RequestJsonApi {
 
     promiseThunk(resolve, reject) {
         return (err, header, body) => {
-
+            console.log(body);
             if (err) {
                 reject(err);
             } else {
@@ -34,6 +34,7 @@ export default class RequestJsonApi {
     get() {
         const that = this;
         return this.promise((resolve, reject) => {
+
             that.client.get(that.url, that.data, that.promiseThunk(resolve, reject));
         });
     }
@@ -41,6 +42,9 @@ export default class RequestJsonApi {
     post() {
         const that = this;
         return this.promise((resolve, reject) => {
+            console.log(that.url);
+            console.log(that.data);
+            
             that.client.post(that.url, that.data, that.promiseThunk(resolve, reject));
         });
     }
