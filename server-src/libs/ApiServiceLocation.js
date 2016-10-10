@@ -47,3 +47,8 @@ export function memberApiServiceLocation() {
     const memberLocation = 'member';
     return getServiceLcation(memberLocation);
 }
+
+export function orderApiServiceLocation() {
+    const orderLocation = 'order';
+    return getServiceLcation(orderLocation);
+}

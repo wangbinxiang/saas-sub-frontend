@@ -76,3 +76,74 @@ export async function showAddOrder(ctx, next) {
         await ctx.render('404');
 	}
 } 
+
+
+
+
+export async function addOrder(ctx, next) {
+
+	let userId = ctx.state.user.id;
+	let shopId = 10;
+
+	let price = ctx.request.body.price;
+
+	let comment = ctx.request.body.comment;
+
+	// ctx.request.body.productId;
+	// ctx.request.body.number;
+	// ctx.request.body.priceIndex;
+
+
+	const orderService = new OrderService();
+	let productList = [
+		{
+			productId: ctx.request.body.productId,
+			number: ctx.request.body.number,
+			priceIndex: ctx.request.body.priceIndex
+		}
+	];
+	let result = await orderService.addOrder(userId, shopId, price, comment, productList);
+
+	console.log(result);
+
+
+	ctx.body = result;
+}
+
+
+
+export async function get(ctx, next) {
+
+
+    let number =  1;
+
+    let size =  5; 
+
+    let filters = {
+        shopId: 10
+    };
+
+    let pages = {
+        number,
+        size
+    };
+
+
+	const orderService = new OrderService();
+	let result = await orderService.index(filters, pages);
+	// let result = await orderService.get(8);
+	console.log(result);
+	ctx.body = result;
+}
+
+
+export async function pay(ctx, next) {
+
+
+	const orderService = new OrderService();
+	let result = await orderService.pay(7);
+
+	ctx.body = result;
+
+
+}

@@ -1,7 +1,10 @@
 import Router from 'koa-router';
 
 import {
-	showAddOrder
+	showAddOrder,
+	addOrder,
+	get,
+	pay
 } from '../../controllers/orders';
 
 
@@ -14,7 +17,12 @@ router.prefix('/orders');
 //添加路由页面
 router.get('/add', showAddOrder);
 
+router.post('/', addOrder);
 
+
+router.get('/get', get);
+
+router.get('/pay', pay);
 
 
 

@@ -9,7 +9,7 @@ const p12 = path.resolve(__dirname, '../../../config/apiclient_cert.p12');
 const p12File = fs.readFileSync(p12);
 
 var initConfig = {
-  // partnerKey: "<partnerkey>",
+  partnerKey: "HZ0Y76V68V8WMMW6Q5FLQO7FCSW1KUAY",
   appId: "wx73fc850b69d5209f",
   mchId: "1390442102",
   notifyUrl: "http://10.sub.dianshangwan.com/pay/notify",
@@ -25,10 +25,10 @@ router.get('/pay', async (ctx, next) => {
     const openid = ctx.state.user.openId;
 
     var order = {
-      body: '吮指原味鸡 * 1',
-      attach: '{"部位":"三角"}',
+      body: '1',
+      attach: '2',
       out_trade_no: 'kfc' + (+new Date),
-      total_fee: 123.45,
+      total_fee: 1,//单位为分
       spbill_create_ip: ctx.ip,
       openid: openid,
       trade_type: 'JSAPI'

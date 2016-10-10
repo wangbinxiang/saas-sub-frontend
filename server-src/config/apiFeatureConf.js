@@ -52,3 +52,12 @@ export const PRODUCT_PRICE_ADD    = Symbol();
 export const MEMBER_SIGNUP        = Symbol();
 //用户登陆
 export const MEMBER_LOGIN         = Symbol();
+
+
+export const ORDER_ADD            = Symbol();
+export const ORDER_PAY            = Symbol();
+export const ORDER_CONFIRMPAY     = Symbol();
+export const ORDER_GET            = Symbol();
+
+
+
