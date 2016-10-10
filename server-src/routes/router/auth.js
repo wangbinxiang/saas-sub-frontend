@@ -94,6 +94,7 @@ router.post('/signin',
 
 );
 
+<<<<<<< HEAD
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
         let res = await passport.authenticate('wechat')(ctx, next);
@@ -102,6 +103,14 @@ router.get('/wechat/auth/callback', async (ctx, next) => {
         console.log(err);
         ctx.redirect('/');
     }
+=======
+router.get('/wechat/auth', async (ctx, next) => {
+        let res = await passport.authenticate('wechat')(ctx, next);
+        console.log('res');
+        console.log(res);
+        console.log(ctx.status);
+        console.log(ctx.res);
+>>>>>>> cb02c74e07006363e1c1a8e7e246084e83df0ef3
 });
 
 //退出登录

@@ -58,6 +58,7 @@ router.get('/wechat/auth', async (ctx, next) => {
 // 	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
 // });
 
+
 // //退出登录
 // router.get('/logout', logout);
 
