@@ -27,5 +27,13 @@
     
 </script>
 
+<h1 class="row column">订单支付</h1>
+<div class="row column">
+    <div class="callout success">
+        <h4>微信支付 总金额：￥<%= order.price %></h4>
+        <p>产品：<%= product.name %> / 数量：<%= order.productList.number %> / 单价：￥<%= product.prices[order.productList.product_price_index].price %>
+        </p>
+    </div>
+</div>
 
 <%- include('../layout/footer') -%>
