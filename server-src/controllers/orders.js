@@ -8,9 +8,6 @@ export async function showAddOrder(ctx, next) {
 	let priceOrder = ctx.query.price;
 	let productNum = ctx.query.number;
 
-	console.log(productId);
-	console.log(priceOrder);
-	console.log(productNum);
 
 	const orderService = new OrderService();
 
@@ -19,8 +16,6 @@ export async function showAddOrder(ctx, next) {
 	if (result !== null) {
 
 		let { product, priceInfo, totalPrice } = result;
-		console.log(priceInfo);
-		console.log(totalPrice);
 		const title = '订单详情';
 	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
 	    const data = {
