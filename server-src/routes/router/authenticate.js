@@ -34,14 +34,33 @@ router.get('/wechat/auth', async (ctx, next) => {
 	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	ctx.redirect(location);
-})
+});
+
+
+// router.get('/wechat/zhuce', async (ctx, next) => {
+// 	let callbackUrl = 'http://10.sub.dianshangwan.com/wechat/auth/callback';
+// 	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
+// 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
+// 	ctx.redirect(location);
+// });
+
+router.get('/wechat/zhuce/callback', async (ctx, next) => {
+	let code = ctx.query.code;
+	if (code) {
+		let location = config.get('host.zhuce') + '/wechat/auth/callback?code=' + code;
+		ctx.redirect(location);
+	} else {
+		ctx.status = 404
+		await ctx.render('404');
+	}
+});
 
 
 
 
-// router.get('/log', async (ctx, next) => {
-// 	console.log(ctx.query.code);
-// 	console.log(ctx.query.sub);
+router.get('/log', async (ctx, next) => {
+	console.log(ctx.query.code);
+	console.log(ctx.query.sub);
 	
 
 // 	const appId = config.get('wechat.dianshangwan.appID');
@@ -57,8 +76,8 @@ router.get('/wechat/auth', async (ctx, next) => {
 // 	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
 // });
 
-// 	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
-// });
+	ctx.body = { login: 'ok', code: ctx.query.code, sub: ctx.query.sub };
+});
 
 // //退出登录
 // router.get('/logout', logout);

@@ -22,7 +22,7 @@ router.post('/', addOrder);
 
 router.get('/get', get);
 
-router.get('/pay', pay);
+// router.get('/pay', pay);
 
 
 
