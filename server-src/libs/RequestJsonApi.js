@@ -15,7 +15,6 @@ export default class RequestJsonApi {
 
     promiseThunk(resolve, reject) {
         return (err, header, body) => {
-            console.log(body);
             if (err) {
                 reject(err);
             } else {

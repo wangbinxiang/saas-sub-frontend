@@ -6,8 +6,8 @@ import '../../../client-src/js/pages/base.js'
 
 let ConfirmModel = function(data){
     let self = this;
-    self.goods = ko.observableArray(data.goods)
-    self.addresses = ko.observableArray(data.addresses)
+    // self.goods = ko.observableArray(data.goods)
+    // self.addresses = ko.observableArray(data.addresses)
 
     self.save = function(){
         $('#formOrderConfirm').foundation('validateForm');
@@ -30,7 +30,7 @@ let ConfirmModel = function(data){
 }
 
 if($('#orderConfirm').length){
-    let confirmModel = new ConfirmModel(data)
+    let confirmModel = new ConfirmModel();
     ko.applyBindings(confirmModel, document.getElementById('orderConfirm'))
 }
 

@@ -49,6 +49,3 @@ export default new Strategy({
     }
 );
 
-
-
-

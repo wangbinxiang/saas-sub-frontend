@@ -13,13 +13,13 @@ export async function handlerHostToSubId(ctx, next) {
     const hostSplit = ctx.request.host.split('.');
     const subIdList = config.get('subIdList');
     let subId = parseInt(hostSplit[0]);
-    hostSplit[0] = '10';
-    console.log(_.indexOf(subIdList, hostSplit[0]));
+    // hostSplit[0] = '10';
     if (isPositiveInteger(subId) && _.indexOf(subIdList, hostSplit[0]) >= 0) {
         //当前店铺id
         ctx._subId = subId;
         await next();
     } else {
+        console.log('站点id错误');
         ctx.status = 404
         await ctx.render('404')
     }

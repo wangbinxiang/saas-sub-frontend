@@ -38,7 +38,6 @@ router.get('/pay', async (ctx, next) => {
       if (product) {
         let openid = ctx.state.user.openId;
         // let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
-        console.log(product.prices);
         var order = {
           body: product.name,//产品名称
           attach: product.prices[result.productList.product_price_index].title,//价格名称

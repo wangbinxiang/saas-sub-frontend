@@ -15,7 +15,7 @@ export default async(ctx, next) => {
 
     let filters = {
         //userId: ctx._subId,
-        userId: 10,
+        userId: ctx._subId,
         status: 0
     };
 
