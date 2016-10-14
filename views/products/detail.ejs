@@ -24,26 +24,26 @@
         </div>
     </div>
     <div class="large-6 medium-12 columns">
-        <div class="row detailPrice">
-            <div class="medium-12 columns medium-text-left large-text-left">
+        <div class="clearfix detailPrice">
+            <div class="p-margin-bottom lbPrice">
                 单价￥<b class="stat" id="priceStat"><%= product.prices.length > 0 ? product.prices[0].price : '' %></b>
             </div>
-            <div class="row filter-bar filter-bar--sku" id="skuBar">
-                <div class="button-group small single" id="priceLabels">
+            <div class=" filter-bar filter-bar--sku" id="skuBar">
+                <div class="button-group single" id="priceLabels">
                     <% for(let i in product.prices) { %>
                     <a class="button<%= i == 0 ? ' checked' : '' %>" data-price="<%= product.prices[i].price %>"><%= product.prices[i].title %></a>
                     <% } %>
                 </div>
             </div>
-            <div class="row">
-                数量 <input type="number" class="input-unstyle" min="1" value="1" id="orderNumber" />
+            <div class="input-group p-margin-bottom input-group--quantity">
+                <span class="input-group-label">数量</span> 
+                <input type="number" class="input-group-field" min="1" value="1" id="orderNumber" />
             </div>
-            <p class="row"></p>
-            <div class="small-8 small-centered clearfix text-center button-book">
+            <div class="small-12 small-centered large-uncentered clearfix button-book">
                 <button class="expanded large button" id="orderNow">立即订购</button>
             </div>
         </div>
-        <p><%- nl2br(product.feature) %></p>
+        <p class="detailFeature"><%- nl2br(product.feature) %></p>
     </div>
 </div>
 
