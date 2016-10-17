@@ -56,6 +56,17 @@ router.get('/wechat/zhuce/callback', async (ctx, next) => {
 });
 
 
+router.get('/wechat/faqi/callback', async (ctx, next) => {
+	let code = ctx.query.code;
+	if (code) {
+		let location = config.get('host.zhuce') + '/wechat/faqi/callback?code=' + code;
+		ctx.redirect(location);
+	} else {
+		ctx.status = 404
+		await ctx.render('404');
+	}
+});
+
 
 
 router.get('/log', async (ctx, next) => {
