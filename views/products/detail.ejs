@@ -14,8 +14,8 @@
         <div class="jcarousel-wrapper">
             <div class="jcarousel">
                 <ul>
-                    <% for(var i = 0; i < product.slideIds.length; i++) { %>
-                    <li><img src="<%= product.slides[product.slideIds[i]].url %>" /></li>
+                    <% for(let slide of product.slides) { %>
+                    <li><img src="<%= imgHost +  slide %>" /></li>
                     <% } %>
                 </ul>
             </div>
@@ -68,8 +68,8 @@
     <div class="profile-main">
     <% for(var i = 0; i < product.description.length; i++) { %>
         <% if(product.description[i].type == "image"){ %>
-        <img src="<%= product.description[i].value.url %>" />
-        <% } else { %>
+        <img src="<%= imgHost + product.description[i].value.url %>" />
+        <% } else if (product.description[i].type == "text") { %>
         <h6><%= product.description[i].value.title %></h6>
         <p><%- nl2br(product.description[i].value.desc) %></p>
         <% } %>

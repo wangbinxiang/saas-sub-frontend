@@ -4,6 +4,7 @@ import {
     PRODUCT_CATEGORY_LIST
 } from '../config/productConf';
 import nl2br from 'nl2br';
+import config from 'config';
 
 
 /**
@@ -35,13 +36,15 @@ export async function detail(ctx, next) {
 
         const pageJs = webpackIsomorphicTools.assets().javascript.product;
 
+        const imgHost = config.get('qiniu.bucket.subImg.url');
 
         await ctx.render('products/detail', {
             title,
             product,
             pageJs,
             nl2br,
-            subId
+            subId,
+            imgHost
         });
     }
 }

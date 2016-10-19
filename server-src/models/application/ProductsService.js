@@ -27,11 +27,11 @@ export default class ProductsService {
 			
 
 			let productTypeIdList = []
-			let attachmentIdList = [];
-			let logoList = []
+			// let attachmentIdList = [];
+			// let logoList = []
 			for (let i in products) {
 				productTypeIdList.push(products[i].productTypeId);
-				attachmentIdList.push(products[i].logoId);
+				// attachmentIdList.push(products[i].logoId);
 			}
 
 			//获取productType信息
@@ -54,19 +54,19 @@ export default class ProductsService {
 				}
 			}
 
-			//获取封面图片信息
-			if (attachmentIdList && attachmentIdList.length > 0) {
-				// try {
-				attachmentIdList = _.uniq(attachmentIdList);
-				const attachmentAdapter = new AttachmentAdapter();
-				let attachments = await attachmentAdapter.getImage(attachmentIdList, logoWidth, logoHeight, Attachment);
+			// //获取封面图片信息
+			// if (attachmentIdList && attachmentIdList.length > 0) {
+			// 	// try {
+			// 	attachmentIdList = _.uniq(attachmentIdList);
+			// 	const attachmentAdapter = new AttachmentAdapter();
+			// 	let attachments = await attachmentAdapter.getImage(attachmentIdList, logoWidth, logoHeight, Attachment);
 
-				if (attachments !== null) {
-					for (let i in products) {
-						products[i].logo = attachments[products[i].logoId];
-					}
-				}
-			}
+			// 	if (attachments !== null) {
+			// 		for (let i in products) {
+			// 			products[i].logo = attachments[products[i].logoId];
+			// 		}
+			// 	}
+			// }
 
 			//返回 分页 和 Products 数据
 			return {
@@ -103,51 +103,51 @@ export default class ProductsService {
 			//
 			//slides 图片
 
-			let attachmentIdList = [];
-			attachmentIdList = _.concat(attachmentIdList, product.slideIds);
+			// let attachmentIdList = [];
+			// attachmentIdList = _.concat(attachmentIdList, product.slideIds);
 
-			//description图片
+			// //description图片
 
-			if (product.description) {
-				for(let des of product.description) {
-					if (des.type === 'image' && des.value && des.value.id && parseInt(des.value.id) > 0) {
-						attachmentIdList.push(parseInt(des.value.id));
-					}
-				}
-			}
+			// if (product.description) {
+			// 	for(let des of product.description) {
+			// 		if (des.type === 'image' && des.value && des.value.id && parseInt(des.value.id) > 0) {
+			// 			attachmentIdList.push(parseInt(des.value.id));
+			// 		}
+			// 	}
+			// }
 
-			if (attachmentIdList) {
-				attachmentIdList = _.uniq(attachmentIdList);
+			// if (attachmentIdList) {
+			// 	attachmentIdList = _.uniq(attachmentIdList);
 
-				const attachmentAdapter = new AttachmentAdapter();
-				let attachments = await attachmentAdapter.get(attachmentIdList, Attachment);
+			// 	const attachmentAdapter = new AttachmentAdapter();
+			// 	let attachments = await attachmentAdapter.get(attachmentIdList, Attachment);
 
-				if (attachments !== null) {
+			// 	if (attachments !== null) {
 
-					//设置logo图片
-					if (attachments[product.logoId]) {
-						product.logo = attachments[product.logoId];
-					}
-
-
-					//设置幻灯片图片
-					if (product.slideIds) {
-						for(let slideId of product.slideIds) {
-							product.slides[slideId] = attachments[slideId];
-						}
-					}
+			// 		//设置logo图片
+			// 		if (attachments[product.logoId]) {
+			// 			product.logo = attachments[product.logoId];
+			// 		}
 
 
-					if (product.description) {
-						for(let i in product.description) {
-							if (product.description[i].type === 'image' && product.description[i].value && product.description[i].value.id && parseInt(product.description[i].value.id) > 0) {
+			// 		//设置幻灯片图片
+			// 		if (product.slideIds) {
+			// 			for(let slideId of product.slideIds) {
+			// 				product.slides[slideId] = attachments[slideId];
+			// 			}
+			// 		}
 
-								product.description[i].value = attachments[product.description[i].value.id];
-							}
-						}
-					}
-				}
-			}
+
+			// 		if (product.description) {
+			// 			for(let i in product.description) {
+			// 				if (product.description[i].type === 'image' && product.description[i].value && product.description[i].value.id && parseInt(product.description[i].value.id) > 0) {
+
+			// 					product.description[i].value = attachments[product.description[i].value.id];
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 			return product;
 		}
 	}

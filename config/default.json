@@ -33,5 +33,19 @@
   },
   "host": {
     "zhuce": "http://zhuce.dianshangwan.com"
+  },
+  "qiniu": {
+    "accessKey": "4i-VhpjaUerpYaw5_j8JlIyTjGYwxeUDMe5k2qP3",
+    "secretKey": "Ax2usNh4f5Vt1xCOyJP0nltDNR-xk2zE58TWftK7",
+    "bucket": {
+      "subImg": {
+        "name": "image",
+        "url": "http://oew2ozpi2.bkt.clouddn.com/",
+        "style": {
+          "productList": "-productList",
+          "productWaterFall": "-productWaterFall"
+        }
+      }
+    }
   }
 }

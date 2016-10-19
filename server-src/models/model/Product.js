@@ -21,13 +21,11 @@ export default class Product {
 		this.name          = name;
 		this.category      = category;
 		this.feature       = feature;
-		this.logo          = undefined;
-		this.logoId        = logo;
+		this.logo          = logo;
 		this.minPrice      = minPrice;
 		this.maxPrice      = maxPrice;
 		this.description   = description;
-		this.slides        = {};
-		this.slideIds      = slides;
+		this.slides        = slides;
 		this.prices        = prices;
 		this.updateTime    = updateTime;
 		this.createTime    = createTime;

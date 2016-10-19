@@ -28,11 +28,11 @@ export default class IndexService {
 			
 
 			let productTypeIdList = []
-			let attachmentIdList = [];
-			let logoList = []
+			// let attachmentIdList = [];
+			// let logoList = []
 			for (let i in products) {
 				productTypeIdList.push(products[i].productTypeId);
-				attachmentIdList.push(products[i].logoId);
+				// attachmentIdList.push(products[i].logoId);
 			}
 
 			//获取productType信息
@@ -56,17 +56,17 @@ export default class IndexService {
 			}
 
 			//获取封面图片信息
-			if (attachmentIdList && attachmentIdList.length > 0) {
-				attachmentIdList = _.uniq(attachmentIdList);
-				const attachmentAdapter = new AttachmentAdapter();
-				let attachments = await attachmentAdapter.getImage(attachmentIdList, logoWidth, logoHeight, Attachment);
+			// if (attachmentIdList && attachmentIdList.length > 0) {
+			// 	attachmentIdList = _.uniq(attachmentIdList);
+			// 	const attachmentAdapter = new AttachmentAdapter();
+			// 	let attachments = await attachmentAdapter.getImage(attachmentIdList, logoWidth, logoHeight, Attachment);
 
-				if (attachments !== null) {
-					for (let i in products) {
-						products[i].logo = attachments[products[i].logoId];
-					}
-				}
-			}
+			// 	if (attachments !== null) {
+			// 		for (let i in products) {
+			// 			products[i].logo = attachments[products[i].logoId];
+			// 		}
+			// 	}
+			// }
 
 			//返回 分页 和 Products 数据
 			return {

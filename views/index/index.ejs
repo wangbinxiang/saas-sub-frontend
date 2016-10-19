@@ -1,70 +1,10 @@
 <%- include('../layout/header') -%>
-<!--% if(data["ads"].length > 0) { %>
-<div class="row expanded column top-carousel">
-    <div class="jcarousel jcarousel--home">
-        <ul>
-            <% for(var i=0; i<data["ads"].length; i++) { %>
-                <li>
-                    <a href="detail/<%= data["ads"][i].id %>">
-                        <div><img src="<%= data["ads"][i].img %>" /></div>
-                        <b class="lead"><%= data["ads"][i].title %></b>
-                        <span><small>from</small><sup>￥</sup><strong><%= data["ads"][i].price %></strong><i class="fa fa-arrow-circle-o-right"></i></span>
-                    </a>
-                </li>
-			<% } %>		
-        </ul>
-    </div>
-    <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
-    <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
-    <div class="jcarousel-pagination"></div>
-</div>
-<%% } %-->
 
-<!--% if(data["lbs"].length > 0) { %>
-<div class="hot-bar-wrap clearfix">
-    <div class="top-bar hot-bar clearfix">
-        <ul class="dropdown menu index" data-dropdown-menu>
-            <li class="menu-text">关键字目录</li>
-            <% for(var i=0; i<data["lbs"].length; i++) { %>
-                <li><a href="cata/<%= data["lbs"][i].id %>"><%= data["lbs"][i].lb %></a></li>
-			<% } %>
-        </ul>
-    </div>
-</div>
-<%% } %-->
-
-<!--% if(data["hots"].length > 0) { %>
-<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
-    <% for(var i=0; i<data["hots"].length; i++) { %>
-    <div class="column tourboard__title tourboard__title--<%= i %>">
-        <a href="cata/<%= data["hots"][i].id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <h3><%= data["hots"][i].cata %></h3>
-            <cite>(<%= data["hots"][i].total %>)</cite>
-            <i class="material-icons mi-arrow_forward"></i>
-        </a>
-    </div>
-        <% for(var j = 0; j < data["hots"][i].items.length; j++) { %>
-            <div class="column">
-                <a href="detail/<%= data["hots"][i].items[j].id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
-                    <img src="<%= data["hots"][i].items[j].img %>" />
-                    <b><%= data["hots"][i].items[j].title %></b>
-                    <em>
-                        <small>STARTS</small>: Tianjin, China<br />
-                        <small>End in</small>: Paris, France<br />
-                        <small>Days of Tour</small>: 12 Days
-                    </em>
-                    <span><small>from</small> ￥<strong><%= data["hots"][i].items[j].price %></strong></span>
-                </a>
-            </div>
-        <% } %>
-    <% } %>    
-</div>
-<%% } %-->
 
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
     <div class="column">
         <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <img data-bind="attr:{src: logo.url}" />
+            <img data-bind="attr:{src: imgHost + logo + imgStyle }" />
             <b data-bind="text:name"></b>
             <em></em>
             <span><small>最低</small> ￥<strong data-bind="text:minPrice"></strong></span>
@@ -95,5 +35,7 @@
 	var data = <%- JSON.stringify(products) %>;
     var pageno = <%= number %>;
     var isnext = <%= isNext %>;
+    var imgHost = '<%= imgHost %>';
+    var imgStyle = '<%= imgStyle %>';
 </script>
 <%- include('../layout/footer') -%>
