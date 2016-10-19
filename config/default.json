@@ -39,6 +39,7 @@
     "secretKey": "Ax2usNh4f5Vt1xCOyJP0nltDNR-xk2zE58TWftK7",
     "bucket": {
       "subImg": {
+        "name": "image",
         "url": "http://oew2ozpi2.bkt.clouddn.com/",
         "style": {
           "productList": "-productList",
