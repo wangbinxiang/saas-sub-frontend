@@ -70,8 +70,10 @@
         <% if(product.description[i].type == "image"){ %>
         <img src="<%= imgHost + product.description[i].value.url %>" />
         <% } else if (product.description[i].type == "text") { %>
-        <h6><%= product.description[i].value.title %></h6>
-        <p><%- nl2br(product.description[i].value.desc) %></p>
+        <% if(product.description[i].value.title != ''){ %>
+        <h6<% if (product.description[i].value.isAlert) { %> class="alert"<% } %>><%= product.description[i].value.title %></h6>
+        <% } %>
+        <p<% if (product.description[i].value.isAlert) { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc) %></p>
         <% } %>
     <% } %>
     </div>
