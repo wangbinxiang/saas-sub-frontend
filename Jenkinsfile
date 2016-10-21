@@ -4,6 +4,12 @@ node {
     echo 'checkout'
     stage 'test'
     echo 'test'
+    stage '发布候选版本'
+    //
+    sh 'sudo docker login --username=电商湾 --password=Cmu7yJ69hx5VWnu8 --email=41893204@qq.com registry-internal.cn-hangzhou.aliyuncs.com'
+    sh 'sudo docker pull registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend'
+    sh 'sudo docker tag $(sudo docker images |grep \'registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend\'|grep \'latest\'|awk \'{print $3}\') registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend:$(cat ./VERSION)'
+    sh 'sudo docker push registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend:$(cat ./VERSION)'
     stage 'release sandbox'
     dir('deployment/sandbox') {
         sh 'rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_SANDBOX_ACCESS_KEY} --secret-key ${RANCHER_SANDBOX_SECRET_KEY} --verbose -p saas-sub-frontend up -d --upgrade --confirm-upgrade service'

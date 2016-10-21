@@ -7,5 +7,5 @@ service:
   - npm
   - run
   - pm2-docker-sandbox
-  image: registry.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend:0.1.0
+  image: registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend:VERSION
   stdin_open: true
