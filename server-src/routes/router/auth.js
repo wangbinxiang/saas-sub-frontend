@@ -118,7 +118,6 @@ router.post('/signin',
 
 );
 
-
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
         let res = await passport.authenticate('wechat')(ctx, next);
