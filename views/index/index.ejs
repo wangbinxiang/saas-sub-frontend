@@ -1,6 +1,34 @@
 <%- include('../layout/header') -%>
 
 
+
+<% if(data.items.length > 0){ %>
+<div class="row expanded column top-carousel">
+    <div class="jcarousel jcarousel--home">
+        <ul>
+            <% for(let i of data.items) { %>
+			<li>
+                <a href="<%= i.url %>">
+                    <div><img src="<%= i.img %>" /></div>
+                    <b class="lead">
+                        <%= i.title %>
+                    </b>
+                    <span><small>最低</small><sup>￥</sup><strong><%= i.price %></strong><i class="fa fa-arrow-circle-o-right"></i></span>
+                </a>
+            </li>
+			<% } %>
+        </ul>
+    </div>
+    <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
+    <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
+    <div class="jcarousel-pagination"></div>
+</div>
+<% } %>
+
+
+<div class="blk-margin"></div>
+
+
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
     <div class="column">
         <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
