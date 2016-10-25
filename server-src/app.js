@@ -6,7 +6,7 @@ import convert from 'koa-convert'
 import json from 'koa-json'
 import Bodyparser from 'koa-bodyparser'
 import logger from 'koa-logger'
-import koaStatic from 'koa-static-plus'
+import koaStaticCache from 'koa-static-cache';
 import koaOnError from 'koa-onerror'
 import session from 'koa-generic-session';
 // import mysqlSession from 'koa-mysql-session';
@@ -110,16 +110,15 @@ if (__DEVELOPMENT__) {
 };
 
 // static
-app.use(convert(koaStatic(path.join(__dirname, '../client'), {
-  pathPrefix: ''
-})))
+//缓存一个月
+app.use(convert(koaStaticCache(path.join(__dirname, '../client'), { maxAge: 108000 })));
 
 
 //underscore写入全局方法
-app.use( async (ctx, next) => {
-  ctx.state._ = _;
-  await next();
-});
+// app.use( async (ctx, next) => {
+//   ctx.state._ = _;
+//   await next();
+// });
 
 // views
 app.use(views(path.join(__dirname, '../views'), {

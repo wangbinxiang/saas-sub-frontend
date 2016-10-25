@@ -1,6 +1,6 @@
 import config from 'config';
 import _ from 'lodash'
-
+import ShopService from '../models/application/ShopService';
 /**
  * 验证子站id
  * @author wangbinxiang
@@ -12,11 +12,33 @@ import _ from 'lodash'
 export async function handlerHostToSubId(ctx, next) {
     const hostSplit = ctx.request.host.split('.');
     const subIdList = config.get('subIdList');
-    let subId = parseInt(hostSplit[0]);
+    let subId = hostSplit[0];
+
+    const shopService = new ShopService();
+    let shop = await shopService.get(subId);
     // hostSplit[0] = '10';
-    if (isPositiveInteger(subId) && _.indexOf(subIdList, hostSplit[0]) >= 0) {
+    console.log(shop);
+    if (isPositiveInteger(subId) && shop.id === subId) {
         //当前店铺id
         ctx._subId = subId;
+        ctx._shop = shop;
+    
+        let logo = '/img/sa_logo.png';
+        let contactPeoplePhone = shop.contactPeoplePhone? shop.contactPeoplePhone: '';
+        let contactPeopleQQ = shop.contactPeopleQQ? shop.contactPeopleQQ: '';
+        let copyright = shop.contactPeopleQQ? shop.contactPeopleQQ: '复泰科技电商湾';
+        if (shop.logo) {
+            //七牛host
+            const imgHost = config.get('qiniu.bucket.subImg.url');
+            logo = imgHost + shop.logo;
+        }
+
+        ctx.state.shopInfo = {
+            logo,
+            contactPeoplePhone,
+            contactPeopleQQ,
+            copyright
+        }
         await next();
     } else {
         console.log('站点id错误');

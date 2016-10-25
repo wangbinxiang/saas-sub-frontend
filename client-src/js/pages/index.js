@@ -70,7 +70,6 @@ let ProdModel = function(data){
     
     let self = this
     self.prods = ko.observableArray(arrData)
-    console.log(self.prods())
 
     //self.more = function() {
     //    pageno = pageno + 1

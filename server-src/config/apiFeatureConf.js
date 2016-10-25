@@ -61,4 +61,14 @@ export const ORDER_GET            = Symbol();
 
 
 
+export const SHOP_GET             = Symbol();
+
+export const SHOP_SAVE_BASE_INFO  = Symbol();
+
+export const SHOP_SAVE_ABOUT_INFO = Symbol();
+
+export const SHOP_SAVE_NAVIGATION = Symbol();
+
+export const SHOP_SAVE_SLIDES     = Symbol();
+
 

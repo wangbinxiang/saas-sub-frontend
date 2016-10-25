@@ -52,3 +52,8 @@ export function orderApiServiceLocation() {
     const orderLocation = 'order';
     return getServiceLcation(orderLocation);
 }
+
+export function shopApiServiceLocation() {
+    const locationName = 'shop';
+    return getServiceLcation(locationName);
+}
