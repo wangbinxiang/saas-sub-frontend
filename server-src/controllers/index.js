@@ -58,8 +58,42 @@ export default async(ctx, next) => {
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
+    const data = {
+        "items": [{
+            "url": 'http://www.duckduckgo.com',
+            "title": "Tincidunt integer eu",
+            "price": 15783,
+            "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"
+        }, {
+            "url": 'http://www.duckduckgo.com',
+            "title": "Tincidunt integer eu integer eu integer eu",
+            "price": 15784,
+            "img": "/img/170_200/150711-n-ru971-772.jpg"
+        }, {
+            "url": 'http://www.duckduckgo.com',
+            "title": "Tincidunt integer eu",
+            "price": 15785,
+            "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"
+        }, {
+            "url": 'http://www.duckduckgo.com',
+            "title": "Tincidunt integer eu integer eu",
+            "price": 15786,
+            "img": "/img/170_200/ecba5dd0-b6fb-406e-9b6e-08f7fc8ec60d.jpg"
+        }, {
+            "url": 'http://www.duckduckgo.com',
+            "title": "Tincidunt integer eu",
+            "price": 15787,
+            "img": "/img/170_200/city_skyline.jpeg"
+        }, {
+            "url": 'http://www.duckduckgo.com',
+            "title": "Tincidunt integer eu Tincidunt integer eu",
+            "price": 888,
+            "img": "/img/170_200/fcfa8905-7145-4b81-acad-255c13ae0221.jpg"
+        }]
+    }
+
     await ctx.render('index/index', {
-        title,
+        title, data,
         products,
         isNext,
         number,
