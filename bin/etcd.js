@@ -7,6 +7,7 @@ if (process.env.ETCD_ENV) {
     // var etcdHost = 'http://121.199.48.91:2379'; //
     var etcdAttachment;
     var etcdProduct;
+    var etcdShop;
     var etcdMemcacheHost;
     var etcdSubIdList;
 
@@ -27,6 +28,7 @@ if (process.env.ETCD_ENV) {
     if (process.env.ETCD_ENV === 'production') {
         etcdAttachment = '/saas/production/services/attachment/url';
         etcdProduct = '/saas/production/services/product/url';
+        etcdShop = '/saas/production/services/shop/url';
         etcdMemcacheHost = '/saas/production/frontend/memcached/host';
         etcdSubIdList = '/saas/production/frontend/subIdList';
 
@@ -38,6 +40,7 @@ if (process.env.ETCD_ENV) {
     } else if (process.env.ETCD_ENV === 'sandbox') {
         etcdAttachment = '/saas/sandbox/services/attachment/url';
         etcdProduct = '/saas/sandbox/services/product/url';
+        etcdShop = '/saas/sandbox/services/shop/url';
         etcdMemcacheHost = '/saas/sandbox/frontend/memcached/host';
         etcdSubIdList = '/saas/sandbox/frontend/subIdList';
     }
@@ -46,6 +49,7 @@ if (process.env.ETCD_ENV) {
 
     var attachmentUrl = etcd.getSync(etcdAttachment);
     var productUrl = etcd.getSync(etcdProduct);
+    var shopUrl = etcd.getSync(etcdShop);
     var memcacheHost = etcd.getSync(etcdMemcacheHost);
     var subIdList = etcd.getSync(etcdSubIdList);
 
@@ -53,6 +57,7 @@ if (process.env.ETCD_ENV) {
 
     attachmentUrl = attachmentUrl.body.node.value;
     productUrl = productUrl.body.node.value;
+    shopUrl = shopUrl.body.node.value;
     memcacheHost = memcacheHost.body.node.value;
     subIdList = subIdList.body.node.value.split(',');
 
@@ -83,7 +88,8 @@ if (process.env.ETCD_ENV) {
     var obj = {
         "apiServiceLocation": {
             "attachment": attachmentUrl,
-            "product": productUrl
+            "product": productUrl,
+            "shop": shopUrl
         },
         "memcache": {
             "host": memcacheHost,
