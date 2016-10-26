@@ -61,7 +61,7 @@ export default async(ctx, next) => {
 
     //幻灯片
     let slidesData = [];
-    if (ctx._shop.slides) {
+    if (ctx._shop.slides && ctx._shop.slides.length) {
         console.log(ctx._shop.slides);
         const poductService = new ProductService();
         let products = await poductService.get(ctx._shop.slides, ctx._subId);
