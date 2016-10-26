@@ -65,7 +65,6 @@ export default async(ctx, next) => {
         console.log(ctx._shop.slides);
         const poductService = new ProductService();
         let products = await poductService.get(ctx._shop.slides, ctx._subId);
-        console.log(products);
         if (products) {
             for (let i in products) {
                 slidesData.push({
