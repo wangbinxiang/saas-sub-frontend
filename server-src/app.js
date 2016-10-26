@@ -125,21 +125,17 @@ app.use(views(path.join(__dirname, '../views'), {
   extension: 'ejs'
 }))
 
+
 // 500 error
 app.use(convert(koaerro({
   engine: 'ejs',
   template: 'views/500.ejs'
 })));
-
 
 import { handlerHostToSubId } from './middlewares/handlerHostToSubId';
 app.use(handlerHostToSubId);
 
-// 500 error
-app.use(convert(koaerro({
-  engine: 'ejs',
-  template: 'views/500.ejs'
-})));
+
 
 // response router
 // app.use(async (ctx, next) => {

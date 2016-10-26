@@ -62,8 +62,10 @@ export default async(ctx, next) => {
     //幻灯片
     let slidesData = [];
     if (ctx._shop.slides) {
+        console.log(ctx._shop.slides);
         const poductService = new ProductService();
         let products = await poductService.get(ctx._shop.slides, ctx._subId);
+        console.log(products);
         if (products) {
             for (let i in products) {
                 slidesData.push({
@@ -75,8 +77,6 @@ export default async(ctx, next) => {
             }
         }
     }
-
-    console.log(slidesData);
 
     await ctx.render('index/index', {
         title,

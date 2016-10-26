@@ -1,14 +1,14 @@
     <footer class="footer-global">
         <div class="row helpWay column">
-            <% if (shopInfo.contactPeoplePhone) { %>
+            <% if (typeof shopInfo !== 'undefined' && shopInfo.contactPeoplePhone) { %>
             <div class="medium-6 columns"><i class="material-icons mi-call"></i> <b><%= shopInfo.contactPeoplePhone %></b></div>
             <% } %>
-            <% if (shopInfo.contactPeopleQQ) { %>
+            <% if (typeof shopInfo !== 'undefined' && shopInfo.contactPeopleQQ) { %>
             <div class="medium-6 columns"><i class="material-icons">headset_mic</i> <b><%= shopInfo.contactPeopleQQ %></b></div>
             <% } %>
         </div>
         <div class="row text">
-            2016 &copy; <%= shopInfo.copyright %>
+            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %>
             <br />Power by <a>dianshangwan.com</a>
         </div>
     </footer>

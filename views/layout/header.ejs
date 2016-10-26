@@ -15,7 +15,7 @@
                 <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
                     <span class="menu-icon dark" data-toggle></span>
                 </span>
-                <strong><a href="/"><img src="<%= shopInfo.logo %>" class="saLogo" /></a></strong>
+                <strong><a href="/"><img src="<%= typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
                 <div class="top-bar-fix">
                     <ul class="menu">
                         <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
