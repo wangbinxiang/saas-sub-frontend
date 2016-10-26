@@ -1,15 +1,18 @@
 import IndexService from '../models/application/IndexService';
+import ProductService from '../models/application/ProductsService';
 import config from 'config';
 
 
 export default async(ctx, next) => {
     const title = '首页';
 
-    if (ctx.isAuthenticated()) {
-        console.log('isAuthenticated');
-        console.log(ctx.state.user);
-        // ctx.logout();
-    }
+    // if (ctx.isAuthenticated()) {
+    //     console.log('isAuthenticated');
+    //     console.log(ctx.state.user);
+    //     // ctx.logout();
+    // }
+
+
 
     let number = ctx.query.number ? ctx.query.number : 1;
 
@@ -26,8 +29,6 @@ export default async(ctx, next) => {
         size
     };
 
-    let logoWidth = 1000;
-    let logiHeight = 666;
 
     let products = null;
 
@@ -38,7 +39,7 @@ export default async(ctx, next) => {
     let result = await indexService.index(filters, {
         number,
         size
-    }, logoWidth, logiHeight);
+    });
 
     if (result !== null) {
         let page = result.page;
@@ -49,6 +50,8 @@ export default async(ctx, next) => {
         }
     }
 
+
+
     // console.log(products);
     // console.log(isNext);
 
@@ -58,42 +61,26 @@ export default async(ctx, next) => {
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
-    const data = {
-        "items": [{
-            "url": 'http://www.duckduckgo.com',
-            "title": "Tincidunt integer eu",
-            "price": 15783,
-            "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"
-        }, {
-            "url": 'http://www.duckduckgo.com',
-            "title": "Tincidunt integer eu integer eu integer eu",
-            "price": 15784,
-            "img": "/img/170_200/150711-n-ru971-772.jpg"
-        }, {
-            "url": 'http://www.duckduckgo.com',
-            "title": "Tincidunt integer eu",
-            "price": 15785,
-            "img": "/img/170_200/60dd7658-702b-4787-bc09-4c3a33bf831b.jpg"
-        }, {
-            "url": 'http://www.duckduckgo.com',
-            "title": "Tincidunt integer eu integer eu",
-            "price": 15786,
-            "img": "/img/170_200/ecba5dd0-b6fb-406e-9b6e-08f7fc8ec60d.jpg"
-        }, {
-            "url": 'http://www.duckduckgo.com',
-            "title": "Tincidunt integer eu",
-            "price": 15787,
-            "img": "/img/170_200/city_skyline.jpeg"
-        }, {
-            "url": 'http://www.duckduckgo.com',
-            "title": "Tincidunt integer eu Tincidunt integer eu",
-            "price": 888,
-            "img": "/img/170_200/fcfa8905-7145-4b81-acad-255c13ae0221.jpg"
-        }]
+    //幻灯片
+    let slidesData = [];
+    if (ctx._shop.slides) {
+        const poductService = new ProductService();
+        let products = await poductService.get(ctx._shop.slides, ctx._subId);
+        if (products) {
+            for (let i in products) {
+                slidesData.push({
+                    "url": '/products/' + products[i].id,
+                    "title": products[i].name,
+                    "price": products[i].minPrice,
+                    "img": imgHost + products[i].logo
+                });
+            }
+        }
     }
 
     await ctx.render('index/index', {
-        title, data,
+        title,
+        slidesData,
         products,
         isNext,
         number,

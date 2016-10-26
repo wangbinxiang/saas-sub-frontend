@@ -2,11 +2,11 @@
 
 
 
-<% if(data.items.length > 0){ %>
+<% if(slidesData.length > 0){ %>
 <div class="row expanded column top-carousel">
     <div class="jcarousel jcarousel--home">
         <ul>
-            <% for(let i of data.items) { %>
+            <% for(let i of slidesData) { %>
 			<li>
                 <a href="<%= i.url %>">
                     <div><img src="<%= i.img %>" /></div>

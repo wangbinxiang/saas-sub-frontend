@@ -17,7 +17,6 @@ export async function handlerHostToSubId(ctx, next) {
     const shopService = new ShopService();
     let shop = await shopService.get(subId);
     // hostSplit[0] = '10';
-    console.log(shop);
     if (isPositiveInteger(subId) && shop.id === subId) {
         //当前店铺id
         ctx._subId = subId;
@@ -41,7 +40,6 @@ export async function handlerHostToSubId(ctx, next) {
         }
         await next();
     } else {
-        console.log('站点id错误');
         ctx.status = 404
         await ctx.render('404')
     }

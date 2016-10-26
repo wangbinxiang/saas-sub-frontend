@@ -119,3 +119,25 @@ export function jsonApiGetUrl(baseUrl, idList, { filters, pages }) {
     return buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl);
 }
 
+/**
+ * 检查资源是否是该拥有者的
+ * @author wangbinxiang
+ * @date   2016-10-26T13:25:21+0800
+ * @param  { object }                 resources   资源
+ * @param  { string }                 checkTarget 检查目标
+ * @param  { int }                 owner       拥有者数据
+ * @param  { bool }                isList      是否是数据列表
+ * @return { bool }                            返回是否是该拥有者的
+ */
+export function checkResourcesOwner(resources, checkTarget, owner, isList) {
+    if (isList) {
+        for(let i in resources) {
+            if (resources[i][checkTarget] !== owner) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return resources[checkTarget] === owner;
+    }
+}

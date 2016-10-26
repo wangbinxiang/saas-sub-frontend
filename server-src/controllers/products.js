@@ -20,14 +20,12 @@ export async function detail(ctx, next) {
     ctx.params.id;
 
     let product;
-    console.log(ctx._subId);
     let subId = ctx._subId;
     // try {
     let id = ctx.params.id;
     const poductsService = new ProductsService();
-    product = await poductsService.get(id);
-    console.log(product);
-    if (product === null || parseInt(product.userId) !== subId) {
+    product = await poductsService.get(id, subId);
+    if (product === null) {
         ctx.status = 404
         await ctx.render('404');
     } else {
