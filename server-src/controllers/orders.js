@@ -112,3 +112,46 @@ export async function pay(ctx, next) {
 
 
 }
+
+
+/**
+ * 订单列表
+ * @author wangbinxiang
+ * @date   2016-10-26T13:31:07+0800
+ * @param  {[type]}                 ctx  [description]
+ * @param  {Function}               next [description]
+ * @return {[type]}                      [description]
+ */
+export async function index(ctx, next) {
+    const title = '订单管理'
+    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+    let data = [
+        {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974},
+        {id:2233232, status:'已完成', payment:'微信支付', total:233232, userid:15023568974},
+        {id:2233232, status:'已完成', payment:'微信支付', total:233232, userid:15023568974}
+    ]
+    let isNext = true
+    let pageNo = 0
+    await ctx.render('orders/index', {
+        title, pageJs, data, isNext, pageNo
+	});
+}
+
+export async function detail(ctx, next) {
+    const title = '订单管理'
+    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+    let data = {
+        id:212233232,
+        status:'等待支付',
+        goods:[
+            {id:2233232, title:'This is longer content Donec id elit non mi porta gravida at eget metus.', sku:'red', price:233232, qty:3},
+                {id:2233233, title:'This is longer content Donec id elit non mi porta gravida at eget metus.', sku:'green', price:233232, qty:3},
+                {id:2233234, title:'This is longer content Donec id elit non mi porta gravida at eget metus.', sku:'blue', price:233232, qty:3}
+        ],
+        comment:'Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.',
+        total:2123432
+    }
+    await ctx.render('orders/detail', {
+        title, pageJs, data
+	});
+}

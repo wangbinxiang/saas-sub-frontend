@@ -45,7 +45,7 @@ if($('#orderDetail').length){
     ko.applyBindings(orderModel, document.getElementById('orderDetail'))
 }
 
-let OrdersModel = function(data){
+let OrderssModel = function(data){
     let self = this;
     self.orders = ko.observableArray(data.orders)
 
@@ -63,6 +63,41 @@ let OrdersModel = function(data){
 }
 
 if($('#listOrders').length){
-    let ordersModel = new OrdersModel(orders) 
+    let ordersModel = new OrderssModel(orders) 
     ko.applyBindings(ordersModel, document.getElementById('listOrders'))
+}
+
+let OrdersModel = function(orders){
+    let self = this
+    self.orders = ko.observableArray(orders)
+    self.isnext = isNext
+
+    self.more = function(){
+        $('#moreOrders').attr('disabled', true)
+        pageNo += 1
+        $.ajax({
+            method: "POST",
+            url: "/orders/" + pageNo,
+        })
+        .done(function(respones) {
+            self.orders.push(respones.orders)
+            self.isnext = respones.isNext
+        })
+        .fail(function(response){
+            //alert('商品ID不存在!')
+            let data = [
+                {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974},
+                {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974},
+                {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974}
+            ]
+            for(let i of data){
+                self.orders.push(i)
+            }
+            $('#moreOrders').attr('disabled', false)
+        })
+    }
+}
+if($('#ordersWrap').length){
+    let orderModel = new OrdersModel(data);
+    ko.applyBindings(orderModel, document.getElementById('ordersWrap'));
 }

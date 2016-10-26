@@ -1,0 +1,104 @@
+﻿<%- include('../layout/header') -%>
+
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">网站管理</a></li>
+        <li><a href="/orders">用户订单</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 订单详情
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">订单详情 No.<%= data.id %></h1>
+
+<!-- <div class="row block-margin-bottom">
+    <div class="workflow-wrap">
+        <div class="workflow-bar prec1"></div>
+        <ol class="workflow-label">
+            <li class="lb passed"><b><s></s></b>提交订单</li>
+            <li class="lb passed"><b><s></s></b>支付订单</li>
+            <li class="lb"><b><s></s></b>等待收货</li>
+            <li class="lb"><b><s></s></b>完成</li>
+        </ol>
+    </div>
+</div> -->
+
+<% if(data.status == "等待支付"){ %>
+
+<div class="row column">
+    <div class="callout alert">
+        <h4>等待用户完成订单支付！</h4>
+        <p>订购时间 2016-12-12 13:30:30。</p>
+    </div>
+</div>
+<div class="row text-center form-submit-wrap">
+    <a class="button large" href="/orders/pay">支付订单</a>
+</div>
+
+<% } else { %>
+
+<div class="row column">
+    <div class="callout success">
+        <h4>订单已完成配送！</h4>
+        <p>订购时间 2016-12-12 13:30:30。</p>
+    </div>
+</div>
+
+<% } %>
+
+
+
+<div class="row column">
+    <table class="stack stack--small hover listCart tableList">
+        <thead>
+			<tr>
+                <th width="150">产品ID</th>
+                <th>产品名称</th>
+                <th width="150">规格</th>
+                <th width="150">单价</th>
+                <th width="150">数量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i of data.goods){ %>
+			<tr>
+                <td data-th="产品ID"><%= i.id %></td>
+                <td data-th="产品名称"><%= i.title %></td>
+                <td data-th="规格"><%= i.sku %></td>
+                <td data-th="单价">￥<%= i.price %></td>
+                <td data-th="数量"><%= i.qty %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>   
+
+    <form data-abide novalidate>
+        <div data-abide-error class="alert callout" style="display: none;">
+            <p><i class="fi-alert"></i> There are some errors in your form.</p>
+        </div>
+        <fieldset class="fieldset">
+            <legend><h4>客户留言</h4></legend>
+            <div class="row">
+                <div class="small-12 columns">
+                    <label>
+                        <%= data.comment %>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend><h4>支付方式</h4></legend>
+            <div class="row">
+                <fieldset class="columns">
+                    <label for="pokemonRed">微信支付</label>
+                </fieldset>
+            </div>
+        </fieldset>
+    <div class="row text-right cart-total">
+        订单合计：￥<strong class="stat"><%= data.total %></strong>
+    </div>
+</div>
+
+<%- include('../layout/footer') -%>
