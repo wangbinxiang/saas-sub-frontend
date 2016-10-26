@@ -14,3 +14,6 @@
         min-height: 3em;
     }
 }
+.top-carousel .jcarousel--home img {
+    min-height:100%;
+}
