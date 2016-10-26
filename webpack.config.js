@@ -71,7 +71,8 @@ var config = {
         loader: 'babel',
         exclude: /node_modules/,
         query: { compact: false }
-      }
+      },
+      { test: /\.css?$/, loader: 'css-loader' }
     ]
   }
 };

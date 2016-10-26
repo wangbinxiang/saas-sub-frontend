@@ -14,7 +14,7 @@ import routerProducts from './router/products';
 
 //订单路由
 import orderProducts from './router/order';
-
+//import routerOrders from './router/orders';
 import indexRouter from './router/index';
 import RouterAuth from './router/auth'
 
@@ -29,6 +29,7 @@ router.use('', orderProducts.routes());
 // router.use('', routerAttachments.routes());
 router.use('', RouterAuth.routes());
 router.use('', indexRouter.routes());
+//router.use('', routerOrders.routes());
 
 
 export default router;

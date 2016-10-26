@@ -1,5 +1,5 @@
 import ShopAdapter from '../adapter/ShopAdapter';
-import ProductAdapter from '../adapter/productAdapter';
+import ProductAdapter from '../adapter/ProductAdapter';
 import Shop from '../model/Shop';
 import Product from '../model/Product';
 
