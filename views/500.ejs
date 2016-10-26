@@ -1,6 +1,21 @@
 <%- include('./layout/header') -%>
   <h1 class="row column user-margin">错误500</h1>
     <div data-abide-error class="alert callout alert-form-error">
-        <p class="row column">We're sorry, but something went wrong. <br />If you are the application owner check the logs for more information.</p>
+        <p class="row column">诶？出现了一些意想不到的错误。。。。</p>
     </div>
+
+    <% if (env !== 'production') { %>
+          <h2>Message:</h2>
+          <pre>
+            <code>
+    	<%= error %>
+            </code>
+          </pre>
+          <h2>Stack:</h2>
+          <pre>
+            <code>
+    	<%= stack %>
+            </code>
+          </pre>
+    <% } %>
 <%- include('./layout/footer') -%>

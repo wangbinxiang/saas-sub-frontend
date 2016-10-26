@@ -12,8 +12,6 @@ export default async(ctx, next) => {
     //     // ctx.logout();
     // }
 
-
-
     let number = ctx.query.number ? ctx.query.number : 1;
 
     let size = ctx.query.size ? ctx.query.size : 500;
@@ -77,6 +75,8 @@ export default async(ctx, next) => {
             }
         }
     }
+
+    console.log(slidesData);
 
     await ctx.render('index/index', {
         title,

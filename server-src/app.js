@@ -7,7 +7,7 @@ import json from 'koa-json'
 import Bodyparser from 'koa-bodyparser'
 import logger from 'koa-logger'
 import koaStaticCache from 'koa-static-cache';
-import koaOnError from 'koa-onerror'
+import koaerro from 'koa-error';
 import session from 'koa-generic-session';
 // import mysqlSession from 'koa-mysql-session';
 import memcacheSession from 'koa-memcached';
@@ -125,15 +125,21 @@ app.use(views(path.join(__dirname, '../views'), {
   extension: 'ejs'
 }))
 
+// 500 error
+app.use(convert(koaerro({
+  engine: 'ejs',
+  template: 'views/500.ejs'
+})));
+
+
 import { handlerHostToSubId } from './middlewares/handlerHostToSubId';
 app.use(handlerHostToSubId);
 
 // 500 error
-koaOnError(app, {
+app.use(convert(koaerro({
+  engine: 'ejs',
   template: 'views/500.ejs'
-})
-
-
+})));
 
 // response router
 // app.use(async (ctx, next) => {
@@ -142,11 +148,14 @@ koaOnError(app, {
 import router from './routes/router';
 app.use(router.routes()).use(router.allowedMethods());
 
+
+
 // 404
 app.use(async (ctx) => {
   ctx.status = 404
   await ctx.render('404')
 })
+
 
 // error logger
 app.on('error', async (err, ctx) => {

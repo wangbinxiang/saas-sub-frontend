@@ -25,7 +25,7 @@ export async function handlerHostToSubId(ctx, next) {
         let logo = '/img/sa_logo.png';
         let contactPeoplePhone = shop.contactPeoplePhone? shop.contactPeoplePhone: '';
         let contactPeopleQQ = shop.contactPeopleQQ? shop.contactPeopleQQ: '';
-        let copyright = shop.contactPeopleQQ? shop.contactPeopleQQ: '复泰科技电商湾';
+        let copyright = shop.contactPeopleQQ? shop.copyright: '复泰科技电商湾';
         if (shop.logo) {
             //七牛host
             const imgHost = config.get('qiniu.bucket.subImg.url');
