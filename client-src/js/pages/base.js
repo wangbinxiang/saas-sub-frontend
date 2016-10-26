@@ -5,6 +5,7 @@ if (module.hot) {
 import 'foundation-sites'
 $(document).foundation();
 
+//import 'jquery-touchswipe'
 
 $('#topBarSearch').click(function () {
     if (!Foundation.MediaQuery.atLeast('medium')) {
