@@ -12,6 +12,8 @@
       "initialDays": 1
     }
   },
+  "hostMapping": {
+  },
   "apiServiceLocation": {
     "attachment": "http://121.199.20.221:8001",
     "product": "http://121.199.48.143:8002",
@@ -25,7 +27,6 @@
   },
   "cookieExpired": 86400000,
   "port": 3010,
-  "subIdList": ["1", "10", "10001", "10002", "10003"],
   "wechat": {
     "dianshangwan": {
       "appID": "wx73fc850b69d5209f",

@@ -11,12 +11,15 @@ import ShopService from '../models/application/ShopService';
  */
 export async function handlerHostToSubId(ctx, next) {
 
-    console.log(ctx.hostname);
     console.log(ctx.host);
 
+    const hostMapping = config.get('hostMapping');
+    console.log(hostMapping);
+    console.log(hostMapping[ctx.host]);
+
     let subId;
-    if (ctx.host === 'www.yundianshang.cc' || ctx.host === 'yundianshang.cc') {
-        subId = '10001';
+    if (hostMapping && hostMapping[ctx.host]) {
+        subId = hostMapping[ctx.host];
     } else {
         const hostSplit = ctx.host.split('.');
         subId = hostSplit[0];

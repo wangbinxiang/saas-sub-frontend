@@ -3,13 +3,13 @@ var jsonfile = require('jsonfile');
 
 //配置docker内网数据j接口
 if (process.env.ETCD_ENV) {
-    var etcdHost = 'http://etcd.etcd-ha:2379'; //'http://120.25.168.230:2379'; //
-    // var etcdHost = 'http://121.199.48.91:2379'; //
+    // var etcdHost = 'http://etcd.etcd-ha:2379'; //'http://120.25.168.230:2379'; //
+    var etcdHost = 'http://121.199.48.91:2379'; //
     var etcdAttachment;
     var etcdProduct;
     var etcdShop;
     var etcdMemcacheHost;
-    var etcdSubIdList;
+    var etcdHostMapping;
 
     var etcdQiniuAccessKey;
     var etcdQiniuSecretKey;
@@ -30,7 +30,7 @@ if (process.env.ETCD_ENV) {
         etcdProduct = '/saas/production/services/product/url';
         etcdShop = '/saas/production/services/shop/url';
         etcdMemcacheHost = '/saas/production/frontend/memcached/host';
-        etcdSubIdList = '/saas/production/frontend/subIdList';
+        etcdHostMapping = '/saas/production/frontend/hostMapping';
 
         etcdQiniuAccessKey = '/saas/production/qiniu/accesskey';
         etcdQiniuSecretKey = '/saas/production/qiniu/secretkey';
@@ -42,7 +42,7 @@ if (process.env.ETCD_ENV) {
         etcdProduct = '/saas/sandbox/services/product/url';
         etcdShop = '/saas/sandbox/services/shop/url';
         etcdMemcacheHost = '/saas/sandbox/frontend/memcached/host';
-        etcdSubIdList = '/saas/sandbox/frontend/subIdList';
+        etcdHostMapping = '/saas/sandbox/frontend/hostMapping';
     }
 
     var etcd = new Etcd(etcdHost);
@@ -51,7 +51,7 @@ if (process.env.ETCD_ENV) {
     var productUrl = etcd.getSync(etcdProduct);
     var shopUrl = etcd.getSync(etcdShop);
     var memcacheHost = etcd.getSync(etcdMemcacheHost);
-    var subIdList = etcd.getSync(etcdSubIdList);
+    var hostMapping = etcd.getSync(etcdHostMapping);
 
     
 
@@ -59,7 +59,7 @@ if (process.env.ETCD_ENV) {
     productUrl = productUrl.body.node.value;
     shopUrl = shopUrl.body.node.value;
     memcacheHost = memcacheHost.body.node.value;
-    subIdList = subIdList.body.node.value.split(',');
+    hostMapping = JSON.parse(hostMapping.body.node.value);
 
 
     if (process.env.ETCD_ENV === 'production') {
@@ -86,6 +86,7 @@ if (process.env.ETCD_ENV) {
 
     var file = './config/production.json';
     var obj = {
+        "hostMapping": hostMapping,
         "apiServiceLocation": {
             "attachment": attachmentUrl,
             "product": productUrl,
@@ -95,7 +96,6 @@ if (process.env.ETCD_ENV) {
             "host": memcacheHost,
             "port": 11211
         },
-        "subIdList": subIdList,
         "qiniu": {
             "accessKey": qiniuAccessKey,
             "secretKey": qiniuSecretKey,
