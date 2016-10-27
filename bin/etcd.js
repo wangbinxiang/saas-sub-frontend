@@ -3,8 +3,8 @@ var jsonfile = require('jsonfile');
 
 //配置docker内网数据j接口
 if (process.env.ETCD_ENV) {
-    // var etcdHost = 'http://etcd.etcd-ha:2379'; //'http://120.25.168.230:2379'; //
-    var etcdHost = 'http://121.199.48.91:2379'; //
+    var etcdHost = 'http://etcd.etcd-ha:2379'; //'http://120.25.168.230:2379'; //
+    // var etcdHost = 'http://121.199.48.91:2379'; //
     var etcdAttachment;
     var etcdProduct;
     var etcdShop;
