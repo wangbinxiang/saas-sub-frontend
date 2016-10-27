@@ -1,6 +1,7 @@
 import IndexService from '../models/application/IndexService';
-import ProductService from '../models/application/ProductsService';
+import ProductService from '../models/application/ProductService';
 import config from 'config';
+import _ from 'lodash';
 
 
 export default async(ctx, next) => {
@@ -58,10 +59,9 @@ export default async(ctx, next) => {
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-
     //幻灯片
     let slidesData = [];
-    if (ctx._shop.slides && ctx._shop.slides.length) {
+    if (ctx._shop.slides && _.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
         console.log(ctx._shop.slides);
         const poductService = new ProductService();
         let products = await poductService.get(ctx._shop.slides, ctx._subId);

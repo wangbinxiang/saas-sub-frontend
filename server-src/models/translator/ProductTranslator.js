@@ -26,7 +26,8 @@ export default class ProductTranslator extends Translator {
 
         let user        = bodyReader.value('users');
         let productType = bodyReader.value('productTypes');
+        let snapshots   = bodyReader.value('snapshots');
 
-        return { id, name, category, feature, logo, minPrice, maxPrice, description, slides, prices, updateTime, createTime, statusTime, status, user, productType};
+        return { id, name, category, feature, logo, minPrice, maxPrice, description, slides, prices, updateTime, createTime, statusTime, status, user, productType, snapshots};
     }
 }

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /**
  * json api body 读取数据类
  */
@@ -6,7 +8,6 @@ export default class JsonApiBodyReader {
         this.data = body.attributes;
         this.data.id =  body.id;
         this.relationships(body.relationships);
-
     }
 
     value(key) {
@@ -22,8 +23,16 @@ export default class JsonApiBodyReader {
      */
     relationships(relationships) {
     	if (relationships) {
+
     		for(let relationship in relationships) {
-    			this.data[relationships[relationship].data.type] = relationships[relationship].data.id
+                if (_.isArray(relationships[relationship].data) && relationships[relationship].data.length > 0) {
+                    this.data[relationships[relationship].data[0].type] = []
+                    for(let info of relationships[relationship].data) {
+                        this.data[info.type].push(info.id);
+                    }
+                } else {
+                    this.data[relationships[relationship].data.type] = relationships[relationship].data.id
+                }
     		}
     	}
     }

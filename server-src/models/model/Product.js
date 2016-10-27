@@ -15,7 +15,8 @@ export default class Product {
 		statusTime,
 		status,
 		user,
-		productType
+		productType,
+		snapshots
 	}) {
 		this.id            = id;
 		this.name          = name;
@@ -35,5 +36,6 @@ export default class Product {
 		this.user          = undefined;
 		this.productTypeId = productType;
 		this.productType   = undefined;
+		this.snapshotIds   = snapshots;
 	}
 }

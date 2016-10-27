@@ -5,7 +5,7 @@ import ProductType from '../model/ProductType';
 import _ from 'lodash';
 import { checkResourcesOwner } from '../../libs/helper';
 
-export default class ProductsService {
+export default class ProductService {
 
 	constructor() {
 		this.productAdapter = new ProductAdapter();

@@ -69,7 +69,6 @@ export default class OrderTranslator extends Translator {
         let comment;
         let productList;
 
-        console.log(data);
         if (data.order) {
             id = data.order.order_id;
             status = data.order.status;
@@ -80,7 +79,6 @@ export default class OrderTranslator extends Translator {
             comment = data.order.comment;
             productList = data.productList;
         } else {
-            console.log(data);
             id = data.order_id;
             status = data.status;
             payType = data.pay_type;

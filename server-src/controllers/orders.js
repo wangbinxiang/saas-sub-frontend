@@ -1,4 +1,5 @@
 import OrderService from '../models/application/OrderService';
+import ProductService from '../models/application/ProductService';
 
 export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id
@@ -48,8 +49,9 @@ export async function addOrder(ctx, next) {
 
 
 	// console.log(ctx.state.user);
-	let userId = ctx.state.user.id;
-	let shopId = 10;
+	// let userId = ctx.state.user.id;
+	let userId = 21
+	let shopId = ctx._subId;
 
 	let price = ctx.request.body.price;
 
@@ -60,19 +62,33 @@ export async function addOrder(ctx, next) {
 	// ctx.request.body.priceIndex;
 
 
-	const orderService = new OrderService();
-	let productList = [
-		{
-			productId: ctx.request.body.productId,
-			number: ctx.request.body.number,
-			priceIndex: ctx.request.body.priceIndex
-		}
-	];
-	let result = await orderService.addOrder(userId, shopId, price, comment, productList);
+	const productService = new ProductService();
+	let product = await productService.get(ctx.request.body.productId, shopId);
+	product.snapshotIds[0];
 
-	console.log(result);
 
-	ctx.body = result;
+	if (product === null) {
+	    ctx.status = 404;
+	    ctx.body = {};
+	} else {
+		const orderService = new OrderService();
+		let productList = [
+			{
+				productId: ctx.request.body.productId,
+				number: ctx.request.body.number,
+				priceIndex: ctx.request.body.priceIndex,
+				snapshotId: product.snapshotIds[0]
+			}
+		];
+		console.log(productList);
+		let result = await orderService.addOrder(userId, shopId, price, comment, productList);
+
+		console.log(result);
+
+		ctx.body = result;
+		ctx.status = 500;
+		// ctx.body = {};
+	}
 }
 
 

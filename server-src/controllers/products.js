@@ -1,4 +1,4 @@
-import ProductsService from '../models/application/ProductsService';
+import ProductService from '../models/application/ProductService';
 import ProductTypesService from '../models/application/ProductTypeService';
 import {
     PRODUCT_CATEGORY_LIST
@@ -23,8 +23,9 @@ export async function detail(ctx, next) {
     let subId = ctx._subId;
     // try {
     let id = ctx.params.id;
-    const poductsService = new ProductsService();
-    product = await poductsService.get(id, subId);
+    const productService = new ProductService();
+    product = await productService.get(id, subId);
+    console.log(product.snapshotIds[0]);
     if (product === null) {
         ctx.status = 404
         await ctx.render('404');

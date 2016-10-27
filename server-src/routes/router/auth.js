@@ -4,7 +4,7 @@ import { showSignUp, showSignIn } from '../../controllers/auth';
 import { Payment } from 'wechat-pay';
 import fs from 'fs';
 import path from 'path';
-import ProductsService from '../../models/application/ProductsService';
+import ProductService from '../../models/application/ProductService';
 import OrderService from '../../models/application/OrderService';
 
 const p12 = path.resolve(__dirname, '../../../config/apiclient_cert.p12');
@@ -33,8 +33,8 @@ router.get('/pay', async (ctx, next) => {
     if (result) {
 
       console.log(result)
-      const poductsService = new ProductsService();
-      let product = await poductsService.get(result.productList.product_id);
+      const productService = new ProductService();
+      let product = await productService.get(result.productList.product_id);
       if (product) {
         let openid = ctx.state.user.openId;
         // let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
