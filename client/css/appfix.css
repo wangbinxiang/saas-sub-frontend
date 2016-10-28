@@ -5,15 +5,3 @@
 .button--fix {
     position:absolute; right:0; bottom:0;
 }
-.masonry-item--index img{
-	display:block; margin:auto;
-}
-
-@media screen and (min-width: 40em) {
-    .top-carousel .jcarousel--home b {
-        min-height: 3em;
-    }
-}
-.top-carousel .jcarousel--home img {
-    min-height:100%;
-}
