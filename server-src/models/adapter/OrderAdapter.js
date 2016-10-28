@@ -43,7 +43,6 @@ export default class OrderAdapter extends RequestAdapter {
 
 
 		add({
-			payType,
 			userId,
 			shopId,
 			price,
@@ -51,7 +50,6 @@ export default class OrderAdapter extends RequestAdapter {
 			productList
 		}, aOrderClass) {
 			this.buildRequest(ORDER_ADD, {
-				payType,
 				userId,
 				shopId,
 				price,

@@ -1,20 +1,33 @@
 export default class Order {
 	constructor({
-		id = 0,
-		status = 0,
-		payType = 1,
-		userId = 0,
-		shopId = 0,
-		price = 0,
-		comment = '',
-		productList = {}
+		id,
+		price,
+		payType,
+		category,
+		payTime,
+		comment,
+		freight,
+		users,
+		shops,
+		orderProducts,
+		updateTime,
+		createTime,
+		statusTime,
+		status
 	}) {
 		this.id = id;
-		this.payType = payType;
-		this.userId = userId;
-		this.shopId = shopId;
 		this.price = price;
-		this.comment = comment;
-		this.productList = productList;
+ 		this.payType = payType;
+ 		this.category = category;
+ 		this.payTime = payTime;
+ 		this.comment = comment;
+ 		this.freight = freight;
+		this.userId = users;
+		this.shopId = shops;
+		this.productIdList = orderProducts;
+		this.updateTime = updateTime;
+		this.createTime = createTime;
+		this.statusTime = statusTime;
+		this.status = status;
 	}
 }

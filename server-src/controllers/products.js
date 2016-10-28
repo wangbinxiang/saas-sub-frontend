@@ -1,5 +1,4 @@
 import ProductService from '../models/application/ProductService';
-import ProductTypesService from '../models/application/ProductTypeService';
 import {
     PRODUCT_CATEGORY_LIST
 } from '../config/productConf';

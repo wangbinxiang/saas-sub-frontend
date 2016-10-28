@@ -1,9 +1,7 @@
 import ProductAdapter from '../adapter/ProductAdapter';
 import ProductTypeAdapter from '../adapter/ProductTypeAdapter';
-import AttachmentAdapter from '../adapter/AttachmentAdapter';
 import Product from '../model/Product';
 import ProductType from '../model/ProductType';
-import Attachment from '../model/Attachment';
 import _ from 'lodash';
 
 

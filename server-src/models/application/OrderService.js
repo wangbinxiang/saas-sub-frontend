@@ -51,9 +51,7 @@ export default class OrderService {
 
 
 	async addOrder(userId, shopId, price, comment, productList) {
-		const payType = 1;
 		return await this.orderAdapter.add({
-			payType,
 			userId,
 			shopId,
 			price,

@@ -60,7 +60,6 @@ export default class OrderRequestJsonApi extends BaseRequest {
 		// this.setSuccessCode(201);
 
 		let attributes = {
-			payType: this.originData.payType,
 			userId: this.originData.userId,
 			shopId: this.originData.shopId,
 			price: this.originData.price,

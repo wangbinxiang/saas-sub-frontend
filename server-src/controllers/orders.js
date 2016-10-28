@@ -64,7 +64,7 @@ export async function addOrder(ctx, next) {
 
 	const productService = new ProductService();
 	let product = await productService.get(ctx.request.body.productId, shopId);
-	product.snapshotIds[0];
+	console.log(product.snapshotIds[0]);
 
 
 	if (product === null) {
@@ -154,8 +154,17 @@ export async function index(ctx, next) {
 }
 
 export async function detail(ctx, next) {
-    const title = '订单管理'
+
+		// let userId = ctx.state.user.id;
+	let userId = 21
+	let shopId = ctx._subId;
+
+
+
+    const title = '订单详情'
     const pageJs = webpackIsomorphicTools.assets().javascript.order;
+
+    
     let data = {
         id:212233232,
         status:'等待支付',
