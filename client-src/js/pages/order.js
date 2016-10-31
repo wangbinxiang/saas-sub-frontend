@@ -2,7 +2,7 @@ if (module.hot) {
     module.hot.accept()
 }
 
-import '../../../client-src/js/pages/base.js'
+import './base.js'
 
 let ConfirmModel = function(data){
     let self = this;
@@ -19,7 +19,7 @@ let ConfirmModel = function(data){
             })
             .done(function(respones) {
                 alert('下单成功。');
-                location.href = 'http://zhuce.dianshangwan.com/orders/pay?id=' + respones.id;
+                location.href = '/orders/jumpPay?id=' + respones.id;
             })
             .fail(function(respones){
                 

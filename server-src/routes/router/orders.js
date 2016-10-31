@@ -7,7 +7,7 @@ import {
 	pay,
     index,
 	detail,
-	confirm
+	jumpPay
 } from '../../controllers/orders';
 import { requiresLogin } from '../../middlewares/authorization';
 
@@ -33,8 +33,13 @@ router.post('/', addOrder);
 //订单列表页面
 router.get('/', index);
 
+
+router.get('/jumpPay', jumpPay);
+
 //订单详情页面
 router.get('/:id', detail);
+
+
 
 // router.get('/:id/confirm', confirm);
 

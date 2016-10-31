@@ -1,5 +1,6 @@
 import OrderService from '../models/application/OrderService';
 import ProductService from '../models/application/ProductService';
+import config from 'config';
 
 export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id
@@ -216,4 +217,14 @@ export async function confirm(ctx, next) {
 	let order = await orderService.confirmPay(id);
 
 	ctx.body = order;
+}
+
+
+export async function jumpPay(ctx, next) {
+	let id = ctx.query.id;
+
+	let redirect = config.get('host.zhuce') + '/orders/pay/?id=' + id;
+
+	ctx.redirect(redirect);
+
 }
