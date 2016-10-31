@@ -10,10 +10,9 @@ let ConfirmModel = function(data){
     // self.addresses = ko.observableArray(data.addresses)
 
     self.save = function(){
-        let that = this;
         $('#formOrderConfirm').foundation('validateForm');
         if($('[data-invalid]').length === 0){
-            $(that).attr('disabled', true);
+            $('#confirmButton').attr('disabled', true);
             $.ajax({
                 method: "POST",
                 url: "/orders",
@@ -25,7 +24,7 @@ let ConfirmModel = function(data){
             })
             .fail(function(respones){
                 alert('下单失败。');
-                $(that).attr('disabled', false);
+                $('#confirmButton').attr('disabled', false);
             })
         }
         return false
