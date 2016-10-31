@@ -48,6 +48,9 @@ export const PRODUCT_DEL          = Symbol();
 export const PRODUCT_PRICE_ADD    = Symbol();
 
 
+//获取产品快照信息
+export const PRODUCT_SNAPSHOT_GET = Symbol();
+
 //用户注册
 export const MEMBER_SIGNUP        = Symbol();
 //用户登陆

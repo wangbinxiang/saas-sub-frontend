@@ -135,6 +135,11 @@ app.use(convert(koaerro({
 import { handlerHostToSubId } from './middlewares/handlerHostToSubId';
 app.use(handlerHostToSubId);
 
+import wechatRequiresLogin from './middlewares/wechatRequiresLogin';
+app.use(wechatRequiresLogin);
+
+
+
 
 
 // response router

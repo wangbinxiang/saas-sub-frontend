@@ -11,6 +11,8 @@ import ShopService from '../models/application/ShopService';
  */
 export async function handlerHostToSubId(ctx, next) {
 
+
+    console.log(ctx.headers);
     console.log(ctx.host);
 
     const hostMapping = config.get('hostMapping');
@@ -27,8 +29,7 @@ export async function handlerHostToSubId(ctx, next) {
 
     // const hostSplit = ctx.request.host.split('.');
     // let subId = hostSplit[0];
-
-
+    // subId = "10002";
     // hostSplit[0] = '10';
     if (isPositiveInteger(subId)) {
         //当前店铺id

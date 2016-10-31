@@ -49,8 +49,8 @@ export async function addOrder(ctx, next) {
 
 
 	// console.log(ctx.state.user);
-	// let userId = ctx.state.user.id;
-	let userId = 21
+	let userId = ctx.state.user.id;
+	// let userId = 21
 	let shopId = ctx._subId;
 
 	let price = ctx.request.body.price;
@@ -86,7 +86,7 @@ export async function addOrder(ctx, next) {
 		console.log(result);
 
 		ctx.body = result;
-		ctx.status = 500;
+		// ctx.status = 500;
 		// ctx.body = {};
 	}
 }
@@ -139,6 +139,33 @@ export async function pay(ctx, next) {
  * @return {[type]}                      [description]
  */
 export async function index(ctx, next) {
+
+	let userId = ctx.state.user.id;
+
+	let number = ctx.query.number ? ctx.query.number : 1;
+
+    let size = ctx.query.size ? ctx.query.size : 500;
+
+    let filters = {
+        userId
+    };
+
+    let pages = {
+        number,
+        size
+    };
+
+
+	const orderService = new OrderService();
+	let orders = await orderService.search(filters, pages);
+
+	console.log(orders);	
+	for(let key in orders['result']) {
+		console.log(orders['result'][key]);	
+	}
+	
+
+
     const title = '订单管理'
     const pageJs = webpackIsomorphicTools.assets().javascript.order;
     let data = [
@@ -153,30 +180,40 @@ export async function index(ctx, next) {
 	});
 }
 
+/**
+ * 订单详情
+ * @author wangbinxiang
+ * @date   2016-10-30T13:02:52+0800
+ * @param  {[type]}                 ctx  [description]
+ * @param  {Function}               next [description]
+ * @return {[type]}                      [description]
+ */
 export async function detail(ctx, next) {
 
-		// let userId = ctx.state.user.id;
-	let userId = 21
+	let userId = ctx.state.user.id;
+	// let userId = 21
 	let shopId = ctx._subId;
-
-
+	//订单id
+	let id = ctx.params.id;
+	console.log(id);
+	const orderService = new OrderService();
+	let order = await orderService.get(id);
+	console.log(order.products[0].productSnapshot);
 
     const title = '订单详情'
     const pageJs = webpackIsomorphicTools.assets().javascript.order;
 
-    
-    let data = {
-        id:212233232,
-        status:'等待支付',
-        goods:[
-            {id:2233232, title:'This is longer content Donec id elit non mi porta gravida at eget metus.', sku:'red', price:233232, qty:3},
-                {id:2233233, title:'This is longer content Donec id elit non mi porta gravida at eget metus.', sku:'green', price:233232, qty:3},
-                {id:2233234, title:'This is longer content Donec id elit non mi porta gravida at eget metus.', sku:'blue', price:233232, qty:3}
-        ],
-        comment:'Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.',
-        total:2123432
-    }
     await ctx.render('orders/detail', {
-        title, pageJs, data
+        title, pageJs, order
 	});
+}
+
+export async function confirm(ctx, next) {
+
+	let id = ctx.params.id;
+
+	const orderService = new OrderService();
+	let order = await orderService.confirmPay(id);
+
+	ctx.body = order;
 }

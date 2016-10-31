@@ -30,7 +30,10 @@ const router = Router();
 
 
 router.get('/wechat/auth', async (ctx, next) => {
-	let callbackUrl = 'http://10.sub.dianshangwan.com/wechat/auth/callback';
+
+	let callbackUrl = config.get('host.zhuce') + '/wechat/auth/callback?shopId=' + ctx._subId
+
+	// let callbackUrl = 'http://10.sub.dianshangwan.com/wechat/auth/callback';
 	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	ctx.redirect(location);

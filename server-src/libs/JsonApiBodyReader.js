@@ -4,10 +4,12 @@ import _ from 'lodash';
  * json api body 读取数据类
  */
 export default class JsonApiBodyReader {
-    constructor(body) {
+    constructor(body, included) {
         this.data = body.attributes;
         this.data.id =  body.id;
+        this.included = included;
         this.relationships(body.relationships);
+     
     }
 
     value(key) {
@@ -28,12 +30,29 @@ export default class JsonApiBodyReader {
                 if (_.isArray(relationships[relationship].data) && relationships[relationship].data.length > 0) {
                     this.data[relationships[relationship].data[0].type] = []
                     for(let info of relationships[relationship].data) {
-                        this.data[info.type].push(info.id);
+
+                        this.data[info.type].push(this.relationshipInfoFormIncluded(info.type, info.id));
                     }
                 } else {
-                    this.data[relationships[relationship].data.type] = relationships[relationship].data.id
+                    this.data[relationships[relationship].data.type] = this.relationshipInfoFormIncluded(relationships[relationship].data.type, relationships[relationship].data.id);
                 }
     		}
     	}
+    }
+
+
+    relationshipInfoFormIncluded(type, id) {
+        if (this.included) {
+            for(let info of this.included) {
+                if (info.type === type && info.id === id) {
+                    info.attributes.id = id;
+                    return info.attributes;
+                }
+            }
+            //included内没有数据的返回id
+            return id;
+        } else {
+            return id;
+        }
     }
 }

@@ -24,7 +24,6 @@ export default class MemberService {
 					throw err;
 			}
 		}
-		console.log(member);
 
 		return member;
         //登陆用户

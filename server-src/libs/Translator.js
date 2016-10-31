@@ -14,6 +14,7 @@ export default class Translator {
 
         let page;
         let result;
+
         if (typeof body.links !== 'undefined') {
             page = this.createPage(body.links);
         }
@@ -21,11 +22,11 @@ export default class Translator {
         if (typeof body.data.length !== 'undefined') {
             result = {};
             for(let data of body.data) {
-                let obj = this.createObject(data);
+                let obj = this.createObject(data, body.included);
                 result[obj.id] = obj;
             }
         } else {
-            let obj = this.createObject(body.data);
+            let obj = this.createObject(body.data, body.included);
             if (this.isNeedArrayResult()) {
                 result = { [obj.id] : obj };
             } else {
@@ -47,8 +48,8 @@ export default class Translator {
      * @param  {[type]}                 data [description]
      * @return {[type]}                      [description]
      */
-    createObject(data) {
-        let param = this.readData(data);
+    createObject(data, included) {
+        let param = this.readData(data, included);
         return this.newObject(param);
     }
 
@@ -70,7 +71,7 @@ export default class Translator {
      * @param  {[type]}                 data [description]
      * @return {[type]}                      [description]
      */
-    readData(data){}
+    readData(data, included){}
 
     readPageData(links){
         const bodyLinksReader = new JsonApiBodyLinksReader(links);

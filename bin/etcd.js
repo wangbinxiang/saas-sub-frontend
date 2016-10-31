@@ -10,6 +10,7 @@ if (process.env.ETCD_ENV) {
     var etcdShop;
     var etcdMemcacheHost;
     var etcdHostMapping;
+    var etcdOrder;
 
     var etcdQiniuAccessKey;
     var etcdQiniuSecretKey;
@@ -31,6 +32,7 @@ if (process.env.ETCD_ENV) {
         etcdShop = '/saas/production/services/shop/url';
         etcdMemcacheHost = '/saas/production/frontend/memcached/host';
         etcdHostMapping = '/saas/production/frontend/hostMapping';
+        etcdOrder = '/saas/production/services/order/url';
 
         etcdQiniuAccessKey = '/saas/production/qiniu/accesskey';
         etcdQiniuSecretKey = '/saas/production/qiniu/secretkey';
@@ -43,6 +45,7 @@ if (process.env.ETCD_ENV) {
         etcdShop = '/saas/sandbox/services/shop/url';
         etcdMemcacheHost = '/saas/sandbox/frontend/memcached/host';
         etcdHostMapping = '/saas/sandbox/frontend/hostMapping';
+        etcdOrder = '/saas/sandbox/services/order/url';
     }
 
     var etcd = new Etcd(etcdHost);
@@ -52,9 +55,10 @@ if (process.env.ETCD_ENV) {
     var shopUrl = etcd.getSync(etcdShop);
     var memcacheHost = etcd.getSync(etcdMemcacheHost);
     var hostMapping = etcd.getSync(etcdHostMapping);
+    var orderUrl = etcd.getSync(etcdOrder);
 
     
-
+    orderUrl = orderUrl.body.node.value;
     attachmentUrl = attachmentUrl.body.node.value;
     productUrl = productUrl.body.node.value;
     shopUrl = shopUrl.body.node.value;
@@ -90,7 +94,8 @@ if (process.env.ETCD_ENV) {
         "apiServiceLocation": {
             "attachment": attachmentUrl,
             "product": productUrl,
-            "shop": shopUrl
+            "shop": shopUrl,
+            "order": orderUrl
         },
         "memcache": {
             "host": memcacheHost,

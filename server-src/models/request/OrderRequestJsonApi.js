@@ -77,13 +77,9 @@ export default class OrderRequestJsonApi extends BaseRequest {
 		this.url = url + id + '/pay';
 		this.method = PUT;
 
-		// let attributes = {
-		// 	name: this.originData.name,
-		// 	feature: this.originData.feature,
-		// 	productType: this.originData.productType,
-		// 	description: this.originData.description,
-		// 	slides: this.originData.slides
-		// };
+		let attributes = {
+			payType: this.originData.payType
+		};
 
 		// this.buildData(attributes);
 	}

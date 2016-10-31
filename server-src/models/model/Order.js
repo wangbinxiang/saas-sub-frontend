@@ -24,7 +24,7 @@ export default class Order {
  		this.freight = freight;
 		this.userId = users;
 		this.shopId = shops;
-		this.productIdList = orderProducts;
+		this.products = orderProducts;
 		this.updateTime = updateTime;
 		this.createTime = createTime;
 		this.statusTime = statusTime;

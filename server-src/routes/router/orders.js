@@ -6,14 +6,18 @@ import {
 	get,
 	pay,
     index,
-	detail
+	detail,
+	confirm
 } from '../../controllers/orders';
+import { requiresLogin } from '../../middlewares/authorization';
 
 
 const router = Router();
 
 //路由前缀
 router.prefix('/orders');
+
+router.use(requiresLogin);
 
 
 //添加路由页面
@@ -22,7 +26,7 @@ router.get('/add', showAddOrder);
 router.post('/', addOrder);
 
 
-router.get('/get', get);
+// router.get('/get', get);
 
 // router.get('/pay', pay);
 
@@ -30,6 +34,8 @@ router.get('/get', get);
 router.get('/', index);
 
 //订单详情页面
-router.get('/detail', detail);
+router.get('/:id', detail);
+
+// router.get('/:id/confirm', confirm);
 
 export default router;

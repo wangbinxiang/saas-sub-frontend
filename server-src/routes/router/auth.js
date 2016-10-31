@@ -23,61 +23,61 @@ var payment = new Payment(initConfig);
 const router = Router();
 
 
-router.get('/pay', async (ctx, next) => {
-    const orderId = ctx.query.id;
+// router.get('/pay', async (ctx, next) => {
+//     const orderId = ctx.query.id;
 
-    const orderService = new OrderService();
+//     const orderService = new OrderService();
 
-    let result = await orderService.get(orderId);
+//     let result = await orderService.get(orderId);
 
-    if (result) {
+//     if (result) {
 
-      console.log(result)
-      const productService = new ProductService();
-      let product = await productService.get(result.productList.product_id);
-      if (product) {
-        let openid = ctx.state.user.openId;
-        // let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
-        var order = {
-          body: product.name,//产品名称
-          attach: product.prices[result.productList.product_price_index].title,//价格名称
-          out_trade_no: 'dsw' + (+new Date),
-          total_fee: result.price * 100,//单位为分
-          spbill_create_ip: ctx.ip,
-          openid: openid,
-          trade_type: 'JSAPI'
-        };
+//       console.log(result)
+//       // const productService = new ProductService();
+//       // let product = await productService.get(result.productList.product_id);
+//       if (result) {
+//         // let openid = ctx.state.user.openId;
+//         let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
+//         var order = {
+//           body: '产品名称',//产品名称
+//           attach: '123',//价格名称
+//           out_trade_no: 'dsw' + (+new Date),
+//           total_fee: 100,//单位为分
+//           spbill_create_ip: ctx.ip,
+//           openid: openid,
+//           trade_type: 'JSAPI'
+//         };
         
-        console.log(order);
+//         console.log(order);
 
-        let payargs = await new Promise((resolve, reject) => {
-            payment.getBrandWCPayRequestParams(order, function(err, payargs){
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(payargs);
-                }
-            });
-        });
+//         let payargs = await new Promise((resolve, reject) => {
+//             payment.getBrandWCPayRequestParams(order, function(err, payargs){
+//                 if (err) {
+//                     reject(err);
+//                 } else {
+//                     resolve(payargs);
+//                 }
+//             });
+//         });
 
-        console.log(payargs);
+//         console.log(payargs);
 
-        await ctx.render('pay/index', {
-            payargs,
-            order: result,
-            product
-        });
+//         await ctx.render('pay/index', {
+//             payargs,
+//             order: result,
+//             product
+//         });
 
-      } else {
-        ctx.status = 404
-        await ctx.render('404');
-      }
-    } else {
-      ctx.status = 404
-      await ctx.render('404');
-    }
+//       } else {
+//         ctx.status = 404
+//         await ctx.render('404');
+//       }
+//     } else {
+//       ctx.status = 404
+//       await ctx.render('404');
+//     }
 
-});
+// });
 
 
 
@@ -124,7 +124,7 @@ router.get('/wechat/auth/callback', async (ctx, next) => {
         ctx.redirect('/');
     } catch (err) {
         console.log(err);
-        ctx.redirect('/');
+        ctx.redirect('/wechat/auth');
     }
 });
 

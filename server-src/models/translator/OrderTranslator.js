@@ -7,41 +7,8 @@ export default class OrderTranslator extends Translator {
     }
 
 
-    //翻译users信息
-    // toObject(body, aActiveClass) {
-
-    //     let page;
-    //     let result;
-    //     if (typeof body.links !== 'undefined') {
-    //         page = this.createPage(body.links);
-    //     }
-    //     this.activeClass = aActiveClass;
-
-    //     if (typeof body.length !== 'undefined') {
-    //         result = {};
-    //         for(let data of body) {
-    //             let obj = this.createObject(data);
-    //             result[obj.id] = obj;
-    //         }
-    //     } else {
-    //         let obj = this.createObject(body);
-    //         // if (this.isNeedArrayResult()) {
-    //         //     result = { [obj.id] : obj };
-    //         // } else {
-    //             result = obj;
-    //         // }
-    //     }
-
-    //     // if (page) {
-    //     //     return { page, result };    
-    //     // }
-
-    //     return result;
-    // }
-
-    readData(data) {
-        const bodyReader = new OrderJsonApiBodyReader(data);
-        console.log(bodyReader.data);
+    readData(data, included) {
+        const bodyReader = new OrderJsonApiBodyReader(data, included);
         
         let id = bodyReader.value('id');
         let price = bodyReader.value('price');

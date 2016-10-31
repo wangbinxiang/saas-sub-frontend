@@ -14,7 +14,6 @@ export default class RequestAdapter {
         let result = null;
 
         const { header, body } = await this.requestObject.request();
-        console.log(body);
         if (header.statusCode === this.requestObject.getSuccessCode()) {
             result = this.translator.toObject(body, this.activeClass);
         } else if (header.statusCode === this.requestObject.noContentCode) {

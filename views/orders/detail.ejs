@@ -10,7 +10,7 @@
     </ul>
 </nav>
 
-<h1 class="row column">订单详情 No.<%= data.id %></h1>
+<h1 class="row column">订单详情 No.<%= order.id %></h1>
 
 <!-- <div class="row block-margin-bottom">
     <div class="workflow-wrap">
@@ -24,7 +24,7 @@
     </div>
 </div> -->
 
-<% if(data.status == "等待支付"){ %>
+<% if(order.status === 0){ %>
 
 <div class="row column">
     <div class="callout alert">
@@ -36,11 +36,11 @@
     <a class="button large" href="/orders/pay">支付订单</a>
 </div>
 
-<% } else { %>
+<% } else if(order.status === 5) { %>
 
 <div class="row column">
     <div class="callout success">
-        <h4>订单已完成配送！</h4>
+        <h4>订单已完成！</h4>
         <p>订购时间 2016-12-12 13:30:30。</p>
     </div>
 </div>
@@ -61,13 +61,15 @@
             </tr>
         </thead>
         <tbody>
-            <% for(let i of data.goods){ %>
+
+            <% for(let i of order.products){ %>
+            <% console.log(i) %>
 			<tr>
-                <td data-th="产品ID"><%= i.id %></td>
-                <td data-th="产品名称"><%= i.title %></td>
-                <td data-th="规格"><%= i.sku %></td>
-                <td data-th="单价">￥<%= i.price %></td>
-                <td data-th="数量"><%= i.qty %></td>
+                <td data-th="产品ID"><%= i.productSnapshot.product.id %></td>
+                <td data-th="产品名称"><%= i.productSnapshot.product.name %></td>
+                <td data-th="规格"><%= i.productSnapshot.product.prices[i.priceIndex].title %></td>
+                <td data-th="单价">￥<%= i.productSnapshot.product.prices[i.priceIndex].price %></td>
+                <td data-th="数量"><%= i.number %></td>
             </tr>
             <% } %>
         </tbody>
@@ -82,7 +84,7 @@
             <div class="row">
                 <div class="small-12 columns">
                     <label>
-                        <%= data.comment %>
+                        <%= order.comment %>
                     </label>
                 </div>
             </div>
@@ -97,7 +99,7 @@
             </div>
         </fieldset>
     <div class="row text-right cart-total">
-        订单合计：￥<strong class="stat"><%= data.total %></strong>
+        订单合计：￥<strong class="stat"><%= order.price %></strong>
     </div>
 </div>
 

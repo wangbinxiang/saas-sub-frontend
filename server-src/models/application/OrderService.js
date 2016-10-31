@@ -2,6 +2,9 @@ import ProductAdapter from '../adapter/ProductAdapter';
 import Product from '../model/Product';
 import OrderAdapter from '../adapter/OrderAdapter';
 import Order from '../model/Order';
+import ProductSnapshotAdapter from '../adapter/ProductSnapshotAdapter';
+import ProductSnapshot from '../model/ProductSnapshot';
+
 
 export default class OrderService {
 
@@ -33,11 +36,13 @@ export default class OrderService {
 	}
 
 
-	async index(filters, pages) {
+	async search(filters, pages) {
 		let result = await this.orderAdapter.get({
 			filters,
 			pages
 		}, Order);
+
+		return result;
 	}
 
 
@@ -46,7 +51,30 @@ export default class OrderService {
 			idList: id
 		}, Order);
 
-		return order;
+		if (order === null) {
+			return null;
+		} else {
+			let productSnapshot = undefined;
+			let snapshotIds = []
+			for(let snapshot of order.products) {
+				snapshotIds.push(snapshot.snapshot);
+			}			
+
+			if (snapshotIds.length) {
+				const productSnapshotAdapter = new ProductSnapshotAdapter();
+				productSnapshot = await productSnapshotAdapter.get({
+					idList: snapshotIds
+				}, ProductSnapshot);
+			}
+
+			if (productSnapshot) {
+				for(let key in order.products) {
+					order.products[key]['productSnapshot'] = productSnapshot[order.products[key].snapshot];
+				}
+			}
+
+			return order;
+		}
 	}
 
 
