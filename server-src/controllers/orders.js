@@ -142,10 +142,11 @@ export async function pay(ctx, next) {
 export async function index(ctx, next) {
 
 	let userId = ctx.state.user.id;
+	// let userId = 21;
 
 	let number = ctx.query.number ? ctx.query.number : 1;
 
-    let size = ctx.query.size ? ctx.query.size : 500;
+    let size = ctx.query.size ? ctx.query.size : 10;
 
     let filters = {
         userId

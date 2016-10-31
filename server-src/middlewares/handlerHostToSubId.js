@@ -36,7 +36,8 @@ export async function handlerHostToSubId(ctx, next) {
         
         const shopService = new ShopService();
         let shop = await shopService.get(subId);
-
+        console.log(shop);
+        console.log(subId);
         if (shop.id === subId) {
             ctx._subId = subId;
             ctx._shop = shop;
