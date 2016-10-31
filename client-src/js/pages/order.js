@@ -12,6 +12,7 @@ let ConfirmModel = function(data){
     self.save = function(){
         $('#formOrderConfirm').foundation('validateForm');
         if($('[data-invalid]').length === 0){
+            $('#formOrderConfirm').attr('disabled', true)
             $.ajax({
                 method: "POST",
                 url: "/orders",
@@ -22,7 +23,8 @@ let ConfirmModel = function(data){
                 location.href = '/orders/jumpPay?id=' + respones.id;
             })
             .fail(function(respones){
-                
+                alert('下单失败。');
+                $('#formOrderConfirm').attr('disabled', false)
             })
         }
         return false
