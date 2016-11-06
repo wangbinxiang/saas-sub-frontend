@@ -15,13 +15,12 @@ export default async function wechatRequiresLogin(ctx, next) {
 		'/wechat/auth',
 		'/wechat/auth/callback'
 	];
-	console.log(ctx.path);
-	console.log(ignoreUrls.indexOf(ctx.path));
 
 	if (isWeixinBrowser(ctx.headers['user-agent']) && ignoreUrls.indexOf(ctx.path) === -1) {
 	    if (ctx.isAuthenticated()) {
 	        await next();
 	    } else {
+	    	ctx.session.returnTo = ctx.header.ctx.path;
 	        ctx.redirect('/wechat/auth');
 	    }
     } else {

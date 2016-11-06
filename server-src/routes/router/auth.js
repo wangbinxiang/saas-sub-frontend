@@ -121,7 +121,10 @@ router.post('/signin',
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
         let res = await passport.authenticate('wechat')(ctx, next);
-        ctx.redirect('/');
+
+        let redirectTo = ctx.session.returnTo? ctx.session.returnTo: '/';
+
+        ctx.redirect(redirectTo);
     } catch (err) {
         console.log(err);
         ctx.redirect('/wechat/auth');
