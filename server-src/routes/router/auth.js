@@ -120,6 +120,10 @@ router.post('/signin',
 
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
+
+        console.log(ctx.headers);
+        console.log(ctx.host);
+
         console.log('ctx.session');
         console.log(ctx.session);
 
