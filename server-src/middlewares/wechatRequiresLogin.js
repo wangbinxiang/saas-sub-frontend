@@ -21,6 +21,7 @@ export default async function wechatRequiresLogin(ctx, next) {
 	        await next();
 	    } else {
 	    	ctx.session.returnTo = ctx.path;
+	    	console.log(ctx.session);
 	        ctx.redirect('/wechat/auth');
 	    }
     } else {
