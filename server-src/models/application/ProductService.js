@@ -17,9 +17,9 @@ export default class ProductService {
 			pages
 		}, Product);
 
-		if (result == null) {
+		if (result === null) {
 			//没有获取数据 直接返回空
-			return result;
+			return null;
 		} else {
 
 			let { page, result: products } = result;

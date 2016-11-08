@@ -53,6 +53,7 @@
     "debug": "^2.2.0",
     "dropzone": "^4.3.0",
     "ejs": "^2.4.1",
+    "faker": "^3.1.0",
     "foundation-sites": "^6.2.3",
     "imagesloaded": "^4.1.1",
     "jcarousel": "^0.3.4",

@@ -36,13 +36,28 @@ export default class OrderService {
 	}
 
 
+	/**
+	 * 搜索订单
+	 * @author wangbinxiang
+	 * @date   2016-11-03T14:40:03+0800
+	 * @param  {[type]}                 filters [description]
+	 * @param  {[type]}                 pages   [description]
+	 * @return {[type]}                         [description]
+	 */
 	async search(filters, pages) {
 		let result = await this.orderAdapter.get({
 			filters,
 			pages
 		}, Order);
 
-		return result;
+		if (result === null) {
+			return null;
+		} else {
+			return {
+				page: result.page,
+				orders: result.result
+			};
+		}
 	}
 
 

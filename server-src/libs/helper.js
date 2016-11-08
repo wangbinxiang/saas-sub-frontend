@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import _ from 'lodash';
+import moment from 'moment';
 
 /**
  * 生成随机整数
@@ -140,4 +141,9 @@ export function checkResourcesOwner(resources, checkTarget, owner, isList) {
     } else {
         return resources[checkTarget] === owner;
     }
+}
+
+
+export function timestampToDate(timestamp, format = 'YYYY-MM-DD HH:mm:ss') {
+    return moment.unix(timestamp).utc().utcOffset(8).format('YYYY-MM-DD HH:mm:ss');
 }

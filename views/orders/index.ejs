@@ -10,42 +10,39 @@
 
 <h1 class="row column">订单管理</h1>
 <div id="ordersWrap">
-<div class="row column">
-    <table class="stack stack--small hover listCart tableList">
-        <thead>
-            <tr>
-                <th width="150">订单ID</th>
-                <th width="150">订单状态</th>
-                <th width="150">支付方式</th>
-                <th width="150">总价</th>
-                <th width="150">买家ID</th>
-                <th width="300">操作</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach:orders">
-            <tr>
-                <td data-th="订单ID" data-bind="text:id"></td>
-                <td data-th="订单状态" data-bind="text:status"></td>
-                <td data-th="支付方式" data-bind="text:payment"></td>
-                <td data-th="总价" data-bind="text:'￥' + total"></td>
-                <td data-th="买家ID" data-bind="text:userid"></td>
-                <td data-th="操作">
-                    <a href="/orders/detail" class="button small">查看</a>
-                    <a href="/orders/pay" class="button small" data-bind="visible:status=='等待支付'">确认支付</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="row column">
+        <table class="stack stack--small hover listCart tableList">
+            <thead>
+                <tr>
+                    <th width="150">订单ID</th>
+                    <th width="150">订单状态</th>
+                    <th width="150">创建时间</th>
+                    <th width="150">总价</th>
+                    <th width="300">操作</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach:orders">
+                <tr>
+                    <td data-th="订单ID" data-bind="text:id"></td>
+                    <td data-th="订单状态" data-bind="text:_statusName"></td>
+                    <td data-th="创建时间" data-bind="text:_createTimeDate"></td>
+                    <td data-th="总价" data-bind="text:'￥' + price"></td>
+                    <td data-th="操作">
+                        <a data-bind="attr: { href: '/orders/' + id }" class="button small">查看</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<div class="list-button row column">
-    <a class="button large btnMore" data-bind="click:$root.more, visible:isnext" id="moreOrders">显示更多订单</a>
-</div>
+    <div class="list-button row column">
+        <a class="button large btnMore" style="display: none;" data-bind="click: more, visible: isNext()" id="moreOrders">显示更多订单</a>
+    </div>
 </div>
 <script>
-    var data = <%- JSON.stringify(data) %>;
+    var data = <%- JSON.stringify(orders) %>;
 	var isNext = <%= isNext %>;
 	var pageNo = <%= pageNo %>;
-    </script>  
+</script>  
   
 <%- include('../layout/footer') -%>

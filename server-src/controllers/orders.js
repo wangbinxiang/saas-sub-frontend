@@ -1,6 +1,8 @@
 import OrderService from '../models/application/OrderService';
 import ProductService from '../models/application/ProductService';
 import config from 'config';
+import { timestampToDate } from '../libs/helper';
+import lodash from 'lodash';
 
 export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id
@@ -142,7 +144,6 @@ export async function pay(ctx, next) {
 export async function index(ctx, next) {
 
 	let userId = ctx.state.user.id;
-	// let userId = 21;
 
 	let number = ctx.query.number ? ctx.query.number : 1;
 
@@ -157,29 +158,45 @@ export async function index(ctx, next) {
         size
     };
 
+    let orders = null;
+    let isNext = false;
+
 
 	const orderService = new OrderService();
-	let orders = await orderService.search(filters, pages);
+	let result = await orderService.search(filters, pages);
 
-	console.log(orders);	
-	for(let key in orders['result']) {
-		console.log(orders['result'][key]);	
+	if (result !== null) {
+		let page = result.page;
+		orders = lodash.values(result.orders);
+
+		if (page && page.haveNext()) {
+		    isNext = true;
+		}
+
+
 	}
-	
 
+	if (ctx.accepts('html', 'text', 'json') === 'json') {
+		ctx.body = {
+            orders,
+            isNext
+        };
 
-    const title = '订单管理'
-    const pageJs = webpackIsomorphicTools.assets().javascript.order;
-    let data = [
-        {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974},
-        {id:2233232, status:'已完成', payment:'微信支付', total:233232, userid:15023568974},
-        {id:2233232, status:'已完成', payment:'微信支付', total:233232, userid:15023568974}
-    ]
-    let isNext = true
-    let pageNo = 0
-    await ctx.render('orders/index', {
-        title, pageJs, data, isNext, pageNo
-	});
+	} else {
+	    const title = '订单管理'
+	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+
+	    let pageNo = 1
+		await ctx.render('orders/index', {
+			title,
+			pageJs,
+			orders,
+			isNext,
+			pageNo,
+			number,
+			size
+		});
+	}
 }
 
 /**
