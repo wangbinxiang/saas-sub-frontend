@@ -72,30 +72,26 @@ if($('#listOrders').length){
 let OrdersModel = function(orders){
     let self = this
     self.orders = ko.observableArray(orders)
-    self.isnext = isNext
+    self.isNext = ko.observable(isNext)
 
     self.more = function(){
-        $('#moreOrders').attr('disabled', true)
         pageNo += 1
         $.ajax({
-            method: "POST",
-            url: "/orders/" + pageNo,
+            method: "GET",
+            url: "/orders?number=" + pageNo,
+            dataType: "json"
         })
         .done(function(respones) {
-            self.orders.push(respones.orders)
-            self.isnext = respones.isNext
+            if (respones.orders) {
+                for(let order of respones.orders){
+                    self.orders.push(order)
+                }
+            }
+            self.isNext(respones.isNext);
         })
         .fail(function(response){
-            //alert('商品ID不存在!')
-            let data = [
-                {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974},
-                {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974},
-                {id:2233232, status:'等待支付', payment:'微信支付', total:233232, userid:15023568974}
-            ]
-            for(let i of data){
-                self.orders.push(i)
-            }
-            $('#moreOrders').attr('disabled', false)
+            
+            
         })
     }
 }

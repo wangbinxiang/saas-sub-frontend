@@ -1,5 +1,6 @@
 import local from './local';
 import wechat from './wechat';
+import faker from './faker';
 
 export default (passport) => {
 
@@ -16,4 +17,7 @@ export default (passport) => {
 
     //注册微信浏览器内登陆策略
     passport.use(wechat);
+
+    //
+    passport.use('faker', faker);
 }

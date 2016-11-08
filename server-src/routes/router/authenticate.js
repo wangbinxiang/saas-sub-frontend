@@ -2,7 +2,8 @@ import Router from 'koa-router';
 import passport from 'koa-passport';
 import {
 	login,
-	logout
+	logout,
+	faker
 } from '../../controllers/authenticate';
 import { requiresLogin } from '../../middlewares/authorization';
 import config from 'config';
@@ -28,6 +29,13 @@ const router = Router();
 // //登陆
 // router.post('/login', login);
 
+
+router.get('/auth/faker', async (ctx, next) => {
+	ctx.request.body.passport = '123';
+	ctx.request.body.password = '123';
+
+	await next();
+}, faker);
 
 router.get('/wechat/auth', async (ctx, next) => {
 

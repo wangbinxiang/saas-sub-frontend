@@ -12,8 +12,30 @@ export async function login(ctx, next) {
                 ctx.body = {};
             }
         })(ctx, next);
-    } catch (e) {
-        throw e;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export async function faker(ctx, next) {
+    if (__DEVELOPMENT__) {
+        try {
+            await passport.authenticate('faker', async (user, info, status) => {
+                if (user === false) {
+                    ctx.status = 401;
+                    ctx.body = info;
+                } else {
+                    ctx.login(user);
+                    ctx.status = 200;
+                    ctx.body = user;
+                }
+            })(ctx, next);
+        } catch (err) {
+            throw err;
+        }
+    } else {
+        ctx.status = 404
+        await ctx.render('404');
     }
 }
 
