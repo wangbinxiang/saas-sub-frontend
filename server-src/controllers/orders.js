@@ -241,7 +241,7 @@ export async function confirm(ctx, next) {
 export async function jumpPay(ctx, next) {
 	let id = ctx.query.id;
 
-	let redirect = config.get('host.zhuce') + '/orders/pay/?id=' + id;
+	let redirect = 'http://' + config.get('host.hub') + '/wechat/pay/?id=' + id;
 
 	ctx.redirect(redirect);
 

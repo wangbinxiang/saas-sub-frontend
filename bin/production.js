@@ -14,7 +14,6 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 try {
   var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
   global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack-isomorphic-tools'))
-    .development(false)
     .server(rootDir, function() {
       require(path.join(__dirname, '../server'))
     });
