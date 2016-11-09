@@ -1,4 +1,3 @@
-
 export async function showSignUp(ctx, next) {
 
     const title = '注册';

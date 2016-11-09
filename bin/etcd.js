@@ -27,7 +27,12 @@ if (process.env.ETCD_ENV) {
     //七牛子站图片bucket名称
     var qiniuBucketSubImgName;
 
+    //hub站地址(沙箱和正式的区分)
+    var hostHub = "";
+
     if (process.env.ETCD_ENV === 'production') {
+        hostHub = "hub.yundianshang.cc"
+
         etcdAttachment = '/saas/production/services/attachment/url';
         etcdProduct = '/saas/production/services/product/url';
         etcdShop = '/saas/production/services/shop/url';
@@ -42,6 +47,8 @@ if (process.env.ETCD_ENV) {
         etcdQiniuBucketSubImgName = '/saas/production/qiniu/bucket/subImg/name';
 
     } else if (process.env.ETCD_ENV === 'sandbox') {
+        hostHub = "hub.dianshangwan.com"
+
         etcdAttachment = '/saas/sandbox/services/attachment/url';
         etcdProduct = '/saas/sandbox/services/product/url';
         etcdShop = '/saas/sandbox/services/shop/url';
@@ -120,6 +127,9 @@ if (process.env.ETCD_ENV) {
                     }
                 }
             }
+        },
+        "host": {
+            "hub": hostHub
         }
     };
     console.log(obj);

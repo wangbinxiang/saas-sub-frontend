@@ -34,7 +34,8 @@
     }
   },
   "host": {
-    "zhuce": "http://zhuce.dianshangwan.com"
+    "zhuce": "zhuce.dianshangwan.com",
+    "hub": "hub.saaslocal.com"
   },
   "qiniu": {
     "accessKey": "4i-VhpjaUerpYaw5_j8JlIyTjGYwxeUDMe5k2qP3",
