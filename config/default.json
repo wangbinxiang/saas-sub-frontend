@@ -29,6 +29,7 @@
   "port": 3010,
   "wechat": {
     "dianshangwan": {
+      "authHost": "hub.yundianshang.cc",
       "appID": "wx73fc850b69d5209f",
       "appsecret": "799126be40163fa841b5e08f5f7b1f99"
     }

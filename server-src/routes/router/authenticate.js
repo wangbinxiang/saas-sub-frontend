@@ -9,6 +9,7 @@ import { requiresLogin } from '../../middlewares/authorization';
 import config from 'config';
 
 import OAuth from 'wechat-oauth';
+import base64url from 'base64url';
 
 
 const router = Router();
@@ -39,13 +40,17 @@ router.get('/auth/faker', async (ctx, next) => {
 
 router.get('/wechat/auth', async (ctx, next) => {
 
-	let callbackUrl = config.get('host.zhuce') + '/wechat/auth/callback?shopId=' + ctx._subId
+	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
+
+	let redirectTo = 'http://' + ctx.host + '/wechat/auth/callback';
 
 	if (ctx.session.returnTo) {
-		callbackUrl += '&returnTo=' + ctx.session.returnTo;
+		redirectTo += '?&returnTo=' + ctx.session.returnTo;
 	}
 
-	// let callbackUrl = 'http://10.sub.dianshangwan.com/wechat/auth/callback';
+	callbackUrl += 'redirectTo=' +base64url(redirectTo);
+
+	console.log(callbackUrl);
 	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	ctx.redirect(location);
