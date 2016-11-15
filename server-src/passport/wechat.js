@@ -2,7 +2,7 @@ import {
     Strategy
 } from 'passport-wechat';
 import config from 'config';
-import MemberService from '../models/application/MemberService';
+
 
 
 const callbackUrl = 'http://10.sub.dianshangwan.com/wechat/auth/callback';
@@ -24,14 +24,14 @@ export default new Strategy({
         console.log(profile);
         console.log(expires_in);
 
-        let openid = profile.openid;
-        let nickName = profile.nickname;
-        let shopId = 10;
-        const memberService = new MemberService();
-        let member = await memberService.wechatLogin(openid, nickName, shopId);
+        // let openid = profile.openid;
+        // let nickName = profile.nickname;
+        // let shopId = 10;
+        // const memberService = new MemberService();
+        // let member = await memberService.wechatLogin(openid, nickName, shopId);
 
-        if (member) {
-            return done(null, member);
+        if (profile) {
+            return done(null, profile);
         }
 
         return done(new Error('wechat login fail'));

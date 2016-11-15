@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import ProductService from '../../models/application/ProductService';
 import OrderService from '../../models/application/OrderService';
+import MemberService from '../../models/application/MemberService';
 
 const p12 = path.resolve(__dirname, '../../../config/apiclient_cert.p12');
 const p12File = fs.readFileSync(p12);
@@ -121,7 +122,18 @@ router.post('/signin',
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
 
-        let res = await passport.authenticate('wechat')(ctx, next);
+        let profile = await passport.authenticate('wechat')(ctx, next);
+        ctx.logout();
+        if (profile) {
+            const openid = profile.openid;
+            const nickName = profile.nickname;
+            const shopId = ctx._subId;
+            const memberService = new MemberService();
+            const member = await memberService.wechatLogin(openid, nickName, shopId);
+            if (member) {
+                ctx.login(member);
+            }
+        }
 
         let redirectTo = ctx.query.returnTo? ctx.query.returnTo: '/';
 
