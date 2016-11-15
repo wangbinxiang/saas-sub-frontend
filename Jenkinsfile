@@ -20,6 +20,7 @@ node {
     timeout(time:2, unit:'DAYS') {
         input message:'Release Production ?', ok: 'Release'
     }
+    sh 'sed -i "s/VERSION/$(cat VERSION)/g" deployment/production/docker-compose.yml'
     dir('deployment/production') {
         sh 'rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_PRODUCTION_ACCESS_KEY} --secret-key ${RANCHER_PRODUCTION_SECRET_KEY} --verbose -p saas-sub-frontend up -d --upgrade --batch-size 1 --interval "30000" --confirm-upgrade service'
     }
