@@ -122,22 +122,35 @@ router.post('/signin',
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
 
-        let profile = await passport.authenticate('wechat')(ctx, next);
-        ctx.logout();
-        if (profile) {
-            const openid = profile.openid;
-            const nickName = profile.nickname;
-            const shopId = ctx._subId;
-            const memberService = new MemberService();
-            const member = await memberService.wechatLogin(openid, nickName, shopId);
-            if (member) {
-                ctx.login(member);
-            }
-        }
+        let profile = await passport.authenticate('wechat', async (profile, info, status) => {
+                console.log('status');
+                console.log(status);
+                console.log(profile);
+                if (profile === false) {
+                    ctx.status = 403;
+                    ctx.body = info;
+                } else {
+                    const openid = profile.openid;
+                    const nickName = profile.nickname;
+                    const shopId = ctx._subId;
+                    const memberService = new MemberService();
+                    const member = await memberService.wechatLogin(openid, nickName, shopId);
+                    console.log('member');
+                    console.log(member);
+                    if (member) {
+                        ctx.login(member);
+                        ctx.status = 200;
+                        ctx.body = user;
 
-        let redirectTo = ctx.query.returnTo? ctx.query.returnTo: '/';
+                        let redirectTo = ctx.query.returnTo? ctx.query.returnTo: '/';
 
-        ctx.redirect(redirectTo);
+                        ctx.redirect(redirectTo);
+                    } else {
+                        ctx.status = 403;
+                        ctx.body = {};
+                    }
+                }
+            })(ctx, next);
     } catch (err) {
         console.log(err);
         ctx.redirect('/wechat/auth');
