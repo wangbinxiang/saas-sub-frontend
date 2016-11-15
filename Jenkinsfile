@@ -11,6 +11,7 @@ node {
     sh 'sudo docker tag $(sudo docker images |grep \'registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend\'|grep \'latest\'|awk \'{print $3}\') registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend:$(cat ./VERSION)'
     sh 'sudo docker push registry-internal.cn-hangzhou.aliyuncs.com/saas/saas-sub-frontend:$(cat ./VERSION)'
     stage 'release sandbox'
+    sh 'sed -i "s/VERSION/$(cat VERSION)/g" deployment/sandbox/docker-compose.yml'
     dir('deployment/sandbox') {
         sh 'rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_SANDBOX_ACCESS_KEY} --secret-key ${RANCHER_SANDBOX_SECRET_KEY} --verbose -p saas-sub-frontend up -d --upgrade --confirm-upgrade service'
     }
