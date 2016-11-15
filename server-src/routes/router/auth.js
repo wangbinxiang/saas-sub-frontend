@@ -140,7 +140,7 @@ router.get('/wechat/auth/callback', async (ctx, next) => {
                     if (member) {
                         ctx.login(member);
                         ctx.status = 200;
-                        ctx.body = user;
+                        ctx.body = member;
 
                         let redirectTo = ctx.query.returnTo? ctx.query.returnTo: '/';
 
