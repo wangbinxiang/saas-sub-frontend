@@ -3,6 +3,9 @@ import ProductTypeAdapter from '../adapter/ProductTypeAdapter';
 import Product from '../model/Product';
 import ProductType from '../model/ProductType';
 import _ from 'lodash';
+import {
+    PRODUCT_STATUS_ON_SALE
+} from '../../config/productConf';
 
 
 export default class IndexService {
@@ -11,67 +14,36 @@ export default class IndexService {
 		this.productAdapter = new ProductAdapter();
 	}
 
-	async index(filters, pages, logoWidth, logoHeight) {
-		let result = await this.productAdapter.get({
+	async index(number, size, userId) {
+		//分页，产品列表，分类列表(导航使用)
+		let page, products, productTypes;
+
+		const pages = {
+	        number,
+	        size
+	    };
+
+		const filters = {
+			userId,
+			status: PRODUCT_STATUS_ON_SALE
+		}
+
+		const productsResult = await this.productAdapter.get({
 			filters,
 			pages
 		}, Product);
 
-		if (result == null) {
+		if (productsResult !== null) {
 			//没有获取数据 直接返回空
-			return result;
-		} else {
+			page = productsResult.page;
+			products = productsResult.result;
+		} 
 
-			let { page, result: products } = result;
-			
-
-			let productTypeIdList = []
-			// let attachmentIdList = [];
-			// let logoList = []
-			for (let i in products) {
-				productTypeIdList.push(products[i].productTypeId);
-				// attachmentIdList.push(products[i].logoId);
-			}
-
-			//获取productType信息
-			if (productTypeIdList && productTypeIdList.length > 0) {
-				// try {
-
-				productTypeIdList = _.uniq(productTypeIdList);
-				const productTypeAdapter = new ProductTypeAdapter();
-				let productTypes = await productTypeAdapter.get({
-					'idList': productTypeIdList
-				}, ProductType);
-
-
-				if (productTypes !== null) {
-					if (productTypes) {
-						for (let i in products) {
-							products[i].productType = productTypes[products[i].productTypeId];
-						}
-					}
-				}
-			}
-
-			//获取封面图片信息
-			// if (attachmentIdList && attachmentIdList.length > 0) {
-			// 	attachmentIdList = _.uniq(attachmentIdList);
-			// 	const attachmentAdapter = new AttachmentAdapter();
-			// 	let attachments = await attachmentAdapter.getImage(attachmentIdList, logoWidth, logoHeight, Attachment);
-
-			// 	if (attachments !== null) {
-			// 		for (let i in products) {
-			// 			products[i].logo = attachments[products[i].logoId];
-			// 		}
-			// 	}
-			// }
-
-			//返回 分页 和 Products 数据
-			return {
-				page,
-				products
-			};
-		}
+		//返回 分页 和 Products 数据
+		return {
+			page,
+			products
+		};
 	}
 
 

@@ -1,0 +1,35 @@
+<%- include('../layout/header') -%>
+<nav aria-label="您的位置:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="#">首页</a></li>
+        <li>
+            <span class="show-for-sr">当前: </span> 分类频道
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column"><%= productType.name %></h1>
+    <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
+        <div class="column">
+            <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <img data-bind="attr:{src: imgHost + logo + imgStyle }" />
+                <b data-bind="text:name"></b>
+                <em></em>
+                <span><small>最低</small> ￥<strong data-bind="text:minPrice"></strong></span>
+            </a>
+        </div>
+    </div>
+<div class="list-button row column">
+    <a class="button large btnMore" style="display: none;" data-bind="click: more, visible: isNext()" id="more">显示更多商品</a>
+</div>
+
+<script>
+	var productTypeId = <%= productTypeId %>;
+	var data = <%- JSON.stringify(products? products: {}) %>;
+    var isNext = <%= isNext %>;
+    var imgHost = '<%= imgHost %>';
+    var imgStyle = '<%= imgStyle %>';
+</script>
+
+
+<%- include('../layout/footer') -%>

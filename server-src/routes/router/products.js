@@ -5,7 +5,7 @@ import {
 import {
 	detailValidation,
 } from '../../validations/productsValidation';
-// import { requiresLogin } from '../../middlewares/authorization';
+import navigation from '../../middlewares/navigation';
 
 const router = Router();
 
@@ -17,7 +17,7 @@ router.prefix('/products')
 
 
 //预览产品页面
-router.get('/:id', detailValidation, detail);
+router.get('/:id', detailValidation, navigation, detail);
 
 
 export default router;

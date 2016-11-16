@@ -1,7 +1,4 @@
 <%- include('../layout/header') -%>
-
-
-
 <% if(slidesData.length > 0){ %>
 <div class="row expanded column top-carousel">
     <div class="jcarousel jcarousel--home">
@@ -61,7 +58,7 @@
 <script>
 	var data = <%- JSON.stringify(products) %>;
     var pageno = <%= number %>;
-    var isnext = <%= isNext %>;
+    var isNext = <%= isNext %>;
     var imgHost = '<%= imgHost %>';
     var imgStyle = '<%= imgStyle %>';
 </script>

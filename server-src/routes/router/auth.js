@@ -122,7 +122,7 @@ router.post('/signin',
 router.get('/wechat/auth/callback', async (ctx, next) => {
     try {
 
-        let profile = await passport.authenticate('wechat', async (profile, info, status) => {
+        await passport.authenticate('wechat', async (profile, info, status) => {
                 console.log('status');
                 console.log(status);
                 console.log(profile);

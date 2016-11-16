@@ -48,11 +48,13 @@
             </div>
             <div id="responsive-menu" class="menu-body">
                 <div class="top-bar-left top-bar-left--global">
+                    <% if(typeof _navigation !== 'undefined') { %>
                     <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
-                        <!--<li><a href="detail.html" class="highlight">Tours</a></li>
-                        <li><a href="detail_alt.html">Destinations</a></li>
-                        <li><a href="list.html">Flights</a></li>-->
+                        <% for(const i in _navigation) { %>
+                        <li><a href="/channel/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
+                        <% } %>
                     </ul>
+                    <% } %>
                 </div>
             </div>
         </header>

@@ -70,25 +70,26 @@ let ProdModel = function(data){
     });
     
     let self = this
-    self.prods = ko.observableArray(arrData)
+    self.prods = ko.observableArray(arrData);
+    self.isNext = ko.observable(isNext);
 
-    //self.more = function() {
-    //    pageno = pageno + 1
-    //    $.ajax({
-    //        method: "GET",
-    //        url: "/product-types?number=" + pageno,
-    //        dataType: "json"
-    //    })
-    //    .done(function(respones) {
-    //        let types = $.map(respones.productTypes, function(value, index) {
-    //            return [value];
-    //        });
-    //        for(let type of types){
-    //            self.types.push(type)
-    //        }
-    //        self.isNext(respones.moreInfo)
-    //    })
-    //}
+    self.more = function() {
+       pageno = pageno + 1
+       $.ajax({
+           method: "GET",
+           url: "/product-types?number=" + pageno,
+           dataType: "json"
+       })
+       .done(function(respones) {
+           let types = $.map(respones.productTypes, function(value, index) {
+               return [value];
+           });
+           for(let type of types){
+               self.types.push(type)
+           }
+           self.isNext(respones.moreInfo);
+       })
+    }
 }
 
 let prodModel = new ProdModel(data)

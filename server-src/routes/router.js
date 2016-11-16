@@ -10,6 +10,8 @@ import routerOrders from './router/orders';
 import routerIndex from './router/index';
 //认证路由
 import routerAuth from './router/auth'
+//频道页路由
+import routerChannel from './router/channel';
 
 
 const router = new Router();
@@ -19,6 +21,7 @@ router.use('', routerProducts.routes());
 router.use('', routerOrders.routes());
 router.use('', routerAuth.routes());
 router.use('', routerIndex.routes());
+router.use('', routerChannel.routes());
 
 
 export default router;

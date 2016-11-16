@@ -12,7 +12,7 @@ import session from 'koa-generic-session';
 // import mysqlSession from 'koa-mysql-session';
 import memcacheSession from 'koa-memcached';
 import passport from 'koa-passport';
-import _ from 'underscore';
+// import _ from 'underscore';
 import config from 'config';
 
 
