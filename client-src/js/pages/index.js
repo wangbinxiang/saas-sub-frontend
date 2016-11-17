@@ -77,17 +77,18 @@ let ProdModel = function(data){
        pageno = pageno + 1
        $.ajax({
            method: "GET",
-           url: "/product-types?number=" + pageno,
+           url: "/?number=" + pageno,
            dataType: "json"
        })
        .done(function(respones) {
-           let types = $.map(respones.productTypes, function(value, index) {
+           const products = $.map(respones.products, function(value, index) {
                return [value];
            });
-           for(let type of types){
-               self.types.push(type)
+           for(let product of products){
+               self.prods.push(product)
            }
-           self.isNext(respones.moreInfo);
+           self.isNext(respones.isNext);
+           Foundation.reInit($('#listEqualizer'));
        })
     }
 }

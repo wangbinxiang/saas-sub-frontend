@@ -4,7 +4,6 @@ if (module.hot) {
 
 import './base.js';
 
-
 const ProdModel = function(data, productTypeId){
     var arrData = $.map(data, function(value, index) {
         return [value];
@@ -30,7 +29,8 @@ const ProdModel = function(data, productTypeId){
                self.prods.push(product)
            }
            self.isNext(respones.isNext);
-           new Foundation.Equalizer($('#listEqualizer'));
+           // new Foundation.Equalizer($('#listEqualizer'));
+           Foundation.reInit($('#listEqualizer'));
        })
     }
 }

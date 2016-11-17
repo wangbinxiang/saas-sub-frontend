@@ -1,0 +1,15 @@
+<%- include('../layout/header') -%>
+    <nav aria-label="You are here:" role="navigation" class="clearfix">
+        <ul class="breadcrumbs onionLink">
+            <li><a href="/">首页</a></li>
+            <li>
+                <span class="show-for-sr">Current: </span> 用户关联注册
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="row column user-margin"><%= "关联用户" %></h1>
+    <div data-abide-error class="alert callout" >
+        <p><i class="fi-alert"></i><%= message %><a href="<%= redirectTo %>">请点击跳转</a></p>
+    </div>
+<%- include('../layout/footer') -%>

@@ -38,6 +38,8 @@
     "zhuce": "zhuce.dianshangwan.com",
     "hub": "hub.saaslocal.com"
   },
+  "relationshipSub": ["10021"],
+  "relationshipParentId": "0",
   "qiniu": {
     "accessKey": "4i-VhpjaUerpYaw5_j8JlIyTjGYwxeUDMe5k2qP3",
     "secretKey": "Ax2usNh4f5Vt1xCOyJP0nltDNR-xk2zE58TWftK7",

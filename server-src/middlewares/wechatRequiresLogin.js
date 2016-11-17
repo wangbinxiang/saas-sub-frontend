@@ -1,3 +1,4 @@
+import { notNeedRelationship } from '../tools/signup';
 /**
  * 微信访问需要登陆
  * @author wangbinxiang
@@ -16,7 +17,7 @@ export default async function wechatRequiresLogin(ctx, next) {
 		'/wechat/auth/callback'
 	];
 
-	if (isWeixinBrowser(ctx.headers['user-agent']) && ignoreUrls.indexOf(ctx.path) === -1) {
+	if (isWeixinBrowser(ctx.headers['user-agent']) && notNeedRelationship(ctx._subId) && ignoreUrls.indexOf(ctx.path) === -1) {
 	    if (ctx.isAuthenticated()) {
 	        await next();
 	    } else {
@@ -33,3 +34,4 @@ export default async function wechatRequiresLogin(ctx, next) {
 function isWeixinBrowser(userAgent){
   return /micromessenger/.test(userAgent.toLowerCase());
 }
+

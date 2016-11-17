@@ -14,7 +14,7 @@ router.prefix('/channel');
 
 router.get('/qrcode', async (ctx, next) => {
 
-	const img = qrImage.image('http://nga.178.com/');
+	const img = qrImage.image('http://nga.178.com/', {size: 10, margin: 0});
 	ctx.type = 'image/png';
     await new Promise(()=>{
     	img.pipe(ctx.res)

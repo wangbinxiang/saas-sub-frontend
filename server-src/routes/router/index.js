@@ -9,11 +9,11 @@ const router = Router()
 router.get('/', navigation, index);
 
 
-router.get('/category', category);
-router.get('/detail', detail);
-router.get('/orderConfirm', orderConfirm);
-router.get('/orders', orders);
-router.get('/order', order);
+// router.get('/category', category);
+// router.get('/detail', detail);
+// router.get('/orderConfirm', orderConfirm);
+// router.get('/orders', orders);
+// router.get('/order', order);
 
 // router.get('/member', async(ctx, next) => {
 // 	let openid = 'oB42-wQn9urflXjc_XS_Oghyo-v9';

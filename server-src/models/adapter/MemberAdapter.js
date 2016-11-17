@@ -18,11 +18,12 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 
-	wechatSignup(openid, nickName, shopId, aUserClass) {
+	wechatSignup(openId, nickName, shopId, parentId, aUserClass) {
 	    this.buildRequest(MEMBER_SIGNUP, { 
-	    	shopId: shopId,
-	        openId: openid,
-	        nickName: nickName
+	    	shopId,
+	        openId,
+	        nickName,
+	        parentId
 	    });
 
 	    this.activeClass = aUserClass;
