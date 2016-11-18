@@ -83,10 +83,10 @@
 
 <div class="text-center">
     <h3>扫码加入会员</h3>
-    <img src="/channel/qrcode">
+    <img src="/channel/qrcode?productId=<%= product.id %>">
 <div>
 
 <script>
-	var id = <%= product.id %>
+	var id = <%= product.id %>;
 </script>
 <%- include('../layout/footer') -%>

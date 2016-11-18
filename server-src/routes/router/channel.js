@@ -14,7 +14,11 @@ router.prefix('/channel');
 
 router.get('/qrcode', async (ctx, next) => {
 
-	const img = qrImage.image('http://nga.178.com/', {size: 10, margin: 0});
+	//需要productId
+	const productId = ctx.query.productId;
+
+	const url = 'http://' + ctx.host + '/wechat/auth/relationship?redirectTo=/products/' + productId;
+	const img = qrImage.image(url, {size: 10, margin: 0});
 	ctx.type = 'image/png';
     await new Promise(()=>{
     	img.pipe(ctx.res)

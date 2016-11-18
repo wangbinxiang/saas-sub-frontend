@@ -65,9 +65,7 @@ router.get('/wechat/auth/relationship', signupRelationshipBlock, wechatRelations
 });
 
 //大美网站直接注册登陆
-router.get('/wechat/auth/login/relationship', signupRelationshipBlock, wechatRelationshipValidation, async (ctx, next) => {
-	const parentId = ctx.query.parentId;
-
+router.get('/wechat/auth/login/relationship', signupRelationshipBlock, async (ctx, next) => {
 
 	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
 
