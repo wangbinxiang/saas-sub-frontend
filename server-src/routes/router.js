@@ -13,6 +13,8 @@ import routerAuth from './router/auth'
 //频道页路由
 import routerChannel from './router/channel';
 
+import routerQrcode from './router/qrcode';
+
 
 const router = new Router();
 
@@ -22,6 +24,7 @@ router.use('', routerOrders.routes());
 router.use('', routerAuth.routes());
 router.use('', routerIndex.routes());
 router.use('', routerChannel.routes());
+router.use('', routerQrcode.routes());
 
 
 export default router;

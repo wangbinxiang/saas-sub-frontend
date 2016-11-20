@@ -7,7 +7,7 @@ import {
 } from '../../controllers/authenticate';
 import { requiresLogin } from '../../middlewares/authorization';
 import { wechatRelationshipValidation } from '../../validations/authValidation';
-import { signupRelationshipBlock, signupNormalBlock } from '../../middlewares/auth/signup';
+import { authRelationshipWechatBlock, authNormalWechatBlock } from '../../middlewares/auth/wechat';
 
 import config from 'config';
 
@@ -25,7 +25,7 @@ router.get('/auth/faker', async (ctx, next) => {
 	await next();
 }, faker);
 
-router.get('/wechat/auth', signupNormalBlock, async (ctx, next) => {
+router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 
 	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
 
@@ -35,7 +35,7 @@ router.get('/wechat/auth', signupNormalBlock, async (ctx, next) => {
 		redirectTo += '?&returnTo=' + ctx.session.returnTo;
 	}
 
-	callbackUrl += 'redirectTo=' +base64url(redirectTo);
+	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);
 	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
@@ -44,8 +44,8 @@ router.get('/wechat/auth', signupNormalBlock, async (ctx, next) => {
 });
 
 //关联用户注册
-router.get('/wechat/auth/relationship', signupRelationshipBlock, wechatRelationshipValidation, async (ctx, next) => {
-	const parentId = ctx.query.parentId;
+router.get('/wechat/auth/relationship', authRelationshipWechatBlock, wechatRelationshipValidation, async (ctx, next) => {
+	const parentId = ctx.query.parentId? ctx.query.parentId: config.get('relationshipParentId');
 
 
 	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
@@ -56,35 +56,13 @@ router.get('/wechat/auth/relationship', signupRelationshipBlock, wechatRelations
 		redirectTo += '&returnTo=' + ctx.query.redirectTo;
 	}
 
-	callbackUrl += 'redirectTo=' +base64url(redirectTo);
+	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);
 	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	ctx.redirect(location);
 });
-
-//大美网站直接注册登陆
-router.get('/wechat/auth/login/relationship', signupRelationshipBlock, async (ctx, next) => {
-
-	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
-
-	let redirectTo = 'http://' + ctx.host + '/wechat/auth/login/relationship/callback';
-
-	if (ctx.query.redirectTo) {
-		redirectTo += '?returnTo=' + ctx.query.redirectTo;
-	}
-
-	callbackUrl += 'redirectTo=' +base64url(redirectTo);
-
-	console.log(callbackUrl);
-	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
-	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
-	ctx.redirect(location);
-});
-
-
-
 
 router.get('/log', async (ctx, next) => {
 	console.log(ctx.query.code);

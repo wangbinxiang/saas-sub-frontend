@@ -3,7 +3,7 @@ import Joi from 'joi';
 
 
 export const wechatRelationshipValidation = validate('query')(Joi.object().keys({
-	parentId: Joi.number().integer().required(),
+	parentId: Joi.number().integer(),
 }));
 
 
