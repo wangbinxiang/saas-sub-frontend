@@ -28,8 +28,8 @@
             <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
                 <% if(__IN_WECHAT__ && typeof user === 'undefined') { %>
                 <a href="<%= __AUTH_WECHAT_LINK__ %>">授权登录</a>
-                <% } else { %>
-
+                <% } else if(typeof user !== 'undefined') { %>
+                    <a href="/orders">我的定单</a>
                 <% } %>
             </div>
             <div id="responsive-menu" class="menu-body">
