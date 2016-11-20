@@ -9,7 +9,7 @@ import { isWeixinBrowser } from '../tools/wechat';
  */
 export async function isInWechat(ctx, next) {
 
-	ctx.state.__IN_WECHAT__ = true;
+	ctx.state.__IN_WECHAT__ = false;
 
 	if (isWeixinBrowser(ctx.headers['user-agent'])) {
 		ctx.state.__IN_WECHAT__ = true;

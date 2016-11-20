@@ -31,10 +31,8 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 
 	let redirectTo = 'http://' + ctx.host + '/wechat/auth/callback';
 
-	if (ctx.session.returnTo) {
-		redirectTo += '?&returnTo=' + ctx.session.returnTo;
-	}
-
+	redirectTo += '&returnTo=' + ( ctx.headers.referer? ctx.headers.referer: '/');
+	console.log(ctx.headers);
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);
@@ -52,10 +50,8 @@ router.get('/wechat/auth/relationship', authRelationshipWechatBlock, wechatRelat
 
 	let redirectTo = 'http://' + ctx.host + '/wechat/auth/relationship/callback?parentId=' + parentId;
 
-	if (ctx.query.redirectTo) {
-		redirectTo += '&returnTo=' + ctx.query.redirectTo;
-	}
-
+	redirectTo += '&returnTo=' + ( ctx.headers.referer? ctx.headers.referer: '/');
+	console.log(redirectTo);
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);

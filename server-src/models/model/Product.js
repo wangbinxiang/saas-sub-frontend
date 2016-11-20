@@ -1,3 +1,11 @@
+import {
+	PRODUCT_STATUS_IN_STOCK,
+	PRODUCT_STATUS_ON_SALE,
+	PRODUCT_STATUS_DELETE,
+	PRODUCT_STATUS_PERMANENTLY_DELETE
+} from '../../config/productConf';
+
+
 export default class Product {
 	constructor ({
 		id = 0,
@@ -38,4 +46,32 @@ export default class Product {
 		this.productType   = undefined;
 		this.snapshotIds   = snapshots;
 	}
+
+	/**
+	 * 是否在出售
+	 * @author wangbinxiang
+	 * @date   2016-11-20T22:26:13+0800
+	 * @return {Boolean}                [description]
+	 */
+	isOnSale() {
+		if (this.status === PRODUCT_STATUS_ON_SALE) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 是否拥有该产品
+	 * @author wangbinxiang
+	 * @date   2016-11-20T22:58:15+0800
+	 * @param  {[type]}                 shopId [description]
+	 * @return {[type]}                        [description]
+	 */
+	own(shopId) {
+		console.log(shopId)
+		console.log(this.userId)
+		console.log(this.userId === shopId)
+		return this.userId === shopId;
+	}
+
 }

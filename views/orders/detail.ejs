@@ -62,14 +62,13 @@
         </thead>
         <tbody>
 
-            <% for(let i of order.products){ %>
-            <% console.log(i) %>
+            <% for(let product of order.products){ %>
 			<tr>
-                <td data-th="产品ID"><%= i.productSnapshot.product.id %></td>
-                <td data-th="产品名称"><%= i.productSnapshot.product.name %></td>
-                <td data-th="规格"><%= i.productSnapshot.product.prices[i.priceIndex].title %></td>
-                <td data-th="单价">￥<%= i.productSnapshot.product.prices[i.priceIndex].price %></td>
-                <td data-th="数量"><%= i.number %></td>
+                <td data-th="产品ID"><%= product.productSnapshot.product.id %></td>
+                <td data-th="产品名称"><%= product.productSnapshot.product.name %></td>
+                <td data-th="规格"><%= product.productSnapshot.product.prices[product.priceIndex].title %></td>
+                <td data-th="单价">￥<%= product.productSnapshot.product.prices[product.priceIndex].price %></td>
+                <td data-th="数量"><%= product.number %></td>
             </tr>
             <% } %>
         </tbody>

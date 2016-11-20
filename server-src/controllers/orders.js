@@ -8,14 +8,15 @@ export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id
 	//商品价格索引 ctx.query.price
 	//商品数量 ctx.query.number
-	let productId = ctx.query.id;
-	let priceOrder = ctx.query.price;
-	let productNum = ctx.query.number;
+	const productId = ctx.query.id;
+	const priceOrder = ctx.query.price;
+	const productNum = ctx.query.number;
+	const shopId = ctx._subId;
 
 
 	const orderService = new OrderService();
 
-	let result = await orderService.showAddOrder(productId, priceOrder, productNum);
+	const result = await orderService.showAddOrder(productId, priceOrder, productNum, shopId);
 
 	if (result !== null) {
 
@@ -37,60 +38,33 @@ export async function showAddOrder(ctx, next) {
 
 export async function addOrder(ctx, next) {
 
-
-	// ctx.state.user = { 
-	// 	id: '17',
-	// 	cellPhone: '',
-	// 	nickName: '波风皆人',
-	// 	userName: 'GOaC1476033708',
-	// 	status: 0,
-	// 	createTime: 1476033708,
-	// 	updateTime: 1476033708,
-	// 	statusTime: 1476033708,
-	// 	openId: 'osgj-wm-CKTT4K3xJoBoxh78w73w' }
-
-
-
-	// console.log(ctx.state.user);
 	let userId = ctx.state.user.id;
-	// let userId = 21
+
 	let shopId = ctx._subId;
 
 	let price = ctx.request.body.price;
 
 	let comment = ctx.request.body.comment;
 
-	// ctx.request.body.productId;
-	// ctx.request.body.number;
-	// ctx.request.body.priceIndex;
+	const orderService = new OrderService();
+	let productList = [
+		{
+			productId: ctx.request.body.productId,
+			number: ctx.request.body.number,
+			priceIndex: ctx.request.body.priceIndex
+		}
+	];
 
+	let result = await orderService.addOrder(userId, shopId, price, comment, productList);
 
-	const productService = new ProductService();
-	let product = await productService.get(ctx.request.body.productId, shopId);
-	console.log(product.snapshotIds[0]);
-
-
-	if (product === null) {
+	if (result === null) {
 	    ctx.status = 404;
 	    ctx.body = {};
 	} else {
-		const orderService = new OrderService();
-		let productList = [
-			{
-				productId: ctx.request.body.productId,
-				number: ctx.request.body.number,
-				priceIndex: ctx.request.body.priceIndex,
-				snapshotId: product.snapshotIds[0]
-			}
-		];
-		console.log(productList);
-		let result = await orderService.addOrder(userId, shopId, price, comment, productList);
-
+		
 		console.log(result);
 
 		ctx.body = result;
-		// ctx.status = 500;
-		// ctx.body = {};
 	}
 }
 
@@ -167,7 +141,7 @@ export async function index(ctx, next) {
 
 	if (result !== null) {
 		let page = result.page;
-		orders = lodash.values(result.orders);
+		orders = result.orders;
 
 		if (page && page.haveNext()) {
 		    isNext = true;
@@ -214,17 +188,22 @@ export async function detail(ctx, next) {
 	let shopId = ctx._subId;
 	//订单id
 	let id = ctx.params.id;
-	console.log(id);
+
 	const orderService = new OrderService();
-	let order = await orderService.get(id);
-	console.log(order.products[0].productSnapshot);
+	let order = await orderService.detail(id, userId, shopId);
 
-    const title = '订单详情'
-    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+	if (order === null) {
+	    ctx.status = 404;
+	    await ctx.render('404');
+	} else {
+		
+	    const title = '订单详情'
+	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
 
-    await ctx.render('orders/detail', {
-        title, pageJs, order
-	});
+	    await ctx.render('orders/detail', {
+	        title, pageJs, order
+		});
+	}
 }
 
 export async function confirm(ctx, next) {

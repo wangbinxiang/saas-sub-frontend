@@ -10,6 +10,7 @@ import {
 	jumpPay
 } from '../../controllers/orders';
 import { requiresLogin } from '../../middlewares/authorization';
+import navigation from '../../middlewares/navigation';
 
 
 const router = Router();
@@ -21,7 +22,7 @@ router.use(requiresLogin);
 
 
 //添加路由页面
-router.get('/add', showAddOrder);
+router.get('/add', navigation, showAddOrder);
 
 router.post('/', addOrder);
 
@@ -31,13 +32,13 @@ router.post('/', addOrder);
 // router.get('/pay', pay);
 
 //订单列表页面
-router.get('/', index);
+router.get('/', navigation, index);
 
 
 router.get('/jumpPay', jumpPay);
 
 //订单详情页面
-router.get('/:id', detail);
+router.get('/:id', navigation, detail);
 
 
 

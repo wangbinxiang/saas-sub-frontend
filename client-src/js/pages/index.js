@@ -65,12 +65,12 @@ require.ensure([], function(require) {
 })
 
 let ProdModel = function(data){
-    var arrData = $.map(data, function(value, index) {
-        return [value];
-    });
+    // var arrData = $.map(data, function(value, index) {
+    //     return [value];
+    // });
     
     let self = this
-    self.prods = ko.observableArray(arrData);
+    self.prods = ko.observableArray(data);
     self.isNext = ko.observable(isNext);
 
     self.more = function() {
@@ -81,10 +81,10 @@ let ProdModel = function(data){
            dataType: "json"
        })
        .done(function(respones) {
-           const products = $.map(respones.products, function(value, index) {
-               return [value];
-           });
-           for(let product of products){
+           // const products = $.map(respones.products, function(value, index) {
+           //     return [value];
+           // });
+           for(let product of respones.products){
                self.prods.push(product)
            }
            self.isNext(respones.isNext);

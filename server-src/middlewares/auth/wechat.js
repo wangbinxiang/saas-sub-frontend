@@ -8,7 +8,8 @@ export async function authRelationshipWechatBlock(ctx, next) {
 	if (isAuthRelationship(ctx) && inWehcat(ctx)) {
 		await next();
 	} else {
-		throw new Error('signup relationship block');
+		ctx.status = 404;
+		await ctx.render('404');
 	}
 
 	//扫码注册关联相关用户
@@ -23,7 +24,8 @@ export async function authNormalWechatBlock(ctx, next) {
 	if (isAuthNormal(ctx) && inWehcat(ctx)) {
 		await next();
 	} else {
-		throw new Error('signup normal block');
+		ctx.status = 404;
+		await ctx.render('404');
 	}
 }
 

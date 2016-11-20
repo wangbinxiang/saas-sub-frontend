@@ -20,15 +20,17 @@ export default class Translator {
         }
         this.activeClass = aActiveClass;
         if (typeof body.data.length !== 'undefined') {
-            result = {};
+            result = [];
             for(let data of body.data) {
                 let obj = this.createObject(data, body.included);
-                result[obj.id] = obj;
+                result.push(obj);
             }
+
         } else {
             let obj = this.createObject(body.data, body.included);
             if (this.isNeedArrayResult()) {
-                result = { [obj.id] : obj };
+                result = [];
+                result.push(obj);
             } else {
                 result = obj;
             }
