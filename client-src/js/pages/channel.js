@@ -35,16 +35,20 @@ const ProdModel = function(data, productTypeId){
     }
 }
 
+let prodModel
+
 function koBind(data, productTypeId) {
-	const prodModel = new ProdModel(data, productTypeId);
+	prodModel = new ProdModel(data, productTypeId);
 	ko.applyBindings(prodModel);
 }
 
 koBind(data, productTypeId);
 
-require.ensure([], function(require) {
-    let imagesLoaded = require('imagesloaded')
-    new imagesLoaded($('#listEqualizer'), function(){
-        var equalizer = new Foundation.Equalizer($('#listEqualizer'));
-    });
-})
+if(prodModel.prods().length > 1){
+    require.ensure([], function(require) {
+        let imagesLoaded = require('imagesloaded')
+        new imagesLoaded($('#listEqualizer'), function(){
+            var equalizer = new Foundation.Equalizer($('#listEqualizer'));
+        });
+    })
+}
