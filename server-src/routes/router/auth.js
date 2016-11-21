@@ -21,7 +21,7 @@ router.get('/wechat/auth/callback', authNormalWechatBlock, async(ctx, next) => {
                 ctx.status = 403;
                 ctx.body = info;
             } else {
-                const unionId = profile.unionId;
+                const unionId = profile.unionid;
                 const openid = profile.openid;
                 const nickName = profile.nickname;
                 const shopId = ctx._subId;
@@ -60,7 +60,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 ctx.status = 403;
                 ctx.body = info;
             } else {
-                const unionId = profile.unionId;
+                const unionId = profile.unionid;
                 const parentId = ctx.query.parentId;
                 const openid = profile.openid;
                 const nickName = profile.nickname;
