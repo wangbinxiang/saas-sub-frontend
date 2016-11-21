@@ -12,7 +12,6 @@ import ShopService from '../models/application/ShopService';
 export async function handlerHostToSubId(ctx, next) {
 
 
-    console.log(ctx.headers);
     console.log(ctx.host);
 
     const hostMapping = config.get('hostMapping');

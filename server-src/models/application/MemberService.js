@@ -18,7 +18,7 @@ export default class MemberService {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, null, unionId, Member);
+					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, undefined, unionId, Member);
 					break;
 				default:
 					throw err;
