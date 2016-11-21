@@ -13,7 +13,7 @@ export async function productType(ctx, next) {
 
 	const number = ctx.query.number ? ctx.query.number : 1;
 
-	const size = ctx.query.size ? ctx.query.size : 2;
+	const size = ctx.query.size ? ctx.query.size : 10;
 
 	const channelService = await new ChannelService();
 	const { page, products, productType } = await channelService.productType(number, size, productTypeId, ctx._subId);
