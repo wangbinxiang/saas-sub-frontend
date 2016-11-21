@@ -200,8 +200,11 @@ export async function detail(ctx, next) {
 	    const title = '订单详情'
 	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
 
+	    const hubHost = config.get('host.hub');
+
+
 	    await ctx.render('orders/detail', {
-	        title, pageJs, order
+	        title, pageJs, order, hubHost
 		});
 	}
 }
