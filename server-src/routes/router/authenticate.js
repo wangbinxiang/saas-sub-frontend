@@ -42,7 +42,7 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 });
 
 //关联用户注册
-router.get('/wechat/auth/relationship', authRelationshipWechatBlock, wechatRelationshipValidation, async (ctx, next) => {
+router.get('/wechat/auth/relationship', authRelationshipWechatBlock, async (ctx, next) => {
 	const parentId = ctx.query.parentId? ctx.query.parentId: config.get('relationshipParentId');
 
 
