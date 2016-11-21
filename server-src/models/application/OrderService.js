@@ -4,6 +4,7 @@ import OrderAdapter from '../adapter/OrderAdapter';
 import Order from '../model/Order';
 import ProductSnapshotAdapter from '../adapter/ProductSnapshotAdapter';
 import ProductSnapshot from '../model/ProductSnapshot';
+import lodash from 'lodash';
 
 
 export default class OrderService {
@@ -13,13 +14,13 @@ export default class OrderService {
 		this.orderAdapter = new OrderAdapter();
 	}
 
-	async showAddOrder(productId, priceOrder, productNum) {
+	async showAddOrder(productId, priceOrder, productNum, shopId) {
 		//获取产品信息
 		let product = await this.productAdapter.get({
 			idList: productId
 		}, Product);
-		if (product === null) {
-			return product;
+		if (product === null || !product.isOnSale() || !product.own(shopId)) {
+			return null;
 		} else {
 			//获取价格信息
 			let priceInfo = product.prices[priceOrder];
@@ -45,9 +46,11 @@ export default class OrderService {
 	 * @return {[type]}                         [description]
 	 */
 	async search(filters, pages) {
+		const sort = '-id';
 		let result = await this.orderAdapter.get({
 			filters,
-			pages
+			pages,
+			sort
 		}, Order);
 
 		if (result === null) {
@@ -61,16 +64,16 @@ export default class OrderService {
 	}
 
 
-	async get(id) {
+	async detail(id, userId, shopId) {
 		let order = await this.orderAdapter.get({
 			idList: id
 		}, Order);
 
-		if (order === null) {
+		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
 			return null;
 		} else {
 			let productSnapshot = undefined;
-			let snapshotIds = []
+			let snapshotIds = [];
 			for(let snapshot of order.products) {
 				snapshotIds.push(snapshot.snapshot);
 			}			
@@ -81,26 +84,35 @@ export default class OrderService {
 					idList: snapshotIds
 				}, ProductSnapshot);
 			}
-
 			if (productSnapshot) {
 				for(let key in order.products) {
-					order.products[key]['productSnapshot'] = productSnapshot[order.products[key].snapshot];
+					const snapshotKey = lodash.findIndex(productSnapshot, function(o) { return o.id === order.products[key].snapshot; });
+					order.products[key]['productSnapshot'] = productSnapshot[snapshotKey];
 				}
 			}
-
 			return order;
 		}
 	}
 
 
 	async addOrder(userId, shopId, price, comment, productList) {
-		return await this.orderAdapter.add({
-			userId,
-			shopId,
-			price,
-			comment,
-			productList
-		}, Order);
+		//获取产品信息
+		const product = await this.productAdapter.get({
+			idList: productList[0].productId
+		}, Product);
+		if (product === null || !product.isOnSale() || !product.own(shopId)) {
+			return null;
+		} else {
+			productList[0].snapshotId = product.snapshotIds[0];
+
+			return await this.orderAdapter.add({
+				userId,
+				shopId,
+				price,
+				comment,
+				productList
+			}, Order);
+		}
 	}
 
 

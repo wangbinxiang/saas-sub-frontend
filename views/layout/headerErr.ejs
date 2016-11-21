@@ -1,0 +1,29 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%= typeof title !== 'undefined'? title: ''%></title>
+        <link rel="icon" href="/img/sa_logo.png" type="image/x-icon" />
+        <link rel="stylesheet" href="/css/app.css?20161031" />
+        <link rel="stylesheet" href="/css/appfix.css?20161031" />
+    </head>
+    <body>
+        <header class="top-bar" id="headerGlobal">
+            <div class="top-bar-title">
+                <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
+                    <span class="menu-icon dark" data-toggle></span>
+                </span>
+                <strong><a href="/"><img src="<%= typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
+                <div class="top-bar-fix">
+                    <ul class="menu">
+                        <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
+                        <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li>
+                        <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>welcome</b><i class="material-icons mi-expand_more"></i></a></li>
+                        <li><a class="cart"><i class="material-icons mi-shopping_cart"></i><em></em></a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="show-for-small-only small-header-margin-top"></div>

@@ -8,7 +8,8 @@ export default class Member {
         createTime = '',
         updateTime = '',
         statusTime = '',
-        openId = ''
+        openId = '',
+        unionId = ''
     }) {
         this.id = id;
         this.cellPhone = cellPhone;
@@ -19,5 +20,6 @@ export default class Member {
         this.updateTime = updateTime;
         this.statusTime = statusTime;
         this.openId = openId;
+        this.unionId = unionId;
     }
 }

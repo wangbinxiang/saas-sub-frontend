@@ -9,15 +9,15 @@ export default class ProductTypeTranslator extends Translator {
     readData(data) {
         const bodyReader = new ProductTypeJsonApiBodyReader(data);
 
-        let id         = bodyReader.value('id');
-        let name       = bodyReader.value('name');
-        let category   = bodyReader.value('category');
-        let updateTime = bodyReader.value('updateTime');
-        let createTime = bodyReader.value('createTime');
-        let statusTime = bodyReader.value('statusTime');
-        let status     = bodyReader.value('status');
+        const id         = bodyReader.value('id');
+        const name       = bodyReader.value('name');
+        const category   = bodyReader.value('category');
+        const updateTime = bodyReader.value('updateTime');
+        const createTime = bodyReader.value('createTime');
+        const statusTime = bodyReader.value('statusTime');
+        const status     = bodyReader.value('status');
+        const userId     = bodyReader.value('users');
 
-
-        return { id, name, category, updateTime, createTime, statusTime, status };
+        return { id, name, category, updateTime, createTime, statusTime, status, userId };
     }
 }

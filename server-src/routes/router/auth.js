@@ -1,156 +1,106 @@
 import Router from 'koa-router';
 import passport from 'koa-passport';
-import { showSignUp, showSignIn } from '../../controllers/auth';
-import { Payment } from 'wechat-pay';
-import fs from 'fs';
-import path from 'path';
-import ProductService from '../../models/application/ProductService';
-import OrderService from '../../models/application/OrderService';
 import MemberService from '../../models/application/MemberService';
-
-const p12 = path.resolve(__dirname, '../../../config/apiclient_cert.p12');
-const p12File = fs.readFileSync(p12);
-
-var initConfig = {
-  partnerKey: "HZ0Y76V68V8WMMW6Q5FLQO7FCSW1KUAY",
-  appId: "wx73fc850b69d5209f",
-  mchId: "1390442102",
-  notifyUrl: "http://10.sub.dianshangwan.com/pay/notify",
-  pfx: p12File
-};
-var payment = new Payment(initConfig);
+import {
+    authRelationshipWechatBlock,
+    authNormalWechatBlock
+} from '../../middlewares/auth/wechat';
+import config from 'config';
 
 
 const router = Router();
 
 
-// router.get('/pay', async (ctx, next) => {
-//     const orderId = ctx.query.id;
+router.get('/wechat/auth/callback', authNormalWechatBlock, async(ctx, next) => {
+    try {
+        await passport.authenticate('wechat', async(profile, info, status) => {
+            console.log('status');
+            console.log(status);
+            console.log(profile);
+            if (profile === false) {
+                ctx.status = 403;
+                ctx.body = info;
+            } else {
+                const unionId = profile.unionId;
+                const openid = profile.openid;
+                const nickName = profile.nickname;
+                const shopId = ctx._subId;
+                const memberService = new MemberService();
+                const member = await memberService.wechatLogin(openid, nickName, shopId, unionId);
+                console.log('member');
+                console.log(member);
+                if (member) {
+                    ctx.login(member);
+                    // ctx.status = 200;
+                    // ctx.body = member;
 
-//     const orderService = new OrderService();
+                    let redirectTo = ctx.query.returnTo ? ctx.query.returnTo : '/';
 
-//     let result = await orderService.get(orderId);
-
-//     if (result) {
-
-//       console.log(result)
-//       // const productService = new ProductService();
-//       // let product = await productService.get(result.productList.product_id);
-//       if (result) {
-//         // let openid = ctx.state.user.openId;
-//         let openid = 'osgj-wm-CKTT4K3xJoBoxh78w73w';
-//         var order = {
-//           body: '产品名称',//产品名称
-//           attach: '123',//价格名称
-//           out_trade_no: 'dsw' + (+new Date),
-//           total_fee: 100,//单位为分
-//           spbill_create_ip: ctx.ip,
-//           openid: openid,
-//           trade_type: 'JSAPI'
-//         };
-        
-//         console.log(order);
-
-//         let payargs = await new Promise((resolve, reject) => {
-//             payment.getBrandWCPayRequestParams(order, function(err, payargs){
-//                 if (err) {
-//                     reject(err);
-//                 } else {
-//                     resolve(payargs);
-//                 }
-//             });
-//         });
-
-//         console.log(payargs);
-
-//         await ctx.render('pay/index', {
-//             payargs,
-//             order: result,
-//             product
-//         });
-
-//       } else {
-//         ctx.status = 404
-//         await ctx.render('404');
-//       }
-//     } else {
-//       ctx.status = 404
-//       await ctx.render('404');
-//     }
-
-// });
-
-
-
-
-//注册页面
-router.get('/signup', async (ctx, next) => {
-    console.log(Router.url('signup'));
-    console.log('signStart');
-    await next();
-    console.log('signEnd');
-}, showSignUp);
-
-//注册
-router.post('/signup', async (ctx, next) => {
-
+                    ctx.redirect(redirectTo);
+                } else {
+                    ctx.status = 403;
+                    ctx.body = {};
+                }
+            }
+        })(ctx, next);
+    } catch (err) {
+        console.log(err);
+        ctx.redirect('/wechat/auth');
+    }
 });
 
 
-//登陆页面
-router.get('/signin', async (ctx, next) => {
-    console.log(Router.url('signin'));
-    console.log('signStart');
-    await next();
-    console.log('signEnd');
-}, showSignIn);
-
-
-//登陆
-router.post('/signin',
-    passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/'
-    })
-    // passport.authenticate('local', {
-    //     successRedirect: '/',
-    //     failureRedirect: '/sign/signup'
-    // }), 
-
-);
-
-router.get('/wechat/auth/callback', async (ctx, next) => {
+router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, async(ctx, next) => {
     try {
+        await passport.authenticate('wechat', async(profile, info, status) => {
+            console.log('status');
+            console.log(status);
+            console.log(profile);
+            if (profile === false) {
+                ctx.status = 403;
+                ctx.body = info;
+            } else {
+                const unionId = profile.unionId;
+                const parentId = ctx.query.parentId;
+                const openid = profile.openid;
+                const nickName = profile.nickname;
+                const shopId = ctx._subId;
+                const memberService = new MemberService();
+                const {
+                    member,
+                    success
+                } = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+                console.log('member');
+                console.log(member);
+                if (member) {
+                    ctx.login(member);
+                    // ctx.status = 200;
+                    // ctx.body = member;
 
-        let profile = await passport.authenticate('wechat', async (profile, info, status) => {
-                console.log('status');
-                console.log(status);
-                console.log(profile);
-                if (profile === false) {
-                    ctx.status = 403;
-                    ctx.body = info;
-                } else {
-                    const openid = profile.openid;
-                    const nickName = profile.nickname;
-                    const shopId = ctx._subId;
-                    const memberService = new MemberService();
-                    const member = await memberService.wechatLogin(openid, nickName, shopId);
-                    console.log('member');
-                    console.log(member);
-                    if (member) {
-                        ctx.login(member);
-                        ctx.status = 200;
-                        ctx.body = member;
+                    let redirectTo = ctx.query.returnTo ? ctx.query.returnTo : '/';
+                    const title = '关联用户注册'
+                        // ctx.redirect(redirectTo);
 
-                        let redirectTo = ctx.query.returnTo? ctx.query.returnTo: '/';
-
-                        ctx.redirect(redirectTo);
+                    //页面提示信息
+                    let message;
+                    if (success) {
+                        message = '您关联用户成功，当前已登录。'
                     } else {
-                        ctx.status = 403;
-                        ctx.body = {};
+                        message = '您之前已注册过，关联用户失败，当前已登录。'
                     }
+
+                    await ctx.render('auth/relationship', {
+                        title,
+                        success,
+                        message,
+                        redirectTo
+                    });
+                } else {
+                    ctx.status = 403;
+                    ctx.body = {};
                 }
-            })(ctx, next);
+            }
+        })(ctx, next);
     } catch (err) {
         console.log(err);
         ctx.redirect('/wechat/auth');
@@ -158,9 +108,9 @@ router.get('/wechat/auth/callback', async (ctx, next) => {
 });
 
 //退出登录
-router.get('signout', async (ctx, next) => {
+// router.get('signout', async (ctx, next) => {
 
-});
+// });
 
 // router.post('/custom', async (ctx, next) => {
 //     return passport.authenticate('local', function(user, info, status) {

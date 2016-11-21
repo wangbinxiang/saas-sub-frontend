@@ -72,23 +72,27 @@ export function buildJsonApiIdsUrl(idList) {
 
 /**
  * 将搜索条件转为 Json api url 搜索参数
- * @author wangbinxiang
+ * @author wangbinxiangurl
  * @date   2016-09-23T17:18:43+0800
  * @param  { object }                 filters [description]
  * @return {[string]}                         json api url 搜索参数
  */
-export function buildJsonApiQueryUrl(filters, pages) {
+export function buildJsonApiQueryUrl(filters, pages, sort) {
     let url = '';
     let urlList = [];
     if (_.isPlainObject(filters) && Object.keys(filters).length > 0) {
         for (let i in filters) {
-            urlList.push(url + 'filter[' + i + ']=' + filters[i]);
+            urlList.push('filter[' + i + ']=' + filters[i]);
         }
     }
     if (_.isPlainObject(pages) && Object.keys(pages).length > 0) {
         for (let i in pages) {
-            urlList.push(url + 'page[' + i + ']=' + pages[i]);
+            urlList.push('page[' + i + ']=' + pages[i]);
         }
+    }
+
+    if (sort) {
+        urlList.push('sort=' + sort);
     }
 
     if (urlList.length > 0) {
@@ -111,11 +115,11 @@ export function buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl) {
 }
 
 
-export function jsonApiGetUrl(baseUrl, idList, { filters, pages }) {
+export function jsonApiGetUrl(baseUrl, idList, { filters, pages, sort }) {
 
     let idsUrl = buildJsonApiIdsUrl(idList);
 
-    let queryUrl = buildJsonApiQueryUrl(filters, pages);
+    let queryUrl = buildJsonApiQueryUrl(filters, pages, sort);
 
     return buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl);
 }

@@ -57,5 +57,25 @@ export default class Order {
 		this._statusName = ORDER_STATUS_NAME_LIST[status];
 	}
 
+	/**
+	 * 订单是否属于该店铺是否
+	 * @author wangbinxiang
+	 * @date   2016-11-20T23:48:30+0800
+	 * @param  {[type]}                 shopId [description]
+	 * @return {[type]}                        [description]
+	 */
+	belongShop(shopId) {
+		return parseInt(this.shopId) === parseInt(shopId);
+	}
 
+	/**
+	 * 用户是否拥有该订单
+	 * @author wangbinxiang
+	 * @date   2016-11-20T23:47:02+0800
+	 * @param  {[type]}                 userId [description]
+	 * @return {[type]}                        [description]
+	 */
+	own(userId) {
+		return parseInt(this.userId) === userId;
+	}
 }

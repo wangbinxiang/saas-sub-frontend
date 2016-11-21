@@ -1,5 +1,4 @@
 {
-  // Customer module configs 
   "Customer": {
     "dbConfig": {
       "host": "localhost",
@@ -8,7 +7,6 @@
     },
     "credit": {
       "initialLimit": 100,
-      // Set low for development 
       "initialDays": 1
     }
   },
@@ -32,12 +30,19 @@
       "authHost": "hub.yundianshang.cc",
       "appID": "wx73fc850b69d5209f",
       "appsecret": "799126be40163fa841b5e08f5f7b1f99"
+    },
+    "yundianshang": {
+      "authHost": "hub.yundianshang.cc",
+      "appID": "wx2d9a5f4daf486473",
+      "appsecret": "48d75e8d74713d925a1576da7c78e96e"
     }
   },
   "host": {
     "zhuce": "zhuce.dianshangwan.com",
     "hub": "hub.saaslocal.com"
   },
+  "relationshipSub": ["10021"],
+  "relationshipParentId": "0",
   "qiniu": {
     "accessKey": "4i-VhpjaUerpYaw5_j8JlIyTjGYwxeUDMe5k2qP3",
     "secretKey": "Ax2usNh4f5Vt1xCOyJP0nltDNR-xk2zE58TWftK7",

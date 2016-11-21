@@ -26,33 +26,21 @@
                 </div>
             </div>
             <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
-                <!-- <a href="login.html">Login</a>
-                <a href="register.html">Register</a>
-                <a>Logout</a>
-                <a href="/orders">My Orders</a>
-                <a href="userCPAddressbook.html">My Address Book</a>
-                <a href="userCPChangePswd.html">Change Password</a> -->
-                <!--<hr />
-                <a href="hostCPHomeSlide.html">首页幻灯片管理</a>
-                <a href="hostCPLabels.html">商品关键字管理</a>
-                <a href="hostCPTypes.html">商品分类管理</a>
-                <hr />
-                <a href="hostCPUsers.html">买家管理</a>
-                <a href="hostCPRoles.html">角色管理</a>
-                <a href="hostCPEmployees.html">员工管理</a>
-                <hr />
-                <a href="hostCPGoods.html">自有商品管理</a>
-                <a href="hostCPPurchases.html">采购商品管理</a>
-                <a href="hostCPDistributions.html">分销商品管理</a>
-                <a href="hostCPOrderList.html">订单管理</a>-->
+                <% if(__IN_WECHAT__ && typeof user === 'undefined') { %>
+                <a href="<%= __AUTH_WECHAT_LINK__ %>">授权登录</a>
+                <% } else if(typeof user !== 'undefined') { %>
+                    <a href="/orders">我的定单</a>
+                <% } %>
             </div>
             <div id="responsive-menu" class="menu-body">
                 <div class="top-bar-left top-bar-left--global">
+                    <% if(typeof _navigation !== 'undefined') { %>
                     <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
-                        <!--<li><a href="detail.html" class="highlight">Tours</a></li>
-                        <li><a href="detail_alt.html">Destinations</a></li>
-                        <li><a href="list.html">Flights</a></li>-->
+                        <% for(const i in _navigation) { %>
+                        <li><a href="/channel/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
+                        <% } %>
                     </ul>
+                    <% } %>
                 </div>
             </div>
         </header>

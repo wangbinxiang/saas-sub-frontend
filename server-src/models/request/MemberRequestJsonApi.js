@@ -36,7 +36,9 @@ export default class MemberRequestJsonApi extends BaseRequest {
         let attributes = {
             shopId: this.originData.shopId,
             openId: this.originData.openId, 
-            nickName: this.originData.nickName
+            nickName: this.originData.nickName,
+            parentId: this.originData.parentId,
+            unionId: this.originData.unionId
         };
 
         this.buildData(attributes);
@@ -49,7 +51,7 @@ export default class MemberRequestJsonApi extends BaseRequest {
         this.method = POST;
 
         let attributes = {
-            openId: this.originData.openId
+            unionId: this.originData.unionId
         };
 
         this.buildData(attributes);

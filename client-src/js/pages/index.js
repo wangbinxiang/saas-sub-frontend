@@ -65,38 +65,42 @@ require.ensure([], function(require) {
 })
 
 let ProdModel = function(data){
-    var arrData = $.map(data, function(value, index) {
-        return [value];
-    });
+    // var arrData = $.map(data, function(value, index) {
+    //     return [value];
+    // });
     
     let self = this
-    self.prods = ko.observableArray(arrData)
+    self.prods = ko.observableArray(data);
+    self.isNext = ko.observable(isNext);
 
-    //self.more = function() {
-    //    pageno = pageno + 1
-    //    $.ajax({
-    //        method: "GET",
-    //        url: "/product-types?number=" + pageno,
-    //        dataType: "json"
-    //    })
-    //    .done(function(respones) {
-    //        let types = $.map(respones.productTypes, function(value, index) {
-    //            return [value];
-    //        });
-    //        for(let type of types){
-    //            self.types.push(type)
-    //        }
-    //        self.isNext(respones.moreInfo)
-    //    })
-    //}
+    self.more = function() {
+       pageno = pageno + 1
+       $.ajax({
+           method: "GET",
+           url: "/?number=" + pageno,
+           dataType: "json"
+       })
+       .done(function(respones) {
+           // const products = $.map(respones.products, function(value, index) {
+           //     return [value];
+           // });
+           for(let product of respones.products){
+               self.prods.push(product)
+           }
+           self.isNext(respones.isNext);
+           Foundation.reInit($('#listEqualizer'));
+       })
+    }
 }
 
 let prodModel = new ProdModel(data)
 ko.applyBindings(prodModel)
 
-require.ensure([], function(require) {
-    let imagesLoaded = require('imagesloaded')
-    new imagesLoaded($('#listEqualizer'), function(){
-        var equalizer = new Foundation.Equalizer($('#listEqualizer'));
-    });
-})
+if(prodModel.prods().length > 1){
+    require.ensure([], function(require) {
+        let imagesLoaded = require('imagesloaded')
+        new imagesLoaded($('#listEqualizer'), function(){
+            var equalizer = new Foundation.Equalizer($('#listEqualizer'));
+        });
+    })
+}

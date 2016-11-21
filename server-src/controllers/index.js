@@ -4,8 +4,10 @@ import config from 'config';
 import _ from 'lodash';
 
 
+
 export default async(ctx, next) => {
     const title = '首页';
+    let isNext = false;
 
     // if (ctx.isAuthenticated()) {
     //     console.log('isAuthenticated');
@@ -13,80 +15,60 @@ export default async(ctx, next) => {
     //     // ctx.logout();
     // }
 
-    let number = ctx.query.number ? ctx.query.number : 1;
+    const number = ctx.query.number ? ctx.query.number : 1;
 
-    let size = ctx.query.size ? ctx.query.size : 500;
-
-    let filters = {
-        //userId: ctx._subId,
-        userId: ctx._subId,
-        status: 0
-    };
-
-    let pages = {
-        number,
-        size
-    };
-
-
-    let products = null;
-
-    let isNext = false;
+    const size = ctx.query.size ? ctx.query.size : 10;
 
     const indexService = new IndexService();
 
-    let result = await indexService.index(filters, {
-        number,
-        size
-    });
-
-    if (result !== null) {
-        let page = result.page;
-        products = result.products;
-
-        if (page && page.haveNext()) {
-            isNext = true;
-        }
+    // const result = await indexService.index(number, size, ctx._subId);
+    const { page, products} = await indexService.index(number, size, ctx._subId);
+    if (page && page.haveNext()) {
+        isNext = true;
     }
 
+    if (ctx.accepts('html', 'text', 'json') === 'json') {
+        ctx.body = {
+            products,
+            isNext
+        };
+    } else {
+        console.log(products);
+        console.log(isNext);
 
+        const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
-    // console.log(products);
-    // console.log(isNext);
+        const imgHost = config.get('qiniu.bucket.subImg.url');
 
-    const pageJs = webpackIsomorphicTools.assets().javascript.index;
-
-    const imgHost = config.get('qiniu.bucket.subImg.url');
-
-    const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-    //幻灯片
-    let slidesData = [];
-    if (ctx._shop.slides && _.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
-        console.log(ctx._shop.slides);
-        const poductService = new ProductService();
-        let products = await poductService.get(ctx._shop.slides, ctx._subId);
-        if (products) {
-            for (let i in products) {
-                slidesData.push({
-                    "url": '/products/' + products[i].id,
-                    "title": products[i].name,
-                    "price": products[i].minPrice,
-                    "img": imgHost + products[i].logo
-                });
+        const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+        //幻灯片
+        let slidesData = [];
+        if (ctx._shop.slides && _.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
+            const poductService = new ProductService();
+            let products = await poductService.get(ctx._shop.slides, ctx._subId);
+            if (products) {
+                for (let i in products) {
+                    slidesData.push({
+                        "url": '/products/' + products[i].id,
+                        "title": products[i].name,
+                        "price": products[i].minPrice,
+                        "img": imgHost + products[i].logo
+                    });
+                }
             }
         }
-    }
 
-    await ctx.render('index/index', {
-        title,
-        slidesData,
-        products,
-        isNext,
-        number,
-        pageJs,
-        imgHost,
-        imgStyle
-    })
+        await ctx.render('index/index', {
+            title,
+            slidesData,
+            products,
+            isNext,
+            number,
+            pageJs,
+            imgHost,
+            imgStyle
+        });
+    }    
 }
 
 export async function category(ctx, next) {

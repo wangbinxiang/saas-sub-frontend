@@ -6,14 +6,16 @@ export default class ProductType {
 		updateTime,
 		createTime,
 		statusTime,
-		status
+		status,
+		userId
 	}) {
-		this.id         = id;
+		this.id         = parseInt(id);
 		this.name       = name;
 		this.category   = category;
 		this.updateTime = updateTime;
 		this.createTime = createTime;
 		this.statusTime = statusTime;
 		this.status     = status;
+		this.userId     = parseInt(userId);
 	}
 }

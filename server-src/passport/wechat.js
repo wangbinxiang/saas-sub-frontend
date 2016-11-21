@@ -3,15 +3,10 @@ import {
 } from 'passport-wechat';
 import config from 'config';
 
-
-
-const callbackUrl = 'http://10.sub.dianshangwan.com/wechat/auth/callback';
-
 export default new Strategy({
-        appID: config.get('wechat.dianshangwan.appID'),
-        appSecret: config.get('wechat.dianshangwan.appsecret'),
+        appID: config.get('wechat.yundianshang.appID'),
+        appSecret: config.get('wechat.yundianshang.appsecret'),
         client: 'wechat',
-        callbackURL: callbackUrl,
         scope: 'snsapi_userinfo',
         state: 123,
         // getToken: {getToken},

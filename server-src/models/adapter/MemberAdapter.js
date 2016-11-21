@@ -18,11 +18,13 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 
-	wechatSignup(openid, nickName, shopId, aUserClass) {
+	wechatSignup(openId, nickName, shopId, parentId, unionId, aUserClass) {
 	    this.buildRequest(MEMBER_SIGNUP, { 
-	    	shopId: shopId,
-	        openId: openid,
-	        nickName: nickName
+	    	shopId,
+	        openId,
+	        nickName,
+	        parentId,
+	        unionId
 	    });
 
 	    this.activeClass = aUserClass;
@@ -31,9 +33,9 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 	//验证用户 async函数
-	wechatLogin(openid, aUserClass) {
+	wechatLogin(unionId, aUserClass) {
 	    this.buildRequest(MEMBER_LOGIN, { 
-	        openId: openid
+	        unionId: unionId
 	    });
 
 	    this.activeClass = aUserClass;

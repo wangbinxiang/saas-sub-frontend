@@ -16,15 +16,12 @@ import config from 'config';
  */
 export async function detail(ctx, next) {
     //产品id
-    ctx.params.id;
-
     let product;
     let subId = ctx._subId;
     // try {
     let id = ctx.params.id;
     const productService = new ProductService();
     product = await productService.get(id, subId);
-    console.log(product.snapshotIds[0]);
     if (product === null) {
         ctx.status = 404
         await ctx.render('404');

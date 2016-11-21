@@ -1,7 +1,4 @@
 <%- include('../layout/header') -%>
-
-
-
 <% if(slidesData.length > 0){ %>
 <div class="row expanded column top-carousel">
     <div class="jcarousel jcarousel--home">
@@ -55,13 +52,13 @@
     </div>
 </div>-->
 
-<!--<div class="list-button row column">
+<div class="list-button row column">
     <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
-</div>-->
+</div>
 <script>
-	var data = <%- JSON.stringify(products) %>;
+	var data = <%- JSON.stringify(products? products: []) %>;
     var pageno = <%= number %>;
-    var isnext = <%= isNext %>;
+    var isNext = <%= isNext %>;
     var imgHost = '<%= imgHost %>';
     var imgStyle = '<%= imgStyle %>';
 </script>
