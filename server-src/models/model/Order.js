@@ -76,6 +76,6 @@ export default class Order {
 	 * @return {[type]}                        [description]
 	 */
 	own(userId) {
-		return parseInt(this.userId) === userId;
+		return parseInt(this.userId) === parseInt(userId);
 	}
 }
