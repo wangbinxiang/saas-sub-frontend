@@ -1,8 +1,5 @@
 import OrderService from '../models/application/OrderService';
-import ProductService from '../models/application/ProductService';
 import config from 'config';
-import { timestampToDate } from '../libs/helper';
-import lodash from 'lodash';
 
 export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id

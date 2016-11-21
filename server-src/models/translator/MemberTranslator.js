@@ -2,23 +2,35 @@ import Translator from '../../libs/Translator';
 import MemberJsonApiBodyReader from '../reader/MemberJsonApiBodyReader';
 
 export default class MemberTranslator extends Translator {
-    constructor() {
-        super();
-    }
+	constructor() {
+		super();
+	}
 
-    readData(data) {
-        const bodyReader = new MemberJsonApiBodyReader(data);
+	readData(data) {
+		const bodyReader = new MemberJsonApiBodyReader(data);
 
-		let id         = bodyReader.value('id');
-		let cellPhone  = bodyReader.value('cellPhone');
-		let nickName   = bodyReader.value('nickName');
-		let userName   = bodyReader.value('userName');
-		let status     = bodyReader.value('status');
-		let createTime = bodyReader.value('createTime');
-		let updateTime = bodyReader.value('updateTime');
-		let statusTime = bodyReader.value('statusTime');
-		let openId     = bodyReader.value('openId');
+		const id = bodyReader.value('id');
+		const cellPhone = bodyReader.value('cellPhone');
+		const nickName = bodyReader.value('nickName');
+		const userName = bodyReader.value('userName');
+		const status = bodyReader.value('status');
+		const createTime = bodyReader.value('createTime');
+		const updateTime = bodyReader.value('updateTime');
+		const statusTime = bodyReader.value('statusTime');
+		const openId = bodyReader.value('openId');
+		const unionId = bodyReader.value('unionId');
 
-        return { id, cellPhone, nickName, userName, status, createTime, updateTime, statusTime, openId };
-    }
+		return {
+			id,
+			cellPhone,
+			nickName,
+			userName,
+			status,
+			createTime,
+			updateTime,
+			statusTime,
+			openId,
+			unionId
+		};
+	}
 }

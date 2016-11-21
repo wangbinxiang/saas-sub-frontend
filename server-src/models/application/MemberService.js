@@ -9,16 +9,16 @@ export default class MemberService {
 	}
 
 
-	async wechatLogin(openid, nickName, shopId) {
+	async wechatLogin(openid, nickName, shopId, unionId) {
 		let member;
 
 		try {
-			member = await this.userAdapter.wechatLogin(openid, Member);
+			member = await this.userAdapter.wechatLogin(unionId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, null, Member);
+					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, null, unionId, Member);
 					break;
 				default:
 					throw err;
@@ -29,16 +29,16 @@ export default class MemberService {
 		//登陆用户
 	}
 
-	async wechatRelationshipLogin(openid, nickName, shopId, parentId) {
+	async wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId) {
 		let member, success = false; //关联是否成功标示
 
 		try {
-			member = await this.userAdapter.wechatLogin(openid, Member);
+			member = await this.userAdapter.wechatLogin(unionId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, parentId, Member);
+					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, parentId, unionId, Member);
 					//关联成功
 					success = true;
 					break;

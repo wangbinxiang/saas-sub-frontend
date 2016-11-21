@@ -1,34 +1,11 @@
 import Router from 'koa-router';
 import passport from 'koa-passport';
-import {
-    showSignUp,
-    showSignIn
-} from '../../controllers/auth';
-import {
-    Payment
-} from 'wechat-pay';
-import fs from 'fs';
-import path from 'path';
-import ProductService from '../../models/application/ProductService';
-import OrderService from '../../models/application/OrderService';
 import MemberService from '../../models/application/MemberService';
 import {
     authRelationshipWechatBlock,
     authNormalWechatBlock
 } from '../../middlewares/auth/wechat';
 import config from 'config';
-
-const p12 = path.resolve(__dirname, '../../../config/apiclient_cert.p12');
-const p12File = fs.readFileSync(p12);
-
-var initConfig = {
-    partnerKey: "HZ0Y76V68V8WMMW6Q5FLQO7FCSW1KUAY",
-    appId: "wx73fc850b69d5209f",
-    mchId: "1390442102",
-    notifyUrl: "http://10.sub.dianshangwan.com/pay/notify",
-    pfx: p12File
-};
-var payment = new Payment(initConfig);
 
 
 const router = Router();
@@ -44,11 +21,12 @@ router.get('/wechat/auth/callback', authNormalWechatBlock, async(ctx, next) => {
                 ctx.status = 403;
                 ctx.body = info;
             } else {
+                const unionId = profile.unionId;
                 const openid = profile.openid;
                 const nickName = profile.nickname;
                 const shopId = ctx._subId;
                 const memberService = new MemberService();
-                const member = await memberService.wechatLogin(openid, nickName, shopId);
+                const member = await memberService.wechatLogin(openid, nickName, shopId, unionId);
                 console.log('member');
                 console.log(member);
                 if (member) {
@@ -82,6 +60,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 ctx.status = 403;
                 ctx.body = info;
             } else {
+                const unionId = profile.unionId;
                 const parentId = ctx.query.parentId;
                 const openid = profile.openid;
                 const nickName = profile.nickname;
@@ -90,7 +69,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 const {
                     member,
                     success
-                } = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId);
+                } = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
                 console.log('member');
                 console.log(member);
                 if (member) {

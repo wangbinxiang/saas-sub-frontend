@@ -27,7 +27,7 @@ router.get('/auth/faker', async (ctx, next) => {
 
 router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 
-	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
+	let callbackUrl = 'http://' + config.get('wechat.yundianshang.authHost') + '/wechat/auth/callback?';
 
 	let redirectTo = 'http://' + ctx.host + '/wechat/auth/callback';
 
@@ -36,7 +36,7 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);
-	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
+	const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	ctx.redirect(location);
 });
@@ -46,7 +46,7 @@ router.get('/wechat/auth/relationship', authRelationshipWechatBlock, wechatRelat
 	const parentId = ctx.query.parentId? ctx.query.parentId: config.get('relationshipParentId');
 
 
-	let callbackUrl = 'http://' + config.get('wechat.dianshangwan.authHost') + '/wechat/auth/callback?';
+	let callbackUrl = 'http://' + config.get('wechat.yundianshang.authHost') + '/wechat/auth/callback?';
 
 	let redirectTo = 'http://' + ctx.host + '/wechat/auth/relationship/callback?parentId=' + parentId;
 
@@ -55,7 +55,7 @@ router.get('/wechat/auth/relationship', authRelationshipWechatBlock, wechatRelat
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);
-	const oauth = new OAuth(config.get('wechat.dianshangwan.appID'), config.get('wechat.dianshangwan.appsecret'));
+	const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
 	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	ctx.redirect(location);
 });

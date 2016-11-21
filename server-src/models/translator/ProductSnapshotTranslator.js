@@ -1,5 +1,5 @@
 import Translator from '../../libs/Translator';
-import ProductSnapshotJsonApiBodyReader from '../reader/OrderJsonApiBodyReader';
+import ProductSnapshotJsonApiBodyReader from '../reader/ProductSnapshotJsonApiBodyReader';
 import Product from '../model/Product'
 
 export default class ProductSnapshotTranslator extends Translator {
