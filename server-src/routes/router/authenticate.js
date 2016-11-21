@@ -29,9 +29,9 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 
 	let callbackUrl = 'http://' + config.get('wechat.yundianshang.authHost') + '/wechat/auth/callback?';
 
-	let redirectTo = 'http://' + ctx.host + '/wechat/auth/callback';
+	let redirectTo = 'http://' + ctx.host + '/wechat/auth/callback?';
 
-	redirectTo += '&returnTo=' + ( ctx.headers.referer? ctx.headers.referer: '/');
+	redirectTo += 'returnTo=' + ( ctx.headers.referer? ctx.headers.referer: '/');
 	console.log(ctx.headers);
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
