@@ -6,6 +6,7 @@ import {
 	detailValidation,
 } from '../../validations/productsValidation';
 import navigation from '../../middlewares/navigation';
+import { productRedirect } from '../../middlewares/products/relationship';
 
 const router = Router();
 
@@ -17,7 +18,7 @@ router.prefix('/products')
 
 
 //预览产品页面
-router.get('/:id', detailValidation, navigation, detail);
+router.get('/:id', detailValidation, productRedirect, navigation, detail);
 
 
 export default router;

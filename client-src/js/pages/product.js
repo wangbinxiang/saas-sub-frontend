@@ -2,7 +2,7 @@
     module.hot.accept()
 }
 
-import '../../../client-src/js/pages/base.js'
+import './base.js';
 
 require.ensure([], function(require) {
     let jcarousel = require('jcarousel')
@@ -141,6 +141,7 @@ $(function(){
            }
         })
     }
+    // history.pushState({}, "page 2", "bar.html");
     
     if($('#productsIndex').length){
         let goodsModel = new GoodsModel(data)
