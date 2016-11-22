@@ -27,7 +27,7 @@ export async function detail(ctx, next) {
         await ctx.render('404');
     } else {
 
-        const title = '产品详细';
+        const title = product.name + ' - ' + ctx._shop.title;
 
         const pageJs = webpackIsomorphicTools.assets().javascript.product;
 

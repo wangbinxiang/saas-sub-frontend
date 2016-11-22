@@ -7,8 +7,6 @@ export async function productType(ctx, next) {
 	//频道信息
 	let isNext = false;
 
-	const title = '分类频道';
-
 	const productTypeId = ctx.params.id;
 
 	const number = ctx.query.number ? ctx.query.number : 1;
@@ -32,6 +30,8 @@ export async function productType(ctx, next) {
 	            isNext
 	        };
 	    } else {
+	    	
+	    	const title = productType.name + ' - ' + ctx._shop.title;
 
 			const imgHost = config.get('qiniu.bucket.subImg.url');
 

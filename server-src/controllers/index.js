@@ -6,7 +6,8 @@ import _ from 'lodash';
 
 
 export default async(ctx, next) => {
-    const title = '首页';
+    
+    const title = ctx._shop.title? ctx._shop.title: '首页';
     let isNext = false;
 
     // if (ctx.isAuthenticated()) {
