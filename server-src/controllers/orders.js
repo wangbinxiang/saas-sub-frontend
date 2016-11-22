@@ -20,7 +20,7 @@ export async function showAddOrder(ctx, next) {
 		let { product, priceInfo, totalPrice } = result;
 		const title = '订单详情';
 	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
-	    await ctx.render('index/orderConfirm', {
+	    await ctx.render('orders/addOrder', {
 	        title, product, priceInfo, totalPrice, productNum, productId, priceOrder,
 	        pageJs
 	    });

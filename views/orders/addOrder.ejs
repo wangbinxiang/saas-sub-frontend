@@ -1,63 +1,15 @@
 <%- include('../layout/header') -%>
 <nav aria-label="You are here:" role="navigation" class="clearfix">
     <ul class="breadcrumbs onionLink">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="userCPOrderList.html">用户订单</a></li>
+        <li><a href="/">首页</a></li>
         <li>
-            <span class="show-for-sr">Current: </span> 订单详情
+            <span class="show-for-sr">Current: </span> 提交订单
         </li>
     </ul>
 </nav>
 
-<h1 class="row column">订单详情 No.157658-333</h1>
-<div id="orderDetail">
-<div class="row block-margin-bottom">
-    <div class="workflow-wrap">
-        <div class="workflow-bar prec<%= data.step %>"></div>
-        <ol class="workflow-label">
-            <li class="lb<%= data.step >= 0 ? ' passed' : '' %>"><b><s></s></b>提交订单</li>
-            <li class="lb<%= data.step >= 1 ? ' passed' : '' %>"><b><s></s></b>支付订单</li>
-            <li class="lb<%= data.step >= 2 ? ' passed' : '' %>"><b><s></s></b>等待收货</li>
-            <li class="lb<%= data.step == 3 ? ' passed' : '' %>"><b><s></s></b>完成</li>
-        </ol>
-    </div>
-</div>
-
-    <% if(data.step == 1) { %>
-    <div class="row column">
-        <div class="callout alert">
-            <h4>请您尽快支付订单！</h4>
-            <p>您订单No.26733-128已完成提交，正在等待支付。</p>
-        </div>
-    </div>
-
-    <div class="row text-center form-submit-wrap">
-        <a href="userCPOrderDetail_1_waitingDelivery.html" class="button large">支付订单</a>
-    </div>
-    <% } %>
-
-    <% if(data.step == 2) { %>
-    <div class="row column">
-        <div class="callout success">
-            <h4>您的订单正在配送途中，请您耐心等待！</h4>
-            <p>请您在收货后点击下方的确认收货按钮。</p>
-        </div>
-    </div>
-
-    <div class="row text-center form-submit-wrap">
-        <a href="userCPOrderDetail_2_complete.html" class="button large">确认收货</a>
-    </div>
-    <% } %>
-
-    <% if(data.step == 3) { %>
-    <div class="row column">
-        <div class="callout success">
-            <h4>您的订单已完成配送！</h4>
-            <p>确认收货时间为 2016-12-12 13:30:30。</p>
-        </div>
-    </div>
-    <% } %>
-
+<h1 class="row column">提交商品订单</h1>
+<div id="orderConfirm">
 <div class="row column">
     <table class="stack stack--small hover listCart tableList">
         <thead>
@@ -69,46 +21,126 @@
                 <th width="150">数量</th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: goods">
+        <tbody>
             <tr>
-                <td data-th="产品ID" data-bind="text:id"></td>
-                <td data-th="产品名称" data-bind="text:name"></td>
-                <td data-th="颜色" data-bind="text:sku"></td>
-                <td data-th="单价" data-bind="text:price"></td>
-                <td data-th="数量" data-bind="text:quantity"></td>
+                <td data-th="产品ID"><%= product.id %></td>
+                <td data-th="产品名称"><%= product.name %></td>
+                <td data-th="规格"><%= priceInfo.title %></td>
+                <td data-th="单价"><%= priceInfo.price %></td>
+                <td data-th="数量"><%= productNum %></td>
             </tr>
         </tbody>
     </table>   
 
-    <form data-abide novalidate>
-        <div data-abide-error class="alert callout" style="display: none;">
-            <p><i class="fi-alert"></i> There are some errors in your form.</p>
+    <form data-abide="ajax" novalidate id="formOrderConfirm">
+        <div data-abide-error class="alert callout alert-form-error" style="display: none;">
+            <p class="row column">请填写所有表单内容</p>
         </div>
-        <fieldset class="fieldset">
+        <fieldset class="fieldset" id="fieldAddress">
             <legend><h4>附加留言</h4></legend>
-            <div class="row column">
-                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum. Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
+            <div>
+                <label>请填写联系方式和姓名
+                    <textarea rows="3" id="comment"></textarea>
+                    <span class="form-error">
+                        请填写收货人信息
+                    </span>
+                </label>                
             </div>
+            <!-- kos foreach:addresses ->
+            <div class="row column checkbox-inline">
+                <input data-bind="attr:{id: id}" type="radio" name="adress">
+                <label for="checkbox12"><b data-bind="text:name">收货人姓名</b>, <span data-bind="text: mobile + ', ' + where + ', ' + address">15012345678, 山西-西安-莲湖区Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</span></label>
+            </div>
+            <!- /ko 
+            <div>
+                <button class="button button-unstyle" data-open="editRole" onclick="return false;">添加新地址</button>
+            </div>-->
         </fieldset>
 
         <fieldset class="fieldset">
             <legend><h4>支付方式</h4></legend>
             <div class="row">
                 <fieldset class="columns">
-                    <label for="pokemonRed">银联</label>
+                    <input type="radio" name="pokemon" value="Red" id="pokemonRed" checked><label for="pokemonRed">微信支付</label>
+                    <!--<input type="radio" name="pokemon" value="Yellow" id="pokemonYellow"><label for="pokemonYellow">线下交易</label>-->
+                    <!--<div class="row column">
+                        <div class="callout success">
+                            <h5>关于诚信游支付</h5>
+                            <p>
+                                Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                            </p>
+                        </div>
+                    </div>-->
                 </fieldset>
             </div>
         </fieldset>
-    </form>
 
-    <div class="row text-right cart-total">
-        商品小计：￥<strong class="stat"><%= data.totalGoods %></strong><br />
-        运费小计：￥<strong class="stat"><%= data.deliveryFee %></strong><br />
-        订单合计：￥<strong class="stat"><%= data.totalGoods + data.deliveryFee %></strong>
+        <div class="row text-right cart-total">
+            订单合计：￥<strong class="stat"><%= totalPrice %></strong>
+        </div>
+
+        <div class="row text-center form-submit-wrap">
+            <button href="/order" id="confirmButton" class="button large" data-bind="click: save">确认并提交商品订单</button>
+        </div>
+    </form>
+</div>
+
+<div class="reveal small" id="editRole" data-reveal>
+    <h3>添加/编辑地址</h3>
+    <div class="row">
+        <div class="medium-6 columns">
+            <label>
+                收货人姓名
+                <input type="text" required>
+            </label>
+        </div>
+        <div class="medium-6 columns">
+            <label>
+                联系电话
+                <input type="text" required>
+            </label>
+        </div>
     </div>
+    <div class="row">
+        <div class="medium-6 columns">
+            <label class="autoSelect">
+                <span>所在地区</span>
+                <select><option>请选择省</option></select>
+                <select><option>请选择市</option></select>
+                <select><option>请选择区</option></select>
+            </label>
+        </div>
+        <div class="medium-6 columns">
+            <label>
+                邮政编码
+                <input type="text" required>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <label>
+                详细地址
+                <input type="text" placeholder="" required pattern="number">
+                <span class="form-error">
+                    Yo, you had better fill this out, it's required.
+                </span>
+            </label>
+        </div>
+    </div>
+    <div class="row text-center form-submit-wrap">
+        <button class="button" data-close id="saveAddress">保存</button>
+        <button class="button secondary" data-close>取消</button>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 </div>
 <script>
-    var order = <%- JSON.stringify(data) %>;
+    var price = <%= totalPrice %>;
+    var prodId = <%= productId %>;
+    var priceOrder = <%= priceOrder %>;
+    var productNum = <%= productNum %>;
 </script>
 <%- include('../layout/footer') -%>
