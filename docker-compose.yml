@@ -1,0 +1,8 @@
+node:
+  image: node:6.9.1-onbuild
+  volumes:
+    - .:/usr/src/app
+  ports:
+    - 3010:3010
+    - 3001:3001
+  command: npm run dev
