@@ -14,7 +14,7 @@ require.ensure([], function(require) {
     $('.jcarousel.jcarousel--home').jcarousel({        
         wrap: 'circular'
     }).jcarouselAutoscroll({
-        interval: 15000,
+        interval: 7500,
         target: '+=1',
         autostart: true
     })
