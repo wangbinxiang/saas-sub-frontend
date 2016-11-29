@@ -40,7 +40,7 @@
             <legend><h4>附加留言</h4></legend>
             <div>
                 <label>请填写联系方式和姓名
-                    <textarea rows="3" id="comment"></textarea>
+                    <textarea rows="3" id="comment" required></textarea>
                     <span class="form-error">
                         请填写收货人信息
                     </span>
@@ -75,6 +75,17 @@
             </div>
         </fieldset>
 
+        <fieldset class="fieldset">
+            <legend><h4>合同信息</h4></legend>
+            <div class="row column">
+                <label><input type="checkbox" required /> 接受合同<a data-open="contractPanel" onclick="return false;">Lorem ipsum dolor sit amet</a>的条款
+                <span class="form-error">
+                    请查看并选择接受合同条款
+                </span>
+                </label>
+            </div>
+        </fieldset>  
+
         <div class="row text-right cart-total">
             订单合计：￥<strong class="stat"><%= totalPrice %></strong>
         </div>
@@ -83,6 +94,26 @@
             <button href="/order" id="confirmButton" class="button large" data-bind="click: save">确认并提交商品订单</button>
         </div>
     </form>
+</div>
+
+<div class="reveal large" id="contractPanel" data-reveal>
+    <h3>Lorem ipsum dolor sit amet</h3>
+    <div class="profile-main">
+        <h6>商品说明</h6>
+        <p>美国大杏仁(即扁桃仁)是维生素E的食物源之一，也是含维生素最丰富的坚果之一；采用各种炮制方法，风味独特，营养价值丰富，倍受广大消费者欢迎，被誉为"蓝钻石果仁，加州仁上仁"；Blue Diamond蓝钻石是全世界扁桃仁坚果加工和销售公司之一，已有超过百年的历史；精选美国优质原粒扁桃仁，颗颗优质，粒粒纯正；Blue Diamond蓝钻石扁桃仁系列保持始终如一的品质！</p>
+        <h6>品牌简介</h6>
+        <p>Blue Diamond是世界上最大的树坚果加工和销售公司。在1910年成立，Blue Diamond从一个小型的加州企业发展成为扁桃仁种植、扁桃仁生产和销售的世界领导者。Blue Diamond扁桃仁精选美国优质原粒扁桃仁，颗颗优质，粒粒纯正。采用烟焗的炮制方法，风味独特，营养价值丰富，倍受广大消费者欢迎。</p>
+        <h6>成分</h6>
+        <p>扁桃仁，植物油（菜籽油，葵花籽油），白砂糖，食盐，番茄，糖蜜粉（蔗糖糖浆，糖蜜），食醋粉（麦芽糊精，食醋），洋葱，大蒜，食用香料，酵母抽提物，辣椒，芥菜，苹果酸，香辛料，辣椒粉。</p>
+        <h6 class="alert">重要说明</h6>
+        <p class="alert">Blue Diamond是世界上最大的树坚果加工和销售公司。在1910年成立，Blue Diamond从一个小型的加州企业发展成为扁桃仁种植、扁桃仁生产和销售的世界领导者。Blue Diamond扁桃仁精选美国优质原粒扁桃仁，颗颗优质，粒粒纯正。采用烟焗的炮制方法，风味独特，营养价值丰富，倍受广大消费者欢迎。</p>
+    </div>
+    <div class="row text-center form-submit-wrap">
+        <button class="button" data-close id="saveAddress">关闭</button>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 
 <div class="reveal small" id="editRole" data-reveal>
