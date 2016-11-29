@@ -37,11 +37,11 @@ export async function signIn(ctx, next) {
 
 export async function bindCellphone(ctx, next) {
     const cellPhone = ctx.request.body.cellPhone;
-    const uid = ctx.state.uid.id;
+    const uid = ctx.state.user.id;
 
     const memberService = new MemberService();
     const result = await memberService.bindCellphone(uid, cellPhone);
-    ctx.body = result;
+    ctx.body = { result };
 }
 
 
@@ -101,12 +101,3 @@ export async function checkBindCellphoneVerificationCode(ctx, next) {
         }
     }
 }
-
-
-
-
-
-
-
-
-

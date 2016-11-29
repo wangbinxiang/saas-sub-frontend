@@ -8,7 +8,7 @@ export default class MemberService {
 		this.userAdapter = new MemberAdapter();
 	}
 
-	async isCellphoneSignup(cellPhone) {
+	async _isCellphoneBind(cellPhone) {
 		const filters = {
 			cellPhone
 		};
@@ -29,6 +29,10 @@ export default class MemberService {
 		}
 
 		return false;
+	}
+
+	async isCellphoneSignup(cellPhone) {
+		return await this._isCellphoneBind(cellPhone);
 	}
 
 	async wechatLogin(openid, nickName, shopId, unionId) {
@@ -76,9 +80,14 @@ export default class MemberService {
 		//登陆用户
 	}
 
+	async bindCellphone(uid, cellPhone){
+		const isCellphoneBind = await this._isCellphoneBind(cellPhone);
 
-
-	async bindCellphone(uid, cellphone){
+		//手机已绑定
+		if (isCellphoneBind) {
+			return false;
+		}
+		return true;
 
 	}
 }

@@ -25,7 +25,7 @@ import {
 const router = Router();
 
 //绑定手机
-router.post('/auth/bind-cellphone', requiresLogin, checkBindCellphoneVerificationCode, bindCellphone);
+router.put('/auth/bind-cellphone', requiresLogin, bindCellphoneRequestBodyValidation,  checkBindCellphoneVerificationCode, bindCellphone);
 
 
 //发送手机验证码
