@@ -71,7 +71,11 @@
     <% for(var i = 0; i < product.description.length; i++) { %>
         <% if (product.description[i].type == "image" && product.description[i].value){ %>
             <% if (product.description[i].value.url){ %>
-                <img src="<%= imgHost + product.description[i].value.url %>" />
+                <% if (product.description[i].value.link){ %>
+                    <a href="<%= 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + product.description[i].value.url %>" /></a>
+                <% } else { %>
+                    <img src="<%= imgHost + product.description[i].value.url %>" />
+                <% } %>
             <% } %>
         <% } else if (product.description[i].type == "text" && product.description[i].value) { %>
             <% if(product.description[i].value.title != ''){ %>
