@@ -16,7 +16,7 @@
             <% if (description.type === "image" && description.value){ %>
                 <% if (description.value.url){ %>
                     <% if (description.value.link){ %>
-                        <a href="<%= 'http://' + description.value.link %>" class="image-link-"><img src="<%= imgHost + description.value.url %>" /></a>
+                        <a href="<%= 'http://' + description.value.link %>" class="image-link-"><img src="<%= imgHost + description.value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:rgba(0, 0, 0, 0.4);">点击查看详情</p></a>
                     <% } else { %>
                         <img src="<%= imgHost + description.value.url %>" />
                     <% } %>
