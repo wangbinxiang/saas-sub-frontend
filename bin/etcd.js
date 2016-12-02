@@ -12,6 +12,7 @@ if (process.env.ETCD_ENV) {
     var etcdHostMapping;
     var etcdOrder;
     var etcdMember;
+    var etcdCms;
 
     var etcdQiniuAccessKey;
     var etcdQiniuSecretKey;
@@ -40,6 +41,7 @@ if (process.env.ETCD_ENV) {
         etcdHostMapping = '/saas/production/frontend/hostMapping';
         etcdOrder = '/saas/production/services/order/url';
         etcdMember = '/saas/production/services/member/url';
+        etcdCms = '/saas/production/services/cms/url';
 
         etcdQiniuAccessKey = '/saas/production/qiniu/accesskey';
         etcdQiniuSecretKey = '/saas/production/qiniu/secretkey';
@@ -56,6 +58,7 @@ if (process.env.ETCD_ENV) {
         etcdHostMapping = '/saas/sandbox/frontend/hostMapping';
         etcdOrder = '/saas/sandbox/services/order/url';
         etcdMember = '/saas/sandbox/services/member/url';
+        etcdCms = '/saas/sandbox/services/cms/url';
     }
 
     var etcd = new Etcd(etcdHost);
@@ -67,6 +70,7 @@ if (process.env.ETCD_ENV) {
     var hostMapping = etcd.getSync(etcdHostMapping);
     var orderUrl = etcd.getSync(etcdOrder);
     var memberUrl = etcd.getSync(etcdMember);
+    var cmsUrl = etcd.getSync(etcdCms);
 
     
     memberUrl = memberUrl.body.node.value;
@@ -76,6 +80,7 @@ if (process.env.ETCD_ENV) {
     shopUrl = shopUrl.body.node.value;
     memcacheHost = memcacheHost.body.node.value;
     hostMapping = JSON.parse(hostMapping.body.node.value);
+    cmsUrl = cmsUrl.body.node.value;
 
 
     if (process.env.ETCD_ENV === 'production') {
@@ -108,7 +113,8 @@ if (process.env.ETCD_ENV) {
             "product": productUrl,
             "shop": shopUrl,
             "order": orderUrl,
-            "member": memberUrl
+            "member": memberUrl,
+            "cms": cmsUrl
         },
         "memcache": {
             "host": memcacheHost,
