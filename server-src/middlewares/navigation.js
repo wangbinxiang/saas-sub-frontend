@@ -1,4 +1,5 @@
 import NavigationService from '../models/application/NavigationService';
+import CategoriesService from '../models/application/CategoriesService';
 
 /**
  * 导航中间件
@@ -16,6 +17,14 @@ export default async function navigation(ctx, next) {
 			ctx.state._navigation = productTypes;
 		} else {
 			ctx.state._navigation = undefined;
+		}
+
+		const categories = await navigationService.categories(ctx._subId);
+
+		if (categories !== null) {
+			ctx.state._categories = categories;
+		} else {
+			ctx.state._categories = undefined;
 		}
 
 		await next();

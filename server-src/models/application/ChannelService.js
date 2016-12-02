@@ -4,6 +4,8 @@ import Product from '../model/Product';
 import ProductType from '../model/ProductType';
 import CategoryAdapter from '../adapter/CategoryAdapter';
 import Category from '../model/Category';
+import ArticleAdapter from '../adapter/ArticleAdapter';
+import Article from '../model/Article';
 
 import {
     ARTICLE_STATUS_PUBLISH
@@ -99,11 +101,11 @@ export default class ChannelService {
 		    };
 
 			const filters = {
-				category: categoryId,
+				categoryId,
 				status: ARTICLE_STATUS_PUBLISH
 			};
-
-			const articleResult = await this.articleAdapter.get({
+			const articleAdapter = new ArticleAdapter();
+			const articleResult = await articleAdapter.get({
 			    filters,
 			    pages
 			}, Article);

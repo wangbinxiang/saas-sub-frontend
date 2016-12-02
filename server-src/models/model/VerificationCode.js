@@ -31,14 +31,9 @@ export default class VerificationCode {
     }
 
     saveData(data) {
-        console.log(data);
-
         const store = this.store[this.codeName]? this.store[this.codeName]: {};
         store[data.phoneNum] = data;
         this.store[this.codeName] = store;
-
-        console.log(this.getData());
-        // this.store[this.codeName] = data;
     }
 
     //检查是否可以发送验证码

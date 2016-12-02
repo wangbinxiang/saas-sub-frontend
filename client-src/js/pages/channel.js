@@ -18,7 +18,7 @@ const ProdModel = function(data, productTypeId){
        pageno = pageno + 1;
        $.ajax({
            method: "GET",
-           url: "/channel/" + productTypeId + "?number=" + pageno,
+           url: "/channel/productTypes/" + productTypeId + "?number=" + pageno,
            dataType: "json"
        })
        .done(function(respones) {
@@ -48,6 +48,36 @@ function koBind(data, productTypeId) {
       })
   }
 }
+if ($('#listEqualizer').length) {
+  koBind(data, productTypeId);  
+}
 
-koBind(data, productTypeId);
 
+const ArticlesModel = function(data, categoryId) {
+  let self = this
+  self.articles = ko.observableArray(data);
+  self.isNext = ko.observable(isNext);
+
+  let pageno = 1;
+
+  self.more = function() {
+     pageno = pageno + 1;
+     $.ajax({
+         method: "GET",
+         url: "/channel/categories/" + categoryId + "?number=" + pageno,
+         dataType: "json"
+     })
+     .done(function(respones) {
+         for(let article of respones.articles){
+             self.articles.push(article)
+         }
+         self.isNext(respones.isNext);
+     })
+  }
+}
+
+if ($('#articles').length) {
+  const articlesModel = new ArticlesModel(data, categoryId); 
+  ko.applyBindings(articlesModel);
+   
+}

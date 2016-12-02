@@ -14,6 +14,6 @@ export default class Category {
 		this.updateTime = updateTime;
 		this.createTime = createTime;
 		this.statusTime = statusTime;
-		this.userId     = userId;
+		this.userId     = parseInt(userId);
 	}
 }

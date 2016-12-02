@@ -1,1 +1,32 @@
-category.ejs
+<%- include('../layout/header') -%>
+<nav aria-label="您的位置:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">首页</a></li>
+        <li>
+            <span class="show-for-sr">当前: </span> 文章频道
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column"><%= category.name %></h1>
+
+<div class="row column">
+    <div data-bind="foreach:articles" id="articles">
+        <a class="article-item clearfix" data-bind="attr:{href: '/articles/' + id}">
+            <h4 data-bind="text:title"></h4>
+        </a>
+    </div>
+    
+</div>
+<div class="list-button row column">
+    <a class="button large btnMore" style="display: none;" data-bind="click: more, visible: isNext()" id="more">显示更多商品</a>
+</div>
+
+<script>
+	var categoryId = <%= categoryId %>;
+	var data = <%- JSON.stringify(articles? articles: []) %>;
+    var isNext = <%= isNext %>;
+</script>
+
+
+<%- include('../layout/footer') -%>

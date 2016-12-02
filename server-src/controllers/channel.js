@@ -91,8 +91,9 @@ export async function category(ctx, next) {
 				title,
 				pageJs,
 				number,
+				isNext,
 				articles,
-				category,
+				category
 			});
 		}
 	}
