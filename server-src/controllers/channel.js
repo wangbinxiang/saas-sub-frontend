@@ -53,3 +53,48 @@ export async function productType(ctx, next) {
 		}
 	}
 }
+
+export async function category(ctx, next) {
+	//频道信息
+	let isNext = false;
+
+	const categoryId = ctx.params.id;
+
+	const number = ctx.query.number ? ctx.query.number : 1;
+
+	const size = ctx.query.size ? ctx.query.size : 10;
+
+	const channelService = await new ChannelService();
+	const { page, articles, category } = await channelService.category(number, size, categoryId, ctx._subId);
+
+	if (!category) {
+		//404
+		await next()
+	} else {
+		if (page && page.haveNext()) {
+			isNext = true;
+		}
+
+		if (ctx.accepts('html', 'text', 'json') === 'json') {
+	        ctx.body = {
+	            articles,
+	            isNext
+	        };
+	    } else {
+	    	
+	    	const title = category.name + ' - ' + ctx._shop.title;
+
+			const pageJs = webpackIsomorphicTools.assets().javascript.channel;
+
+			await ctx.render('channel/category', {
+				categoryId,
+				title,
+				pageJs,
+				number,
+				articles,
+				category,
+			});
+		}
+	}
+
+}

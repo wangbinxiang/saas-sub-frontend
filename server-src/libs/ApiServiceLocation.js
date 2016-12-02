@@ -57,3 +57,8 @@ export function shopApiServiceLocation() {
     const locationName = 'shop';
     return getServiceLcation(locationName);
 }
+
+export function cmsApiServiceLocation() {
+    const locationName = 'cms';
+    return getServiceLcation(locationName);
+}

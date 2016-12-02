@@ -76,3 +76,26 @@ export const SHOP_SAVE_NAVIGATION = Symbol();
 export const SHOP_SAVE_SLIDES     = Symbol();
 
 
+//文章分类列表
+export const CATEGORY_GET         = Symbol();
+//添加文章分类
+export const CATEGORY_ADD         = Symbol();
+//编辑文章分类
+export const CATEGORY_EDIT        = Symbol();
+//删除文章分类
+export const CATEGORY_DEL         = Symbol();
+
+
+//文章分类
+export const ARTICLE_GET          = Symbol();
+//添加文章
+export const ARTICLE_ADD          = Symbol();
+//编辑文章
+export const ARTICLE_EDIT         = Symbol();
+//删除文章
+export const ARTICLE_DEL          = Symbol();
+//草稿文章
+export const ARTICLE_REVERT       = Symbol();
+//发布文章
+export const ARTICLE_PUBLISH      = Symbol();
+
