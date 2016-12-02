@@ -47,9 +47,10 @@ export const PRODUCT_DEL          = Symbol();
 //添加产品价格
 export const PRODUCT_PRICE_ADD    = Symbol();
 
-
+export const MEMBER_GET           = Symbol();
 //获取产品快照信息
 export const PRODUCT_SNAPSHOT_GET = Symbol();
+
 
 //用户注册
 export const MEMBER_SIGNUP        = Symbol();
@@ -74,4 +75,27 @@ export const SHOP_SAVE_NAVIGATION = Symbol();
 
 export const SHOP_SAVE_SLIDES     = Symbol();
 
+
+//文章分类列表
+export const CATEGORY_GET         = Symbol();
+//添加文章分类
+export const CATEGORY_ADD         = Symbol();
+//编辑文章分类
+export const CATEGORY_EDIT        = Symbol();
+//删除文章分类
+export const CATEGORY_DEL         = Symbol();
+
+
+//文章分类
+export const ARTICLE_GET          = Symbol();
+//添加文章
+export const ARTICLE_ADD          = Symbol();
+//编辑文章
+export const ARTICLE_EDIT         = Symbol();
+//删除文章
+export const ARTICLE_DEL          = Symbol();
+//草稿文章
+export const ARTICLE_REVERT       = Symbol();
+//发布文章
+export const ARTICLE_PUBLISH      = Symbol();
 

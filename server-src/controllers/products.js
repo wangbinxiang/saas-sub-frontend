@@ -23,8 +23,7 @@ export async function detail(ctx, next) {
     const productService = new ProductService();
     product = await productService.get(id, subId);
     if (product === null) {
-        ctx.status = 404
-        await ctx.render('404');
+        await next();
     } else {
 
         const title = product.name + ' - ' + ctx._shop.title;

@@ -15,6 +15,8 @@ import routerChannel from './router/channel';
 
 import routerQrcode from './router/qrcode';
 
+import routerArticles from './router/articles';
+
 
 const router = new Router();
 
@@ -25,6 +27,7 @@ router.use('', routerAuth.routes());
 router.use('', routerIndex.routes());
 router.use('', routerChannel.routes());
 router.use('', routerQrcode.routes());
+router.use('', routerArticles.routes());
 
 
 export default router;

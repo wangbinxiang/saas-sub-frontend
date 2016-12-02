@@ -1,14 +1,37 @@
 import Router from 'koa-router';
 import passport from 'koa-passport';
+import {
+    requiresLogin
+} from '../../middlewares/authorization';
 import MemberService from '../../models/application/MemberService';
 import {
     authRelationshipWechatBlock,
     authNormalWechatBlock
 } from '../../middlewares/auth/wechat';
 import config from 'config';
+import {
+    bindCellphone,
+    isCellphoneSignup,
+    sendBindCellphoneVerificationCode,
+    checkBindCellphoneVerificationCode
+} from '../../controllers/auth';
+import {
+    isCellphoneSignupValidation,
+    sendSignupCellphoneVerificationCodeValidation,
+    bindCellphoneRequestBodyValidation
+} from '../../validations/authValidation';
 
 
 const router = Router();
+
+//绑定手机
+router.put('/auth/bind-cellphone', requiresLogin, bindCellphoneRequestBodyValidation,  checkBindCellphoneVerificationCode, bindCellphone);
+
+
+//发送手机验证码
+router.get('/auth/validate/send-bind-cellphone-verification-code', sendSignupCellphoneVerificationCodeValidation, sendBindCellphoneVerificationCode);
+//检查手机是否注册
+router.get('/auth/validate/is-cellphone-signup', isCellphoneSignupValidation, isCellphoneSignup);
 
 
 router.get('/wechat/auth/callback', authNormalWechatBlock, async(ctx, next) => {
@@ -83,7 +106,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                         ctx.redirect(redirectTo);
                     } else {
                         const title = '关联用户注册'
-                        //页面提示信息
+                            //页面提示信息
                         let message;
                         if (success) {
                             message = '您关联用户成功，当前已登录。'

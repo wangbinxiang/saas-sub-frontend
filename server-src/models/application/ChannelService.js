@@ -2,6 +2,15 @@ import ProductAdapter from '../adapter/ProductAdapter';
 import ProductTypeAdapter from '../adapter/ProductTypeAdapter';
 import Product from '../model/Product';
 import ProductType from '../model/ProductType';
+import CategoryAdapter from '../adapter/CategoryAdapter';
+import Category from '../model/Category';
+import ArticleAdapter from '../adapter/ArticleAdapter';
+import Article from '../model/Article';
+
+import {
+    ARTICLE_STATUS_PUBLISH
+} from '../../config/articleConf';
+
 import {
     PRODUCT_STATUS_ON_SALE
 } from '../../config/productConf';
@@ -42,7 +51,7 @@ export default class ChannelService {
 
 			const filters = {
 				productType: productTypeId,
-				status: PRODUCT_STATUS_ON_SALE
+				status: ARTICLE_STATUS_PUBLISH
 			}
 
 
@@ -64,6 +73,55 @@ export default class ChannelService {
 			page,
 			products,
 			productType
+		};
+	}
+
+
+	/**
+	 * 获取某分类下文章
+	 * @author wangbinxiang
+	 * @date   2016-12-02T15:50:47+0800
+	 * @param  {[type]}                 number     [description]
+	 * @param  {[type]}                 size       [description]
+	 * @param  {[type]}                 categoryId [description]
+	 * @param  {[type]}                 userId     [description]
+	 * @return {[type]}                            [description]
+	 */
+	async category(number, size, categoryId, userId) {
+		let page, articles, category;
+
+		const categoryAdapter = new CategoryAdapter();
+		category = await categoryAdapter.get({ idList: categoryId }, Category);
+		console.log(category);
+		if (category && category.userId === parseInt(userId)) {
+
+			const pages = {
+		        number,
+		        size
+		    };
+
+			const filters = {
+				categoryId,
+				status: ARTICLE_STATUS_PUBLISH
+			};
+			const articleAdapter = new ArticleAdapter();
+			const articleResult = await articleAdapter.get({
+			    filters,
+			    pages
+			}, Article);
+			console.log(articleResult);
+			if (articleResult !== null) {
+				//没有获取数据 直接返回空
+				page = articleResult.page;
+				articles = articleResult.result;
+			} 
+		}
+
+		//返回 分页 和 products 数据
+		return {
+			page,
+			articles,
+			category
 		};
 	}
 }

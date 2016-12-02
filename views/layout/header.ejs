@@ -21,7 +21,7 @@
                         <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
                         <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li>
                         <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>welcome</b><i class="material-icons mi-expand_more"></i></a></li>
-                        <li><a class="cart"><i class="material-icons mi-shopping_cart"></i><em></em></a></li>
+                        <!--<li><a class="cart"><i class="material-icons mi-shopping_cart"></i><em></em></a></li>-->
                     </ul>
                 </div>
             </div>
@@ -34,13 +34,20 @@
             </div>
             <div id="responsive-menu" class="menu-body">
                 <div class="top-bar-left top-bar-left--global">
-                    <% if(typeof _navigation !== 'undefined') { %>
+                    
                     <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
+                    <% if(typeof _navigation !== 'undefined') { %>
                         <% for(const i in _navigation) { %>
-                        <li><a href="/channel/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
+                        <li><a href="/channel/productTypes/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
                         <% } %>
-                    </ul>
                     <% } %>
+                    <% if(typeof _categories !== 'undefined') { %>
+                        <% for(const i in _categories) { %>
+                        <li><a href="/channel/categories/<%= _categories[i].id %>"><%= _categories[i].name %></a></li>
+                        <% } %>
+                    <% } %>
+                    </ul>
+                    
                 </div>
             </div>
         </header>

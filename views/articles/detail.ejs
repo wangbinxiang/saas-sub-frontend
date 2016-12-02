@@ -1,0 +1,34 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">首页</a></li>
+        <!--<li><a href="/products/">文章列表</a></li>-->
+        <li>
+            <span class="show-for-sr">Current: </span>文章详情
+        </li>
+    </ul>
+</nav>
+<h1 class="row pageHeader"><%= article.title %></h1>
+<div class="column row article-detail">
+    <div class="row column">
+        <div class="profile-main">
+        <% for(let description of article.content) { %>
+            <% if (description.type === "image" && description.value){ %>
+                <% if (description.value.url){ %>
+                    <% if (description.value.link){ %>
+                        <a href="<%= 'http://' + description.value.link %>" class="image-link-"><img src="<%= imgHost + description.value.url %>" /></a>
+                    <% } else { %>
+                        <img src="<%= imgHost + description.value.url %>" />
+                    <% } %>
+                <% } %>
+            <% } else if (description.type === "text" && description.value) { %>
+                <% if(description.value.title != ''){ %>
+                <h6<% if (description.value.isAlert == "true") { %> class="alert"<% } %>><%= description.value.title %></h6>
+                <% } %>
+                <p<% if (description.value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(description.value.desc) %></p>
+            <% } %>
+        <% } %>
+        </div>
+    </div>
+</div>
+<%- include('../layout/footer') -%>

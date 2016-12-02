@@ -12,6 +12,7 @@ import {
 	jsonApiGetUrl
 } from '../../libs/helper';
 import {
+    MEMBER_GET,
 	MEMBER_SIGNUP,
 	MEMBER_LOGIN
 } from '../../config/apiFeatureConf';
@@ -23,6 +24,19 @@ export default class MemberRequestJsonApi extends BaseRequest {
 		this.dataType = 'users';
 	}
 
+    get() {
+        const baseUrl = '/users';
+
+        const idList = this.originData.idList ? this.originData.idList : '';
+
+        const filters = this.originData.filters ? this.originData.filters : '';
+
+        const pages = this.originData.pages ? this.originData.pages : '';
+
+        this.url = jsonApiGetUrl(baseUrl, idList, { filters, pages });
+
+        this.method = GET;
+    }
 
 	signup() {
         let url = '/users';
@@ -60,6 +74,9 @@ export default class MemberRequestJsonApi extends BaseRequest {
 
     buildFeature() {
         switch(this.feature) {
+            case MEMBER_GET:
+                this.get();
+                break;
             case MEMBER_LOGIN:
                 this.login();
                 break;

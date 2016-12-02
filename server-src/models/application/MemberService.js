@@ -8,6 +8,32 @@ export default class MemberService {
 		this.userAdapter = new MemberAdapter();
 	}
 
+	async _isCellphoneBind(cellPhone) {
+		const filters = {
+			cellPhone
+		};
+
+		const pages = {
+			number: 1,
+        	size: 0
+		}
+
+
+		const member = await this.userAdapter.get({
+			filters,
+			pages
+		}, Member);
+
+		if (member) {
+			return true;
+		}
+
+		return false;
+	}
+
+	async isCellphoneSignup(cellPhone) {
+		return await this._isCellphoneBind(cellPhone);
+	}
 
 	async wechatLogin(openid, nickName, shopId, unionId) {
 		let member;
@@ -52,5 +78,16 @@ export default class MemberService {
 			success
 		};
 		//登陆用户
+	}
+
+	async bindCellphone(uid, cellPhone){
+		const isCellphoneBind = await this._isCellphoneBind(cellPhone);
+
+		//手机已绑定
+		if (isCellphoneBind) {
+			return false;
+		}
+		return true;
+
 	}
 }

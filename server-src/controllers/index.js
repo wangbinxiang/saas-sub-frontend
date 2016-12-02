@@ -34,8 +34,6 @@ export default async(ctx, next) => {
             isNext
         };
     } else {
-        console.log(products);
-        console.log(isNext);
 
         const pageJs = webpackIsomorphicTools.assets().javascript.index;
 

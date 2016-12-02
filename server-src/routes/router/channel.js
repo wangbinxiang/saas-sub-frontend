@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { productType } from '../../controllers/channel';
+import { productType, category } from '../../controllers/channel';
 import navigation from '../../middlewares/navigation';
 const router = Router();
 
@@ -9,7 +9,9 @@ router.prefix('/channel');
 
 
 
-router.get('/:id', navigation, productType);
+router.get('/productTypes/:id', navigation, productType);
+
+router.get('/categories/:id', navigation, category);
 
 
 export default router;
