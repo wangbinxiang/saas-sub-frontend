@@ -196,7 +196,7 @@ server.on('error', (error) => {
   }
 });
 server.on('listening', () => {
-  console.log('==> 🌎  Koa2 server listening on port: %d in %s mode', port, app.env)
+  console.log('==> 🌎  saas-sub-frontend server listening on port: %d in %s mode', port, app.env)
 })
 
 export default app

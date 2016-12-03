@@ -79,9 +79,9 @@
             <% } %>
         <% } else if (product.description[i].type == "text" && product.description[i].value) { %>
             <% if(product.description[i].value.title != ''){ %>
-            <h6<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%= product.description[i].value.title %></h6>
+            <h6<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%= product.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
             <% } %>
-            <p<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc) %></p>
+            <p<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
         <% } %>
     <% } %>
     </div>
