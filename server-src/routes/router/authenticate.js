@@ -28,7 +28,7 @@ router.get('/auth/faker', async (ctx, next) => {
 router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 
 	let callbackUrl = 'http://' + config.get('wechat.yundianshang.authHost') + '/wechat/auth/callback?';
-	const returnTo = ctx.query.returnTo? base64url.decode(ctx.query.returnTo): ( ctx.headers.referer? ctx.headers.referer: '/');
+	const returnTo = ctx.query.returnTo? ctx.query.returnTo: ( ctx.headers.referer? base64url(ctx.headers.referer): '/');
 
 	let redirectTo = 'http://' + ctx.host + '/wechat/auth/callback?';
 
@@ -46,7 +46,7 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 //关联用户注册
 router.get('/wechat/auth/relationship', authRelationshipWechatBlock, async (ctx, next) => {
 	const parentId = ctx.query.parentId? ctx.query.parentId: config.get('relationshipParentId');
-	const returnTo = ctx.query.returnTo? base64url.decode(ctx.query.returnTo): ( ctx.headers.referer? ctx.headers.referer: '/');
+	const returnTo = ctx.query.returnTo? ctx.query.returnTo: ( ctx.headers.referer? base64url(ctx.headers.referer): '/');
 
 	let callbackUrl = 'http://' + config.get('wechat.yundianshang.authHost') + '/wechat/auth/callback?';
 

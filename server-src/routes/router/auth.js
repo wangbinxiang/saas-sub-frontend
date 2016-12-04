@@ -57,7 +57,7 @@ router.get('/wechat/auth/callback', authNormalWechatBlock, async(ctx, next) => {
                     // ctx.status = 200;
                     // ctx.body = member;
 
-                    let redirectTo = ctx.query.returnTo ? ctx.query.returnTo : '/';
+                    let redirectTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo) : '/';
 
                     ctx.redirect(redirectTo);
                 } else {
@@ -100,7 +100,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                     // ctx.status = 200;
                     // ctx.body = member;
 
-                    let redirectTo = ctx.query.returnTo ? ctx.query.returnTo : '/';
+                    let redirectTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo) : '/';
 
                     if (parentId === config.get('relationshipParentId')) {
                         ctx.redirect(redirectTo);
