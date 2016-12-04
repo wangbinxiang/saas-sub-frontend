@@ -20,6 +20,7 @@ import {
     sendSignupCellphoneVerificationCodeValidation,
     bindCellphoneRequestBodyValidation
 } from '../../validations/authValidation';
+import base64url from 'base64url';
 
 
 const router = Router();
