@@ -1,3 +1,4 @@
+import base64url from 'base64url';
 /**
  * 检查是否登陆，没有登陆跳转到/login登录页面
  * @author wangbinxiang
@@ -10,6 +11,10 @@ export async function requiresLogin(ctx, next) {
     if (ctx.isAuthenticated()) {
         await next();
     } else {
-        ctx.redirect('/');
+    	let redirectUrl = '/';
+    	if (ctx.state.__IN_WECHAT__) {
+    		redirectUrl = ctx.state.__AUTH_WECHAT_LINK__ + '?returnTo=' + base64url(ctx.url);
+    	}
+        ctx.redirect(redirectUrl);
     }
 }

@@ -15,6 +15,7 @@ export default class ShopTranslator extends Translator {
 		let contactPeoplePhone = bodyReader.value('contactPeoplePhone');
 		let contactPeopleQQ    = bodyReader.value('contactPeopleQQ');
 		let logo               = bodyReader.value('logo');
+		let officialQRCode     = bodyReader.value('officialQRCode');
 		let copyright          = bodyReader.value('copyright');
 		let province           = bodyReader.value('province');
 		let city               = bodyReader.value('city');
@@ -27,6 +28,6 @@ export default class ShopTranslator extends Translator {
 		let statusTime         = bodyReader.value('statusTime');
 		let status             = bodyReader.value('status');
 
-        return { id, title, contactPeople, contactPeoplePhone, contactPeopleQQ, logo, copyright, province, city, address, aboutInfo, slides, navigation, createTime, updateTime, statusTime, status};
+        return { id, title, contactPeople, contactPeoplePhone, contactPeopleQQ, logo, officialQRCode, copyright, province, city, address, aboutInfo, slides, navigation, createTime, updateTime, statusTime, status};
     }
 }

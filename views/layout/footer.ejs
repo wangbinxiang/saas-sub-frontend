@@ -5,15 +5,15 @@
                 <div class="medium-6 columns"><a href="tel:<%= shopInfo.contactPeoplePhone %>"><i class="material-icons mi-call"></i> <b><%= shopInfo.contactPeoplePhone %></b></a></div>
                 <% } %>
                 <% if (typeof shopInfo !== 'undefined' && shopInfo.contactPeopleQQ) { %>
-                <div class="medium-6 columns"><a data-toggle="qr-dropdown"><i class="material-icons">&#xE0B7;</i> 微信<b><%= shopInfo.contactPeopleQQ %></b></a></div>
+                <div class="medium-6 columns"><a data-toggle="qr-dropdown"><i class="material-icons">&#xE0B7;</i> 微信客服</a></div>
                 <% } %>
             </div>
         </div>
         <div class="dropdown-pane top dropdown-pane-lang" id="qr-dropdown" data-dropdown data-close-on-click="true">
-                <img src="/img/super-qr-code.gif">
+                <img src="<%= shopInfo.contactPeopleQQ %>">
             </div>
         <div class="text">
-            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %>
+            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %> <img src="<%= shopInfo.officialQRCode %>">
             <br />Power by <a href="http://www.yundianshang.cc">www.yundianshang.cc</a>
         </div>
     </footer>

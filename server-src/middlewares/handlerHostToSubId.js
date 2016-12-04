@@ -40,22 +40,29 @@ export async function handlerHostToSubId(ctx, next) {
         if (shop.id === subId) {
             ctx._subId = subId;
             ctx._shop = shop;
-        
+            const imgHost = config.get('qiniu.bucket.subImg.url');
             let logo = '/img/sa_logo.png';
             let contactPeoplePhone = shop.contactPeoplePhone? shop.contactPeoplePhone: '';
             let contactPeopleQQ = shop.contactPeopleQQ? shop.contactPeopleQQ: '';
             let copyright = shop.contactPeopleQQ? shop.copyright: '复泰科技电商湾';
+            let officialQRCode = shop.officialQRCode? shop.officialQRCode: '';
             if (shop.logo) {
                 //七牛host
-                const imgHost = config.get('qiniu.bucket.subImg.url');
                 logo = imgHost + shop.logo;
+            }
+            if (contactPeopleQQ) {
+                contactPeopleQQ = imgHost + contactPeopleQQ; 
+            }
+            if (officialQRCode) {
+                officialQRCode = imgHost + officialQRCode;
             }
 
             ctx.state.shopInfo = {
                 logo,
                 contactPeoplePhone,
                 contactPeopleQQ,
-                copyright
+                copyright,
+                officialQRCode
             }
             await next();
         } else {

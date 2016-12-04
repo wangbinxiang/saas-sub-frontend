@@ -67,7 +67,7 @@ export default class ProductService {
 			idList
 		}, Product);
 		if (product === null || !checkResourcesOwner(product, 'userId', userId, _.isArray(idList))) {
-			return product;
+			return null;
 		} else {
 
 			let productTypeId = product.productTypeId;

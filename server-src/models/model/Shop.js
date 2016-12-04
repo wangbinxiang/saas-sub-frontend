@@ -7,6 +7,7 @@ export default class Shop {
 		contactPeoplePhone,
 		contactPeopleQQ,
 		logo,
+		officialQRCode,
 		copyright,
 		province,
 		city,
@@ -25,6 +26,7 @@ export default class Shop {
 		this.contactPeoplePhone = contactPeoplePhone;
 		this.contactPeopleQQ    = contactPeopleQQ;
 		this.logo               = logo;
+		this.officialQRCode		= officialQRCode;
 		this.copyright          = copyright;
 		this.province           = province;
 		this.city               = city;
