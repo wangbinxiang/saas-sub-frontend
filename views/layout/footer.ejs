@@ -15,8 +15,9 @@
         </div>
         <% } %>
         
-        <div class="text">
-            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %> <% if (typeof shopInfo !== 'undefined' && shopInfo.officialQRCode) { %><img src="<%= shopInfo.officialQRCode %>"><% } %>
+        <div class="text blk-margin">
+            <% if (typeof shopInfo !== 'undefined' && shopInfo.officialQRCode) { %><img src="<%= shopInfo.officialQRCode %>"><% } %><br><br>
+            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %> 
             <br />Power by <a href="http://www.yundianshang.cc">www.yundianshang.cc</a>
         </div>
     </footer>
