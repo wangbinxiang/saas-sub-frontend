@@ -4,6 +4,7 @@ import {
 } from '../config/productConf';
 import nl2br from 'nl2br';
 import config from 'config';
+import { isAuthRelationship } from '../tools/auth';
 
 
 /**
@@ -26,6 +27,8 @@ export async function detail(ctx, next) {
         await next();
     } else {
 
+        const showRelationship = isAuthRelationship(ctx);
+
         const title = product.name + ' - ' + ctx._shop.title;
 
         const pageJs = webpackIsomorphicTools.assets().javascript.product;
@@ -38,7 +41,8 @@ export async function detail(ctx, next) {
             pageJs,
             nl2br,
             subId,
-            imgHost
+            imgHost,
+            showRelationship
         });
     }
 }

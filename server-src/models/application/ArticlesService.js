@@ -3,6 +3,8 @@ import Article from '../model/Article';
 import CategoryAdapter from '../adapter/CategoryAdapter';
 import Category from '../model/Category';
 import lodash from 'lodash';
+import { checkResourcesOwner } from '../../libs/helper';
+import { ARTICLE_STATUS_PUBLISH } from '../../config/articleConf'
 /**
  * 产品分类service类
  */
@@ -65,6 +67,26 @@ export default class ArticlesService {
             idList
         }, Article);
         return articles;
+    }
+
+
+    /**
+     * 文章详情页面
+     * @author wangbinxiang
+     * @date   2016-12-05T11:06:00+0800
+     * @param  {[type]}                 idList [description]
+     * @param  {[type]}                 userId [description]
+     * @return {[type]}                        [description]
+     */
+    async detail(idList, userId) {
+        const article = await this.articleAdapter.get({
+            idList
+        }, Article);
+        console.log(article.status);
+        if (article === null || !checkResourcesOwner(article, 'userId', userId, lodash.isArray(idList)) || article.status !== ARTICLE_STATUS_PUBLISH) {
+            return null;
+        } 
+        return article;
     }
 
 

@@ -86,7 +86,7 @@
     <% } %>
     </div>
 </div>
-<% if(typeof user !== 'undefined') {%>
+<% if( showRelationship && typeof user !== 'undefined') {%>
 <div class="text-center">
     <h3>扫码加入会员</h3>
     <img src="/qrcode/relationship?productId=<%= product.id %>">

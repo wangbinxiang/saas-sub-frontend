@@ -2,7 +2,7 @@ import ProductAdapter from '../adapter/ProductAdapter';
 import ProductTypeAdapter from '../adapter/ProductTypeAdapter';
 import Product from '../model/Product';
 import ProductType from '../model/ProductType';
-import _ from 'lodash';
+import lodash from 'lodash';
 import { checkResourcesOwner } from '../../libs/helper';
 
 export default class ProductService {
@@ -37,7 +37,7 @@ export default class ProductService {
 			if (productTypeIdList && productTypeIdList.length > 0) {
 				// try {
 
-				productTypeIdList = _.uniq(productTypeIdList);
+				productTypeIdList = lodash.uniq(productTypeIdList);
 				const productTypeAdapter = new ProductTypeAdapter();
 				let productTypes = await productTypeAdapter.get({
 					'idList': productTypeIdList
@@ -66,7 +66,7 @@ export default class ProductService {
 		let product = await this.productAdapter.get({
 			idList
 		}, Product);
-		if (product === null || !checkResourcesOwner(product, 'userId', userId, _.isArray(idList))) {
+		if (product === null || !checkResourcesOwner(product, 'userId', userId, lodash.isArray(idList))) {
 			return null;
 		} else {
 

@@ -4,11 +4,16 @@
             <div class="medium-6 columns"><i class="material-icons mi-call"></i> <b><%= shopInfo.contactPeoplePhone %></b></div>
             <% } %>
             <% if (typeof shopInfo !== 'undefined' && shopInfo.contactPeopleQQ) { %>
-            <div class="medium-6 columns"><i class="material-icons">headset_mic</i> <b><%= shopInfo.contactPeopleQQ %></b></div>
-            <% } %>
+                <div class="medium-6 columns"><a data-toggle="qr-dropdown"><i class="material-icons">&#xE0B7;</i> 微信客服</a></div>
+                <% } %>
         </div>
+        <% if (typeof shopInfo !== 'undefined' && shopInfo.contactPeopleQQ) { %>
+        <div class="dropdown-pane top dropdown-pane-lang" id="qr-dropdown" data-dropdown data-close-on-click="true">
+                <img src="<%= shopInfo.contactPeopleQQ %>">
+        </div>
+        <% } %>
         <div class="row text">
-            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %>
+            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %><% if (typeof shopInfo !== 'undefined' && shopInfo.officialQRCode) { %><img src="<%= shopInfo.officialQRCode %>"><% } %>
             <br />Power by <a href="http://www.yundianshang.cc">www.yundianshang.cc</a>
         </div>
     </footer>

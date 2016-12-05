@@ -6,7 +6,7 @@ export async function detail(ctx, next) {
 	//文章id
 	const id = ctx.params.id;
 	const articlesService = new ArticlesService();
-	const article = await articlesService.get(id, ctx._subId);
+	const article = await articlesService.detail(id, ctx._subId);
 	if (article === null) {
 	    await next();
 	} else {

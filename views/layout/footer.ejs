@@ -9,11 +9,14 @@
                 <% } %>
             </div>
         </div>
+        <% if (typeof shopInfo !== 'undefined' && shopInfo.contactPeopleQQ) { %>
         <div class="dropdown-pane top dropdown-pane-lang" id="qr-dropdown" data-dropdown data-close-on-click="true">
                 <img src="<%= shopInfo.contactPeopleQQ %>">
-            </div>
+        </div>
+        <% } %>
+        
         <div class="text">
-            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %> <img src="<%= shopInfo.officialQRCode %>">
+            2016 &copy; <%= typeof shopInfo !== 'undefined'? shopInfo.copyright: '' %> <% if (typeof shopInfo !== 'undefined' && shopInfo.officialQRCode) { %><img src="<%= shopInfo.officialQRCode %>"><% } %>
             <br />Power by <a href="http://www.yundianshang.cc">www.yundianshang.cc</a>
         </div>
     </footer>
