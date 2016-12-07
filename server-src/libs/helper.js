@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
+import config from 'config';
 
 /**
  * 生成随机整数
@@ -145,6 +146,21 @@ export function checkResourcesOwner(resources, checkTarget, owner, isList) {
     } else {
         return resources[checkTarget] === owner;
     }
+}
+
+export function checkOther(id, shopId){
+    const other = config.get('productMapping.' + shopId);
+    let live = false
+    if (other) {
+        console.log(other);
+        for(let i in other) {
+            if (_.indexOf(other[i], +id) > -1) {
+                live = true;
+            }
+        }
+    }
+    console.log(live);
+    return live;
 }
 
 

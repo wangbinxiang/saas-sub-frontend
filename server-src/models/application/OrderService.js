@@ -11,6 +11,7 @@ import Contract from '../model/Contract';
 import ContractSnapshotAdapter from '../adapter/ContractSnapshotAdapter';
 import ContractSnapshot from '../model/ContractSnapshot';
 import lodash from 'lodash';
+import { checkOther } from '../../libs/helper';
 
 
 export default class OrderService {
@@ -25,7 +26,7 @@ export default class OrderService {
 		let product = await this.productAdapter.get({
 			idList: productId
 		}, Product);
-		if (product === null || !product.isOnSale() || !product.own(shopId)) {
+		if (product === null || !product.isOnSale() || (!checkOther(productId, shopId) && !product.own(shopId))) {
 			return null;
 		} else {
 			//获取分类信息
@@ -146,7 +147,7 @@ export default class OrderService {
 		const product = await this.productAdapter.get({
 			idList: productList[0].productId
 		}, Product);
-		if (product === null || !product.isOnSale() || !product.own(shopId)) {
+		if (product === null || !product.isOnSale() || (!checkOther(productList[0].productId, shopId) && !product.own(shopId))) {
 			return null;
 		} else {
 			productList[0].snapshotId = product.snapshotIds[0];

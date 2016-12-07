@@ -1,5 +1,7 @@
 import ChannelService from '../models/application/ChannelService';
+import ProductService from '../models/application/ProductService';
 import config from 'config';
+import lodash from 'lodash';
 
 
 
@@ -14,7 +16,7 @@ export async function productType(ctx, next) {
 	const size = ctx.query.size ? ctx.query.size : 10;
 
 	const channelService = await new ChannelService();
-	const { page, products, productType } = await channelService.productType(number, size, productTypeId, ctx._subId);
+	let { page, products, productType } = await channelService.productType(number, size, productTypeId, ctx._subId);
 
 	if (!productType) {
 		//404
@@ -30,6 +32,16 @@ export async function productType(ctx, next) {
 	            isNext
 	        };
 	    } else {
+	    	//获取当前是否有
+	    	const other = config.get('productMapping.' + ctx._subId + '.' + productTypeId);
+
+	    	if (other) {
+	    		const productService = new ProductService();
+	    		const otherProducts = await productService.list(other);
+	    		if (otherProducts) {
+	    			products = lodash.concat(products, otherProducts);
+	    		}
+	    	}
 	    	
 	    	const title = productType.name + ' - ' + ctx._shop.title;
 

@@ -3,7 +3,7 @@ import ProductTypeAdapter from '../adapter/ProductTypeAdapter';
 import Product from '../model/Product';
 import ProductType from '../model/ProductType';
 import lodash from 'lodash';
-import { checkResourcesOwner } from '../../libs/helper';
+import { checkResourcesOwner, checkOther } from '../../libs/helper';
 
 export default class ProductService {
 
@@ -61,12 +61,21 @@ export default class ProductService {
 		}
 	}
 
+	async list(idList) {
+		const products = await this.productAdapter.get({
+			idList
+		}, Product);
+
+		return products;
+	}
+
 
 	async get(idList, userId) {
 		let product = await this.productAdapter.get({
 			idList
 		}, Product);
-		if (product === null || !checkResourcesOwner(product, 'userId', userId, lodash.isArray(idList))) {
+		;
+		if (product === null || (!checkOther(idList, userId) && !checkResourcesOwner(product, 'userId', userId, lodash.isArray(idList)))) {
 			return null;
 		} else {
 
