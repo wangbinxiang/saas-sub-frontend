@@ -25,7 +25,6 @@ export default class JsonApiBodyReader {
      */
     relationships(relationships) {
     	if (relationships) {
-
     		for(let relationship in relationships) {
                 if (_.isArray(relationships[relationship].data) && relationships[relationship].data.length > 0) {
                     this.data[relationships[relationship].data[0].type] = []
@@ -46,7 +45,17 @@ export default class JsonApiBodyReader {
             for(let info of this.included) {
                 if (info.type === type && info.id === id) {
                     info.attributes.id = id;
-                    return info.attributes;
+
+                    let data = info.attributes;
+
+                    if (info.relationships) {
+                        for(let key in info.relationships) {
+                            if(info.relationships[key].data && info.relationships[key].data.type) {
+                                data[info.relationships[key].data.type] = info.relationships[key].data.id
+                            }
+                        }
+                    }
+                    return data;
                 }
             }
             //included内没有数据的返回id

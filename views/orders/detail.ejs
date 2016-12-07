@@ -97,9 +97,50 @@
                 </fieldset>
             </div>
         </fieldset>
+
+        <% if(order.products[0].contractSnapshot.id) { %>
+            <fieldset class="fieldset">
+                <legend><h4>合同信息</h4></legend>
+                <div class="row column">
+                    <a data-open="contractPanel" onclick="return false;"><%= order.products[0].contractSnapshot.contract.title %></a>
+                </div>
+            </fieldset> 
+        <% } %>
     <div class="row text-right cart-total">
         订单合计：￥<strong class="stat"><%= order.price %></strong>
     </div>
 </div>
+
+<% if(order.products[0].contractSnapshot.id) { %>
+<div class="reveal large" id="contractPanel" data-reveal>
+    <h3><%= order.products[0].contractSnapshot.contract.title %></h3>
+    <div class="profile-main">
+        <h6>合同内容</h6>
+        <% for(var i in order.products[0].contractSnapshot.contract.content) { %>
+            <% if (order.products[0].contractSnapshot.contract.content[i].type == "image" && order.products[0].contractSnapshot.contract.content[i].value){ %>
+                <% if (order.products[0].contractSnapshot.contract.content[i].value.url){ %>
+                    <% if (order.products[0].contractSnapshot.contract.content[i].value.link){ %>
+                        <a href="<%= 'http://' + order.products[0].contractSnapshot.contract.content[i].value.link %>" class="image-link-"><img src="<%= imgHost + order.products[0].contractSnapshot.contract.content[i].value.url %>" /></a>
+                    <% } else { %>
+                        <img src="<%= imgHost + order.products[0].contractSnapshot.contract.content[i].value.url %>" />
+                    <% } %>
+                    
+                <% } %>
+            <% } else if (order.products[0].contractSnapshot.contract.content[i].type == "text" && order.products[0].contractSnapshot.contract.content[i].value) { %>
+                <% if(order.products[0].contractSnapshot.contract.content[i].value.title != ''){ %>
+                <h6<% if (order.products[0].contractSnapshot.contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%= order.products[0].contractSnapshot.contract.content[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+                <% } %>
+                <p<% if (order.products[0].contractSnapshot.contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(order.products[0].contractSnapshot.contract.content[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
+            <% } %>
+        <% } %>
+    </div>
+    <div class="row text-center form-submit-wrap">
+        <button class="button" data-close id="saveAddress">关闭</button>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<% } %>
 
 <%- include('../layout/footer') -%>

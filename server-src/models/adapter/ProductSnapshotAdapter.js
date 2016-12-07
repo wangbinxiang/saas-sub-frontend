@@ -21,7 +21,7 @@ export default class ProductSnapshotAdapter extends RequestAdapter {
 			idList,
 			filters,
 			pages
-		}, aOrderClass) {
+		}, aProductSnapshotClass) {
 			this.buildRequest(PRODUCT_SNAPSHOT_GET, {
 				idList,
 				filters,
@@ -33,7 +33,7 @@ export default class ProductSnapshotAdapter extends RequestAdapter {
 
 			this.translator.pageClass = pageCLass;
 
-			this.activeClass = aOrderClass;
+			this.activeClass = aProductSnapshotClass;
 
 			return this.request();
 		}

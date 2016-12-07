@@ -1,5 +1,6 @@
 import OrderService from '../models/application/OrderService';
 import config from 'config';
+import nl2br from 'nl2br';
 
 export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id
@@ -17,19 +18,33 @@ export async function showAddOrder(ctx, next) {
 
 	if (result !== null) {
 
-		let { product, priceInfo, totalPrice } = result;
+		let {
+			product,
+			priceInfo,
+			totalPrice,
+			contract
+			} = result;
 		const title = '订单详情';
-	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
-	    await ctx.render('orders/addOrder', {
-	        title, product, priceInfo, totalPrice, productNum, productId, priceOrder,
-	        pageJs
-	    });
+		const pageJs = webpackIsomorphicTools.assets().javascript.order;
+		const imgHost = config.get('qiniu.bucket.subImg.url');
+		await ctx.render('orders/addOrder', {
+			title,
+			product,
+			priceInfo,
+			totalPrice,
+			productNum,
+			productId,
+			priceOrder,
+			pageJs,
+			contract,
+			nl2br,
+			imgHost
+		});
 	} else {
 		ctx.status = 404
-        await ctx.render('404');
+		await ctx.render('404');
 	}
-} 
-
+}
 
 
 
@@ -44,21 +59,19 @@ export async function addOrder(ctx, next) {
 	let comment = ctx.request.body.comment;
 
 	const orderService = new OrderService();
-	let productList = [
-		{
-			productId: ctx.request.body.productId,
-			number: ctx.request.body.number,
-			priceIndex: ctx.request.body.priceIndex
-		}
-	];
+	let productList = [{
+		productId: ctx.request.body.productId,
+		number: ctx.request.body.number,
+		priceIndex: ctx.request.body.priceIndex
+	}];
 
 	let result = await orderService.addOrder(userId, shopId, price, comment, productList);
 
 	if (result === null) {
-	    ctx.status = 404;
-	    ctx.body = {};
+		ctx.status = 404;
+		ctx.body = {};
 	} else {
-		
+
 		console.log(result);
 
 		ctx.body = result;
@@ -70,18 +83,18 @@ export async function addOrder(ctx, next) {
 export async function get(ctx, next) {
 
 
-    let number =  1;
+	let number = 1;
 
-    let size =  5; 
+	let size = 5;
 
-    let filters = {
-        shopId: 10
-    };
+	let filters = {
+		shopId: 10
+	};
 
-    let pages = {
-        number,
-        size
-    };
+	let pages = {
+		number,
+		size
+	};
 
 
 	const orderService = new OrderService();
@@ -120,20 +133,20 @@ export async function index(ctx, next) {
 
 	let number = ctx.query.number ? ctx.query.number : 1;
 
-    let size = ctx.query.size ? ctx.query.size : 10;
+	let size = ctx.query.size ? ctx.query.size : 10;
 
-    let filters = {
-        userId,
-        shopId
-    };
+	let filters = {
+		userId,
+		shopId
+	};
 
-    let pages = {
-        number,
-        size
-    };
+	let pages = {
+		number,
+		size
+	};
 
-    let orders = null;
-    let isNext = false;
+	let orders = null;
+	let isNext = false;
 
 
 	const orderService = new OrderService();
@@ -144,7 +157,7 @@ export async function index(ctx, next) {
 		orders = result.orders;
 
 		if (page && page.haveNext()) {
-		    isNext = true;
+			isNext = true;
 		}
 
 
@@ -152,15 +165,15 @@ export async function index(ctx, next) {
 
 	if (ctx.accepts('html', 'text', 'json') === 'json') {
 		ctx.body = {
-            orders,
-            isNext
-        };
+			orders,
+			isNext
+		};
 
 	} else {
-	    const title = '订单管理'
-	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
+		const title = '订单管理'
+		const pageJs = webpackIsomorphicTools.assets().javascript.order;
 
-	    let pageNo = 1
+		let pageNo = 1
 		await ctx.render('orders/index', {
 			title,
 			pageJs,
@@ -191,20 +204,24 @@ export async function detail(ctx, next) {
 
 	const orderService = new OrderService();
 	let order = await orderService.detail(id, userId, shopId);
-
 	if (order === null) {
-	    ctx.status = 404;
-	    await ctx.render('404');
+		ctx.status = 404;
+		await ctx.render('404');
 	} else {
-		
-	    const title = '订单详情'
-	    const pageJs = webpackIsomorphicTools.assets().javascript.order;
 
-	    const hubHost = config.get('host.hub');
+		const title = '订单详情'
+		const pageJs = webpackIsomorphicTools.assets().javascript.order;
 
+		const hubHost = config.get('host.hub');
+		const imgHost = config.get('qiniu.bucket.subImg.url');
 
-	    await ctx.render('orders/detail', {
-	        title, pageJs, order, hubHost
+		await ctx.render('orders/detail', {
+			title,
+			pageJs,
+			order,
+			hubHost,
+			imgHost,
+			nl2br
 		});
 	}
 }

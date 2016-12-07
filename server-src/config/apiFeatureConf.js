@@ -99,3 +99,9 @@ export const ARTICLE_REVERT       = Symbol();
 //发布文章
 export const ARTICLE_PUBLISH      = Symbol();
 
+
+//获取合同
+export const CONTRACT_GET          = Symbol();
+
+//获取合同快照
+export const CONTRACT_SNAPSHOT_GET = Symbol();

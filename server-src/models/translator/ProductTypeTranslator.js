@@ -17,7 +17,8 @@ export default class ProductTypeTranslator extends Translator {
         const statusTime = bodyReader.value('statusTime');
         const status     = bodyReader.value('status');
         const userId     = bodyReader.value('users');
+        const contractId = bodyReader.value('contracts');
 
-        return { id, name, category, updateTime, createTime, statusTime, status, userId };
+        return { id, name, category, updateTime, createTime, statusTime, status, userId, contractId };
     }
 }

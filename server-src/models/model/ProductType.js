@@ -7,7 +7,8 @@ export default class ProductType {
 		createTime,
 		statusTime,
 		status,
-		userId
+		userId,
+		contractId
 	}) {
 		this.id         = parseInt(id);
 		this.name       = name;
@@ -17,5 +18,6 @@ export default class ProductType {
 		this.statusTime = statusTime;
 		this.status     = status;
 		this.userId     = parseInt(userId);
+		this.contractId = contractId;
 	}
 }
