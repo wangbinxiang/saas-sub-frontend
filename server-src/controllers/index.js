@@ -28,11 +28,11 @@ export default async(ctx, next) => {
         isNext = true;
     }
 
-    // 获取当前是否有
-    const other = config.get('productMapping.' + ctx._subId);
+    // // 获取当前是否有
+    const other = config.get('productMapping');
 
-    if (other) {
-        const otherIds = lodash.sample(other);
+    if (other[ctx._subId]) {
+        const otherIds = lodash.sample(other[ctx._subId]);
         const productService = new ProductService();
         const otherProducts = await productService.list(otherIds);
         if (otherProducts) {

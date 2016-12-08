@@ -149,11 +149,11 @@ export function checkResourcesOwner(resources, checkTarget, owner, isList) {
 }
 
 export function checkOther(id, shopId){
-    const other = config.get('productMapping.' + shopId);
+    const other = config.get('productMapping');
     let live = false
-    if (other) {
-        for(let i in other) {
-            if (_.indexOf(other[i], +id) > -1) {
+    if (other[shopId]) {
+        for(let i in other[shopId]) {
+            if (_.indexOf(other[shopId][i], +id) > -1) {
                 live = true;
             }
         }
