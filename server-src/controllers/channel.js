@@ -33,11 +33,11 @@ export async function productType(ctx, next) {
 	        };
 	    } else {
 	    	//获取当前是否有
-	    	const other = config.get('productMapping.' + ctx._subId + '.' + productTypeId);
+	    	const other = config.get('productMapping.' + ctx._subId);
 
-	    	if (other) {
+	    	if (other && other[productTypeId]) {
 	    		const productService = new ProductService();
-	    		const otherProducts = await productService.list(other);
+	    		const otherProducts = await productService.list(other[productTypeId]);
 	    		if (otherProducts) {
 	    			products = lodash.concat(products, otherProducts);
 	    		}

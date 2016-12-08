@@ -152,7 +152,6 @@ export function checkOther(id, shopId){
     const other = config.get('productMapping.' + shopId);
     let live = false
     if (other) {
-        console.log(other);
         for(let i in other) {
             if (_.indexOf(other[i], +id) > -1) {
                 live = true;

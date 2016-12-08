@@ -1,7 +1,7 @@
 import IndexService from '../models/application/IndexService';
 import ProductService from '../models/application/ProductService';
 import config from 'config';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 
 
@@ -23,9 +23,21 @@ export default async(ctx, next) => {
     const indexService = new IndexService();
 
     // const result = await indexService.index(number, size, ctx._subId);
-    const { page, products} = await indexService.index(number, size, ctx._subId);
+    let { page, products} = await indexService.index(number, size, ctx._subId);
     if (page && page.haveNext()) {
         isNext = true;
+    }
+
+    // 获取当前是否有
+    const other = config.get('productMapping.' + ctx._subId);
+
+    if (other) {
+        const otherIds = lodash.sample(other);
+        const productService = new ProductService();
+        const otherProducts = await productService.list(otherIds);
+        if (otherProducts) {
+            products = lodash.concat(products, otherProducts);
+        }
     }
 
     if (ctx.accepts('html', 'text', 'json') === 'json') {
@@ -40,9 +52,10 @@ export default async(ctx, next) => {
         const imgHost = config.get('qiniu.bucket.subImg.url');
 
         const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+
         //幻灯片
         let slidesData = [];
-        if (ctx._shop.slides && _.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
+        if (ctx._shop.slides && lodash.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
             const poductService = new ProductService();
             let products = await poductService.get(ctx._shop.slides, ctx._subId);
             if (products) {
