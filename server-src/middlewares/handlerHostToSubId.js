@@ -49,6 +49,9 @@ export async function handlerHostToSubId(ctx, next) {
             if (shop.logo) {
                 //七牛host
                 logo = imgHost + shop.logo;
+                if (ctx._subId === '10021' && ctx.query.from == 'qd') {
+                    logo = 'http://sub-imgs.yundianshang.cc/10021-00262bdc-6504-463a-b7a0-a6a9b70b3eee.png';
+                }
             }
             if (contactPeopleQQ) {
                 contactPeopleQQ = imgHost + contactPeopleQQ; 
