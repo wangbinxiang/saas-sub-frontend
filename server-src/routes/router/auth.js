@@ -130,7 +130,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
         })(ctx, next);
     } catch (err) {
         console.log(err);
-        ctx.redirect('/wechat/auth');
+        ctx.redirect('/');
     }
 });
 

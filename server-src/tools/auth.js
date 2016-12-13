@@ -8,6 +8,10 @@ import config from 'config';
  */
 export function isAuthRelationship(ctx) {
 	const relationSub = config.get('relationshipSub');
+	console.log('relationSub');
+	console.log(relationSub);
+	console.log(ctx._subId);
+	console.log(relationSub.indexOf(ctx._subId));
 	if (relationSub.indexOf(ctx._subId) === -1) {
 		return false;
 	}
