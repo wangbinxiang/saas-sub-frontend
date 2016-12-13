@@ -72,7 +72,7 @@
         <% if (product.description[i].type == "image" && product.description[i].value){ %>
             <% if (product.description[i].value.url){ %>
                 <% if (product.description[i].value.link){ %>
-                    <a href="<%= 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + product.description[i].value.url %>" /></a>
+                    <a href="<%= 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + product.description[i].value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
                 <% } else { %>
                     <img src="<%= imgHost + product.description[i].value.url %>" />
                 <% } %>
