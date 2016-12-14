@@ -62,6 +62,9 @@
       "appsecret": "48d75e8d74713d925a1576da7c78e96e"
     }
   },
+  "theme": {
+    "10022": "garden"
+  },
   "host": {
     "zhuce": "zhuce.dianshangwan.com",
     "hub": "hub.saaslocal.com"

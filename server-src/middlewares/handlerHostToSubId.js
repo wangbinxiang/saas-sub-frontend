@@ -60,12 +60,24 @@ export async function handlerHostToSubId(ctx, next) {
                 officialQRCode = imgHost + officialQRCode;
             }
 
+            const themeConfig = config.get('theme');
+
+            let theme = 'default';
+
+            if (themeConfig) {
+                if (themeConfig[ctx._subId]) {
+                    theme = themeConfig[ctx._subId];
+                }
+            }
+
+
             ctx.state.shopInfo = {
                 logo,
                 contactPeoplePhone,
                 contactPeopleQQ,
                 copyright,
-                officialQRCode
+                officialQRCode,
+                theme
             }
             await next();
         } else {
