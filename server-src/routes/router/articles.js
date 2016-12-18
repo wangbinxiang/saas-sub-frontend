@@ -6,7 +6,7 @@ import {
 	detailValidation,
 } from '../../validations/productsValidation';
 import navigation from '../../middlewares/navigation';
-import { requiresLogin } from '../../middlewares/authorization';
+import { inWechatRequiresLogin } from '../../middlewares/authorization';
 
 const router = Router();
 
@@ -14,7 +14,7 @@ const router = Router();
 router.prefix('/articles')
 
 //需要登陆
-router.use(requiresLogin);
+router.use(inWechatRequiresLogin);
 
 
 //预览产品页面

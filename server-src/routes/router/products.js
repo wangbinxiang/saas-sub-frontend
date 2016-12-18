@@ -7,7 +7,7 @@ import {
 } from '../../validations/productsValidation';
 import navigation from '../../middlewares/navigation';
 import { productRedirect } from '../../middlewares/products/relationship';
-import { requiresLogin } from '../../middlewares/authorization';
+import { inWechatRequiresLogin } from '../../middlewares/authorization';
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.prefix('/products')
 
 
 //预览产品页面
-router.get('/:id', detailValidation, productRedirect, requiresLogin, navigation, detail);
+router.get('/:id', detailValidation, productRedirect, inWechatRequiresLogin, navigation, detail);
 
 
 export default router;
