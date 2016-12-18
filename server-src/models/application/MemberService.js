@@ -8,6 +8,14 @@ export default class MemberService {
 		this.userAdapter = new MemberAdapter();
 	}
 
+	async get(idList) {
+		const members = await this.userAdapter.get({
+			idList
+		}, Member);
+
+		return members;
+	}
+	
 	async _isCellphoneBind(cellPhone) {
 		const filters = {
 			cellPhone

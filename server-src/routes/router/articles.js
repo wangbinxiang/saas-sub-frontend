@@ -6,14 +6,15 @@ import {
 	detailValidation,
 } from '../../validations/productsValidation';
 import navigation from '../../middlewares/navigation';
+import { requiresLogin } from '../../middlewares/authorization';
 
 const router = Router();
 
-//需要登陆
-// router.use(requiresLogin);
-
 //路由前缀
 router.prefix('/articles')
+
+//需要登陆
+router.use(requiresLogin);
 
 
 //预览产品页面

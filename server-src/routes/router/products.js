@@ -7,6 +7,7 @@ import {
 } from '../../validations/productsValidation';
 import navigation from '../../middlewares/navigation';
 import { productRedirect } from '../../middlewares/products/relationship';
+import { requiresLogin } from '../../middlewares/authorization';
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.prefix('/products')
 
 
 //预览产品页面
-router.get('/:id', detailValidation, productRedirect, navigation, detail);
+router.get('/:id', detailValidation, productRedirect, requiresLogin, navigation, detail);
 
 
 export default router;
