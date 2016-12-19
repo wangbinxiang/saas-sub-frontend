@@ -103,25 +103,27 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
 
                     let redirectTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo) : '/';
 
-                    if (parentId === config.get('relationshipParentId')) {
-                        ctx.redirect(redirectTo);
-                    } else {
-                        const title = '关联用户注册'
-                            //页面提示信息
-                        let message;
-                        if (success) {
-                            message = '您关联用户成功，当前已登录。'
-                        } else {
-                            message = '您之前已注册过，关联用户失败，当前已登录。'
-                        }
+                    ctx.redirect(redirectTo);
 
-                        await ctx.render('auth/relationship', {
-                            title,
-                            success,
-                            message,
-                            redirectTo
-                        });
-                    }
+                    // if (parentId === config.get('relationshipParentId')) {
+                    //     ctx.redirect(redirectTo);
+                    // } else {
+                    //     const title = '关联用户注册'
+                    //         //页面提示信息
+                    //     let message;
+                    //     if (success) {
+                    //         message = '您关联用户成功，当前已登录。'
+                    //     } else {
+                    //         message = '您之前已注册过，关联用户失败，当前已登录。'
+                    //     }
+
+                    //     await ctx.render('auth/relationship', {
+                    //         title,
+                    //         success,
+                    //         message,
+                    //         redirectTo
+                    //     });
+                    // }
                 } else {
                     ctx.status = 403;
                     ctx.body = {};
