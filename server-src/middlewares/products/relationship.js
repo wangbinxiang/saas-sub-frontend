@@ -18,7 +18,7 @@ export async function productRedirect(ctx, next) {
 
 			//如果p参数大于0 则说明是关联prentId, 修改wechat auth链接
 			if(ctx.query.p && ctx.query.p > 0) {
-				const parentQuery = { parentId: ctx.query.p};
+				const parentQuery = { parentId: ctx.query.p, returnTo: base64url(ctx.url) };
 				const redirectUrl = addQuery(ctx.state.__AUTH_WECHAT_LINK__, parentQuery);
 				console.log(redirectUrl);
 				ctx.redirect(redirectUrl);

@@ -57,7 +57,7 @@ router.get('/wechat/auth/relationship', authRelationshipWechatBlock, async (ctx,
 	}
 	
 	const parentId = ctx.query.parentId? ctx.query.parentId: config.get('relationshipParentId');
-	const returnTo = ctx.query.returnTo? ctx.query.returnTo: ( ctx.headers.referer? base64url(ctx.headers.referer): '/');
+	const returnTo = ctx.query.returnTo? ctx.query.returnTo: base64url(ctx.headers.referer? ctx.headers.referer: '/');
 
 	let callbackUrl = 'http://' + config.get('wechat.yundianshang.authHost') + '/wechat/auth/callback?';
 

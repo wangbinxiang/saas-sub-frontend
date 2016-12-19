@@ -103,6 +103,8 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
 
                     let redirectTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo) : '/';
 
+                    console.log('redirectTo:' + redirectTo);
+
                     ctx.redirect(redirectTo);
 
                     // if (parentId === config.get('relationshipParentId')) {
