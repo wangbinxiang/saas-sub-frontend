@@ -83,7 +83,7 @@
             <% } %>
             <p<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
         <% } else if (product.description[i].type == "kefu" && product.description[i].value) { %>
-            <script type="text/javascript" charset="utf-8" src="https://www.v5kf.com/<%= product.description[i].value.id %>/v5kf.js?style=2"></script>
+            <script type="text/javascript" charset="utf-8" src="https://www.v5kf.com/<%= product.description[i].value.id %>/v5kf.js?style=3"></script>
         <% } %>
     <% } %>
     </div>
