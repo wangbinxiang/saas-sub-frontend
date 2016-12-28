@@ -46,6 +46,7 @@ export async function handlerHostToSubId(ctx, next) {
             let contactPeopleQQ = shop.contactPeopleQQ? shop.contactPeopleQQ: '';
             let copyright = shop.contactPeopleQQ? shop.copyright: '复泰科技电商湾';
             let officialQRCode = shop.officialQRCode? shop.officialQRCode: '';
+            let kefuId = shop.customerService && shop.customerService.kefuId > 0?  shop.customerService.kefuId: null;
             if (shop.logo) {
                 //七牛host
                 logo = imgHost + shop.logo;
@@ -77,7 +78,8 @@ export async function handlerHostToSubId(ctx, next) {
                 contactPeopleQQ,
                 copyright,
                 officialQRCode,
-                theme
+                theme,
+                kefuId
             }
             await next();
         } else {
