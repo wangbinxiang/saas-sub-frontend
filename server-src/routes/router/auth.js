@@ -99,8 +99,10 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 //如果是启德链接
                 if (ctx._subId === '10021' && ctx.query.from == 'qd' && ctx.query.sourceId) {
                     loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, ctx.query.sourceId);
+                    console.log('sourceLogin');
                 } else {
                     loginResult = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+                    console.log('login');
                 }
 
                 const { member, success } = loginResult
