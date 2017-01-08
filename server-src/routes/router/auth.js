@@ -20,6 +20,9 @@ import {
     sendSignupCellphoneVerificationCodeValidation,
     bindCellphoneRequestBodyValidation
 } from '../../validations/authValidation';
+import {
+    MEMBER_SOURCE_QIDE
+} from '../../config/memberConf';
 import base64url from 'base64url';
 
 
@@ -90,10 +93,18 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 const nickName = profile.nickname;
                 const shopId = ctx._subId;
                 const memberService = new MemberService();
-                const {
-                    member,
-                    success
-                } = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+
+                let loginResult;
+
+                //如果是启德链接
+                if (ctx._subId === '10021' && ctx.query.from == 'qd' && ctx.query.sourceId) {
+                    loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, ctx.query.sourceId);
+                } else {
+                    loginResult = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+                }
+
+                const { member, success } = loginResult
+
                 console.log('member');
                 console.log(member);
                 if (member) {

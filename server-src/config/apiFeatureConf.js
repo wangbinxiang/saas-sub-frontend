@@ -54,8 +54,12 @@ export const PRODUCT_SNAPSHOT_GET = Symbol();
 
 //用户注册
 export const MEMBER_SIGNUP        = Symbol();
+//第三方网站用户注册
+export const MEMBER_SOURCE_SIGNUP = Symbol();
 //用户登陆
 export const MEMBER_LOGIN         = Symbol();
+//第三方网站用户登陆
+export const MEMBER_SOURCE_LOGIN  = Symbol();
 
 
 export const ORDER_ADD            = Symbol();
