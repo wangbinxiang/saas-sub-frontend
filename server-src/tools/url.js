@@ -37,6 +37,6 @@ export function queryNotMatch(urlStr, query) {
  * @return {[type]}                        [description]
  */
 export function getQuery(urlStr) {
-    var urlObj = url.parse(str, true)
+    var urlObj = url.parse(urlStr, true)
     return urlObj.query
 }
