@@ -6,11 +6,13 @@
             <% for(let i of slidesData) { %>
 			<li>
                 <a href="<%= i.url %>">
-                    <div style="background-image:url(<%= i.img %>)"></div>
+                    <div>
+                        <img src="<%= i.img %>?imageView2/1/w/640/h/427" srcset="<%= i.img %>?imageView2/1/w/640/h/427 1x, <%= i.img %> 1.5x" >
+                    </div>
                     <b class="lead">
                         <%= i.title %>
                     </b>
-                    <span><small>最低</small><sup>￥</sup><strong><%= i.price %></strong><i class="fa fa-arrow-circle-o-right"></i></span>
+                    <span><sup>￥</sup><strong><%= i.price %></strong> <small>起</small></span>
                 </a>
             </li>
 			<% } %>
@@ -29,10 +31,10 @@
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
     <div class="column">
         <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <img data-bind="attr:{src: imgHost + logo + imgStyle }" />
+            <img data-bind="attr:{src: imgHost + logo + imgStyle, srcset: imgHost + logo + '?imageView2/0/w/640/ 1x, ' + imgHost + logo + imgStyle + ' 1.5x' }" />
             <b data-bind="text:name"></b>
             <em></em>
-            <span><small>最低</small> ￥<strong data-bind="text:minPrice"></strong></span>
+            <span>￥<strong data-bind="text:minPrice"></strong> <small>起</small></span>
         </a>
     </div>
 </div>
