@@ -24,6 +24,7 @@ import {
     MEMBER_SOURCE_QIDE
 } from '../../config/memberConf';
 import base64url from 'base64url';
+import { getQuery } from '../../tools/url'
 
 
 const router = Router();
@@ -96,9 +97,16 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
 
                 let loginResult;
 
+                const returnTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo): null;
+                let returnToQuery
+                if (returnTo) {
+                    returnToQuery = getQuery(returnTo);
+                }
                 //如果是启德链接
-                if (ctx._subId === '10021' && ctx.query.from == 'qd' && ctx.query.sourceId) {
-                    loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, ctx.query.sourceId);
+                //如果有ctx.query.returnTo, 并有from和sourceId
+                //
+                if (ctx._subId === '10021' && returnToQuery && returnToQuery.from == 'qd' && returnToQuery.sourceId) {
+                    loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, returnToQuery.sourceId);
                     console.log('sourceLogin');
                 } else {
                     loginResult = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
@@ -114,7 +122,7 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                     // ctx.status = 200;
                     // ctx.body = member;
 
-                    let redirectTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo) : '/';
+                    let redirectTo = returnTo ? returnTo : '/';
 
                     console.log('redirectTo:' + redirectTo);
 
