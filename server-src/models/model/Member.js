@@ -9,7 +9,8 @@ export default class Member {
         updateTime = '',
         statusTime = '',
         openId = '',
-        unionId = ''
+        unionId = '',
+        source
     }) {
         this.id = id;
         this.cellPhone = cellPhone;
@@ -21,5 +22,6 @@ export default class Member {
         this.statusTime = statusTime;
         this.openId = openId;
         this.unionId = unionId;
+        this.source = source
     }
 }

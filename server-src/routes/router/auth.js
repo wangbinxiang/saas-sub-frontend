@@ -92,16 +92,22 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 const parentId = ctx.query.parentId;
                 const openid = profile.openid;
                 const nickName = profile.nickname;
+                // const unionId = 'otuttxMhJwPxPnCbLQ2MaHAanmrg'
+                // const parentId = 1
+                // const openid = 'ob5uxwZjH81AEeiVutEGnR2hU-W1'
+                // const nickName = '波风皆人'
                 const shopId = ctx._subId;
                 const memberService = new MemberService();
 
                 let loginResult;
 
                 const returnTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo): null;
+                console.log(returnTo);
                 let returnToQuery
                 if (returnTo) {
                     returnToQuery = getQuery(returnTo);
                 }
+                console.log(returnToQuery);
                 //如果是启德链接
                 //如果有ctx.query.returnTo, 并有from和sourceId
                 //

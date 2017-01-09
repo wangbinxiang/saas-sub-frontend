@@ -105,6 +105,7 @@ export default class MemberRequestJsonApi extends BaseRequest {
         this.method = POST;
 
         let attributes = {
+            unionId: this.originData.unionId,
             source: this.originData.source,
             sourceId: this.originData.sourceId
         };

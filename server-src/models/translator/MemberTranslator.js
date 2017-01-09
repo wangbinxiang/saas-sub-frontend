@@ -8,7 +8,7 @@ export default class MemberTranslator extends Translator {
 
 	readData(data) {
 		const bodyReader = new MemberJsonApiBodyReader(data);
-		console.log(bodyReader.data)
+
 		const id = bodyReader.value('id');
 		const cellPhone = bodyReader.value('cellPhone');
 		const nickName = bodyReader.value('nickName');
@@ -19,6 +19,7 @@ export default class MemberTranslator extends Translator {
 		const statusTime = bodyReader.value('statusTime');
 		const openId = bodyReader.value('openId');
 		const unionId = bodyReader.value('unionId');
+		const source = bodyReader.value('source')
 
 		return {
 			id,
@@ -30,7 +31,8 @@ export default class MemberTranslator extends Translator {
 			updateTime,
 			statusTime,
 			openId,
-			unionId
+			unionId,
+			source
 		};
 	}
 }

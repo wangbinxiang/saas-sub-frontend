@@ -92,7 +92,7 @@ export default class MemberService {
 		let member, success = false; //关联是否成功标示
 
 		try {
-			member = await this.userAdapter.sourceLogin(source, sourceId, Member);
+			member = await this.userAdapter.sourceLogin(unionId, source, sourceId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
