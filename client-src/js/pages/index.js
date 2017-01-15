@@ -9,7 +9,7 @@ require.ensure([], function(require) {
     let swipe = require('jquery-touchswipe')
 
     $('.jcarousel.jcarousel--home ul').css('width', 100 * $('.jcarousel.jcarousel--home ul li').length + '%');
-    $('.jcarousel.jcarousel--home ul li').css('width', 100 / $('.jcarousel.jcarousel--home ul li').length + '%');
+    $('.jcarousel.jcarousel--home ul li').css('width', 100 / $('.jcarousel.jcarousel--home ul li').length + '%').css('visibility', 'visible');
 
     $('.jcarousel.jcarousel--home').jcarousel({        
         wrap: 'circular'

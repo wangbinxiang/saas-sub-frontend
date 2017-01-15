@@ -1,0 +1,192 @@
+<%- include('../layout/header') -%>
+<div class="show-for-small-only small-header-margin-top"></div>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="userCPOrderList.html">用户申请</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 申请详情
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">申请详情 No.<%= application.id %></h1>
+
+<div class="row block-margin-bottom">
+    <div class="workflow-wrap">
+        <div class="workflow-bar prec<% if(application.status === APPLICATION_STATUS_NORMAL) { %>1<% } else if(application.status === APPLICATION_STATUS_DECLINE || application.status === APPLICATION_STATUS_APPROVE) { %>3<% } %>"></div>
+        <ol class="workflow-label">
+            <li class="lb passed"><b><s></s></b>提交申请</li>
+            <li class="lb passed"><b><s></s></b>在线磋商</li>
+            <li class="lb <% if(application.status === APPLICATION_STATUS_DECLINE || application.status === APPLICATION_STATUS_APPROVE ) { %>passed<% } %>"><b><s></s></b>等待结果</li>
+            <li class="lb <% if(application.status === APPLICATION_STATUS_DECLINE || application.status === APPLICATION_STATUS_APPROVE ) { %>passed<% } %>"><b><s></s></b>完成</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row column">
+    <div class="callout <%= application.status === APPLICATION_STATUS_DECLINE? 'alert': 'success' %>">
+        <h4><%=noticeTitle%></h4>
+    </div>
+    <div class="callout">
+        <p>
+            (ID)名称：<a target="_blank" href="/projects/<%= project.id %>">(<%= project.id %>)<%= project.name %></a> 规格: <%= project.prices[application.priceIndex].title %>; 金额: <%= project.prices[application.priceIndex].price %>
+        </p>
+    </div>
+</div>
+<div class="row column">
+    <fieldset class="fieldset">
+        <legend><h4>申请用户信息</h4></legend>
+        <div class="row">
+            <div class="medium-4 columns">
+                <label>
+                    姓名：<%= application.realName %>
+                </label>
+            </div>
+            <div class="medium-4 columns">
+                <label>
+                    联系电话：<%= application.contactPhone %>
+                </label>
+            </div>
+            <div class="medium-4 columns">
+                <label>
+                    身份证号码：<%= application.identifyCardNumber %>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <label>
+                    公司名称：<%= application.companyName %>
+                </label>
+            </div>
+            <div class="medium-6 columns">
+                <label>
+                    公司地址：<%= application.companyAddress %>
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset">
+        <legend><h4>申请信息</h4></legend>
+        <small><%= application._createTimeDate %></small>
+        <div><%- application.information[0]? nl2br(application.information[0].replace(/ /g, '&nbsp;')):'' %></div>
+    </fieldset>
+    <% if(application.status === APPLICATION_STATUS_NORMAL) { %>
+        <% if(applicationContract) { %>
+            <form data-abide="ajax" id="contractForm" novalidate>
+                <fieldset class="fieldset" id="contractInfo">
+                    <legend><h4>合同及支付信息</h4></legend>
+                    <div class="row">
+                        <div class="medium-3 columns">
+                            <label>
+                                金额：￥<b data-bind="text: price"></b>
+                            </label>
+                        </div>
+                        <div class="medium-3 columns">
+                            <label>
+                                要求线上支付：<b data-bind="text: isOnlinePay? '是':'否' ""></b>
+                            </label>
+                        </div>
+                        <div class="medium-3 columns">
+                            <label>
+                                时间：<b data-bind="text: time"></b>
+                            </label>
+                        </div>
+                        <div class="medium-3 columns">
+                            <label>
+                                地点：<b data-bind="text: address"></b>
+                            </label>
+                        </div>
+                    </div>
+                    <p>
+                        合同附件：
+                        <b data-bind="foreach:pdfs">
+                            <br /><a data-bind="attr:{href: '<%= imgHost %>' + $data}, text: $data" target="_blank"></a>
+                        </b>
+                    </p>
+                    <div class="row column">
+                        <label>
+                            <input type="checkbox" required id="agreeContract" /> 接受上述金额和付款方式，以及所有合同约定的条款。(申请方接受合同并保存信息，流程进入下一步等待支付或者完成)
+                        </label>
+        
+                        <div class="row column">
+                            <div class="callout warning">
+                                <P><b>提示</b> 接受所有交易信息将结束在线磋商流程，如果您认为金额/支付/合同仍需修改，请不要勾选该选项。</P>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row text-center form-submit-wrap blk-margin">
+                    <button id="approveButton" class="button large button-unstyle">同意方案</button>
+                    <button id="declineButton" class="button large button-unstyle secondary" >取消申请</button>
+                </div>
+            </form>
+        <% } %>
+        <form data-abide id="formReply" novalidate>
+            <fieldset class="fieldset ">
+                <legend><h4>添加或回复申请</h4></legend>
+                <div data-abide-error class="alert callout" style="display: none;">
+                    <p><i class="fi-alert"></i> 请填写回复说明</p>
+                </div>
+                <textarea name="content"  required placeholder="回复说明" id="content" rows="5"></textarea>
+                <div id="formButton">
+                    <button class="button button-unstyle" data-bind="disable: submit" id="replayButton" >发表回复</button>
+                </div>
+            </fieldset>
+        </form>
+    <% } else { %>
+        <% if(applicationContract) { %>
+            <fieldset class="fieldset" id="contractInfo">
+                <legend><h4>合同及支付信息</h4></legend>
+                <div class="row">
+                    <div class="medium-3 columns">
+                        <label>
+                            金额：￥<b data-bind="text: price"></b>
+                        </label>
+                    </div>
+                    <div class="medium-3 columns">
+                        <label>
+                            要求线上支付：<b data-bind="text: isOnlinePay? '是':'否' ""></b>
+                        </label>
+                    </div>
+                    <div class="medium-3 columns">
+                        <label>
+                            时间：<b data-bind="text: time"></b>
+                        </label>
+                    </div>
+                    <div class="medium-3 columns">
+                        <label>
+                            地点：<b data-bind="text: address"></b>
+                        </label>
+                    </div>
+                </div>
+                <p>
+                    合同附件：
+                    <b data-bind="foreach:pdfs">
+                        <br /><a data-bind="attr:{href: '<%= imgHost %>' + $data}, text: $data" target="_blank"></a>
+                    </b>
+                </p>
+            </fieldset>
+        <% } %>
+    <% } %>
+    <div id="replies" data-bind="foreach:replies">
+        <fieldset class="fieldset">
+            <legend><h4 data-bind="text: source == <%= REPLY_SOURCE_APPLICATION %> ? '申请信息': '项目方反馈'"></h4></legend>
+            <small data-bind="text:_createTimeDate"></small>
+            <div data-bind="text:content[0]"></div>
+        </fieldset>
+    </div>
+    <input type="hidden" id="_csrf" name="_csrf" value="<%= csrf %>" />
+</div>
+<script>
+    var projectId = <%= project.id %>;
+    var applicationId = <%= application.id %>;
+    var applicationContract = <%- JSON.stringify(applicationContract) %>;
+    var hostId = <%= hostId %>;
+    var applicantId = <%= applicantId %>;
+    var imgHost = '<%= imgHost %>';
+    var imgUploadUrl = '<%= imgUploadUrl %>';
+</script>
+<%- include('../layout/footer') -%>
