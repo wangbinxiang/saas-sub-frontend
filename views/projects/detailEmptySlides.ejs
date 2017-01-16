@@ -1,0 +1,58 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">网站管理</a></li>
+        <li><a href="/projects/">项目列表</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span>项目详情
+        </li>
+    </ul>
+</nav>
+<h1 class="row pageHeader"><%= project.name %></h1>
+<div class="expanded detail-top blk-margin-nobottom">
+    <div class="row text-center">
+        <div class="small-6 columns">
+            <label>金额</label>￥<b class="stat" id="priceStat"><%= project.prices.length > 0 ? project.prices[0].price : '' %></b>
+        </div>
+        <div class="small-6 columns">
+            <label>申请人数</label><b class="stat"><%= project.applyCount %></b>
+        </div>
+    </div>
+    <div class="filter-bar column row filter-bar--sku filter-bar--apply" id="skuBar">
+        <div class="button-group single" id="priceLabels">
+            <% for(let i in project.prices) { %>
+            <a class="button<%= i == 0 ? ' checked' : '' %>" data-price="<%= project.prices[i].price %>"><%= project.prices[i].title %></a>
+            <% } %>
+        </div>
+    </div>
+    <% if(!isHost) { %>
+    <div class="column row text-center">
+        <button class="large button btnMore" data-open="cartAlert" id="submit">申请服务(基金)</button>
+    </div>
+    <% } %>
+</div>
+<details class="column row article-detail" open>
+    <summary class="block-margin-top block-margin-bottom" onclick="return false;">
+        <%- nl2br(project.feature) %>
+    </summary>
+    <div class="row column">
+        <div class="profile-main">
+        <% for(var i = 0; i < project.description.length; i++) { %>
+            <% if (project.description[i].type == "image" && project.description[i].value){ %>
+                <% if (project.description[i].value.url){ %>
+                    <img src="<%= imgHost + project.description[i].value.url %>" />
+                <% } %>
+            <% } else if (project.description[i].type == "text" && project.description[i].value) { %>
+                <% if(project.description[i].value.title != ''){ %>
+                <h6<% if (project.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%= project.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+                <% } %>
+                <p<% if (project.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(project.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
+            <% } %>
+        <% } %>
+        </div>
+    </div>
+
+<script>
+    var id = <%= project.id %>;
+</script>
+<%- include('../layout/footer') -%>

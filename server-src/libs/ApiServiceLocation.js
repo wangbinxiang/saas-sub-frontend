@@ -62,3 +62,8 @@ export function cmsApiServiceLocation() {
     const locationName = 'cms';
     return getServiceLcation(locationName);
 }
+
+export function projectApiServiceLocation() {
+    const locationName = 'project';
+    return getServiceLcation(locationName);
+}

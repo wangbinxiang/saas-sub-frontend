@@ -109,3 +109,51 @@ export const CONTRACT_GET          = Symbol();
 
 //获取合同快照
 export const CONTRACT_SNAPSHOT_GET = Symbol();
+
+
+//项目
+export const PROJECT_GET               = Symbol();
+
+export const PROJECT_ADD               = Symbol();
+
+export const PROJECT_EDIT              = Symbol();
+
+export const PROJECT_PRICE_ADD         = Symbol();
+
+export const PROJECT_DEL               = Symbol();
+
+export const PROJECT_PUBLISH           = Symbol();
+
+export const PROJECT_REVERT            = Symbol();
+
+
+//项目类型
+export const PROJECT_TYPE_GET          = Symbol();
+
+export const PROJECT_TYPE_ADD          = Symbol();
+
+export const PROJECT_TYPE_EDIT         = Symbol();
+
+export const PROJECT_TYPE_DEL          = Symbol();
+
+
+//项目申请
+export const APPLICATION_GET           = Symbol();
+
+export const APPLICATION_ADD           = Symbol();
+
+export const APPLICATION_FINISH        = Symbol();
+
+export const APPLICATION_APPROVE       = Symbol();
+
+export const APPLICATION_DECLINE       = Symbol();
+
+export const APPLICATION_REPLY         = Symbol();
+
+export const APPLICATION_REPLY_GET     = Symbol();
+//获取申请合同
+export const APPLICATION_CONTRACT_GET  = Symbol();
+//添加申请合同
+export const APPLICATION_CONTRACT_ADD  = Symbol();
+//编辑申请合同
+export const APPLICATION_CONTRACT_EDIT = Symbol();

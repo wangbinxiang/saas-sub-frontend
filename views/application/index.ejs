@@ -1,0 +1,49 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">首页</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 项目申请管理
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">项目申请管理</h1>
+<div id="applicationsWrap">
+    <div class="row column">
+        <table class="stack stack--small hover listCart tableList">
+            <thead>
+                <tr>
+                    <th width="150">申请ID</th>
+                    <th width="150">申请人姓名</th>
+                    <th width="150">申请人公司</th>
+                    <th width="150">联系电话</th>
+                    <th width="300">查看</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach:applications">
+                <tr>
+                    <td data-th="订单ID" data-bind="text:id"></td>
+                    <td data-th="订单状态" data-bind="text:realName"></td>
+                    <td data-th="创建时间" data-bind="text:companyName"></td>
+                    <td data-th="总价" data-bind="text:contactPhone"></td>
+                    <td data-th="操作">
+                        <a data-bind="attr: { href: '/applications/' + id }" class="button small">查看</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-button row column">
+        <a class="button large btnMore" style="display: none;" data-bind="click: more, visible: isNext()" id="moreOrders">显示更多申请</a>
+    </div>
+</div>
+<script>
+    var data = <%- JSON.stringify(applications) %>;
+    var isNext = <%= isNext %>;
+    var pageNo = <%= pageNo %>;
+    var flag = <%= flag %>;
+</script>  
+  
+<%- include('../layout/footer') -%>

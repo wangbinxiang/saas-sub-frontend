@@ -24,19 +24,20 @@ export default class JsonApiBodyReader {
      * @return {[type]}                               [description]
      */
     relationships(relationships) {
-    	if (relationships) {
-    		for(let relationship in relationships) {
+        if (relationships) {
+
+            for(let relationship in relationships) {
                 if (_.isArray(relationships[relationship].data) && relationships[relationship].data.length > 0) {
                     this.data[relationships[relationship].data[0].type] = []
                     for(let info of relationships[relationship].data) {
 
                         this.data[info.type].push(this.relationshipInfoFormIncluded(info.type, info.id));
                     }
-                } else {
+                } else if(relationships[relationship].data && relationships[relationship].data.type) {
                     this.data[relationships[relationship].data.type] = this.relationshipInfoFormIncluded(relationships[relationship].data.type, relationships[relationship].data.id);
                 }
-    		}
-    	}
+            }
+        }
     }
 
 
@@ -45,17 +46,7 @@ export default class JsonApiBodyReader {
             for(let info of this.included) {
                 if (info.type === type && info.id === id) {
                     info.attributes.id = id;
-
-                    let data = info.attributes;
-
-                    if (info.relationships) {
-                        for(let key in info.relationships) {
-                            if(info.relationships[key].data && info.relationships[key].data.type) {
-                                data[info.relationships[key].data.type] = info.relationships[key].data.id
-                            }
-                        }
-                    }
-                    return data;
+                    return info.attributes;
                 }
             }
             //included内没有数据的返回id

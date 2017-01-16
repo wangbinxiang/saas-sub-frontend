@@ -16,6 +16,10 @@ $('#responsive-menu .top-bar-left--global').on('click', function () {
     $('#responsive-menu').hide();
 });
 
+$('#responsive-menu .top-bar-left--global').on('click', 'ul', function (e) {
+    e.stopPropagation();
+});
+
 var lastScrollTop = 0;
 if (Foundation.MediaQuery.current == 'small') {
     $(window).scroll(function (event) {
