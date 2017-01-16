@@ -41,16 +41,9 @@ export async function index(ctx, next) {
 	const flag = ctx.query.flag ? true : false;
 
 	let filters = {
-	    userId: ctx._subId
+	    memberId: ctx.state.user.id,
+	    projectUserId: ctx._subId
 	};
-
-	//查询收到的申请
-	if (flag) {
-		filters = {
-		    projectUserId: ctx._subId
-		};
-	}
-	
 
 	let pages = {
 	    number,
@@ -79,7 +72,7 @@ export async function index(ctx, next) {
 	    };
 
 	} else {
-	    const title = '订单管理'
+	    const title = '项目申请管理'
 	    const pageJs = webpackIsomorphicTools.assets().javascript.applications;
 
 	    ctx.body = { applications }
@@ -141,7 +134,7 @@ export async function add(ctx, next) {
 	    await next();
 	} else {
 
-		const userId = ctx._subId;
+		const userId = ctx.state.user.id;
 		const realName = ctx.request.body.realName; //string
 		const contactPhone = ctx.request.body.contactPhone; //string
 		const identifyCardNumber = ctx.request.body.identifyCardNumber; //string
@@ -205,7 +198,7 @@ export async function decline(ctx, next) {
 
 export async function reply(ctx, next) {
 	const id = ctx.params.id;
-	const userId = ctx._subId;
+	const userId = ctx.state.user.id;
 	const content = [ctx.request.body.content]; //string
 
 	const applicationService = new ApplicationService();
@@ -261,7 +254,7 @@ export async function detail(ctx, next) {
 	const id = ctx.params.id;
 	const applicationService = new ApplicationService();
 	const result = await applicationService.detail(id);
-	console.log(result)
+
 	if (result === null) {
 	    await next();
 	} else {
@@ -269,14 +262,7 @@ export async function detail(ctx, next) {
 		const { application, project, applicationContract } = result;
 		let role;
 		//申请方打开
-		if (project.userId == ctx._subId) {
-			role = APPLICATION_ROLL_HOST
-			//可以回复
-			//可以结束磋商
-			//可以通过
-			//可以拒绝
-			
-		} else if (application.userId == ctx._subId) {
+		if (application.userId == ctx.state.user.id) {
 			role = APPLICATION_ROLL_APPLICANT
 		} else {
 			role = APPLICATION_ROLL_GUEST

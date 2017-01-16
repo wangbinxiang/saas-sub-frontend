@@ -17,6 +17,10 @@ import routerQrcode from './router/qrcode';
 
 import routerArticles from './router/articles';
 
+import routerProjects from './router/projects';
+
+import routerApplications from './router/applications';
+
 
 const router = new Router();
 
@@ -28,6 +32,8 @@ router.use('', routerIndex.routes());
 router.use('', routerChannel.routes());
 router.use('', routerQrcode.routes());
 router.use('', routerArticles.routes());
+router.use('', routerProjects.routes());
+router.use('', routerApplications.routes());
 
 
 export default router;

@@ -19,7 +19,9 @@ export async function index(ctx, next) {
 	let size = ctx.query.size ? ctx.query.size : 25;
 
 	let filters = {
-	    userId: ctx._subId
+		category: PROJECT_CATEGORY_B2C,
+	    userId: ctx._subId,
+	    status: PROJECT_STATUS_PUBLISH
 	};
 
 	let pages = {
@@ -45,14 +47,13 @@ export async function index(ctx, next) {
 	    }
 	}
 
-
 	if (ctx.accepts('html', 'text', 'json') === 'json') {
 	    ctx.body = {
 	        projects,
 	        isNext
 	    };
 	} else {
-		const title = '自有项目列表';
+		const title = '项目列表';
 
 		const pageJs = webpackIsomorphicTools.assets().javascript.projects;
 
@@ -84,7 +85,7 @@ export async function search(ctx, next) {
 	let size = ctx.query.size ? ctx.query.size : 25;
 
 	let filters = {
-		category: PROJECT_CATEGORY_B2B,
+		category: PROJECT_CATEGORY_B2C,
 	    status: PROJECT_STATUS_PUBLISH
 	};
 

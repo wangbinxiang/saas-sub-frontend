@@ -3,7 +3,7 @@ import {
 	inWechatRequiresLogin
 } from '../../middlewares/authorization';
 import {
-	// index,
+	index,
 	search,
 	// showAdd,
 	// add,
@@ -30,7 +30,7 @@ router.prefix('/projects');
 //订单列表页面
 // router.get('/', index);
 
-router.get('/search', search);
+// router.get('/search', search);
 
 // router.get('/add', showAdd);
 
