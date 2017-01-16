@@ -31,8 +31,13 @@ const ProdModel = function(data, productTypeId){
                self.prods.push(product)
            }
            self.isNext(respones.isNext);
-           // new Foundation.Equalizer($('#listEqualizer'));
-           Foundation.reInit($('#listEqualizer'));
+           Foundation.onImagesLoaded($('#masonryWrap img'), function () {
+                $('#masonryWrap').masonry({
+                    // options
+                    itemSelector: '.column',
+                    percentPosition: true
+                });
+           });
        })
     }
 }
