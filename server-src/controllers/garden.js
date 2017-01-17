@@ -5,7 +5,9 @@ import config from 'config';
 
 export async function articles(ctx, next) {
 
-	const title = ctx._shop.title? ctx._shop.title: '首页';
+    const title = ctx._shop.title? ctx._shop.title: '产业资讯';
+
+    const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
@@ -16,7 +18,7 @@ export async function articles(ctx, next) {
     await channelService.gardenArticles(ctx._subId)
 
     await ctx.render('garden/articles', {
-        title,
+        title, pageJs,
         imgHost,
         imgStyle
     });
@@ -25,7 +27,9 @@ export async function articles(ctx, next) {
 
 export async function products(ctx, next) {
 
-	const title = ctx._shop.title? ctx._shop.title: '首页';
+    const title = ctx._shop.title? ctx._shop.title: '苗木交易';
+
+    const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
@@ -36,7 +40,7 @@ export async function products(ctx, next) {
     await channelService.gardenArticles(ctx._subId)
 
     await ctx.render('garden/products', {
-        title,
+        title, pageJs,
         imgHost,
         imgStyle
     });
