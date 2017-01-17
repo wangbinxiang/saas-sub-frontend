@@ -34,16 +34,19 @@ export default async(ctx, next) => {
 
     if (ctx.state.shopInfo.theme && ctx.state.shopInfo.theme == 'garden') {
         //园林首页
+        const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
-        const indexService = new IndexService();
+        const indexService = new IndexService();  
 
         //页面数据
         const info = await indexService.garden(ctx._subId);
 
+        const blocks = info.products.concat(info.projects);
+
         await ctx.render('garden/index', {
-            title,
+            title, pageJs,
             slidesData,
-            info,
+            info, blocks,
             imgHost,
             imgStyle
         });

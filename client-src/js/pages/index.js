@@ -93,14 +93,16 @@ let ProdModel = function(data){
     }
 }
 
-let prodModel = new ProdModel(data)
-ko.applyBindings(prodModel)
+if($('.orbit--garden').length === 0){
+    let prodModel = new ProdModel(data)
+    ko.applyBindings(prodModel)
 
-if(prodModel.prods().length > 1){
-    require.ensure([], function(require) {
-        let imagesLoaded = require('imagesloaded')
-        new imagesLoaded($('#listEqualizer'), function(){
-            var equalizer = new Foundation.Equalizer($('#listEqualizer'));
-        });
-    })
+    if(prodModel.prods().length > 1){
+        require.ensure([], function(require) {
+            let imagesLoaded = require('imagesloaded')
+            new imagesLoaded($('#listEqualizer'), function(){
+                var equalizer = new Foundation.Equalizer($('#listEqualizer'));
+            });
+        })
+    }
 }
