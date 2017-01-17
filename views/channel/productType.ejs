@@ -10,7 +10,7 @@
 
 <h1 class="row column"><%= productType.name %></h1>
 <div class="masonry-wrap-outer">
-    <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="foreach:prods">
+    <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="template: { foreach: prods, afterAdd: afterAdd }">
         <div class="column">
             <a data-bind="attr:{href: '/products/' + id}" class="masonry-item">
                 <img data-bind="attr:{src: imgHost + logo + imgStyle }" />

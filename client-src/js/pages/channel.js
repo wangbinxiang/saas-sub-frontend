@@ -5,7 +5,9 @@ if (module.hot) {
 import './base.js';
 import jQueryBridget from 'jquery-bridget'
 import Masonry from 'masonry-layout'
+
 jQueryBridget( 'masonry', Masonry, $ );
+
 const ProdModel = function(data, productTypeId){
     // var arrData = $.map(data, function(value, index) {
     //     return [value];
@@ -14,6 +16,14 @@ const ProdModel = function(data, productTypeId){
     let self = this
     self.prods = ko.observableArray(data);
     self.isNext = ko.observable(isNext);
+
+    this.afterAdd = function(element) {
+        console.log('shiver')
+        //$('#masonryWrap').masonry('appended', element).masonry();
+        Foundation.onImagesLoaded($('#masonryWrap img'), function () {
+            $('#masonryWrap').masonry('appended', element).masonry()
+        });
+    };
 
     let pageno = 1;
     self.more = function() {
@@ -31,13 +41,7 @@ const ProdModel = function(data, productTypeId){
                self.prods.push(product)
            }
            self.isNext(respones.isNext);
-           Foundation.onImagesLoaded($('#masonryWrap img'), function () {
-                $('#masonryWrap').masonry({
-                    // options
-                    itemSelector: '.column',
-                    percentPosition: true
-                });
-           });
+           
        })
     }
 }
