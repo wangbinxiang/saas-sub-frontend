@@ -68,9 +68,6 @@ export default class Product {
 	 * @return {[type]}                        [description]
 	 */
 	own(shopId) {
-		console.log(shopId)
-		console.log(this.userId)
-		console.log(this.userId === shopId)
 		return this.userId === shopId;
 	}
 

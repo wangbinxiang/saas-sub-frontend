@@ -61,7 +61,6 @@ export function motionAlert(option) {
         $('#motionAlert').removeClass('success').addClass('alert')
     }
     $('#motionAlert [data-toggle="motionAlert"]').on('click', function(){
-        console.log('shiver')
         if (closeTimer != null) {
             window.clearTimeout(closeTimer);
             closeTimer = null;
