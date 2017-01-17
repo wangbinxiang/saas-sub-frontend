@@ -90,8 +90,6 @@ export default class ApplicationService {
 					idList: application.contractId
 				}, ApplicationContract);
 			}
-			console.log(application.contractId)
-			console.log(applicationContract)
 
 			return {
 				application,
@@ -204,7 +202,6 @@ export default class ApplicationService {
 					return null;	
 				}
 			}
-			console.log('source:' + source)
 
 			return await this.applicationAdapter.reply({
 				id,

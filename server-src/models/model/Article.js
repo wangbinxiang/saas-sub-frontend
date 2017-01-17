@@ -2,6 +2,7 @@ export default class Article {
 	constructor({
 		id = 0,
 		title,
+		logo,
 		content,
 		status,
 		updateTime,
@@ -12,6 +13,7 @@ export default class Article {
 	}) {
 		this.id         = id;
 		this.title      = title;
+		this.logo       = logo;
 		this.content    = content;
 		this.status     = status;
 		this.updateTime = updateTime;

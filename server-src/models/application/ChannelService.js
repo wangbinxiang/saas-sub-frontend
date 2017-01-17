@@ -51,7 +51,7 @@ export default class ChannelService {
 
 			const filters = {
 				productType: productTypeId,
-				status: ARTICLE_STATUS_PUBLISH
+				status: PRODUCT_STATUS_ON_SALE
 			}
 
 
@@ -92,7 +92,6 @@ export default class ChannelService {
 
 		const categoryAdapter = new CategoryAdapter();
 		category = await categoryAdapter.get({ idList: categoryId }, Category);
-		console.log(category);
 		if (category && category.userId === parseInt(userId)) {
 
 			const pages = {
@@ -109,7 +108,6 @@ export default class ChannelService {
 			    filters,
 			    pages
 			}, Article);
-			console.log(articleResult);
 			if (articleResult !== null) {
 				//没有获取数据 直接返回空
 				page = articleResult.page;

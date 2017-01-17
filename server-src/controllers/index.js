@@ -8,79 +8,108 @@ import lodash from 'lodash';
 export default async(ctx, next) => {
     
     const title = ctx._shop.title? ctx._shop.title: '首页';
-    let isNext = false;
 
-    // if (ctx.isAuthenticated()) {
-    //     console.log('isAuthenticated');
-    //     console.log(ctx.state.user);
-    //     // ctx.logout();
-    // }
 
-    const number = ctx.query.number ? ctx.query.number : 1;
+    const imgHost = config.get('qiniu.bucket.subImg.url');
 
-    const size = ctx.query.size ? ctx.query.size : 10;
+    const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
-    const indexService = new IndexService();
-
-    // const result = await indexService.index(number, size, ctx._subId);
-    let { page, products} = await indexService.index(number, size, ctx._subId);
-    if (page && page.haveNext()) {
-        isNext = true;
-    }
-
-    // // 获取当前是否有
-    const other = config.get('productMapping');
-
-    if (other[ctx._subId]) {
-        const otherIds = lodash.sample(other[ctx._subId]);
-        const productService = new ProductService();
-        const otherProducts = await productService.list(otherIds);
-        if (otherProducts) {
-            products = lodash.concat(products, otherProducts);
-        }
-    }
-
-    if (ctx.accepts('html', 'text', 'json') === 'json') {
-        ctx.body = {
-            products,
-            isNext
-        };
-    } else {
-
-        const pageJs = webpackIsomorphicTools.assets().javascript.index;
-
-        const imgHost = config.get('qiniu.bucket.subImg.url');
-
-        const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-
-        //幻灯片
-        let slidesData = [];
-        if (ctx._shop.slides && lodash.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
-            const poductService = new ProductService();
-            let products = await poductService.get(ctx._shop.slides, ctx._subId);
-            if (products) {
-                for (let i in products) {
-                    slidesData.push({
-                        "url": '/products/' + products[i].id,
-                        "title": products[i].name,
-                        "price": products[i].minPrice,
-                        "img": imgHost + products[i].logo
-                    });
-                }
+    //幻灯片
+    let slidesData = [];
+    if (ctx._shop.slides && lodash.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
+        const poductService = new ProductService();
+        let products = await poductService.get(ctx._shop.slides, ctx._subId);
+        if (products) {
+            for (let i in products) {
+                slidesData.push({
+                    "url": '/products/' + products[i].id,
+                    "title": products[i].name,
+                    "price": products[i].minPrice,
+                    "img": imgHost + products[i].logo
+                });
             }
         }
+    }
 
-        await ctx.render('index/index', {
+
+    if (ctx.state.shopInfo.theme && ctx.state.shopInfo.theme == 'garden') {
+        //园林首页
+
+        const indexService = new IndexService();
+
+        //页面数据
+        const info = await indexService.garden(ctx._subId);
+
+        await ctx.render('garden/index', {
             title,
             slidesData,
-            products,
-            isNext,
-            number,
-            pageJs,
+            info,
             imgHost,
             imgStyle
         });
-    }    
+
+    } else {
+        let isNext = false;
+
+        // if (ctx.isAuthenticated()) {
+        //     console.log('isAuthenticated');
+        //     console.log(ctx.state.user);
+        //     // ctx.logout();
+        // }
+
+        const number = ctx.query.number ? ctx.query.number : 1;
+
+        const size = ctx.query.size ? ctx.query.size : 10;
+
+        const indexService = new IndexService();
+
+        // const result = await indexService.index(number, size, ctx._subId);
+        let { page, products} = await indexService.index(number, size, ctx._subId);
+        if (page && page.haveNext()) {
+            isNext = true;
+        }
+
+        await indexService.garden(ctx._subId)
+
+        // // 获取当前是否有
+        const other = config.get('productMapping');
+
+        if (other[ctx._subId]) {
+            const otherIds = lodash.sample(other[ctx._subId]);
+            const productService = new ProductService();
+            const otherProducts = await productService.list(otherIds);
+            if (otherProducts) {
+                products = lodash.concat(products, otherProducts);
+            }
+        }
+
+        if (ctx.accepts('html', 'text', 'json') === 'json') {
+            ctx.body = {
+                products,
+                isNext
+            };
+        } else {
+
+            const pageJs = webpackIsomorphicTools.assets().javascript.index;
+
+            const imgHost = config.get('qiniu.bucket.subImg.url');
+
+            const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+
+            
+
+            await ctx.render('index/index', {
+                title,
+                slidesData,
+                products,
+                isNext,
+                number,
+                pageJs,
+                imgHost,
+                imgStyle
+            });
+        } 
+    }   
 }
 
 export async function category(ctx, next) {

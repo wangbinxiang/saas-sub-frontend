@@ -12,6 +12,7 @@ export default class ArticleTranslator extends Translator {
 
         const id         = bodyReader.value('id');
         const title      = bodyReader.value('title');
+        const logo       = bodyReader.value('logo');
         const content    = bodyReader.value('content');
         const status     = bodyReader.value('status');
         const updateTime = bodyReader.value('updateTime');
@@ -23,6 +24,7 @@ export default class ArticleTranslator extends Translator {
         return {
             id,
             title,
+            logo,
             content,
             status,
             updateTime,
