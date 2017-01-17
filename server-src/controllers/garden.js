@@ -31,9 +31,10 @@ export async function products(ctx, next) {
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
+    const id = ctx.query.id? ctx.query.id: 0;
 
     const channelService = new ChannelService()
-    await channelService.gardenArticles(ctx._subId)
+    await channelService.gardenProducts(ctx._subId, id)
 
     await ctx.render('garden/products', {
         title,
@@ -52,9 +53,10 @@ export async function projects(ctx, next) {
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
+    const id = ctx.query.id? ctx.query.id: 0;
 
     const channelService = new ChannelService()
-    await channelService.gardenArticles(ctx._subId)
+    await channelService.gardenProjects(ctx._subId, id)
 
     await ctx.render('garden/projects', {
         title,
