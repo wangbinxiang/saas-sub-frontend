@@ -111,7 +111,6 @@ if($('.orbit--garden').length === 0 && $('.top-carousel--nopadding').length === 
     }
 }
 
-
 if($('#masonryWrap').length){
     Foundation.onImagesLoaded($('#masonryWrap img'), function () {
         $('#masonryWrap').masonry({
