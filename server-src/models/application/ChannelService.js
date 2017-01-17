@@ -6,6 +6,7 @@ import CategoryAdapter from '../adapter/CategoryAdapter';
 import Category from '../model/Category';
 import ArticleAdapter from '../adapter/ArticleAdapter';
 import Article from '../model/Article';
+import config from 'config';
 
 import {
     ARTICLE_STATUS_PUBLISH
@@ -121,5 +122,40 @@ export default class ChannelService {
 			articles,
 			category
 		};
+	}
+
+
+
+	async gardenArticles(userId) {
+		let page, articles, category;
+		//获取分类
+
+		//获取文章需要幻灯片文章
+		//幻灯片5个
+		const pages = {
+	        number: 1,
+		    size: 5
+	    };
+
+		const filters = {
+			userId,
+			status: ARTICLE_STATUS_PUBLISH,
+			sort: '-id'
+		};
+		const articleAdapter = new ArticleAdapter();
+		const articleResult = await articleAdapter.get({
+		    filters,
+		    pages
+		}, Article);
+		if (articleResult !== null) {
+			//没有获取数据 直接返回空
+			page = articleResult.page;
+			articles = articleResult.result;
+		}
+
+		console.log(articles)
+		//
+		//3个分类的文章
+		//
 	}
 }
