@@ -3,38 +3,17 @@
 <div class="row expanded column top-carousel top-carousel--nopadding">
     <div class="jcarousel jcarousel--home">
         <ul>
-            <!--% for(let i of slidesData) { %-->
+            <% for(let i of info.slideProducts) { %>
             <li>
-                <a href="<%%= i.url %%>">
+                <a href="garden/product/<%= i.id %>">
                     <div>
-                        <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427" srcset="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427 1x, http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0 1.5x">
+                        <img src="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427" srcset="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427 1x, <%= imgHost + i.logo %> 1.5x">
                     </div>
-                    <b class="lead">
-                        <%%= i.title %%>why not navigate bar here not navigate bar here not navigate bar here
-                    </b>
+                    <b class="lead" style="padding-right:7.5rem;"><%= i.name %></b>
+                    <span style="display:block;"><sup>￥</sup><strong><%= i.minPrice %></strong> <small>起</small></span>
                 </a>
             </li>
-            <!--% } %-->
-            <li>
-                <a href="<%%= i.url %%>">
-                    <div>
-                        <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427" srcset="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427 1x, http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0 1.5x">
-                    </div>
-                    <b class="lead">
-                        <%%= i.title %%> And also can't add pageJs
-                    </b>
-                </a>
-            </li>
-            <li>
-                <a href="<%%= i.url %%>">
-                    <div>
-                        <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427" srcset="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427 1x, http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0 1.5x">
-                    </div>
-                    <b class="lead">
-                        <%%= i.title %%>
-                    </b>
-                </a>
-            </li>
+            <% } %>
         </ul>
     </div>
     <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
@@ -47,148 +26,38 @@
         <ul class="dropdown menu index" data-dropdown-menu id="tagFilter">
             <li class="menu-text">苗木交易</li>
             <li>
-                <a>全部</a>
+                <a href="/garden/products/">全部</a>
             </li>
+            <% for(let i of info.productTypes) { %>
             <li>
-                <a>苗木分类0</a>
+                <a href="products/<%= i.id %>"><%= i.name %></a>
             </li>
-            <li>
-                <a>苗木分类1</a>
-            </li>
-            <li role="menuitem">
-                <a>苗木分类1</a>
-            </li>
-            <li>
-                <a href="#">苗木分类2</a>
-            </li>
-            <li>
-                <a href="#">苗木分类3</a>
-            </li>
-            <li>
-                <a href="#">苗木分类4</a>
-            </li>
-            <li>
-                <a href="#">苗木分类5</a>
-            </li>
-            <li>
-                <a href="#">苗木分类6</a>
-            </li>
+            <% } %>
         </ul>
     </div>
 </div>
 
 <div class="masonry-wrap-outer clearfix">
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap">
+        <% for(let i of info.products) { %>
         <div class="column">
             <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
+                <img src="<%= imgHost + i.logo %>" />
                 <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
+                    <%= i.name %>
                 </b>
-                <em>
-                    Lorem ipsum dolor sit amet consectetur adipisicing ipsum dolor sit amet consectetur adipisicing<br />
+                <em><%= i.feature %><br />
                 </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
+                <span> ￥<strong>15678</strong> <small>起</small></span>
                 <i class="small expanded button">查看详情</i>
             </a>
         </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
-                </b>
-                <em>
-                    Lorem ipsum sit amet consectetur adipisicing<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
-                </b>
-                <em>
-                    Lorem dolor sit amet consectetur adipisicing<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
-                </b>
-                <em>
-                    Lorem ipsum dolor consectetur adipisicing<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
-                </b>
-                <em>
-                    Lorem ipsum dolor adipisicing<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
-                </b>
-                <em>
-                    Lorem ipsum dolor sit amet consectetur<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Elit fusce vel sapien elit in malesuada
-                </b>
-                <em>
-                    Lorem ipsum dolor sit amet<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-        <div class="column">
-            <a class="masonry-item" href="detail_cn.html">
-                <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-                <b>
-                    Tincidunt integer eu augue augue nunc elit dolor luctus placerat
-                </b>
-                <em>
-                    Lorem ipsum dolor sit<br />
-                </em>
-                <span><small>最低</small> ￥<strong>15678</strong></span>
-                <i class="small expanded button">查看详情</i>
-            </a>
-        </div>
-    </div>
+        <% } %>
 </div>
 
-<div class="list-button row column clearfix">
+<!--div class="list-button row column clearfix">
     <a class="button large btnMore">显示更多商品</a>
-</div>
+</div-->
 
 <div class="row column bottom-search">
     <h3>Got no ideal? Find more here</h3>

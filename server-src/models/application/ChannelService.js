@@ -259,7 +259,7 @@ export default class ChannelService {
 				const productTypeAdapter = new ProductTypeAdapter();
 				const productTypeResult = await productTypeAdapter.get({ idList: productTypeIds }, ProductType);
 
-				productTypes = productTypeResult.result
+				productTypes = productTypeResult
 			}
 
 			const pages = {
