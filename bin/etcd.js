@@ -3,8 +3,12 @@ var jsonfile = require('jsonfile');
 
 //配置docker内网数据j接口
 if (process.env.ETCD_ENV) {
-    var etcdHost = 'http://etcd.etcd-ha:2379'; //'http://120.25.168.230:2379'; //
-    // var etcdHost = 'http://121.199.48.91:2379'; //
+    var etcdHost = '';
+    if (process.env.NODE_ENV === 'development') {
+        etcdHost = 'http://121.199.48.91:2379';
+    } else {
+        etcdHost = 'http://etcd.etcd-ha:2379'; 
+    }
     var etcdAttachment;
     var etcdProduct;
     var etcdShop;
@@ -125,6 +129,73 @@ if (process.env.ETCD_ENV) {
         "memcache": {
             "host": memcacheHost,
             "port": 11211
+        },
+        "theme": {
+          "10002": "",
+          "10026": "garden"
+        },
+        "layout": {
+            "10002":"",
+            "10026": {
+              "navigation": [
+                {
+                  "name": "产业资讯",
+                  "type": "cms"
+                },
+                {
+                  "name": "日本游",
+                  "type": "product",
+                  "id": 0
+                },
+                {
+                  "name": "月球游",
+                  "type": "product",
+                  "id": 1
+                },
+                {
+                  "name": "项目招标",
+                  "type": "project",
+                  "id": 0
+                },
+                {
+                  "name": "PPP项目合作",
+                  "type": "project",
+                  "id": 1
+                },
+                {
+                  "name": "产业金融",
+                  "type": "project",
+                  "id": 2
+                }
+              ],
+              "article": [
+                2, 3, 4
+              ],
+              "product": {
+                "0": {
+                  "name": "日本游",
+                  "typeIds": "9,11"
+                },
+                "1": {
+                  "name": "月球游",
+                  "typeIds": "10"
+                }
+              },
+              "project": {
+                "0": {
+                  "name": "项目招标",
+                  "typeIds": "2"
+                },
+                "1": {
+                  "name": "PPP项目合作",
+                  "typeIds": "3"
+                },
+                "2": {
+                  "name": "产业金融",
+                  "typeIds": "5"
+                }
+              }
+            }
         },
         "qiniu": {
             "accessKey": qiniuAccessKey,

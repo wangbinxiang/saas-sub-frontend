@@ -139,7 +139,7 @@ export default class ChannelService {
 
 		const shopLayout = layout[userId]
 
-		let slideArticles, categories, articles;
+		let slideArticles, categories, articles, channelName;
 		//获取分类
 
 		//获取文章需要幻灯片文章
@@ -174,6 +174,8 @@ export default class ChannelService {
 
 		if (shopLayout['article']) {
 
+			channelName = shopLayout['article'].name
+
 			const categoryPages = {
 				number: 1,
 		        size: 8
@@ -194,7 +196,7 @@ export default class ChannelService {
 
 
 			articles = {}
-			for(let val of shopLayout['article']) {
+			for(let val of shopLayout['article'].idList) {
 				const pages = {
 					number: 1,
 			        size: 16
@@ -228,13 +230,8 @@ export default class ChannelService {
 			}
 		}
 
-		console.log( {
-			slideArticles, 
-			categories, 
-			articles
-		})
-
 		return {
+			channelName,
 			slideArticles, 
 			categories, 
 			articles
@@ -243,7 +240,7 @@ export default class ChannelService {
 
 
 	async gardenProducts(userId, id) {
-		let productTypes, slideProducts, products
+		let productTypes, slideProducts, products, channelName
 
 
 		const layout = config.get('layout');
@@ -253,6 +250,9 @@ export default class ChannelService {
 		const channelInfo = shopLayout['product'][id]
 
 		if(channelInfo) {
+
+			channelName = channelInfo.name
+
 			const productTypeIds = lodash.split(channelInfo.typeIds, ',')
 
 			if (productTypeIds) {
@@ -299,6 +299,7 @@ export default class ChannelService {
 		}
 
 		return {
+			channelName,
 			productTypes, 
 			slideProducts, 
 			products
@@ -308,7 +309,7 @@ export default class ChannelService {
 
 	async gardenProjects(userId, id) {
 
-		let channelInfo, projects
+		let channelInfo, projects, channelName
 
 		const layout = config.get('layout');
 
@@ -318,8 +319,8 @@ export default class ChannelService {
 
 
 		if(channelInfo) {
-			console.log(channelInfo)
 
+			channelName = channelInfo.name
 
 			const pages = {
 					number: 1,

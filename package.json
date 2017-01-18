@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "author": "wbx",
   "scripts": {
+    "etcd-dev": "NODE_ENV=development ETCD_ENV=sandbox node ./bin/etcd.js",
     "etcd-prod": "ETCD_ENV=production node ./bin/etcd.js",
     "etcd-sandbox": "ETCD_ENV=sandbox node ./bin/etcd.js",
     "pm2-docker-prod": "npm-run-all --sequential compile etcd-prod start-pm2",
