@@ -5,7 +5,7 @@
         <ul>
             <% for(let i of info.slideArticles) { %>
             <li>
-                <a href="article/<%= i.id %>">
+                <a href="/articles/<%= i.id %>">
                     <div>
                         <img src="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427" srcset="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427 1x, <%= imgHost + i.logo %> 1.5x">
                     </div>
@@ -29,7 +29,7 @@
             </li>
             <% for(let i of info.categories) { %>
             <li>
-                <a href="articles/<%= i.id %>"><%= i.name %></a>
+                <a href="/articles/<%= i.id %>"><%= i.name %></a>
             </li>
             <% } %>
         </ul>
@@ -40,12 +40,12 @@
 <div class="row expanded article-mix">
     <div class="large-4 medium-12 columns">
         <hgroup class="tourboard__title tourboard__title--<%= key % 7 %>">
-            <a href="articles/<%= key %>" class="masonry-item masonry-item--title masonry-item--index">
+            <a href="/channel/categories/<%= info.categories.find(x => x.id === key).id %>" class="masonry-item masonry-item--title masonry-item--index">
                 <h3><%= info.categories.find(x => x.id === key).name %></h3>
                 <i class="material-icons mi-arrow_forward"></i>
             </a>
         </hgroup>
-        <a class="article-mix__top" href="detail_cn_article_2.html">
+        <a class="article-mix__top" href="/articles/<%= info.articles[key][0].id %>">
             <img src="<%= imgHost + info.articles[key][0].logo %>" />
             <h4><%= info.articles[key][0].title %></h4>
             <p><%= info.articles[key][0].feature %></p>
@@ -55,7 +55,7 @@
         <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
             <% for(let i = 1; i < info.articles[key].length; i++){ %>
             <div class="column">
-                <a class="article-item" href="article<%= info.articles[key][i].id %>" data-equalizer-watch>
+                <a class="article-item" href="/articles/<%= info.articles[key][i].id %>" data-equalizer-watch>
                     <figure style="background-image:url('<%= imgHost + info.articles[key][i].logo %>"></figure>
                     <h4><%= info.articles[key][i].title %></h4>
                     <p><%= info.articles[key][i].feature %></p>
@@ -66,19 +66,5 @@
     </div>
 </div>
 <% } %>
-
-<div class="row column bottom-search">
-    <h3>Got no ideal? Find more here</h3>
-    <div class="input-group">
-        <input class="input-group-field" type="text">
-        <div class="input-group-button">
-            <!--<a class="button">Primary Action</a>
-            <a class="dropdown button arrow-only">
-                <span class="show-for-sr">Show menu</span>
-            </a>-->
-            <input type="submit" class="button" value="Search">
-        </div>
-    </div>
-</div>
 
 <%- include('../layout/footer') -%>

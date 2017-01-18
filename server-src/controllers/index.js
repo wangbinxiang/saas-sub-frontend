@@ -74,7 +74,6 @@ export default async(ctx, next) => {
             isNext = true;
         }
 
-        await indexService.garden(ctx._subId)
 
         // // 获取当前是否有
         const other = config.get('productMapping');

@@ -10,10 +10,10 @@ router.prefix('/garden');
 //需要登陆
 router.use(inWechatRequiresLogin);
 
-router.get('/articles', articles);
+router.get('/articles', navigation, articles);
 
-router.get('/products/:id', products);
+router.get('/products/:id', navigation, products);
 
-router.get('/projects/:id', projects);
+router.get('/projects/:id', navigation, projects);
 
 export default router;

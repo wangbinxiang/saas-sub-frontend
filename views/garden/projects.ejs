@@ -2,7 +2,7 @@
 
 <nav aria-label="您的位置:" role="navigation" class="clearfix">
     <ul class="breadcrumbs onionLink">
-        <li><a href="#">首页</a></li>
+        <li><a href="/">首页</a></li>
         <li>
             <span class="show-for-sr">当前: </span> <%= info.channelInfo.name %>
         </li>
@@ -14,7 +14,7 @@
 <div class="row column blk-margin">
     <% for(let i of info.projects) { %>
     <div>
-        <a class="article-item clearfix" href="projects/<%= i.id %>">
+        <a class="article-item clearfix" href="/projects/<%= i.id %>">
             <figure style="background-image:url('<%= imgHost + i.logo %>')"></figure>
             <h4><%= i.name %></h4>
             <p><%= i.feature %></p>
@@ -27,18 +27,6 @@
     <a class="button large btnMore">显示更多文章</a>
 </div-->
 
-<div class="row column bottom-search">
-    <h3>啥都没找到？再搜索搜索~</h3>
-    <div class="input-group">
-        <input class="input-group-field" type="text">
-        <div class="input-group-button">
-            <!--<a class="button">Primary Action</a>
-            <a class="dropdown button arrow-only">
-                <span class="show-for-sr">Show menu</span>
-            </a>-->
-            <input type="submit" class="button" value="搜索">
-        </div>
-    </div>
-</div>
+
 
 <%- include('../layout/footer') -%>

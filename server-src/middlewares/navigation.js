@@ -20,7 +20,6 @@ export default async function navigation(ctx, next) {
 
 	if (shopLayout && shopLayout.navigation) {
 		
-		console.log(shopLayout.navigation)
 		ctx.state._navigation = shopLayout.navigation
 
 	} else {
