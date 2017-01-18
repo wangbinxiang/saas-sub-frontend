@@ -45,7 +45,8 @@ export async function products(ctx, next) {
 
     const channelService = new ChannelService()
     const info = await channelService.gardenProducts(ctx._subId, id)
-
+console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
+console.log(info)
     await ctx.render('garden/products', {
         title, 
         pageJs,
@@ -69,8 +70,7 @@ export async function projects(ctx, next) {
 
     const channelService = new ChannelService()
     const info = await channelService.gardenProjects(ctx._subId, id)
-console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
-console.log(info)
+
     await ctx.render('garden/projects', {
         title,
         info,
