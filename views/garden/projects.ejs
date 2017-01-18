@@ -4,63 +4,28 @@
     <ul class="breadcrumbs onionLink">
         <li><a href="#">首页</a></li>
         <li>
-            <span class="show-for-sr">当前: </span> 产业金融
+            <span class="show-for-sr">当前: </span> <%= info.channelInfo.name %>
         </li>
     </ul>
 </nav>
 
-<h1 class="row column">产业金融</h1>
+<h1 class="row column"><%= info.channelInfo.name %></h1>
 
-<div class="row column">
+<div class="row column blk-margin">
+    <% for(let i of info.projects) { %>
     <div>
-        <a class="article-item clearfix" href="detail_cn_article.html">
-            <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>
-                elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum
-                <br />基金来源：<b>Lorem ipsum dolor sit amet consectetur</b>
-            </p>
+        <a class="article-item clearfix" href="projects/<%= i.id %>">
+            <figure style="background-image:url('<%= imgHost + i.logo %>')"></figure>
+            <h4><%= i.name %></h4>
+            <p><%= i.feature %></p>
         </a>
     </div>
-    <div>
-        <a class="article-item clearfix" href="detail_cn_article.html">
-            <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-            <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>
-                基金来源：<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit</b>
-            </p>
-        </a>
-    </div>
-    <div>
-        <a class="article-item clearfix" href="detail_cn_article.html">
-            <h4>Sapien elit in malesuada semper mi id sollicitudinSapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>
-                基金来源：<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit</b>
-            </p>
-        </a>
-    </div>
-    <div>
-        <a class="article-item clearfix" href="detail_cn_article.html">
-            <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-            <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>
-                基金来源：<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit</b>
-            </p>
-        </a>
-    </div>
-    <div>
-        <a class="article-item clearfix" href="detail_cn_article.html">
-            <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-            <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>
-                基金来源：<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit</b>
-            </p>
-        </a>
-    </div>
+    <% } %>
 </div>
 
-<div class="list-button row column">
+<!--div class="list-button row column">
     <a class="button large btnMore">显示更多文章</a>
-</div>
+</div-->
 
 <div class="row column bottom-search">
     <h3>啥都没找到？再搜索搜索~</h3>

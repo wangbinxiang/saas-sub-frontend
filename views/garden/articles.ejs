@@ -3,38 +3,16 @@
 <div class="row expanded column top-carousel top-carousel--nopadding">
     <div class="jcarousel jcarousel--home">
         <ul>
-            <!--% for(let i of slidesData) { %-->
+            <% for(let i of info.slideArticles) { %>
             <li>
-                <a href="<%%= i.url %%>">
+                <a href="article/<%= i.id %>">
                     <div>
-                        <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427" srcset="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427 1x, http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0 1.5x">
+                        <img src="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427" srcset="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427 1x, <%= imgHost + i.logo %> 1.5x">
                     </div>
-                    <b class="lead">
-                        <%%= i.title %%>why not navigate bar here not navigate bar here not navigate bar here
-                    </b>
+                    <b class="lead"><%= i.title %></b>
                 </a>
             </li>
-            <!--% } %-->
-            <li>
-                <a href="<%%= i.url %%>">
-                    <div>
-                        <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427" srcset="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427 1x, http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0 1.5x">
-                    </div>
-                    <b class="lead">
-                        <%%= i.title %%>
-                    </b>
-                </a>
-            </li>
-            <li>
-                <a href="<%%= i.url %%>">
-                    <div>
-                        <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427" srcset="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0?imageView2/1/w/640/h/427 1x, http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0 1.5x">
-                    </div>
-                    <b class="lead">
-                        <%%= i.title %%>
-                    </b>
-                </a>
-            </li>
+            <% } %>
         </ul>
     </div>
     <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
@@ -47,165 +25,47 @@
         <ul class="dropdown menu index" data-dropdown-menu>
             <li class="menu-text">产业资讯</li>
             <li>
-                <a href="list.html">全部</a>
+                <a href="/garden/articles/">全部</a>
             </li>
+            <% for(let i of info.categories) { %>
             <li>
-                <a href="list_cn_articles.html">园林行业资讯</a>
+                <a href="articles/<%= i.id %>"><%= i.name %></a>
             </li>
-            <li>
-                <a href="list_cn_articles.html">PPP项目资讯</a>
-            </li>
-            <li>
-                <a href="list_cn_articles.html">产业资讯分类3</a>
-            </li>
-            <li>
-                <a href="list_cn_articles.html">产业资讯分类4</a>
-            </li>
-            <li>
-                <a href="list_cn_articles.html">产业资讯分类5</a>
-            </li>
-            <li>
-                <a href="list_cn_articles.html">PPP项目资讯</a>
-            </li>
-            <li>
-                <a href="list_cn_articles.html">产业资讯分类3</a>
-            </li>
-            <li>
-                <a href="list_cn_articles.html">产业资讯分类4</a>
-            </li>
+            <% } %>
         </ul>
     </div>
 </div>
 
+<% for(let key of Object.keys(info.articles)) { %>
 <div class="row expanded article-mix">
     <div class="large-4 medium-12 columns">
-        <hgroup class="tourboard__title tourboard__title--0">
-            <a href="list.html" class="masonry-item masonry-item--title masonry-item--index">
-                <h3>园林行业</h3>
+        <hgroup class="tourboard__title tourboard__title--<%= key % 7 %>">
+            <a href="articles/<%= key %>" class="masonry-item masonry-item--title masonry-item--index">
+                <h3><%= info.categories.find(x => x.id === key).name %></h3>
                 <i class="material-icons mi-arrow_forward"></i>
             </a>
         </hgroup>
         <a class="article-mix__top" href="detail_cn_article_2.html">
-            <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-            <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien</p>
+            <img src="<%= imgHost + info.articles[key][0].logo %>" />
+            <h4><%= info.articles[key][0].title %></h4>
+            <p><%= info.articles[key][0].feature %></p>
         </a>
     </div>
     <div class="large-8 medium-12 columns article-mix__sub">
         <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
+            <% for(let i = 1; i < info.articles[key].length; i++){ %>
             <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
+                <a class="article-item" href="article<%= info.articles[key][i].id %>" data-equalizer-watch>
+                    <figure style="background-image:url('<%= imgHost + info.articles[key][i].logo %>"></figure>
+                    <h4><%= info.articles[key][i].title %></h4>
+                    <p><%= info.articles[key][i].feature %></p>
                 </a>
             </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit insemper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit insemper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit insemper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin in malesuada semper mi id sollicitudin</h4>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
+            <% } %>
         </div>
     </div>
 </div>
-
-<div class="row expanded article-mix">
-    <div class="large-4 medium-12 columns">
-        <hgroup class="tourboard__title tourboard__title--1">
-            <a href="list.html" class="masonry-item masonry-item--title masonry-item--index">
-                <h3>PPP项目</h3>
-                <i class="material-icons mi-arrow_forward"></i>
-            </a>
-        </hgroup>
-        <a class="article-mix__top" href="detail_cn_article_2.html">
-            <img src="http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0" />
-            <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-            <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien</p>
-        </a>
-    </div>
-    <div class="large-8 medium-12 columns article-mix__sub">
-        <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit insemper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-            <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/10002-ee498315-8fee-4dc8-ba4d-df667f3b5bc0')"></figure>
-                    <h4>Sapien elit in malesuada semper mi id sollicitudin in malesuada semper mi id sollicitudin</h4>
-                    <p>Sapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit insemper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentumSapien elit in malesuada semper mi id sollicitudin urna fermentumSapien elit in malesuada semper mi, id sollicitudin urna fermentum</p>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+<% } %>
 
 <div class="row column bottom-search">
     <h3>Got no ideal? Find more here</h3>
