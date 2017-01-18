@@ -44,9 +44,11 @@ export default async(ctx, next) => {
         const blocks = info.products.concat(info.projects);
 
         await ctx.render('garden/index', {
-            title, pageJs,
+            title, 
+            pageJs,
             slidesData,
-            info, blocks,
+            info, 
+            blocks,
             imgHost,
             imgStyle
         });

@@ -206,7 +206,9 @@ export default class IndexService {
 
 				if (productsResult !== null) {
 					products.push({
+						'id': i,
 						'name': shopLayout['product'][i]['name'],
+						'type': 'product',
 						'value': productsResult.result
 					})
 				}
@@ -239,17 +241,15 @@ export default class IndexService {
 
 				if (projectResult !== null) {
 					projects.push({
+						'id': i,
 						'name': shopLayout['project'][i]['name'],
+						'type': 'project',
 						'value': projectResult.result
 					})
 				}
 			}
 		}
 
-		console.log(articles)
-		console.log(categories)
-		console.log(products)
-		console.log(projects)
 		return {
 			articles, categories, products, projects
 		}

@@ -18,20 +18,13 @@
     </nav>
 </div>
 
-<div class="sale-bar-wrap row expanded block-margin-top">
-    <h4><a href="detail_sale.html">2017春季苗木交易促销活动</a></h4>
-    <h4><a href="detail_sale.html">热门项目招标推荐</a></h4>
-    <h4><a href="detail_sale.html">2017切尔西花展门票预订</a></h4>
-    <h4><a href="detail_sale.html">2016年度最佳金融服务</a></h4>
-</div>
-
 <div class="hot-bar-wrap clearfix hot-bar-wrap--garden">
     <div class="top-bar hot-bar clearfix">
         <ul class="dropdown menu index" data-dropdown-menu>
             <li class="menu-text">产业资讯</li>
-            <% for(let c of info.categories) { %>
+            <% for(let category of info.categories) { %>
             <li>
-                <a href="<%= 'list/' + c.id %>"><%= c.name %></a>
+                <a href="<%= '/channel/categories/' + category.id %>"><%= category.name %></a>
             </li>
             <% } %>
         </ul>
@@ -41,8 +34,8 @@
 <div class="row expanded article-mix">
     
     <div class="large-4 medium-12 columns">
-        <a class="article-mix__top" href="article/<%= info.articles[0].id %>">
-            <img src="http://oew2ozpi2.bkt.clouddn.com/<%= info.articles[0].logo%>" />
+        <a class="article-mix__top" href="/articles/<%= info.articles[0].id %>">
+            <img src="<%= imgHost %><%= info.articles[0].logo%>" />
             <h4><%= info.articles[0].title %></h4>
             <p><%= info.articles[0].content %></p>
         </a>
@@ -51,10 +44,10 @@
         <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
             <% for(var i = 1; i < info.articles.length; i++) { %>
             <div class="column">
-                <a class="article-item" href="detail_cn_article_2.html" data-equalizer-watch>
-                    <figure style="background-image:url('http://oew2ozpi2.bkt.clouddn.com/<%= info.articles[i].logo %>')"></figure>
+                <a class="article-item" href="/articles/<%= info.articles[0].id %>" data-equalizer-watch>
+                    <figure style="background-image:url('<%= imgHost %><%= info.articles[i].logo %>')"></figure>
                     <h4><%= info.articles[i].title %></h4>
-                    <p><%= info.articles[0].content %></p>
+                    <p></p>
                 </a>
             </div>
             <% } %>
@@ -63,41 +56,29 @@
 </div>
 
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalizer data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
-    <% for(let [i, b] of blocks.entries()) { %>
-    <div class="column tourboard__title tourboard__title--<%= i % 7 %>">
-        <a href="list/" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <h3><%= b.name %></h3>
-            <cite></cite>
-            <i class="material-icons mi-arrow_forward"></i>
-        </a>
-    </div>
-    <% for(let v of b.value) { %>
-    <div class="column">
-        <a href="detail_alt.html" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <img src="http://oew2ozpi2.bkt.clouddn.com/<%= v.logo %>" />
-            <b>
-                <%= v.name %>
-            </b>
-            <p class="with-price"><%= v.feature %></p>
-            <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
-        </a>
-    </div>
+    <% for(let [key, value] of blocks.entries()) { %>
+        
+        <div class="column tourboard__title tourboard__title--<%= key % 7 %>">
+            <a href="/garden/<%= value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%= value.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <h3><%= value.name %></h3>
+                <cite></cite>
+                <i class="material-icons mi-arrow_forward"></i>
+            </a>
+        </div>
+        <% for(let v of value.value) { %>
+        <div class="column">
+            <a href="/<%= value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <img src="<%= imgHost %><%= v.logo %>" />
+                <b>
+                    <%= v.name %>
+                </b>
+                <p class="with-price"><%= v.feature %></p>
+                <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
+            </a>
+        </div>
     <% } %>
     <% } %>
 </div>
 
-<div class="row column bottom-search">
-    <h3>Got no ideal? Find more here</h3>
-    <div class="input-group">
-        <input class="input-group-field" type="text">
-        <div class="input-group-button">
-            <!--<a class="button">Primary Action</a>
-            <a class="dropdown button arrow-only">
-                <span class="show-for-sr">Show menu</span>
-            </a>-->
-            <input type="submit" class="button" value="Search">
-        </div>
-    </div>
-</div>
 
 <%- include('../layout/footer') -%>

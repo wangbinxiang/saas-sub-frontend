@@ -39,16 +39,29 @@
             </div>
             <div id="responsive-menu" class="menu-body">
                 <div class="top-bar-left top-bar-left--global">
-                    
                     <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
-                    <% if(typeof _navigation !== 'undefined') { %>
-                        <% for(const i in _navigation) { %>
-                        <li><a href="/channel/productTypes/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
+                    <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden') { %>
+                        <% if(typeof _navigation !== 'undefined') { %>
+                            <% for(const nav of _navigation) { %>
+                                <% if(nav.type === 'cms') { %>
+                                    <li><a href="/garden/articles %>"><%= nav.name %></a></li>
+                                <% } else if(nav.type === 'product') { %>
+                                    <li><a href="/garden/products/<%= nav.id %>"><%= nav.name %></a></li>
+                                <% } else if(nav.type === 'project') { %>
+                                    <li><a href="/garden/projects/<%= nav.id %>"><%= nav.name %></a></li>
+                                <% } %>
+                            <% } %>
                         <% } %>
-                    <% } %>
-                    <% if(typeof _categories !== 'undefined') { %>
-                        <% for(const i in _categories) { %>
-                        <li><a href="/channel/categories/<%= _categories[i].id %>"><%= _categories[i].name %></a></li>
+                    <% } else { %>
+                        <% if(typeof _navigation !== 'undefined') { %>
+                            <% for(const i in _navigation) { %>
+                            <li><a href="/channel/productTypes/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
+                            <% } %>
+                        <% } %>
+                        <% if(typeof _categories !== 'undefined') { %>
+                            <% for(const i in _categories) { %>
+                            <li><a href="/channel/categories/<%= _categories[i].id %>"><%= _categories[i].name %></a></li>
+                            <% } %>
                         <% } %>
                     <% } %>
                     </ul>

@@ -12,8 +12,8 @@ router.use(inWechatRequiresLogin);
 
 router.get('/articles', articles);
 
-router.get('/products', products);
+router.get('/products/:id', products);
 
-router.get('/projects', projects);
+router.get('/projects/:id', projects);
 
 export default router;
