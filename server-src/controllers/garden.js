@@ -15,10 +15,12 @@ export async function articles(ctx, next) {
 
 
     const channelService = new ChannelService()
-    await channelService.gardenArticles(ctx._subId)
+    const info = await channelService.gardenArticles(ctx._subId)
 
     await ctx.render('garden/articles', {
-        title, pageJs,
+        title, 
+        pageJs,
+        info,
         imgHost,
         imgStyle
     });
@@ -38,10 +40,12 @@ export async function products(ctx, next) {
     const id = ctx.query.id? ctx.query.id: 0;
 
     const channelService = new ChannelService()
-    await channelService.gardenProducts(ctx._subId, id)
+    const info = await channelService.gardenProducts(ctx._subId, id)
 
     await ctx.render('garden/products', {
-        title, pageJs,
+        title, 
+        pageJs,
+        info,
         imgHost,
         imgStyle
     });
@@ -60,10 +64,11 @@ export async function projects(ctx, next) {
     const id = ctx.query.id? ctx.query.id: 0;
 
     const channelService = new ChannelService()
-    await channelService.gardenProjects(ctx._subId, id)
+    const info = await channelService.gardenProjects(ctx._subId, id)
 
     await ctx.render('garden/projects', {
         title,
+        info,
         imgHost,
         imgStyle
     });
