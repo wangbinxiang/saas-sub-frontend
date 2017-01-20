@@ -10,7 +10,7 @@
 </nav>
 
 <h1 class="row column"><%= info.channelInfo.name %></h1>
-
+<% if(info.projects) { %>
 <div class="row column blk-margin">
     <% for(let i of info.projects) { %>
     <div>
@@ -22,6 +22,7 @@
     </div>
     <% } %>
 </div>
+<% } %>
 
 <!--div class="list-button row column">
     <a class="button large btnMore">显示更多文章</a>

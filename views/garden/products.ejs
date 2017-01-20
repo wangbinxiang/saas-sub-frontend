@@ -1,5 +1,5 @@
 ﻿<%- include('../layout/header') -%>
-
+<% if(info.slideProducts) { %>
 <div class="row expanded column top-carousel top-carousel--nopadding">
     <div class="jcarousel jcarousel--home">
         <ul>
@@ -20,6 +20,7 @@
     <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
     <div class="jcarousel-pagination"></div>
 </div>
+<% } %>
 
 <div class="hot-bar-wrap clearfix">
     <div class="top-bar hot-bar clearfix">
@@ -36,7 +37,7 @@
         </ul>
     </div>
 </div>
-
+<% if(info.products) { %>
 <div class="masonry-wrap-outer clearfix">
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap">
         <% for(let i of info.products) { %>
@@ -54,6 +55,7 @@
         </div>
         <% } %>
 </div>
+<% } %>
 
 <!--div class="list-button row column clearfix">
     <a class="button large btnMore">显示更多商品</a>
