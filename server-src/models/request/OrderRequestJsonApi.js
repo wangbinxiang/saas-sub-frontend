@@ -83,7 +83,7 @@ export default class OrderRequestJsonApi extends BaseRequest {
 			payType: this.originData.payType
 		};
 
-		// this.buildData(attributes);
+		this.buildData(attributes);
 	}
 
 	confirmPay() {

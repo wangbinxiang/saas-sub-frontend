@@ -33,13 +33,34 @@
     </div>
 </div>
 
-<% if(account.source){ %>
-    <%= account.source %>
-<% } %>
+<% if(account.source && account.source.balance){ %>
+<div class="row column">
+    <fieldset class="fieldset">
+        <legend><h4>海米余额</h4></legend>
+        <div class="row column">
+            <label><%= account.source.balance %>海米</label>
+        </div>
+    </fieldset>
 
+    <fieldset class="fieldset">
+        <legend><h4>支付方式</h4></legend>
+        <div class="row">
+            <fieldset class="columns">
+                <input type="radio" name="payType" value="1" checked><label for="pokemonRed">微信支付</label>
+
+                <input type="radio" name="payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %></label>
+            </fieldset>
+        </div>
+    </fieldset>
+</div>
+<div class="row text-center form-submit-wrap">
+    <button id="payButton" class="button large">支付定单</button>
+</div>
+<% } else { %>
 <div class="row text-center form-submit-wrap">
     <a class="button large" href="http://<%=hubHost%>/wechat/pay/?id=<%= order.id %>">支付定单</a>
 </div>
+<% } %>
 
 <% } else if(order.status === 5) { %>
 
@@ -147,5 +168,9 @@
     </button>
 </div>
 <% } %>
+<script>
+    var orderId = <%= order.id %>
+    var hubHost = '<%= hubHost %>'
+</script>
 
 <%- include('../layout/footer') -%>

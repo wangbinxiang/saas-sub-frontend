@@ -10,11 +10,6 @@ let ConfirmModel = function(data){
     // self.addresses = ko.observableArray(data.addresses)
 
     self.save = function(){
-
-
-        // console.log($("input[name='payType']:checked").val())
-        // return
-
         $('#formOrderConfirm').foundation('validateForm');
         if($('[data-invalid]').length === 0){
             $('#confirmButton').attr('disabled', true);
@@ -25,7 +20,7 @@ let ConfirmModel = function(data){
             })
             .done(function(respones) {
                 alert('下单成功。');
-                location.href = '/orders/jumpPay?id=' + respones.id;
+                location.href = '/orders/jumpPay?id=' + respones.id + '&payType=' + $("input[name='payType']:checked").val();
             })
             .fail(function(respones){
                 alert('下单失败。');
@@ -120,4 +115,21 @@ $('#thirdPay').click(function(){
         alert('支付失败。');
         $('#thirdPay').attr('disabled', false);
     })
+})
+
+//第三方支付
+$('#payButton').click(function(){
+    $('#payButton').attr('disabled', true);
+
+    const payType = $("input[name='payType']:checked").val()
+
+    let url = '';
+
+    if (payType == 1) {
+        url = 'http://' + hubHost + '/wechat/pay/?id=' + orderId
+    } else if(payType == 3) {
+        url = '/orders/' + orderId + '/third-pay'
+    }
+
+    location.href = url
 })

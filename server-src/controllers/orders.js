@@ -2,6 +2,11 @@ import OrderService from '../models/application/OrderService';
 import config from 'config';
 import nl2br from 'nl2br';
 
+import {
+	ORDER_PAY_TYPE_NORMAL,
+	ORDER_PAY_TYPE_THIRD
+} from '../config/orderConf';
+
 export async function showAddOrder(ctx, next) {
 	//商品id  ctx.query.id
 	//商品价格索引 ctx.query.price
@@ -127,14 +132,16 @@ export async function showThirdPay(ctx, next) {
 	let id = ctx.params.id;
 
 	const orderService = new OrderService();
-	const {
-		order,
-		account
-	} = await orderService.showThirdPay(id, userId, shopId);
-	if (order === null) {
+	const result = await orderService.showThirdPay(id, userId, shopId);
+	if (result === null) {
 		ctx.status = 404;
 		await ctx.render('404');
 	} else {
+
+		const {
+			order,
+			account
+		} = result
 
 		const title = '第三方支付'
 		const pageJs = webpackIsomorphicTools.assets().javascript.order;
@@ -257,14 +264,15 @@ export async function detail(ctx, next) {
 	let id = ctx.params.id;
 
 	const orderService = new OrderService();
-	const {
-		order,
-		account
-	} = await orderService.detail(id, userId, shopId);
-	if (order === null) {
+	const result = await orderService.detail(id, userId, shopId);
+	if (result === null) {
 		ctx.status = 404;
 		await ctx.render('404');
 	} else {
+		const {
+			order,
+			account
+		} = result
 
 		const title = '订单详情'
 		const pageJs = webpackIsomorphicTools.assets().javascript.order;
@@ -298,7 +306,13 @@ export async function confirm(ctx, next) {
 export async function jumpPay(ctx, next) {
 	let id = ctx.query.id;
 
-	let redirect = 'http://' + config.get('host.hub') + '/wechat/pay/?id=' + id;
+	let payType = ctx.query.payType;
+	let redirect = ''
+	if (payType == ORDER_PAY_TYPE_THIRD) {
+		redirect = '/orders/' + id + '/third-pay'
+	} else {
+		redirect = 'http://' + config.get('host.hub') + '/wechat/pay/?id=' + id;
+	}
 
 	ctx.redirect(redirect);
 

@@ -21,3 +21,10 @@ export const ORDER_STATUS_NAME_LIST = {
 	[ORDER_STATUS_WAIT_CONFIRM_PAY]: '等待确认付款',
 	[ORDER_STATUS_SUCESS]: '交易成功'
 }
+
+
+
+export const ORDER_PAY_TYPE_NORMAL = 1;
+
+
+export const ORDER_PAY_TYPE_THIRD = 3;

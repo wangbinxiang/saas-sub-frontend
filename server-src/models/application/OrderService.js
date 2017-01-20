@@ -35,7 +35,7 @@ export default class OrderService {
 			//获取用户信息
 			const accountAdapter = new AccountAdapter();
 			const account =	await accountAdapter.get({
-				idList: 35
+				idList: userId
 			}, Account)
 			console.log(account)
 
@@ -113,7 +113,7 @@ export default class OrderService {
 			//获取用户信息
 			const accountAdapter = new AccountAdapter();
 			const account =	await accountAdapter.get({
-				idList: 35
+				idList: userId
 			}, Account)
 
 
@@ -175,7 +175,7 @@ export default class OrderService {
 			//获取用户信息
 			const accountAdapter = new AccountAdapter();
 			const account =	await accountAdapter.get({
-				idList: 35
+				idList: userId
 			}, Account)
 			console.log(account)
 
