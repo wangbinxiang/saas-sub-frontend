@@ -31,6 +31,7 @@
     </div>
 </div>
 
+<% if(console.log(info.articles)) { %>
 <div class="row expanded article-mix">
     
     <div class="large-4 medium-12 columns">
@@ -54,7 +55,7 @@
         </div>
     </div>
 </div>
-
+<% } %>
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalizer data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
     <% for(let [key, value] of blocks.entries()) { %>
         
