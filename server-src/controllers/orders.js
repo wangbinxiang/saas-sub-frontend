@@ -24,6 +24,8 @@ export async function showAddOrder(ctx, next) {
 
 	if (result !== null) {
 
+		const haimi = config.get('qide') == shopId
+
 		let {
 			product,
 			priceInfo,
@@ -36,6 +38,7 @@ export async function showAddOrder(ctx, next) {
 		const imgHost = config.get('qiniu.bucket.subImg.url');
 		await ctx.render('orders/addOrder', {
 			title,
+			haimi,
 			account,
 			product,
 			priceInfo,
@@ -131,12 +134,16 @@ export async function showThirdPay(ctx, next) {
 	//订单id
 	let id = ctx.params.id;
 
+	const haimi = config.get('qide') == shopId
+
 	const orderService = new OrderService();
 	const result = await orderService.showThirdPay(id, userId, shopId);
-	if (result === null) {
+	if (result === null || !haimi) {
 		ctx.status = 404;
 		await ctx.render('404');
 	} else {
+
+		
 
 		const {
 			order,
@@ -148,6 +155,7 @@ export async function showThirdPay(ctx, next) {
 
 
 		await ctx.render('orders/thirdPay', {
+			haimi,
 			title,
 			pageJs,
 			order,
@@ -269,6 +277,9 @@ export async function detail(ctx, next) {
 		ctx.status = 404;
 		await ctx.render('404');
 	} else {
+
+		const haimi = config.get('qide') == shopId
+
 		const {
 			order,
 			account
@@ -281,6 +292,7 @@ export async function detail(ctx, next) {
 		const imgHost = config.get('qiniu.bucket.subImg.url');
 
 		await ctx.render('orders/detail', {
+			haimi,
 			title,
 			pageJs,
 			order,

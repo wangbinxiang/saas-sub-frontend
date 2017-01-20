@@ -73,6 +73,7 @@
     "zhuce": "zhuce.dianshangwan.com",
     "hub": "hub.saaslocal.com"
   },
+  "qide": 10021,
   "relationshipSub": ["10021"],
   "relationshipParentId": "1",
   "qiniu": {

@@ -56,7 +56,7 @@
                 <button class="button button-unstyle" data-open="editRole" onclick="return false;">添加新地址</button>
             </div>-->
         </fieldset>
-        <% if(account.source && account.source.balance) { %>
+        <% if(haimi && account.source && account.source.balance) { %>
             <% console.log(account.source) %>
             <fieldset class="fieldset">
                 <legend><h4>海米余额</h4></legend>
@@ -72,8 +72,9 @@
             <div class="row">
                 <fieldset class="columns">
                     <input type="radio" name="payType" value="1" checked><label for="pokemonRed">微信支付</label>
-
-                    <input type="radio" name="payType" <% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>(余额不足)<% } %></label>
+                    <% if(haimi && account.source && account.source.balance) { %>
+                        <input type="radio" name="payType" <% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>(余额不足)<% } %></label>
+                    <% } %>
                 </fieldset>
             </div>
         </fieldset>
