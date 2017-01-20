@@ -28,3 +28,15 @@ export function queryNotMatch(urlStr, query) {
     }
     return false;
 }
+
+/**
+ * 获取url的query
+ * @author wangbinxiang
+ * @date   2017-01-09T11:16:58+0800
+ * @param  {[type]}                 urlStr [description]
+ * @return {[type]}                        [description]
+ */
+export function getQuery(urlStr) {
+    var urlObj = url.parse(urlStr, true)
+    return urlObj.query
+}

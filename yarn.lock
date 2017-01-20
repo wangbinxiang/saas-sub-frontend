@@ -3797,6 +3797,10 @@ qr-image@^3.1.0:
   optionalDependencies:
     pako "^0.2.5"
 
+qrcode_js@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/qrcode_js/download/qrcode_js-1.0.0.tgz#e688b4a5fde28d6ac4815352e0426713b7fe70d2"
+
 qs@2.3.3, qs@^6.1.0, qs@~4.0.0, qs@~6.3.0:
   version "6.3.0"
   resolved "http://registry.npm.taobao.org/qs/download/qs-6.3.0.tgz#f403b264f23bc01228c74131b407f18d5ea5d442"

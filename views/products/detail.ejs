@@ -91,7 +91,9 @@
     <img src="/qrcode/relationship?productId=<%= product.id %>">
 <div>
 <% } %>
-
+<% if( shopInfo && shopInfo.kefuId > 0) {%>
+    <script type="text/javascript" charset="utf-8" src="https://www.v5kf.com/<%= shopInfo.kefuId %>/v5kf.js?style=3"></script>
+<% } %>
 <script>
 	var id = <%= product.id %>;
 </script>

@@ -20,7 +20,11 @@ import {
     sendSignupCellphoneVerificationCodeValidation,
     bindCellphoneRequestBodyValidation
 } from '../../validations/authValidation';
+import {
+    MEMBER_SOURCE_QIDE
+} from '../../config/memberConf';
 import base64url from 'base64url';
+import { getQuery } from '../../tools/url'
 
 
 const router = Router();
@@ -88,12 +92,35 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                 const parentId = ctx.query.parentId;
                 const openid = profile.openid;
                 const nickName = profile.nickname;
+                // const unionId = 'otuttxMhJwPxPnCbLQ2MaHAanmrg'
+                // const parentId = 1
+                // const openid = 'ob5uxwZjH81AEeiVutEGnR2hU-W1'
+                // const nickName = '波风皆人'
                 const shopId = ctx._subId;
                 const memberService = new MemberService();
-                const {
-                    member,
-                    success
-                } = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+
+                let loginResult;
+
+                const returnTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo): null;
+                console.log(returnTo);
+                let returnToQuery
+                if (returnTo) {
+                    returnToQuery = getQuery(returnTo);
+                }
+                console.log(returnToQuery);
+                //如果是启德链接
+                //如果有ctx.query.returnTo, 并有from和sourceId
+                //
+                if (ctx._subId === '10021' && returnToQuery && returnToQuery.from == 'qd' && returnToQuery.sourceId) {
+                    loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, returnToQuery.sourceId);
+                    console.log('sourceLogin');
+                } else {
+                    loginResult = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+                    console.log('login');
+                }
+
+                const { member, success } = loginResult
+
                 console.log('member');
                 console.log(member);
                 if (member) {
@@ -101,27 +128,31 @@ router.get('/wechat/auth/relationship/callback', authRelationshipWechatBlock, as
                     // ctx.status = 200;
                     // ctx.body = member;
 
-                    let redirectTo = ctx.query.returnTo ? base64url.decode(ctx.query.returnTo) : '/';
+                    let redirectTo = returnTo ? returnTo : '/';
 
-                    if (parentId === config.get('relationshipParentId')) {
-                        ctx.redirect(redirectTo);
-                    } else {
-                        const title = '关联用户注册'
-                            //页面提示信息
-                        let message;
-                        if (success) {
-                            message = '您关联用户成功，当前已登录。'
-                        } else {
-                            message = '您之前已注册过，关联用户失败，当前已登录。'
-                        }
+                    console.log('redirectTo:' + redirectTo);
 
-                        await ctx.render('auth/relationship', {
-                            title,
-                            success,
-                            message,
-                            redirectTo
-                        });
-                    }
+                    ctx.redirect(redirectTo);
+
+                    // if (parentId === config.get('relationshipParentId')) {
+                    //     ctx.redirect(redirectTo);
+                    // } else {
+                    //     const title = '关联用户注册'
+                    //         //页面提示信息
+                    //     let message;
+                    //     if (success) {
+                    //         message = '您关联用户成功，当前已登录。'
+                    //     } else {
+                    //         message = '您之前已注册过，关联用户失败，当前已登录。'
+                    //     }
+
+                    //     await ctx.render('auth/relationship', {
+                    //         title,
+                    //         success,
+                    //         message,
+                    //         redirectTo
+                    //     });
+                    // }
                 } else {
                     ctx.status = 403;
                     ctx.body = {};

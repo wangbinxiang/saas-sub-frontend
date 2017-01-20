@@ -5,7 +5,9 @@ import pageCLass from '../model/page';
 import {
 	MEMBER_GET,
 	MEMBER_SIGNUP,
-	MEMBER_LOGIN
+	MEMBER_LOGIN,
+	MEMBER_SOURCE_LOGIN,
+	MEMBER_SOURCE_SIGNUP
 } from '../../config/apiFeatureConf';
 
 
@@ -66,4 +68,34 @@ export default class MemberAdapter extends RequestAdapter {
 	    return this.request();
 	}
 
+	//第三方网站登陆
+	sourceLogin(unionId, source, sourceId, aUserClass) {
+		this.buildRequest(MEMBER_SOURCE_LOGIN, { 
+			unionId,
+	        source,
+	        sourceId
+	    });
+
+	    this.activeClass = aUserClass;
+
+	    return this.request();
+	}
+
+	//第三方网站注册
+	sourceSignup(openId, nickName, shopId, parentId, unionId, source, sourceId, aUserClass) {
+
+		this.buildRequest(MEMBER_SOURCE_SIGNUP, { 
+			shopId,
+		    openId,
+		    nickName,
+		    parentId,
+		    unionId,
+		    source,
+		    sourceId
+		});
+
+		this.activeClass = aUserClass;
+
+		return this.request();
+	}
 }

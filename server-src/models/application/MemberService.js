@@ -88,6 +88,32 @@ export default class MemberService {
 		//登陆用户
 	}
 
+	async wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, source, sourceId) {
+		let member, success = false; //关联是否成功标示
+
+		try {
+			member = await this.userAdapter.sourceLogin(unionId, source, sourceId, Member);
+		} catch (err) {
+			switch (err.constructor) {
+				case RequestJsonApiParamsError:
+					//登陆失败用openid和nickname注册用户
+					member = await this.userAdapter.sourceSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, Member);
+					//关联成功
+					success = true;
+					break;
+				default:
+					throw err;
+			}
+		}
+
+		return {
+			member,
+			success
+		};
+		//登陆用户
+	}
+
+
 	async bindCellphone(uid, cellPhone){
 		const isCellphoneBind = await this._isCellphoneBind(cellPhone);
 

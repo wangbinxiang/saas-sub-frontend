@@ -19,6 +19,7 @@ export default class MemberTranslator extends Translator {
 		const statusTime = bodyReader.value('statusTime');
 		const openId = bodyReader.value('openId');
 		const unionId = bodyReader.value('unionId');
+		const source = bodyReader.value('source')
 
 		return {
 			id,
@@ -30,7 +31,8 @@ export default class MemberTranslator extends Translator {
 			updateTime,
 			statusTime,
 			openId,
-			unionId
+			unionId,
+			source
 		};
 	}
 }

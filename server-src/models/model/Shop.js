@@ -12,6 +12,7 @@ export default class Shop {
 		province,
 		city,
 		address,
+		customerService,
 		aboutInfo,
 		slides,
 		navigation,
@@ -31,6 +32,7 @@ export default class Shop {
 		this.province           = province;
 		this.city               = city;
 		this.address            = address;
+		this.customerService    = customerService;
 		this.aboutInfo          = aboutInfo;
 		this.slides             = slides;
 		this.navigation         = navigation;

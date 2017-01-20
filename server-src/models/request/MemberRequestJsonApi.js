@@ -14,7 +14,9 @@ import {
 import {
     MEMBER_GET,
 	MEMBER_SIGNUP,
-	MEMBER_LOGIN
+	MEMBER_LOGIN,
+    MEMBER_SOURCE_LOGIN,
+    MEMBER_SOURCE_SIGNUP
 } from '../../config/apiFeatureConf';
 
 export default class MemberRequestJsonApi extends BaseRequest {
@@ -58,6 +60,29 @@ export default class MemberRequestJsonApi extends BaseRequest {
         this.buildData(attributes);
     }
 
+    sourceSignup() {
+        let url = '/users';
+        this.url = url;
+
+        this.method = POST;
+
+        this.setSuccessCode(201);
+        this.setParamsErrorCode(409);
+
+        let attributes = {
+            shopId: this.originData.shopId,
+            openId: this.originData.openId, 
+            nickName: this.originData.nickName,
+            parentId: this.originData.parentId,
+            unionId: this.originData.unionId,
+            source: this.originData.source,
+            sourceId: this.originData.sourceId
+        };
+
+        this.buildData(attributes);
+    }
+
+
     login() {
         let url = '/users/signIn';
         this.url = url;
@@ -66,6 +91,23 @@ export default class MemberRequestJsonApi extends BaseRequest {
 
         let attributes = {
             unionId: this.originData.unionId
+        };
+
+        this.buildData(attributes);
+    }
+
+    //第三方网站登陆
+    sourceLogin() {
+        let url = '/users/signIn';
+
+        this.url = url;
+
+        this.method = POST;
+
+        let attributes = {
+            unionId: this.originData.unionId,
+            source: this.originData.source,
+            sourceId: this.originData.sourceId
         };
 
         this.buildData(attributes);
@@ -82,6 +124,12 @@ export default class MemberRequestJsonApi extends BaseRequest {
                 break;
             case MEMBER_SIGNUP:
                 this.signup();
+                break;
+            case MEMBER_SOURCE_LOGIN:
+                this.sourceLogin();
+                break;
+            case MEMBER_SOURCE_SIGNUP:
+                this.sourceSignup();
                 break;
             default:
                 throw new Error('Invalid feature method');
