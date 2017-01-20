@@ -82,7 +82,6 @@ export default class ArticlesService {
         const article = await this.articleAdapter.get({
             idList
         }, Article);
-        console.log(article.status);
         if (article === null || !checkResourcesOwner(article, 'userId', userId, lodash.isArray(idList)) || article.status !== ARTICLE_STATUS_PUBLISH) {
             return null;
         } 

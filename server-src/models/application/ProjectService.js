@@ -128,7 +128,6 @@ export default class ProjectService {
 		const project = await this.projectAdapter.get({
 			idList: id
 		}, Project);
-		console.log(project)
 		if (project === null || !checkResourcesOwner(project, 'userId', userId, lodash.isArray(id))) {
 			return null;
 		} else {

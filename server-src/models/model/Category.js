@@ -1,3 +1,7 @@
+
+/**
+ * 文章分类
+ */
 export default class Category {
 	constructor ({
 		id = 0,

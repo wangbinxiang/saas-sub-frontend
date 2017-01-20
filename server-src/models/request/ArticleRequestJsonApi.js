@@ -45,7 +45,9 @@ export default class ArticleRequestJsonApi extends BaseRequest {
 
 		let pages = this.originData.pages ? this.originData.pages : '';
 
-		this.url = jsonApiGetUrl(BaseUrl, idList, { filters, pages });
+		let sort = this.originData.sort ? this.originData.sort : '';
+
+		this.url = jsonApiGetUrl(BaseUrl, idList, { filters, pages, sort });
 		this.method = GET;
 	}
 

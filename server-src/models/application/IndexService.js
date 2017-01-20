@@ -2,10 +2,24 @@ import ProductAdapter from '../adapter/ProductAdapter';
 import ProductTypeAdapter from '../adapter/ProductTypeAdapter';
 import Product from '../model/Product';
 import ProductType from '../model/ProductType';
+import ArticleAdapter from '../adapter/ArticleAdapter';
+import Article from '../model/Article';
+import CategoryAdapter from '../adapter/CategoryAdapter';
+import Category from '../model/Category';
+import ProjectAdapter from '../adapter/ProjectAdapter';
+import Project from '../model/Project';
 import _ from 'lodash';
+import config from 'config';
+import {
+    ARTICLE_STATUS_PUBLISH
+} from '../../config/articleConf';
 import {
     PRODUCT_STATUS_ON_SALE
 } from '../../config/productConf';
+import {
+    PROJECT_STATUS_PUBLISH,
+    PROJECT_CATEGORY_B2C
+} from '../../config/projectConf';
 
 
 export default class IndexService {
@@ -120,6 +134,124 @@ export default class IndexService {
 				}
 			}
 			return product;
+		}
+	}
+
+	//园林首页
+	async garden(userId) {
+		const layout = config.get('layout');
+
+		const shopLayout = layout[userId]
+
+
+		let articles, categories, products, projects;
+
+		//资讯信息，获取cms信息, 获取cms分类前8个，还需要一个cms频道页
+		const pages = {
+	        number: 1,
+	        size: 11
+	    };
+
+		const filters = {
+			userId,
+			status: ARTICLE_STATUS_PUBLISH
+		};
+		const articleAdapter = new ArticleAdapter();
+		const articleResult = await articleAdapter.get({
+		    filters,
+		    pages
+		}, Article);
+		if (articleResult !== null) {
+			//没有获取数据 直接返回空
+			articles = articleResult.result;
+		}
+
+		const categoryPages = {
+			number: 1,
+	        size: 8
+		}
+
+		const categoryFilters = {
+		    userId: userId,
+		    status: 0
+		}
+
+		const categoryAdapter = new CategoryAdapter();
+		const categoriesResult = await categoryAdapter.get({ filters: categoryFilters, pages: categoryPages }, Category);
+
+		if (categoriesResult !== null) {
+			//没有获取数据 直接返回空
+			categories = categoriesResult.result;
+		}
+
+
+		//苗木交易, 获取苗木交易分类的产品数据,前6个
+		if (shopLayout['product']) {
+			products = []
+			for(let i in shopLayout['product']) {
+				const pages = {
+					number: 1,
+			        size: 6
+				}
+
+				const filters = {
+				    productType: shopLayout['product'][i]['typeIds'],
+				    status: PRODUCT_STATUS_ON_SALE
+				};
+
+				const productsResult = await this.productAdapter.get({
+					filters,
+					pages
+				}, Product);
+
+				if (productsResult !== null) {
+					products.push({
+						'id': i,
+						'name': shopLayout['product'][i]['name'],
+						'type': 'product',
+						'value': productsResult.result
+					})
+				}
+			}
+		}
+
+		//行业服务, 获取行业服务分类的产品数据，前6个
+		//项目招标, 获取项目招标分类的招标数据，前6个	
+		if (shopLayout['project']) {
+			projects = []
+			for(let i in shopLayout['project']) {
+
+				const pages = {
+					number: 1,
+			        size: 6
+				}
+
+				const filters = {
+				    projectType: shopLayout['project'][i]['typeIds'],
+				    status: PROJECT_STATUS_PUBLISH,
+				    category: PROJECT_CATEGORY_B2C
+				};
+
+				const projectAdapter = new ProjectAdapter();
+				const projectResult = await projectAdapter.get({
+					filters,
+					pages
+					// sort
+				}, Project);
+
+				if (projectResult !== null) {
+					projects.push({
+						'id': i,
+						'name': shopLayout['project'][i]['name'],
+						'type': 'project',
+						'value': projectResult.result
+					})
+				}
+			}
+		}
+
+		return {
+			articles, categories, products, projects
 		}
 	}
 }

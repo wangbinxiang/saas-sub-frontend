@@ -9,16 +9,19 @@
 </nav>
 
 <h1 class="row column"><%= productType.name %></h1>
-    <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
+<div class="masonry-wrap-outer">
+    <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="template: { foreach: prods, afterAdd: afterAdd }">
         <div class="column">
-            <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a data-bind="attr:{href: '/products/' + id}" class="masonry-item">
                 <img data-bind="attr:{src: imgHost + logo + imgStyle }" />
                 <b data-bind="text:name"></b>
                 <em></em>
                 <span>￥<strong data-bind="text:minPrice"></strong> <small>起</small></span>
+                <i class="small expanded button">查看详情</i>
             </a>
         </div>
     </div>
+</div>
 <div class="list-button row column">
     <a class="button large btnMore" style="display: none;" data-bind="click: more, visible: isNext()" id="more">显示更多商品</a>
 </div>

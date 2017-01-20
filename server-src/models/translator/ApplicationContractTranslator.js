@@ -8,7 +8,6 @@ export default class ApplicationContractTranslator extends Translator {
 
     readData(data) {
         const bodyReader = new ApplicationJsonApiBodyReader(data);
-        console.log(bodyReader.data)
         const id          = bodyReader.value('id');
         const time        = bodyReader.value('time');
         const address     = bodyReader.value('address');

@@ -158,7 +158,6 @@ export function checkOther(id, shopId){
             }
         }
     }
-    console.log(live);
     return live;
 }
 

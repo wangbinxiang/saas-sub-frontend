@@ -96,17 +96,13 @@ if (document.getElementById('formContracts')) {
                 });
 
                 this.on('sending', function(file, xhr, formData){
-                    console.log(contractModel.pdfs())
                     formData.append('key', key_tokens[0].key);
                     formData.append('token', key_tokens[0].token);
                     key_tokens.shift()
                 })
 
                 this.on('success', function(file, response){
-                    console.log(response.key)
-                    console.log(contractModel.pdfs())
                     contractModel.addPdf(response.key)
-                    console.log(contractModel.pdfs())
                     this.processQueue();                
                 })
                 this.on("complete", (file) => {                

@@ -21,6 +21,8 @@ import routerProjects from './router/projects';
 
 import routerApplications from './router/applications';
 
+import routerGarden from './router/garden';
+
 
 const router = new Router();
 
@@ -34,6 +36,7 @@ router.use('', routerQrcode.routes());
 router.use('', routerArticles.routes());
 router.use('', routerProjects.routes());
 router.use('', routerApplications.routes());
+router.use('', routerGarden.routes());
 
 
 export default router;

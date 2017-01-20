@@ -7,7 +7,6 @@ export default class ProjectTranslator extends Translator {
     }
 
     readData(data) {
-        console.log(data)
         const bodyReader = new ProjectJsonApiBodyReader(data);
 
         const id          = bodyReader.value('id');

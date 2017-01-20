@@ -6,6 +6,10 @@ import CategoryAdapter from '../adapter/CategoryAdapter';
 import Category from '../model/Category';
 import ArticleAdapter from '../adapter/ArticleAdapter';
 import Article from '../model/Article';
+import ProjectAdapter from '../adapter/ProjectAdapter';
+import Project from '../model/Project';
+import config from 'config';
+import lodash from 'lodash';
 
 import {
     ARTICLE_STATUS_PUBLISH
@@ -14,6 +18,11 @@ import {
 import {
     PRODUCT_STATUS_ON_SALE
 } from '../../config/productConf';
+
+import {
+    PROJECT_STATUS_PUBLISH,
+    PROJECT_CATEGORY_B2C
+} from '../../config/projectConf';
 
 /**
  * 频道页服务类
@@ -51,7 +60,7 @@ export default class ChannelService {
 
 			const filters = {
 				productType: productTypeId,
-				status: ARTICLE_STATUS_PUBLISH
+				status: PRODUCT_STATUS_ON_SALE
 			}
 
 
@@ -92,7 +101,6 @@ export default class ChannelService {
 
 		const categoryAdapter = new CategoryAdapter();
 		category = await categoryAdapter.get({ idList: categoryId }, Category);
-		console.log(category);
 		if (category && category.userId === parseInt(userId)) {
 
 			const pages = {
@@ -109,7 +117,6 @@ export default class ChannelService {
 			    filters,
 			    pages
 			}, Article);
-			console.log(articleResult);
 			if (articleResult !== null) {
 				//没有获取数据 直接返回空
 				page = articleResult.page;
@@ -123,5 +130,227 @@ export default class ChannelService {
 			articles,
 			category
 		};
+	}
+
+
+
+	async gardenArticles(userId) {
+		const layout = config.get('layout');
+
+		const shopLayout = layout[userId]
+
+		let slideArticles, categories, articles, channelName;
+		//获取分类
+
+		//获取文章需要幻灯片文章
+		//幻灯片5个
+		const pages = {
+	        number: 1,
+		    size: 5
+	    };
+
+		const filters = {
+			userId,
+			status: ARTICLE_STATUS_PUBLISH
+		};
+
+		const sort = '-id';
+
+		const articleAdapter = new ArticleAdapter();
+		const slideArticleResult = await articleAdapter.get({
+		    filters,
+		    pages,
+		    sort
+		}, Article);
+		if (slideArticleResult !== null) {
+			//没有获取数据 直接返回空
+			slideArticles = slideArticleResult.result;
+		}
+
+		const slideIds = lodash.values(lodash.mapValues(slideArticles, 'id'))
+		//
+		//3个分类的文章
+		//
+
+		if (shopLayout['article']) {
+
+			channelName = shopLayout['article'].name
+
+			const categoryPages = {
+				number: 1,
+		        size: 8
+			}
+
+			const categoryFilters = {
+			    userId: userId,
+			    status: 0
+			}
+
+			const categoryAdapter = new CategoryAdapter();
+			const categoriesResult = await categoryAdapter.get({ filters: categoryFilters, pages: categoryPages }, Category);
+
+			if (categoriesResult !== null) {
+				//没有获取数据 直接返回空
+				categories = categoriesResult.result;
+			}
+
+
+			articles = {}
+			for(let val of shopLayout['article'].idList) {
+				const pages = {
+					number: 1,
+			        size: 16
+				}
+
+				const filters = {
+				    categoryId: val,
+				    status: ARTICLE_STATUS_PUBLISH
+				};
+
+				const articleResult = await articleAdapter.get({
+				    filters,
+				    pages,
+				    sort
+				}, Article);
+
+				if (articleResult !== null) {
+					articles[val] = []
+					for(let i in articleResult.result) {
+						if(lodash.indexOf(slideIds, articleResult.result[i].id) === -1) {
+							articles[val].push(articleResult.result[i])
+						} 
+					}
+					
+					// console.log(articleResult.result)
+					// products.push({
+					// 	'name': shopLayout['product'][i]['name'],
+					// 	'value': productsResult.result
+					// })
+				}
+			}
+		}
+
+		return {
+			channelName,
+			slideArticles, 
+			categories, 
+			articles
+		}
+	}
+
+
+	async gardenProducts(userId, id) {
+		let productTypes, slideProducts, products, channelName
+
+
+		const layout = config.get('layout');
+
+		const shopLayout = layout[userId]
+
+		const channelInfo = shopLayout['product'][id]
+
+		if(channelInfo) {
+
+			channelName = channelInfo.name
+
+			const productTypeIds = lodash.split(channelInfo.typeIds, ',')
+
+			if (productTypeIds) {
+				const productTypeAdapter = new ProductTypeAdapter();
+				const productTypeResult = await productTypeAdapter.get({ idList: productTypeIds }, ProductType);
+
+				productTypes = productTypeResult
+			}
+
+			const pages = {
+				number: 1,
+		        size: 40
+			}
+
+			const filters = {
+			    productType: channelInfo.typeIds,
+			    status: PRODUCT_STATUS_ON_SALE
+			};
+
+			const sort = '-id';
+
+			const productAdapter = new ProductAdapter();
+			const productsResult = await productAdapter.get({
+				filters,
+				pages,
+				sort
+			}, Product);
+
+			// console.log(productsResult)
+
+			if (productsResult !== null) {
+				slideProducts = []
+				for(let i = 0; i < 5; i++ ) {
+					if (productsResult.result.length > 0) {
+						slideProducts.push(productsResult.result.shift())
+					}
+				}
+				products = productsResult.result
+				// products.push({
+				// 	'name': shopLayout['product'][i]['name'],
+				// 	'value': productsResult.result
+				// })
+			}
+		}
+
+		return {
+			channelName,
+			productTypes, 
+			slideProducts, 
+			products
+		}
+	}
+
+
+	async gardenProjects(userId, id) {
+
+		let channelInfo, projects, channelName
+
+		const layout = config.get('layout');
+
+		const shopLayout = layout[userId]
+
+		channelInfo = shopLayout['project'][id]
+
+
+		if(channelInfo) {
+
+			channelName = channelInfo.name
+
+			const pages = {
+					number: 1,
+			        size: 40
+				}
+
+			const filters = {
+			    projectType: channelInfo['typeIds'],
+			    status: PROJECT_STATUS_PUBLISH,
+			    category: PROJECT_CATEGORY_B2C
+			};
+
+			const projectAdapter = new ProjectAdapter();
+			const projectResult = await projectAdapter.get({
+				filters,
+				pages
+				// sort
+			}, Project);	
+
+			if (projectResult !== null) {
+
+				projects = projectResult.result
+
+			}
+		}
+
+
+		return {
+			channelInfo,
+			projects
+		}
 	}
 }

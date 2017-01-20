@@ -3,6 +3,10 @@ if (module.hot) {
 }
 
 import './base.js';
+import jQueryBridget from 'jquery-bridget'
+import Masonry from 'masonry-layout'
+
+jQueryBridget( 'masonry', Masonry, $ );
 
 const ProdModel = function(data, productTypeId){
     // var arrData = $.map(data, function(value, index) {
@@ -12,6 +16,14 @@ const ProdModel = function(data, productTypeId){
     let self = this
     self.prods = ko.observableArray(data);
     self.isNext = ko.observable(isNext);
+
+    this.afterAdd = function(element) {
+        console.log('shiver')
+        //$('#masonryWrap').masonry('appended', element).masonry();
+        Foundation.onImagesLoaded($('#masonryWrap img'), function () {
+            $('#masonryWrap').masonry('appended', element).masonry()
+        });
+    };
 
     let pageno = 1;
     self.more = function() {
@@ -29,8 +41,7 @@ const ProdModel = function(data, productTypeId){
                self.prods.push(product)
            }
            self.isNext(respones.isNext);
-           // new Foundation.Equalizer($('#listEqualizer'));
-           Foundation.reInit($('#listEqualizer'));
+           
        })
     }
 }
@@ -39,16 +50,24 @@ function koBind(data, productTypeId) {
 	const prodModel = new ProdModel(data, productTypeId);
 	ko.applyBindings(prodModel);
 
-  if(prodModel.prods().length > 1){
-      require.ensure([], function(require) {
-          let imagesLoaded = require('imagesloaded')
-          new imagesLoaded($('#listEqualizer'), function(){
-              var equalizer = new Foundation.Equalizer($('#listEqualizer'));
-          });
-      })
-  }
+//   if(prodModel.prods().length > 1){
+//       require.ensure([], function(require) {
+//           let imagesLoaded = require('imagesloaded')
+//           new imagesLoaded($('#listEqualizer'), function(){
+//               var equalizer = new Foundation.Equalizer($('#listEqualizer'));
+//           });
+//       })
+//   }
+
+    Foundation.onImagesLoaded($('#masonryWrap img'), function () {
+        $('#masonryWrap').masonry({
+            // options
+            itemSelector: '.column',
+            percentPosition: true
+        });
+    });
 }
-if ($('#listEqualizer').length) {
+if ($('#masonryWrap').length) {
   koBind(data, productTypeId);  
 }
 

@@ -1496,6 +1496,10 @@ depd@1.1.0, depd@^1.1.0, depd@~1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/depd/download/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
 
+desandro-matches-selector@^2.0.0:
+  version "2.0.1"
+  resolved "http://registry.npm.taobao.org/desandro-matches-selector/download/desandro-matches-selector-2.0.1.tgz#2bd348d5d7605dbe475fa246af8b1feed022d05e"
+
 destroy@^1.0.3:
   version "1.0.4"
   resolved "http://registry.npm.taobao.org/destroy/download/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
@@ -1805,7 +1809,7 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "http://registry.npm.taobao.org/esutils/download/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
-ev-emitter@~1.0.0:
+ev-emitter@^1.0.0, ev-emitter@~1.0.0:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/ev-emitter/download/ev-emitter-1.0.3.tgz#ee5ef74b6ed28d911b32ddcbfc97867f580937bc"
 
@@ -1916,6 +1920,12 @@ find-up@^1.0.0, find-up@^1.1.2:
   dependencies:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
+
+fizzy-ui-utils@^2.0.0:
+  version "2.0.3"
+  resolved "http://registry.npm.taobao.org/fizzy-ui-utils/download/fizzy-ui-utils-2.0.3.tgz#4e8ae47b30ba2de32ed7a6f4cbc9fb7faf583432"
+  dependencies:
+    desandro-matches-selector "^2.0.0"
 
 flat-cache@^1.2.1:
   version "1.2.1"
@@ -2055,6 +2065,10 @@ generate-object-property@^1.1.0:
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/get-caller-file/download/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
+
+get-size@^2.0.2:
+  version "2.0.2"
+  resolved "http://registry.npm.taobao.org/get-size/download/get-size-2.0.2.tgz#555ea98ab8732e0c021e9e23e2219adcbe398e98"
 
 get-stdin@^4.0.1:
   version "4.0.1"
@@ -2680,11 +2694,17 @@ joi@^9.0.4:
     moment "2.x.x"
     topo "2.x.x"
 
+jquery-bridget@^2.0.1:
+  version "2.0.1"
+  resolved "http://registry.npm.taobao.org/jquery-bridget/download/jquery-bridget-2.0.1.tgz#784d17a85e641780c5d89ac3f8a7eb47b0bce1fc"
+  dependencies:
+    jquery ">=1.4.2 <4"
+
 jquery-touchswipe@^1.6.15:
   version "1.6.15"
   resolved "http://registry.npm.taobao.org/jquery-touchswipe/download/jquery-touchswipe-1.6.15.tgz#be8372f2c799f9fd6b3c15e5034bf7e25e28dd83"
 
-jquery@>=1.7, jquery@^2.2.0, jquery@^2.2.4:
+"jquery@>=1.4.2 <4", jquery@>=1.7, jquery@^2.2.0, jquery@^2.2.4:
   version "2.2.4"
   resolved "http://registry.npm.taobao.org/jquery/download/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
@@ -3034,6 +3054,13 @@ map-obj@^1.0.0, map-obj@^1.0.1:
 map-stream@~0.1.0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/map-stream/download/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
+
+masonry-layout@^4.1.1:
+  version "4.1.1"
+  resolved "http://registry.npm.taobao.org/masonry-layout/download/masonry-layout-4.1.1.tgz#e8c8c6f5a9e621a75203ac4b7000855a36f6753e"
+  dependencies:
+    get-size "^2.0.2"
+    outlayer "^2.1.0"
 
 matcher@^0.1.1:
   version "0.1.2"
@@ -3474,6 +3501,14 @@ osenv@^0.1.0:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
+
+outlayer@^2.1.0:
+  version "2.1.0"
+  resolved "http://registry.npm.taobao.org/outlayer/download/outlayer-2.1.0.tgz#83b7beefc19becd3278c8ade988d268788d6f93d"
+  dependencies:
+    ev-emitter "^1.0.0"
+    fizzy-ui-utils "^2.0.0"
+    get-size "^2.0.2"
 
 output-file-sync@^1.1.0:
   version "1.1.2"

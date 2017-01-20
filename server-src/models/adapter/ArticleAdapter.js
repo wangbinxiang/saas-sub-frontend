@@ -28,12 +28,14 @@ export default class ArticleAdapter extends RequestAdapter {
     get({
         idList,
         filters,
-        pages
+        pages,
+        sort
     }, aArticleClass) {
         this.buildRequest(ARTICLE_GET, {
             idList,
             filters,
-            pages
+            pages,
+            sort
         });
 
         //如果idList是数组 则需要数组形式的结果

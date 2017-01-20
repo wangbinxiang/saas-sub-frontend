@@ -65,11 +65,11 @@ export async function handlerHostToSubId(ctx, next) {
 
             let theme = 'default';
 
-            // if (themeConfig) {
-            //     if (themeConfig[ctx._subId]) {
-            //         theme = themeConfig[ctx._subId];
-            //     }
-            // }
+            if (themeConfig) {
+                if (themeConfig[ctx._subId]) {
+                    theme = themeConfig[ctx._subId];
+                }
+            }
 
 
             ctx.state.shopInfo = {
