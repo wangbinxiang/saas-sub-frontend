@@ -10,11 +10,12 @@ export async function showAddOrder(ctx, next) {
 	const priceOrder = ctx.query.price;
 	const productNum = ctx.query.number;
 	const shopId = ctx._subId;
+	const userId = ctx.state.user.id;
 
 
 	const orderService = new OrderService();
 
-	const result = await orderService.showAddOrder(productId, priceOrder, productNum, shopId);
+	const result = await orderService.showAddOrder(productId, priceOrder, productNum, shopId, userId);
 
 	if (result !== null) {
 
@@ -22,13 +23,15 @@ export async function showAddOrder(ctx, next) {
 			product,
 			priceInfo,
 			totalPrice,
-			contract
+			contract,
+			account
 			} = result;
 		const title = '订单详情';
 		const pageJs = webpackIsomorphicTools.assets().javascript.order;
 		const imgHost = config.get('qiniu.bucket.subImg.url');
 		await ctx.render('orders/addOrder', {
 			title,
+			account,
 			product,
 			priceInfo,
 			totalPrice,
@@ -115,6 +118,57 @@ export async function pay(ctx, next) {
 
 
 }
+
+export async function showThirdPay(ctx, next) {
+	let userId = ctx.state.user.id;
+	// let userId = 21
+	let shopId = ctx._subId;
+	//订单id
+	let id = ctx.params.id;
+
+	const orderService = new OrderService();
+	const {
+		order,
+		account
+	} = await orderService.showThirdPay(id, userId, shopId);
+	if (order === null) {
+		ctx.status = 404;
+		await ctx.render('404');
+	} else {
+
+		const title = '第三方支付'
+		const pageJs = webpackIsomorphicTools.assets().javascript.order;
+
+
+		await ctx.render('orders/thirdPay', {
+			title,
+			pageJs,
+			order,
+			account,
+		});
+	}
+}
+
+
+export async function thirdPay(ctx, next) {
+	let userId = ctx.state.user.id;
+	// let userId = 21
+	let shopId = ctx._subId;
+	//订单id
+	let id = ctx.params.id;
+
+
+	const orderService = new OrderService();
+	const order = await orderService.thirdPay(id, userId, shopId);
+
+	if (order === null) {
+        throw new Error('thirdPay fail');
+    } else {
+        ctx.body = order;
+    }
+}
+
+
 
 
 /**
@@ -203,7 +257,10 @@ export async function detail(ctx, next) {
 	let id = ctx.params.id;
 
 	const orderService = new OrderService();
-	let order = await orderService.detail(id, userId, shopId);
+	const {
+		order,
+		account
+	} = await orderService.detail(id, userId, shopId);
 	if (order === null) {
 		ctx.status = 404;
 		await ctx.render('404');
@@ -219,6 +276,7 @@ export async function detail(ctx, next) {
 			title,
 			pageJs,
 			order,
+			account,
 			hubHost,
 			imgHost,
 			nl2br

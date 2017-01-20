@@ -32,8 +32,13 @@
         <p>订购时间 2016-12-12 13:30:30。</p>
     </div>
 </div>
+
+<% if(account.source){ %>
+    <%= account.source %>
+<% } %>
+
 <div class="row text-center form-submit-wrap">
-    <a class="button large" href="http://<%=hubHost%>/wechat/pay/?id=<%= order.id %>">支付订单</a>
+    <a class="button large" href="http://<%=hubHost%>/wechat/pay/?id=<%= order.id %>">支付定单</a>
 </div>
 
 <% } else if(order.status === 5) { %>

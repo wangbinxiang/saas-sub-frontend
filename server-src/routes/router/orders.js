@@ -4,7 +4,8 @@ import {
 	showAddOrder,
 	addOrder,
 	get,
-	pay,
+	showThirdPay,
+	thirdPay,
     index,
 	detail,
 	jumpPay
@@ -29,7 +30,9 @@ router.post('/', addOrder);
 
 // router.get('/get', get);
 
-// router.get('/pay', pay);
+router.get('/:id/third-pay', showThirdPay);
+
+router.put('/:id/third-pay', thirdPay);
 
 //订单列表页面
 router.get('/', navigation, index);

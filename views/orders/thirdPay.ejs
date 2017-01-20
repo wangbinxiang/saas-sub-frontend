@@ -1,0 +1,48 @@
+<%- include('../layout/header') -%>
+
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">首页</a></li>
+        <li><a href="/orders">用户订单</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 第三方支付
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column">订单详情 No.<%= order.id %></h1>
+<div class="row column">
+
+	<fieldset class="fieldset">
+	    <legend><h4>海米余额</h4></legend>
+	    <div class="row column">
+	        <label><%= account.source.balance %>海米</label>
+	    </div>
+	</fieldset>
+
+	<fieldset class="fieldset">
+	    <legend><h4>支付方式</h4></legend>
+	    <div class="row">
+	        <fieldset class="columns">
+	            <input type="radio" name="payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="3" checked ><label for="pokemonRed">海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %></label>
+	        </fieldset>
+	    </div>
+	</fieldset>
+	<div class="row text-right cart-total">
+	    订单合计：￥<strong class="stat"><%= order.price %></strong>
+	</div>
+
+	<div class="row text-center form-submit-wrap">
+		<% if(account.source && account.source.balance && account.source.balance * account.source.exchangeRate > order.price ){ %>
+			<button id="thirdPay" class="button large">支付</button>
+		<% } else { %>
+			<button class="secondary button large">余额不足</button>
+		<% } %>
+        
+    </div>
+</div>
+<script>
+    var orderId = <%= order.id %>;
+</script>
+
+<%- include('../layout/footer') -%>

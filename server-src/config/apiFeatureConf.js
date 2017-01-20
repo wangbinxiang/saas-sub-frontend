@@ -47,15 +47,17 @@ export const PRODUCT_DEL          = Symbol();
 //添加产品价格
 export const PRODUCT_PRICE_ADD    = Symbol();
 
-export const MEMBER_GET           = Symbol();
 //获取产品快照信息
 export const PRODUCT_SNAPSHOT_GET = Symbol();
 
-
+export const MEMBER_GET           = Symbol();
 //用户注册
 export const MEMBER_SIGNUP        = Symbol();
 //用户登陆
 export const MEMBER_LOGIN         = Symbol();
+
+//获取用户账户余额
+export const ACCOUNT_GET           = Symbol();
 
 
 export const ORDER_ADD            = Symbol();

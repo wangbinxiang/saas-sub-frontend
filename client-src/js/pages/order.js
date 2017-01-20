@@ -10,6 +10,11 @@ let ConfirmModel = function(data){
     // self.addresses = ko.observableArray(data.addresses)
 
     self.save = function(){
+
+
+        // console.log($("input[name='payType']:checked").val())
+        // return
+
         $('#formOrderConfirm').foundation('validateForm');
         if($('[data-invalid]').length === 0){
             $('#confirmButton').attr('disabled', true);
@@ -99,3 +104,20 @@ if($('#ordersWrap').length){
     let orderModel = new OrdersModel(data);
     ko.applyBindings(orderModel, document.getElementById('ordersWrap'));
 }
+
+//第三方支付
+$('#thirdPay').click(function(){
+    $('#thirdPay').attr('disabled', true);
+    $.ajax({
+        method: "PUT",
+        url: "/orders/" + orderId + '/third-pay'
+    })
+    .done(function(respones) {
+        alert('支付成功。');
+        location.href = '/orders/' + orderId;
+    })
+    .fail(function(respones){
+        alert('支付失败。');
+        $('#thirdPay').attr('disabled', false);
+    })
+})

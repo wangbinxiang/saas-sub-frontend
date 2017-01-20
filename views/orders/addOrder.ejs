@@ -56,21 +56,24 @@
                 <button class="button button-unstyle" data-open="editRole" onclick="return false;">添加新地址</button>
             </div>-->
         </fieldset>
+        <% if(account.source && account.source.balance) { %>
+            <% console.log(account.source) %>
+            <fieldset class="fieldset">
+                <legend><h4>海米余额</h4></legend>
+                <div class="row column">
+                    <label><%= account.source.balance %>海米</label>
+                </div>
+            </fieldset>
+        <% } %>
+
 
         <fieldset class="fieldset">
             <legend><h4>支付方式</h4></legend>
             <div class="row">
                 <fieldset class="columns">
-                    <input type="radio" name="pokemon" value="Red" id="pokemonRed" checked><label for="pokemonRed">微信支付</label>
-                    <!--<input type="radio" name="pokemon" value="Yellow" id="pokemonYellow"><label for="pokemonYellow">线下交易</label>-->
-                    <!--<div class="row column">
-                        <div class="callout success">
-                            <h5>关于诚信游支付</h5>
-                            <p>
-                                Mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                            </p>
-                        </div>
-                    </div>-->
+                    <input type="radio" name="payType" value="1" checked><label for="pokemonRed">微信支付</label>
+
+                    <input type="radio" name="payType" <% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>(余额不足)<% } %></label>
                 </fieldset>
             </div>
         </fieldset>
@@ -168,7 +171,7 @@
                 详细地址
                 <input type="text" placeholder="" required pattern="number">
                 <span class="form-error">
-                    Yo, you had better fill this out, it's required.
+                    请输入详细地址
                 </span>
             </label>
         </div>
@@ -187,5 +190,6 @@
     var prodId = <%= productId %>;
     var priceOrder = <%= priceOrder %>;
     var productNum = <%= productNum %>;
+    var account = <%- JSON.stringify(account) %>;
 </script>
 <%- include('../layout/footer') -%>

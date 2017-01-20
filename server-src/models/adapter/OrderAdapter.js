@@ -66,10 +66,12 @@ export default class OrderAdapter extends RequestAdapter {
 
 
 		pay({
-			id
+			id,
+			payType
 		}, aOrderClass) {
 			this.buildRequest(ORDER_PAY, {
-				id
+				id,
+				payType
 			});
 
 			this.activeClass = aOrderClass;

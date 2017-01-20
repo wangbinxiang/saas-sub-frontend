@@ -10,6 +10,8 @@ import ContractAdapter from '../adapter/ContractAdapter';
 import Contract from '../model/Contract';
 import ContractSnapshotAdapter from '../adapter/ContractSnapshotAdapter';
 import ContractSnapshot from '../model/ContractSnapshot';
+import AccountAdapter from '../adapter/AccountAdapter';
+import Account from '../model/Account';
 import lodash from 'lodash';
 import { checkOther } from '../../libs/helper';
 
@@ -21,7 +23,7 @@ export default class OrderService {
 		this.orderAdapter = new OrderAdapter();
 	}
 
-	async showAddOrder(productId, priceOrder, productNum, shopId) {
+	async showAddOrder(productId, priceOrder, productNum, shopId, userId) {
 		//获取产品信息
 		let product = await this.productAdapter.get({
 			idList: productId
@@ -29,6 +31,14 @@ export default class OrderService {
 		if (product === null || !product.isOnSale() || (!checkOther(productId, shopId) && !product.own(shopId))) {
 			return null;
 		} else {
+
+			//获取用户信息
+			const accountAdapter = new AccountAdapter();
+			const account =	await accountAdapter.get({
+				idList: 35
+			}, Account)
+			console.log(account)
+
 			//获取分类信息
 			//
 			//获取合同信息
@@ -58,7 +68,8 @@ export default class OrderService {
 				product,
 				priceInfo,
 				totalPrice,
-				contract
+				contract,
+				account
 			};
 		}
 	}
@@ -99,6 +110,14 @@ export default class OrderService {
 		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
 			return null;
 		} else {
+			//获取用户信息
+			const accountAdapter = new AccountAdapter();
+			const account =	await accountAdapter.get({
+				idList: 35
+			}, Account)
+
+
+			
 			let productSnapshot;
 			let contractSnapshot;
 			let snapshotIds = [];
@@ -137,9 +156,54 @@ export default class OrderService {
 					
 				}
 			}
-			return order;
+			return {
+				order,
+				account
+			}
 		}
 	}
+
+	async showThirdPay(id, userId, shopId) {
+		let order = await this.orderAdapter.get({
+			idList: id
+		}, Order);
+
+		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
+			return null;
+		} else {
+
+			//获取用户信息
+			const accountAdapter = new AccountAdapter();
+			const account =	await accountAdapter.get({
+				idList: 35
+			}, Account)
+			console.log(account)
+
+
+			return {
+				order,
+				account
+			}
+		}
+	}
+
+
+	async thirdPay(id, userId, shopId) {
+		let order = await this.orderAdapter.get({
+			idList: id
+		}, Order);
+
+		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
+			return null;
+		} else {
+			const payType = 3
+			return await this.orderAdapter.pay({ id, payType }, Order);
+		}
+	}
+
+
+
+
 
 
 	async addOrder(userId, shopId, price, comment, productList) {
