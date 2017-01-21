@@ -115,14 +115,16 @@
             </div>
         </fieldset>
 
+        <% if(order.payType > 0) { %>
         <fieldset class="fieldset">
             <legend><h4>支付方式</h4></legend>
             <div class="row">
                 <fieldset class="columns">
-                    <label for="pokemonRed">微信支付</label>
+                    <label for="pokemonRed"><%= ORDER_PAY_TYPE_NAME_LIST[order.payType]%></label>
                 </fieldset>
             </div>
         </fieldset>
+        <% } %>
 
         <% if(order.products[0].contractSnapshot.id) { %>
             <fieldset class="fieldset">

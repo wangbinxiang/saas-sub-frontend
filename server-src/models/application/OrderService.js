@@ -14,6 +14,11 @@ import AccountAdapter from '../adapter/AccountAdapter';
 import Account from '../model/Account';
 import lodash from 'lodash';
 import { checkOther } from '../../libs/helper';
+import {
+	ORDER_PAY_TYPE_NORMAL,
+	ORDER_PAY_TYPE_THIRD,
+	ORDER_PAY_TYPE_NAME_LIST
+} from '../../config/orderConf';
 
 
 export default class OrderService {
@@ -196,8 +201,7 @@ export default class OrderService {
 		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
 			return null;
 		} else {
-			const payType = 3
-			return await this.orderAdapter.pay({ id, payType }, Order);
+			return await this.orderAdapter.pay({ id, payType: ORDER_PAY_TYPE_THIRD }, Order);
 		}
 	}
 

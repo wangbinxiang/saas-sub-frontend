@@ -4,7 +4,8 @@ import nl2br from 'nl2br';
 
 import {
 	ORDER_PAY_TYPE_NORMAL,
-	ORDER_PAY_TYPE_THIRD
+	ORDER_PAY_TYPE_THIRD,
+	ORDER_PAY_TYPE_NAME_LIST
 } from '../config/orderConf';
 
 export async function showAddOrder(ctx, next) {
@@ -299,7 +300,8 @@ export async function detail(ctx, next) {
 			account,
 			hubHost,
 			imgHost,
-			nl2br
+			nl2br,
+			ORDER_PAY_TYPE_NAME_LIST
 		});
 	}
 }
