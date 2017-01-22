@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="small-12 small-centered large-uncentered clearfix button-book">
-                <% if(__IN_WECHAT__ && project.isPublish() && project.prices && project.prices.length) { %>
+                <% if(typeof user !== 'undefined' && project.isPublish() && project.prices && project.prices.length) { %>
                 <button class="expanded large button" data-open="cartAlert" id="submit">申请合作</button>
                 <% } %>
             </div>
