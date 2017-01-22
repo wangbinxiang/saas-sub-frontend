@@ -62,48 +62,52 @@ export default async(ctx, next) => {
                 }
             }
         }
-
-        const poductService = new ProductService();
-        let products = await poductService.get(productIds, ctx._subId);
-        if (products) {
-            for (let i in products) {
-                slidesData.push({
-                    slideType: SHOP_SLIDES_TYPE_PRODUCT,
-                    id: products[i].id,
-                    title: products[i].name,
-                    img: imgHost + products[i].logo,
-                    url: '/products/' + products[i].id,
-                    price: products[i].price
-                });
+        if (productIds.length > 0) {
+            const poductService = new ProductService();
+            let products = await poductService.get(productIds, ctx._subId);
+            if (products) {
+                for (let i in products) {
+                    slidesData.push({
+                        slideType: SHOP_SLIDES_TYPE_PRODUCT,
+                        id: products[i].id,
+                        title: products[i].name,
+                        img: imgHost + products[i].logo,
+                        url: '/products/' + products[i].id,
+                        price: products[i].minPrice
+                    });
+                }
             }
         }
 
-        const articlesService = new ArticlesService()
-        const articles = await articlesService.get(articleIds)
-        if (articles) {
-            for (let i in articles) {
-                slidesData.push({
-                    slideType: SHOP_SLIDES_TYPE_ARTICLE,
-                    id: articles[i].id,
-                    title: articles[i].title,
-                    img: imgHost + articles[i].logo,
-                    url: '/articles/' + articles[i].id
-                });
+        if (articleIds.length > 0) {
+            const articlesService = new ArticlesService()
+            const articles = await articlesService.get(articleIds)
+            if (articles) {
+                for (let i in articles) {
+                    slidesData.push({
+                        slideType: SHOP_SLIDES_TYPE_ARTICLE,
+                        id: articles[i].id,
+                        title: articles[i].title,
+                        img: imgHost + articles[i].logo,
+                        url: '/articles/' + articles[i].id
+                    });
+                }
             }
         }
 
-
-        const projectService = new ProjectService()
-        const projects = await projectService.get(projectIds)
-        if (projects) {
-            for (let i in projects) {
-                slidesData.push({
-                    slideType: SHOP_SLIDES_TYPE_PROJECT,
-                    id: projects[i].id,
-                    title: projects[i].name,
-                    img: imgHost + projects[i].logo,
-                    url: '/projects/' + projects[i].id
-                });
+        if (projectIds.length > 0) {
+            const projectService = new ProjectService()
+            const projects = await projectService.get(projectIds)
+            if (projects) {
+                for (let i in projects) {
+                    slidesData.push({
+                        slideType: SHOP_SLIDES_TYPE_PROJECT,
+                        id: projects[i].id,
+                        title: projects[i].name,
+                        img: imgHost + projects[i].logo,
+                        url: '/projects/' + projects[i].id
+                    });
+                }
             }
         }
     }
