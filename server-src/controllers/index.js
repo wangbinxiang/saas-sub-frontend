@@ -1,7 +1,16 @@
 import IndexService from '../models/application/IndexService';
 import ProductService from '../models/application/ProductService';
+import ArticlesService from '../models/application/ArticlesService';
+import ProjectService from '../models/application/ProjectService';
 import config from 'config';
 import lodash from 'lodash';
+
+import {
+    SHOP_SLIDES_TYPE_PRODUCT,
+    SHOP_SLIDES_TYPE_ARTICLE,
+    SHOP_SLIDES_TYPE_PROJECT,
+    SHOP_SLIDES_TYPE_NAMES
+} from '../config/shopConf'
 
 
 
@@ -16,21 +25,90 @@ export default async(ctx, next) => {
 
     //幻灯片
     let slidesData = [];
-    if (ctx._shop.slides && lodash.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
+    // if (ctx._shop.slides && lodash.isArray(ctx._shop.slides) && ctx._shop.slides.length > 0) {
+    //     const poductService = new ProductService();
+    //     let products = await poductService.get(ctx._shop.slides, ctx._subId);
+    //     if (products) {
+    //         for (let i in products) {
+    //             slidesData.push({
+    //                 "url": '/products/' + products[i].id,
+    //                 "title": products[i].name,
+    //                 "price": products[i].minPrice,
+    //                 "img": imgHost + products[i].logo
+    //             });
+    //         }
+    //     }
+    // }
+
+    if (ctx._shop.slides && ctx._shop.slides.length) {
+        let productIds = []
+        let articleIds = []
+        let projectIds = []
+
+        for(let val of ctx._shop.slides) {
+            if (lodash.isString(val)) {
+                productIds.push(val)
+            } else if(val.id && val.slideType){
+                switch(parseInt(val.slideType)) {
+                    case SHOP_SLIDES_TYPE_PRODUCT:
+                        productIds.push(val.id)
+                        break;
+                    case SHOP_SLIDES_TYPE_ARTICLE:
+                        articleIds.push(val.id)
+                        break;
+                    case SHOP_SLIDES_TYPE_PROJECT:
+                        projectIds.push(val.id)
+                        break;
+                }
+            }
+        }
+
         const poductService = new ProductService();
-        let products = await poductService.get(ctx._shop.slides, ctx._subId);
+        let products = await poductService.get(productIds, ctx._subId);
         if (products) {
             for (let i in products) {
                 slidesData.push({
-                    "url": '/products/' + products[i].id,
-                    "title": products[i].name,
-                    "price": products[i].minPrice,
-                    "img": imgHost + products[i].logo
+                    slideType: SHOP_SLIDES_TYPE_PRODUCT,
+                    id: products[i].id,
+                    title: products[i].name,
+                    img: imgHost + products[i].logo,
+                    url: '/products/' + products[i].id,
+                    price: products[i].price
+                });
+            }
+        }
+
+        const articlesService = new ArticlesService()
+        const articles = await articlesService.get(articleIds)
+        if (articles) {
+            for (let i in articles) {
+                slidesData.push({
+                    slideType: SHOP_SLIDES_TYPE_ARTICLE,
+                    id: articles[i].id,
+                    title: articles[i].title,
+                    img: imgHost + articles[i].logo,
+                    url: '/articles/' + articles[i].id
+                });
+            }
+        }
+
+
+        const projectService = new ProjectService()
+        const projects = await projectService.get(projectIds)
+        if (projects) {
+            for (let i in projects) {
+                slidesData.push({
+                    slideType: SHOP_SLIDES_TYPE_PROJECT,
+                    id: projects[i].id,
+                    title: projects[i].name,
+                    img: imgHost + projects[i].logo,
+                    url: '/projects/' + projects[i].id
                 });
             }
         }
     }
 
+    console.log(slidesData)
 
     if (ctx.state.shopInfo.theme && ctx.state.shopInfo.theme == 'garden') {
         //园林首页
@@ -50,7 +128,10 @@ export default async(ctx, next) => {
             info, 
             blocks,
             imgHost,
-            imgStyle
+            imgStyle,
+            SHOP_SLIDES_TYPE_PRODUCT,
+            SHOP_SLIDES_TYPE_ARTICLE,
+            SHOP_SLIDES_TYPE_PROJECT,
         });
 
     } else {
@@ -110,7 +191,10 @@ export default async(ctx, next) => {
                 number,
                 pageJs,
                 imgHost,
-                imgStyle
+                imgStyle,
+                SHOP_SLIDES_TYPE_PRODUCT,
+                SHOP_SLIDES_TYPE_ARTICLE,
+                SHOP_SLIDES_TYPE_PROJECT,
             });
         } 
     }   

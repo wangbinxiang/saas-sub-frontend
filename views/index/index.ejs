@@ -12,7 +12,9 @@
                     <b class="lead">
                         <%= i.title %>
                     </b>
+                    <% if(i.slideType == SHOP_SLIDES_TYPE_PRODUCT) { %>
                     <span><sup>￥</sup><strong><%= i.price %></strong> <small>起</small></span>
+                    <% } %>
                 </a>
             </li>
 			<% } %>

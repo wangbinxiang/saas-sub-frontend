@@ -9,7 +9,7 @@ export default new Strategy({
 }, async (passport, password, done) => {
 
 	const member = new Member({
-		id: 35,
+		id: 45,
 		cellPhone: '',
 		nickName: '波风皆人',
 		userName: 'GOaC1476033708',

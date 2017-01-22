@@ -1,0 +1,13 @@
+
+
+export const SHOP_SLIDES_TYPE_PRODUCT = 1
+
+export const SHOP_SLIDES_TYPE_ARTICLE = 2
+
+export const SHOP_SLIDES_TYPE_PROJECT = 3
+
+export const SHOP_SLIDES_TYPE_NAMES = {
+	[SHOP_SLIDES_TYPE_PRODUCT]: '产品',
+	[SHOP_SLIDES_TYPE_ARTICLE]: '文章',
+	[SHOP_SLIDES_TYPE_PROJECT]: '项目'
+}

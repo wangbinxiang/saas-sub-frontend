@@ -5,7 +5,7 @@ import { inWehcat, notInWechat } from '../../tools/wechat';
 //关系型注册屏蔽掉其他注册方式的站点
 //需要来自微信端
 export async function authRelationshipWechatBlock(ctx, next) {
-	if (isAuthRelationship(ctx) && inWehcat(ctx)) {
+	if (isAuthRelationship(ctx)) {
 		await next();
 	} else {
 		ctx.status = 404;
@@ -21,7 +21,7 @@ export async function authRelationshipWechatBlock(ctx, next) {
 //普通注册屏蔽掉非其他注册方式的站点
 //需要来自微信端
 export async function authNormalWechatBlock(ctx, next) {
-	if (isAuthNormal(ctx) && inWehcat(ctx)) {
+	if (isAuthNormal(ctx)) {
 		await next();
 	} else {
 		ctx.status = 404;
@@ -38,7 +38,7 @@ export async function authNormalWechatBlock(ctx, next) {
  * @return {[type]}                      [description]
  */
 export async function authWechatSign(ctx, next) {
-	if (ctx.isUnauthenticated() && inWehcat(ctx)) {
+	if (ctx.isUnauthenticated()) {
 		if (isAuthRelationship(ctx)) {
 			ctx.state.__AUTH_WECHAT_LINK__ = AUTH_WECHAT_RELATIONSHIP_LINK;
 		} else if (isAuthNormal(ctx)) {

@@ -73,7 +73,7 @@ router.get('/wechat/auth/callback', authNormalWechatBlock, async(ctx, next) => {
         })(ctx, next);
     } catch (err) {
         console.log(err);
-        ctx.redirect('/wechat/auth');
+        ctx.redirect('/');
     }
 });
 

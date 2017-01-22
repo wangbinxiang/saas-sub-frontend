@@ -9,6 +9,7 @@ import { requiresLogin } from '../../middlewares/authorization';
 import { wechatRelationshipValidation } from '../../validations/authValidation';
 import { authRelationshipWechatBlock, authNormalWechatBlock } from '../../middlewares/auth/wechat';
 import MemberService from '../../models/application/MemberService';
+import { inWehcat } from '../../tools/wechat';
 
 
 import config from 'config';
@@ -41,7 +42,17 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 
 	console.log(callbackUrl);
 	const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
-	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
+	let location;
+
+	if (inWehcat(ctx)) {
+		const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
+		location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
+	} else {
+		const oauth = new OAuth(config.get('wechat.pc.yundianshang.appID'), config.get('wechat.pc.yundianshang.appsecret'));
+		location = oauth.getAuthorizeURLForWebsite(callbackUrl, '123');
+	}
+
+
 	ctx.redirect(location);
 });
 
@@ -68,8 +79,15 @@ router.get('/wechat/auth/relationship', authRelationshipWechatBlock, async (ctx,
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
 	console.log(callbackUrl);
-	const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
-	let location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
+	let location
+	if (inWehcat(ctx)) {
+		const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
+		location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
+	} else {
+		const oauth = new OAuth(config.get('wechat.pc.yundianshang.appID'), config.get('wechat.pc.yundianshang.appsecret'));
+		location = oauth.getAuthorizeURLForWebsite(callbackUrl, '123');
+	}
+	
 	ctx.redirect(location);
 });
 

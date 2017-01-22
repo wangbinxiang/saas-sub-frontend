@@ -64,6 +64,13 @@
       "authHost": "hub.yundianshang.cc",
       "appID": "wx2d9a5f4daf486473",
       "appsecret": "48d75e8d74713d925a1576da7c78e96e"
+    },
+    "pc": {
+      "yundianshang": {
+        "authHost": "hub.yundianshang.cc",
+        "appID": "wx8e13587c06e4ad12",
+        "appsecret": "770db681ed6dd7c20ace4c4696df44e3"
+      }
     }
   },
   "theme": {
