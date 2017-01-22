@@ -171,7 +171,7 @@ if (process.env.ETCD_ENV) {
               "article": {
                 "name": "产业资讯",
                 "idList": [
-                    5, 6, 7
+                    5, 7, 8
                 ]
               },
               "product": {
