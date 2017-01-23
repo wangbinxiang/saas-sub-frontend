@@ -98,6 +98,10 @@ export async function category(ctx, next) {
 
 			const pageJs = webpackIsomorphicTools.assets().javascript.channel;
 
+			const imgHost = config.get('qiniu.bucket.subImg.url');
+
+			const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+
 			await ctx.render('channel/category', {
 				categoryId,
 				title,
@@ -105,7 +109,9 @@ export async function category(ctx, next) {
 				number,
 				isNext,
 				articles,
-				category
+				category,
+				imgHost,
+				imgStyle
 			});
 		}
 	}

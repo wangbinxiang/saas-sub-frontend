@@ -336,7 +336,7 @@ export async function detail(ctx, next) {
 	        const csrf = ctx.csrf;
 
 	        const imgHost = config.get('qiniu.bucket.subImg.url');
-    		const imgUploadUrl = '';
+    		const imgUploadUrl = config.get('qiniu.bucket.subImg.uploadUrl');
 
 	        await ctx.render('application/detail', {
 	            title,
