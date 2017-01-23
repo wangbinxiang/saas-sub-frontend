@@ -131,6 +131,79 @@ if (document.getElementById('contractInfo')) {
 }
 
 
+
+
+
+
+console.log(imgUploadUrl)
+
+if (document.getElementById('attachmentUploader')) {
+    //ko.applyBindings(contractModel, document.getElementById('formContracts'));  
+    require.ensure([], function(require) {
+        let dropzone = require('../vendors/dropzone.js')
+        let key_tokens = [];
+        $('#attachmentUploader').dropzone({
+            url: 'imgUploadUrl',
+            maxFilesize: 50, // MB
+            addRemoveLinks: true,
+            maxFiles: 5,
+            parallelUploads: 1,
+            acceptedFiles: ".rar, .zip, .jpg",
+            autoProcessQueue : false,
+            init: function () {
+                this.on('addedfile', function(file){
+                    var that = this;
+                    const key = projectId + '-' + applicationId + '-' + file.name
+                    $.ajax({
+                        method: "GET",
+                        dataType: "json",
+                        url: "/attachments/token",
+                        data: { key }
+                    })
+                    .done(function(respones) {
+                        key_tokens.push({ key:respones.key, token:respones.token })
+                        that.processQueue();
+                    })
+                    .fail(function(respones){
+                        alert('error to get upload config')
+                    })
+                });
+
+                this.on('sending', function(file, xhr, formData){
+                    formData.append('key', key_tokens[0].key);
+                    formData.append('token', key_tokens[0].token);
+                    key_tokens.shift()
+                })
+
+                this.on('success', function(file, response){
+                    contractModel.addPdf(response.key)
+                    this.processQueue();                
+                })
+                this.on("complete", (file) => {                
+                    
+                })
+                this.on('removedfile', function(file){
+                    if($(file.previewElement).hasClass('dz-complete')){
+                        var idx = $(file.previewElement).index()
+                        contractModel.removePdf(idx)
+                    }
+                })
+            }
+        });
+    })  
+}
+
+
+
+
+
+
+
+
+
+
+
+
 $('#approveButton').on('click', () => {
     $('#contractForm').foundation('validateForm');
     if($('[data-invalid]').length === 0){
