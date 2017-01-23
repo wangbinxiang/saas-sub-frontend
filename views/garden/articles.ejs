@@ -29,7 +29,7 @@
             </li>
             <% for(let i of info.categories) { %>
             <li>
-                <a href="/articles/<%= i.id %>"><%= i.name %></a>
+                <a href="/channel/categories/<%= i.id %>"><%= i.name %></a>
             </li>
             <% } %>
         </ul>
@@ -49,7 +49,7 @@
         <a class="article-mix__top" href="/articles/<%= info.articles[key][0].id %>">
             <img src="<%= imgHost + info.articles[key][0].logo %>" />
             <h4><%= info.articles[key][0].title %></h4>
-            <p><%= info.articles[key][0].feature %></p>
+            <p><%= info.articles[key][0].abstract %></p>
         </a>
         <% } %>
     </div>
@@ -60,7 +60,7 @@
                 <a class="article-item" href="/articles/<%= info.articles[key][i].id %>" data-equalizer-watch>
                     <figure style="background-image:url('<%= imgHost + info.articles[key][i].logo %>"></figure>
                     <h4><%= info.articles[key][i].title %></h4>
-                    <p><%= info.articles[key][i].feature %></p>
+                    <p><%= info.articles[key][i].abstract %></p>
                 </a>
             </div>
             <% } %>
