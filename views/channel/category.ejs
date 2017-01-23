@@ -13,6 +13,8 @@
 <div class="row column blk-margin">
     <div data-bind="foreach:articles" id="articles">
         <a class="article-item clearfix" data-bind="attr:{href: '/articles/' + id}">
+
+            <figure data-bind="attr:{style: 'background-image:url(<%= imgHost %>' + logo + '<%= imgStyle%>)'}"></figure>
             <h4 data-bind="text:title"></h4>
         </a>
     </div>

@@ -87,10 +87,12 @@
     "npm-run-all": "^3.0.0",
     "passport-local": "^1.0.0",
     "passport-wechat": "^2.0.4",
+    "qiniu": "^6.1.13",
     "qr-image": "^3.1.0",
     "qrcode_js": "^1.0.0",
     "request-json": "^0.6.1",
     "underscore": "^1.8.3",
+    "uuid": "^3.0.1",
     "webpack-isomorphic-tools": "^2.5.8",
     "wechat-pay": "^0.2.4",
     "yayson": "^2.0.1"

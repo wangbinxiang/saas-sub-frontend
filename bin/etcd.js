@@ -23,6 +23,7 @@ if (process.env.ETCD_ENV) {
     var etcdQiniuSecretKey;
     var etcdQiniuBucketSubImgUrl;
     var etcdQiniuBucketSubImgName;
+    var etcdQiniuBucketSubImgUploadUrl;
 
     //七牛access_key
     var qiniuAccessKey;
@@ -32,6 +33,8 @@ if (process.env.ETCD_ENV) {
     var qiniuBucketSubImgUrl;
     //七牛子站图片bucket名称
     var qiniuBucketSubImgName;
+    //子站图片上传七牛地址
+    var qiniuBucketSubImgUploadUrl;
 
     //hub站地址(沙箱和正式的区分)
     var hostHub = "";
@@ -53,6 +56,7 @@ if (process.env.ETCD_ENV) {
         etcdQiniuSecretKey = '/saas/production/qiniu/secretkey';
         etcdQiniuBucketSubImgUrl = '/saas/production/qiniu/bucket/subImg/url';
         etcdQiniuBucketSubImgName = '/saas/production/qiniu/bucket/subImg/name';
+        etcdQiniuBucketSubImgUploadUrl = '/saas/production/qiniu/bucket/subImg/uploadUrl';
 
     } else if (process.env.ETCD_ENV === 'sandbox') {
         hostHub = "hub.dianshangwan.com"
@@ -97,12 +101,14 @@ if (process.env.ETCD_ENV) {
         qiniuSecretKey = etcd.getSync(etcdQiniuSecretKey);
         qiniuBucketSubImgUrl = etcd.getSync(etcdQiniuBucketSubImgUrl);
         qiniuBucketSubImgName = etcd.getSync(etcdQiniuBucketSubImgName);
+        qiniuBucketSubImgUploadUrl = etcd.getSync(etcdQiniuBucketSubImgUploadUrl);
 
         console.log(qiniuBucketSubImgName);
         qiniuAccessKey = qiniuAccessKey.body.node.value;
         qiniuSecretKey = qiniuSecretKey.body.node.value;
         qiniuBucketSubImgUrl = qiniuBucketSubImgUrl.body.node.value;
         qiniuBucketSubImgName = qiniuBucketSubImgName.body.node.value;
+        qiniuBucketSubImgUploadUrl = qiniuBucketSubImgUploadUrl.body.node.value;
 
 
     } else if (process.env.ETCD_ENV === 'sandbox') {
@@ -110,6 +116,7 @@ if (process.env.ETCD_ENV) {
         qiniuSecretKey = "Ax2usNh4f5Vt1xCOyJP0nltDNR-xk2zE58TWftK7";
         qiniuBucketSubImgUrl = "http://oew2ozpi2.bkt.clouddn.com/";
         qiniuBucketSubImgName = "image";
+        qiniuBucketSubImgUploadUrl = 'http://up-z1.qiniu.com';
     }
 
     
@@ -176,7 +183,7 @@ if (process.env.ETCD_ENV) {
               },
               "product": {
                 "1": {
-                  "name": "日本游",
+                  "name": "苗木交易",
                   "typeIds": "43,44,45,46,47,48,49,50"
                 },
                 "2": {
@@ -205,6 +212,7 @@ if (process.env.ETCD_ENV) {
             "secretKey": qiniuSecretKey,
             "bucket": {
                 "subImg": {
+                    "uploadUrl": qiniuBucketSubImgUploadUrl,
                     "name": qiniuBucketSubImgName,
                     "url": qiniuBucketSubImgUrl,
                     "style": {
