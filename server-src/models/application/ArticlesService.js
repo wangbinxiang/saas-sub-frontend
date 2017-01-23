@@ -21,10 +21,11 @@ export default class ArticlesService {
      * @return {[type]}                 [description]
      */
     async index(filters, pages) {
-
+        const sort = '-id';
         let result = await this.articleAdapter.get({
             filters,
-            pages
+            pages,
+            sort
         }, Article);
 
         if (result === null) {

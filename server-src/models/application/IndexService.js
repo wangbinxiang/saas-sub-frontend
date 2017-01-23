@@ -42,9 +42,12 @@ export default class IndexService {
 			status: PRODUCT_STATUS_ON_SALE
 		}
 
+		const sort = '-id';
+
 		const productsResult = await this.productAdapter.get({
 			filters,
-			pages
+			pages,
+			sort
 		}, Product);
 
 		if (productsResult !== null) {
@@ -143,6 +146,7 @@ export default class IndexService {
 
 		const shopLayout = layout[userId]
 
+		const sort = '-id';
 
 		let articles, categories, products, projects;
 
@@ -159,7 +163,8 @@ export default class IndexService {
 		const articleAdapter = new ArticleAdapter();
 		const articleResult = await articleAdapter.get({
 		    filters,
-		    pages
+		    pages,
+		    sort
 		}, Article);
 		if (articleResult !== null) {
 			//没有获取数据 直接返回空
@@ -184,6 +189,7 @@ export default class IndexService {
 			categories = categoriesResult.result;
 		}
 
+		
 
 		//苗木交易, 获取苗木交易分类的产品数据,前6个
 		if (shopLayout['product']) {
@@ -201,7 +207,8 @@ export default class IndexService {
 
 				const productsResult = await this.productAdapter.get({
 					filters,
-					pages
+					pages,
+					sort
 				}, Product);
 
 				if (productsResult !== null) {
@@ -235,8 +242,8 @@ export default class IndexService {
 				const projectAdapter = new ProjectAdapter();
 				const projectResult = await projectAdapter.get({
 					filters,
-					pages
-					// sort
+					pages,
+					sort
 				}, Project);
 
 				if (projectResult !== null) {

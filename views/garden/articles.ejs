@@ -45,11 +45,13 @@
                 <i class="material-icons mi-arrow_forward"></i>
             </a>
         </hgroup>
+        <% if(info.articles[key][0]) { %>
         <a class="article-mix__top" href="/articles/<%= info.articles[key][0].id %>">
             <img src="<%= imgHost + info.articles[key][0].logo %>" />
             <h4><%= info.articles[key][0].title %></h4>
             <p><%= info.articles[key][0].feature %></p>
         </a>
+        <% } %>
     </div>
     <div class="large-8 medium-12 columns article-mix__sub">
         <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">

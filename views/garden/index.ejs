@@ -45,7 +45,7 @@
         <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
             <% for(var i = 1; i < info.articles.length; i++) { %>
             <div class="column">
-                <a class="article-item" href="/articles/<%= info.articles[0].id %>" data-equalizer-watch>
+                <a class="article-item" href="/articles/<%= info.articles[i].id %>" data-equalizer-watch>
                     <figure style="background-image:url('<%= imgHost %><%= info.articles[i].logo %>')"></figure>
                     <h4><%= info.articles[i].title %></h4>
                     <p></p>

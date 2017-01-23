@@ -63,11 +63,12 @@ export default class ChannelService {
 				status: PRODUCT_STATUS_ON_SALE
 			}
 
-
+			const sort = '-id';
 			const productAdapter = new ProductAdapter();
 			const productsResult = await productAdapter.get({
 				filters,
-				pages
+				pages,
+				sort
 			}, Product);
 
 			if (productsResult !== null) {
@@ -112,10 +113,13 @@ export default class ChannelService {
 				categoryId,
 				status: ARTICLE_STATUS_PUBLISH
 			};
+
+			const sort = '-id';
 			const articleAdapter = new ArticleAdapter();
 			const articleResult = await articleAdapter.get({
 			    filters,
-			    pages
+			    pages,
+			    sort
 			}, Article);
 			if (articleResult !== null) {
 				//没有获取数据 直接返回空
@@ -332,12 +336,13 @@ export default class ChannelService {
 			    status: PROJECT_STATUS_PUBLISH,
 			    category: PROJECT_CATEGORY_B2C
 			};
+			const sort = '-id';
 
 			const projectAdapter = new ProjectAdapter();
 			const projectResult = await projectAdapter.get({
 				filters,
-				pages
-				// sort
+				pages,
+				sort
 			}, Project);	
 
 			if (projectResult !== null) {

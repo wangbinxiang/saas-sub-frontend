@@ -15,7 +15,7 @@ export async function articles(ctx, next) {
 
     const channelService = new ChannelService()
     const info = await channelService.gardenArticles(ctx._subId)
-
+    console.log(info)
     // const categories = {}
     // for (let i of info.categories){
     //     categories.[i.id], i.name])
