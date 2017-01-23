@@ -130,8 +130,8 @@
                 <div data-abide-error class="alert callout" style="display: none;">
                     <p><i class="fi-alert"></i> 请填写回复说明</p>
                 </div>
-                <textarea name="content"  required placeholder="回复说明" id="content" rows="5"></textarea>
-                <label>上传文件仅支持rar或zip格式，文件大小不超过50M。</label>
+                <textarea name="content" data-bind="content" required placeholder="回复说明" id="content" rows="5"></textarea>
+                <label>上传文件仅支持rar或zip格式，文件大小不超过50M，最多5个文件。</label>
                 <div class="dropzone dropzone-single" id="attachmentUploader"></div>
                 <div id="formButton">
                     <button class="button button-unstyle" data-bind="disable: submit" id="replayButton" >发表回复</button>

@@ -4,8 +4,8 @@ import {
 import config from 'config';
 
 export default new Strategy({
-        appID: config.get('wechat.yundianshang.appID'),
-        appSecret: config.get('wechat.yundianshang.appsecret'),
+        appID: config.get('wechat.pc.yundianshang.appID'),
+        appSecret: config.get('wechat.pc.yundianshang.appsecret'),
         client: 'wechat',
         scope: 'snsapi_userinfo',
         state: 123,

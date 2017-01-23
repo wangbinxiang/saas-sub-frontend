@@ -183,7 +183,7 @@ if (process.env.ETCD_ENV) {
               },
               "product": {
                 "1": {
-                  "name": "日本游",
+                  "name": "苗木交易",
                   "typeIds": "43,44,45,46,47,48,49,50"
                 },
                 "2": {
