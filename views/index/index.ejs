@@ -6,8 +6,7 @@
             <% for(let i of slidesData) { %>
 			<li>
                 <a href="<%= i.url %>">
-                    <div>
-                        <img src="<%= i.img %>?imageView2/1/w/640/h/427" srcset="<%= i.img %>?imageView2/1/w/640/h/427 1x, <%= i.img %> 1.5x" >
+                    <div style="background-image:url(<%= i.img %>?imageView2/1/w/640/h/427)">
                     </div>
                     <b class="lead">
                         <%= i.title %>
