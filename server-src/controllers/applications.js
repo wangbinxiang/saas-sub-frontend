@@ -201,6 +201,11 @@ export async function reply(ctx, next) {
 	const userId = ctx.state.user.id;
 	const content = [ctx.request.body.content]; //string
 
+	const files = ctx.request.body.files
+	if (files) {
+		content.push(files)
+	}
+
 	const applicationService = new ApplicationService();
 	const reply = await applicationService.reply(id, userId, content);
 

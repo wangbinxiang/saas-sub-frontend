@@ -4,6 +4,8 @@ import routerAuthenticate from './router/authenticate';
 // //产品管理路由
 import routerProducts from './router/products';
 
+import routerAttachments from './router/attachments';
+
 //订单路由
 import routerOrders from './router/orders';
 //首页路由
@@ -37,6 +39,7 @@ router.use('', routerArticles.routes());
 router.use('', routerProjects.routes());
 router.use('', routerApplications.routes());
 router.use('', routerGarden.routes());
+router.use('', routerAttachments.routes());
 
 
 export default router;

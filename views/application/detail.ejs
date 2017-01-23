@@ -130,7 +130,7 @@
                 <div data-abide-error class="alert callout" style="display: none;">
                     <p><i class="fi-alert"></i> 请填写回复说明</p>
                 </div>
-                <textarea name="content" data-bind="content" required placeholder="回复说明" id="content" rows="5"></textarea>
+                <textarea name="content" data-bind="textInput:content" required placeholder="回复说明" id="content" rows="5"></textarea>
                 <label>上传文件仅支持rar或zip格式，文件大小不超过50M，最多5个文件。</label>
                 <div class="dropzone dropzone-single" id="attachmentUploader"></div>
                 <div id="formButton">
@@ -178,6 +178,9 @@
             <legend><h4 data-bind="text: source == <%= REPLY_SOURCE_APPLICATION %> ? '申请信息': '项目方反馈'"></h4></legend>
             <small data-bind="text:_createTimeDate"></small>
             <div data-bind="text:content[0]"></div>
+            <b data-bind="foreach:content[1]">
+                <br /><a data-bind="attr:{href: '<%= imgHost %>' + $data}, text: $data" target="_blank"></a>
+            </b>
         </fieldset>
     </div>
     <input type="hidden" id="_csrf" name="_csrf" value="<%= csrf %>" />

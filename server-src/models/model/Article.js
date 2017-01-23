@@ -3,6 +3,7 @@ export default class Article {
 		id = 0,
 		title,
 		logo,
+		abstract,
 		content,
 		status,
 		updateTime,
@@ -14,6 +15,7 @@ export default class Article {
 		this.id         = id;
 		this.title      = title;
 		this.logo       = logo;
+		this.abstract   = abstract;
 		this.content    = content;
 		this.status     = status;
 		this.updateTime = updateTime;

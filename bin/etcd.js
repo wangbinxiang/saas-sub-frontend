@@ -150,16 +150,6 @@ if (process.env.ETCD_ENV) {
                   "type": "cms"
                 },
                 {
-                  "name": "苗木交易",
-                  "type": "product",
-                  "id": 1
-                },
-                {
-                  "name": "服务配套",
-                  "type": "product",
-                  "id": 2
-                },
-                {
                   "name": "项目招标",
                   "type": "project",
                   "id": 1
@@ -173,6 +163,16 @@ if (process.env.ETCD_ENV) {
                   "name": "产业金融",
                   "type": "project",
                   "id": 3
+                },
+                {
+                  "name": "苗木交易",
+                  "type": "product",
+                  "id": 1
+                },
+                {
+                  "name": "服务配套",
+                  "type": "product",
+                  "id": 2
                 }
               ],
               "article": {

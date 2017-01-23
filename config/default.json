@@ -106,16 +106,6 @@
           "type": "cms"
         },
         {
-          "name": "日本游",
-          "type": "product",
-          "id": 0
-        },
-        {
-          "name": "月球游",
-          "type": "product",
-          "id": 1
-        },
-        {
           "name": "项目招标",
           "type": "project",
           "id": 0
@@ -129,6 +119,16 @@
           "name": "产业金融",
           "type": "project",
           "id": 2
+        },
+        {
+          "name": "日本游",
+          "type": "product",
+          "id": 0
+        },
+        {
+          "name": "月球游",
+          "type": "product",
+          "id": 1
         }
       ],
       "article": {

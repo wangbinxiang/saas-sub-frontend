@@ -36,6 +36,7 @@ $.ajax({
 
 //回复框模型
 const ReplyModel = function() {
+    const self = this
     this.content = ko.observable('')
     this.files = ko.observableArray([])
     this.submit = ko.observable(false)
@@ -63,16 +64,14 @@ if (document.getElementById('formReply')) {
             $('#replayButton').text('正在发布回复')
 
             const _csrf = $('#_csrf').val()
-            // const content = $('#content').val()
+            const content = replyModel.content()
+            const files = replyModel.files()
 
-            console.log(replyModel.content())
-            console.log(replyModel.files())
-            return
             $.ajax({
                 method: 'POST',
                 url: '/applications/' + applicationId + '/replies',
                 dataType: "json",
-                data: { _csrf, content }
+                data: { _csrf, content, files }
             })
             .done(function(response) {
                 alert('提交成功');
@@ -82,7 +81,7 @@ if (document.getElementById('formReply')) {
             .fail(function(response){
                 alert('提交失败！');
                 replyModel.submit(false);
-                $('#replayButton').text('正在发布回复')
+                $('#replayButton').text('发布回复')
             })
         } else {
             $(window).scroll();
@@ -96,7 +95,7 @@ if (document.getElementById('formReply')) {
             let dropzone = require('../vendors/dropzone.js')
             let key_tokens = [];
             $('#attachmentUploader').dropzone({
-                url: 'imgUploadUrl',
+                url: imgUploadUrl,
                 maxFilesize: 50, // MB
                 addRemoveLinks: true,
                 maxFiles: 5,
