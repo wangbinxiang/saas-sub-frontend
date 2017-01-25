@@ -21,6 +21,7 @@ router.get('/relationship', async (ctx, next) => {
     	img.pipe(ctx.res)
     	}
     );
+    ctx.status = 200;
 });
 
 export default router;

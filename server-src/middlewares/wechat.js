@@ -16,7 +16,7 @@ export async function isInWechat(ctx, next) {
 	}
 
 	if (__DEVELOPMENT__) { 
-		// ctx.state.__IN_WECHAT__ = true;
+		ctx.state.__IN_WECHAT__ = true;
 	}
 
 	await next();
