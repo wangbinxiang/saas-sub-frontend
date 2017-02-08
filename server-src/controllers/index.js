@@ -16,7 +16,7 @@ import {
 
 export default async(ctx, next) => {
     
-    const title = ctx._shop.title? ctx._shop.title: '首页';
+    const title = '首页 - ' + ctx._shop.title;
 
 
     const imgHost = config.get('qiniu.bucket.subImg.url');

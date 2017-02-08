@@ -51,7 +51,11 @@
     <% for(var i = 0; i < project.description.length; i++) { %>
         <% if (project.description[i].type == "image" && project.description[i].value){ %>
             <% if (project.description[i].value.url){ %>
-                <img src="<%= imgHost + project.description[i].value.url %>" />
+                <% if (project.description[i].value.link){ %>
+                    <a href="<%= 'http://' + project.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + project.description[i].value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                <% } else { %>
+                    <img src="<%= imgHost + project.description[i].value.url %>" />
+                <% } %>
             <% } %>
         <% } else if (project.description[i].type == "text" && project.description[i].value) { %>
             <% if(project.description[i].value.title != ''){ %>
