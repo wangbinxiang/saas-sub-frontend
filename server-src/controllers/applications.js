@@ -101,7 +101,7 @@ export async function showAdd(ctx, next) {
 
 	const projectService = new ProjectService();
 	const project = await projectService.get(projectId);
-	console.log(project.userId == ctx._subId)
+
 	if (project === null || project.prices[priceIndex] === undefined || project.userId != ctx._subId) {
 	    ctx.status = 404
         await ctx.render('404');
@@ -112,12 +112,17 @@ export async function showAdd(ctx, next) {
 
 	    const csrf = ctx.csrf;
 
+        const imgHost = config.get('qiniu.bucket.subImg.url');
+		const imgUploadUrl = config.get('qiniu.bucket.subImg.uploadUrl');
+
 		await ctx.render('application/add', {
 			title,
 			pageJs,
 		    csrf,
 		    project,
-		    priceIndex
+		    priceIndex,
+		    imgHost,
+		    imgUploadUrl
 		});
 	}
 }

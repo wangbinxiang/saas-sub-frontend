@@ -2,7 +2,7 @@
 
 <nav aria-label="You are here:" role="navigation" class="clearfix">
     <ul class="breadcrumbs onionLink">
-        <li><a href="index.html">首页</a></li>
+        <li><a href="/">首页</a></li>
         <li>
             <span class="show-for-sr">Current: </span> 提交申请
         </li>
@@ -68,6 +68,8 @@
         <fieldset class="fieldset" id="fieldAddress">
             <legend><h4>申请信息</h4></legend>
             <textarea rows="5" id="information" required placeholder="申请说明"></textarea>
+            <label>上传文件仅支持rar或zip格式，文件大小不超过50M，最多5个文件。</label>
+            <div class="dropzone dropzone-single" id="attachmentUploader"></div>
         </fieldset>
     </form>
 </div>
@@ -75,4 +77,10 @@
 <div class="row text-center form-submit-wrap blk-margin" id="formButton">
 	<button data-bind="disable: submit" class="button large blk-margin blk-margin-bottom" id="saveGood">确认并提交申请</button>
 </div>
+
+<script>
+    var projectId = <%= project.id %>;
+    var imgHost = '<%= imgHost %>';
+    var imgUploadUrl = '<%= imgUploadUrl %>';
+</script>
 <%- include('../layout/footer') -%>

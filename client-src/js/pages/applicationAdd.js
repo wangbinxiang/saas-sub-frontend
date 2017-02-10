@@ -3,6 +3,7 @@ if (module.hot) {
 }
 
 import './base.js'
+import md5 from 'md5'
 
 
 let formButton = {
@@ -10,6 +11,80 @@ let formButton = {
 }
 
 ko.applyBindings(formButton, document.getElementById('formButton'));
+
+
+const Attachments = function () {
+
+    this.attachments = []
+    const self = this
+
+    this.addAttachment = function(id){
+        self.attachments.push(id)
+    }
+
+    this.removeAttachment = function(idx) {
+        self.attachments.splice(idx, 1)
+    }
+}
+
+const attachments = new Attachments()
+
+if (document.getElementById('attachmentUploader')) {
+    require.ensure([], function(require) {
+        let dropzone = require('../vendors/dropzone.js')
+        let key_tokens = [];
+        $('#attachmentUploader').dropzone({
+            url: imgUploadUrl,
+            maxFilesize: 50, // MB
+            addRemoveLinks: true,
+            maxFiles: 5,
+            parallelUploads: 1,
+            acceptedFiles: ".rar, .zip",
+            autoProcessQueue : false,
+            init: function () {
+                this.on('addedfile', function(file){
+                    var that = this;
+                    const key = 'projects-' + projectId + '-' + md5(Math.random()).substr(0, 6) + '-' + file.name
+                    $.ajax({
+                        method: "GET",
+                        dataType: "json",
+                        url: "/attachments/token",
+                        data: { key }
+                    })
+                    .done(function(respones) {
+                        key_tokens.push({ key:respones.key, token:respones.token })
+                        that.processQueue();
+                    })
+                    .fail(function(respones){
+                        alert('error to get upload config')
+                    })
+                });
+
+                this.on('sending', function(file, xhr, formData){
+                    formData.append('key', key_tokens[0].key);
+                    formData.append('token', key_tokens[0].token);
+                    key_tokens.shift()
+                })
+
+                this.on('success', function(file, response){
+                    attachments.addAttachment(response.key)
+                    this.processQueue();                
+                })
+                this.on("complete", (file) => {                
+                    // if($('#attachmentUploader .dz-complete.dz-success').length == 1){
+                    //     $(file.previewElement).addClass('good-thumb')
+                    // }
+                })
+                this.on('removedfile', function(file){
+                    if($(file.previewElement).hasClass('dz-complete')){
+                        var idx = $(file.previewElement).index()
+                        attachments.removeAttachment(idx)
+                    }
+                })
+            }
+        });
+    })  
+}
 
 $('#saveGood').on('click', () => {
     Foundation.reInit($('#formGood'));
@@ -27,7 +102,7 @@ $('#saveGood').on('click', () => {
 		const identifyCardNumber = $('#identifyCardNumber').val()
 		const companyName        = $('#companyName').val()
 		const companyAddress     = $('#companyAddress').val()
-		const information        = [$('#information').val()]
+		const information        = [$('#information').val(), attachments.attachments]//申请信息和附件
 
         $.ajax({
             method: 'POST',
