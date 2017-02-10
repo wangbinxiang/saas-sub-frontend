@@ -25,9 +25,19 @@
     </div>
     <div class="large-6 medium-12 columns">
         <div class="clearfix detailPrice">
+            <!-- without rebate
             <div class="p-margin-bottom lbPrice">
                 单价￥<b class="stat" id="priceStat"><%= product.prices.length > 0 ? product.prices[0].price : '' %></b>
             </div>
+            -->
+            <!-- with rebate -->
+            <div class="small-6 columns medium-text-center">
+                <label>单价</label>￥<b class="stat">78945</b>
+            </div>
+            <div class="small-6 columns medium-text-center">
+                <label>返利</label>￥<b class="stat">365.26</b>
+            </div>
+            <!-- with rebate -->
             <div class=" filter-bar filter-bar--sku" id="skuBar">
                 <div class="button-group single" id="priceLabels">
                     <% for(let i in product.prices) { %>
