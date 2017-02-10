@@ -18,6 +18,7 @@ export default class ProjectTranslator extends Translator {
         const minPrice    = bodyReader.value('minPrice');
         const maxPrice    = bodyReader.value('maxPrice');
         const description = bodyReader.value('description');
+        const attachments = bodyReader.value('attachments');
         const slides      = bodyReader.value('slides');
         const prices      = bodyReader.value('prices');
         const applyCount  = bodyReader.value('applyCount');
@@ -38,6 +39,7 @@ export default class ProjectTranslator extends Translator {
             minPrice,
             maxPrice,
             description,
+            attachments,
             slides,
             prices,
             applyCount,

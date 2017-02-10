@@ -139,7 +139,8 @@ if (process.env.ETCD_ENV) {
         },
         "theme": {
           "10002": "",
-          "10026": "garden"
+          "10026": "garden",
+          "10027": "garden"
         },
         "layout": {
             "10002":"",
@@ -205,6 +206,69 @@ if (process.env.ETCD_ENV) {
                   "typeIds": "3"
                 }
               }
+            },
+            "10027" : {
+                "navigation": [
+                  {
+                    "name": "产业资讯",
+                    "type": "cms"
+                  },
+                  {
+                    "name": "项目合作",
+                    "type": "project",
+                    "id": 1
+                  },
+                  {
+                    "name": "项目孵化",
+                    "type": "project",
+                    "id": 2
+                  },
+                  {
+                    "name": "合伙人招募",
+                    "type": "project",
+                    "id": 3
+                  },
+                  {
+                    "name": "运营服务",
+                    "type": "product",
+                    "id": 1
+                  },
+                  {
+                    "name": "增值服务",
+                    "type": "product",
+                    "id": 2
+                  }
+                ],
+                "article": {
+                  "name": "产业资讯",
+                  "idList": [
+                      9, 10
+                  ]
+                },
+                "product": {
+                  "1": {
+                    "name": "运营服务",
+                    "typeIds": "57"
+                  },
+                  "2": {
+                    "name": "增值服务",
+                    "typeIds": "58"
+                  }
+                },
+                "project": {
+                  "1": {
+                    "name": "项目合作",
+                    "typeIds": "7"
+                  },
+                  "2": {
+                    "name": "项目孵化",
+                    "typeIds": "8"
+                  },
+                  "3": {
+                    "name": "合伙人招募",
+                    "typeIds": "9"
+                  }
+                }
             }
         },
         "qiniu": {

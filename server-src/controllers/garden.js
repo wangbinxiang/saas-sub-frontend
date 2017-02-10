@@ -5,7 +5,7 @@ import config from 'config';
 
 export async function articles(ctx, next) {
 
-    const title = ctx._shop.title? ctx._shop.title: '产业资讯';
+    
 
     const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
@@ -15,11 +15,11 @@ export async function articles(ctx, next) {
 
     const channelService = new ChannelService()
     const info = await channelService.gardenArticles(ctx._subId)
-    console.log(info)
     // const categories = {}
     // for (let i of info.categories){
     //     categories.[i.id], i.name])
     // }
+    const title = info.channelName + ' - ' + ctx._shop.title;
 
     await ctx.render('garden/articles', {
         title, 
@@ -33,8 +33,6 @@ export async function articles(ctx, next) {
 
 export async function products(ctx, next) {
 
-    const title = ctx._shop.title? ctx._shop.title: '苗木交易';
-
     const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
@@ -45,6 +43,8 @@ export async function products(ctx, next) {
 
     const channelService = new ChannelService()
     const info = await channelService.gardenProducts(ctx._subId, id)
+
+    const title = info.channelName + ' - ' + ctx._shop.title;
 
     await ctx.render('garden/products', {
         title, 
@@ -59,7 +59,7 @@ export async function products(ctx, next) {
 
 export async function projects(ctx, next) {
 
-	const title = ctx._shop.title? ctx._shop.title: '首页';
+    const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
@@ -70,8 +70,11 @@ export async function projects(ctx, next) {
     const channelService = new ChannelService()
     const info = await channelService.gardenProjects(ctx._subId, id)
 
+    const title = info.channelInfo.name + ' - ' + ctx._shop.title;
+
     await ctx.render('garden/projects', {
         title,
+        pageJs,
         info,
         imgHost,
         imgStyle

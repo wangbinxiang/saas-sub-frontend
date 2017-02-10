@@ -16,7 +16,9 @@ import {
 	MEMBER_SIGNUP,
 	MEMBER_LOGIN,
     MEMBER_SOURCE_LOGIN,
-    MEMBER_SOURCE_SIGNUP
+    MEMBER_SOURCE_SIGNUP,
+    MEMBER_PARENT,
+    MEMBER_CHILDREN
 } from '../../config/apiFeatureConf';
 
 export default class MemberRequestJsonApi extends BaseRequest {
@@ -36,6 +38,24 @@ export default class MemberRequestJsonApi extends BaseRequest {
         const pages = this.originData.pages ? this.originData.pages : '';
 
         this.url = jsonApiGetUrl(baseUrl, idList, { filters, pages });
+
+        this.method = GET;
+    }
+
+    parent() {
+        this.url = '/users/' + this.originData.id + '/parent'
+
+        this.method = GET
+    }
+
+    children() {
+        const baseUrl = '/users';
+
+        const filters = this.originData.filters ? this.originData.filters : '';
+
+        const pages = this.originData.pages ? this.originData.pages : '';
+
+        this.url = jsonApiGetUrl(baseUrl, null, { filters, pages });
 
         this.method = GET;
     }
@@ -114,6 +134,7 @@ export default class MemberRequestJsonApi extends BaseRequest {
     }
 
 
+
     buildFeature() {
         switch(this.feature) {
             case MEMBER_GET:
@@ -130,6 +151,12 @@ export default class MemberRequestJsonApi extends BaseRequest {
                 break;
             case MEMBER_SOURCE_SIGNUP:
                 this.sourceSignup();
+                break;
+            case MEMBER_PARENT:
+                this.parent();
+                break;
+            case MEMBER_CHILDREN:
+                this.children();
                 break;
             default:
                 throw new Error('Invalid feature method');

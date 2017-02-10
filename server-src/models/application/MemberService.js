@@ -124,4 +124,15 @@ export default class MemberService {
 		return true;
 
 	}
+
+
+	async relationship(uid) {
+		const parent = await this.userAdapter.parent({id: uid}, Member)
+		const children = await this.userAdapter.children({id: uid}, Member)
+
+		return {
+			parent,
+			children
+		}
+	}
 }

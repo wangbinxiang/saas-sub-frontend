@@ -7,7 +7,9 @@ import {
 	MEMBER_SIGNUP,
 	MEMBER_LOGIN,
 	MEMBER_SOURCE_LOGIN,
-	MEMBER_SOURCE_SIGNUP
+	MEMBER_SOURCE_SIGNUP,
+    MEMBER_PARENT,
+    MEMBER_CHILDREN
 } from '../../config/apiFeatureConf';
 
 
@@ -34,6 +36,39 @@ export default class MemberAdapter extends RequestAdapter {
 
 		//如果idList是数组 则需要数组形式的结果
 		this.needArrayResult(idList)
+
+		this.translator.pageClass = pageCLass;
+
+		this.activeClass = aMemberClass;
+
+		return this.request();
+	}
+
+	parent({
+		id
+	}, aMemberClass) {
+		this.buildRequest(MEMBER_PARENT, {
+			id
+		});
+
+		//如果idList是数组 则需要数组形式的结果
+		this.needArrayResult(id)
+
+		this.activeClass = aMemberClass;
+
+		return this.request();
+	}
+
+	children({
+		id,
+		filters,
+		pages
+	}, aMemberClass) {
+		this.buildRequest(MEMBER_CHILDREN, {
+			id,
+			filters,
+			pages
+		});
 
 		this.translator.pageClass = pageCLass;
 
