@@ -25,6 +25,8 @@ import routerApplications from './router/applications';
 
 import routerGarden from './router/garden';
 
+import routerUsers from './router/users';
+
 
 const router = new Router();
 
@@ -40,6 +42,7 @@ router.use('', routerProjects.routes());
 router.use('', routerApplications.routes());
 router.use('', routerGarden.routes());
 router.use('', routerAttachments.routes());
+router.use('', routerUsers.routes());
 
 
 export default router;

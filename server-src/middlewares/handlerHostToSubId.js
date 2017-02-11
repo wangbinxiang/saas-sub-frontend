@@ -1,6 +1,7 @@
 import config from 'config';
 import _ from 'lodash'
 import ShopService from '../models/application/ShopService';
+import { isAuthRelationship } from '../tools/auth';
 /**
  * 验证子站id
  * @author wangbinxiang
@@ -71,6 +72,7 @@ export async function handlerHostToSubId(ctx, next) {
                 }
             }
 
+            const relationship = isAuthRelationship(ctx);
 
             ctx.state.shopInfo = {
                 logo,
@@ -79,7 +81,8 @@ export async function handlerHostToSubId(ctx, next) {
                 copyright,
                 officialQRCode,
                 theme,
-                kefuId
+                kefuId,
+                relationship
             }
             await next();
         } else {

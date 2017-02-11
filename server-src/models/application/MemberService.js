@@ -127,8 +127,20 @@ export default class MemberService {
 
 
 	async relationship(uid) {
-		const parent = await this.userAdapter.parent({id: uid}, Member)
-		const children = await this.userAdapter.children({id: uid}, Member)
+		let parent, children
+		try {
+			parent = await this.userAdapter.parent({id: uid}, Member)
+		} catch (err) {
+			
+		}
+		try {
+			children = await this.userAdapter.children({id: uid}, Member)
+			if (children && children.result) {
+				children = children.result
+			}
+		} catch (err) {
+			
+		}
 
 		return {
 			parent,

@@ -1,0 +1,35 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="index.html">首页</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 用户中心 - 关系信息
+        </li>
+    </ul>
+</nav>
+<% console.log(relationship) %>
+<h1 class="row column user-margin">关系信息</h1>
+
+<div class="row column">
+    <h3>我的父关系</h2>
+    <p><%= relationship.parent? (relationship.parent.nickName? relationship.parent.nickName: relationship.parent.userName): '无' %></p>
+
+    <h3>我的子关系(<%= relationship.children? relationship.children.length: 0 %>人)</h2>
+    
+    	<p>
+    	<% if(relationship.children){ %>
+	    	<% for(let i in relationship.children) { %>
+	    		<%= relationship.children[i].nickName? relationship.children[i].nickName: relationship.children[i].userName%>
+	    		<% if((+i + 1) !== relationship.children.length){ %>
+	    		,
+	    		<% } %>	
+	    	<% } %>
+    	<% } else { %>
+
+    	<% } %>
+    	</p>
+
+    
+</div>
+
+<%- include('../layout/footer') -%>

@@ -49,7 +49,7 @@ export default class MemberRequestJsonApi extends BaseRequest {
     }
 
     children() {
-        const baseUrl = '/users';
+        const baseUrl = '/users/' + this.originData.id + '/children'
 
         const filters = this.originData.filters ? this.originData.filters : '';
 
