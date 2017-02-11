@@ -45,7 +45,7 @@
                 <b>
                     <%= v.name %>
                 </b>
-                <p class="with-price"><%= v.feature %></p>
+                <p class="with-price"></p>
                 <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
             </a>
         </div>
@@ -66,7 +66,7 @@
                 <b>
                     <%= v.name %>
                 </b>
-                <p class="with-price"><%= v.feature %></p>
+                <p class="with-price"></p>
                 <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
             </a>
         </div>
@@ -87,7 +87,7 @@
                 <b>
                     <%= v.title %>
                 </b>
-                <p class="with-price"><%= v.abstract %></p>
+                <p class="with-price"></p>
             </a>
         </div>
         <% } %>
@@ -97,9 +97,9 @@
 </div>
 
 
-<div class="list-button row column">
+<!-- <div class="list-button row column">
     <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
-</div>
+</div> -->
 <script>
 	var data = <%- JSON.stringify(products? products: []) %>;
     var pageno = <%= number %>;
