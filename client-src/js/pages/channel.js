@@ -100,3 +100,31 @@ if ($('#articles').length) {
   ko.applyBindings(articlesModel);
    
 }
+
+const ProjectssModel = function(data, projectTypeId) {
+  let self = this
+  self.projects = ko.observableArray(data);
+  self.isNext = ko.observable(isNext);
+
+  let pageno = 1;
+
+  self.more = function() {
+     pageno = pageno + 1;
+     $.ajax({
+         method: "GET",
+         url: "/channel/projectTypes/" + projectTypeId + "?number=" + pageno,
+         dataType: "json"
+     })
+     .done(function(respones) {
+         for(let project of respones.projects){
+             self.projects.push(project)
+         }
+         self.isNext(respones.isNext);
+     })
+  }
+}
+
+if ($('#projects').length) {
+  const projectsModel = new ProjectssModel(data, projectTypeId); 
+  ko.applyBindings(projectsModel);
+}

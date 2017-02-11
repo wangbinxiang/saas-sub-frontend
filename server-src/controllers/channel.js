@@ -116,3 +116,54 @@ export async function category(ctx, next) {
 		}
 	}
 }
+
+export async function projectType(ctx, next) {
+	//频道信息
+	let isNext = false;
+
+	const projectTypeId = ctx.params.id;
+
+	const number = ctx.query.number ? ctx.query.number : 1;
+
+	const size = ctx.query.size ? ctx.query.size : 10;
+
+	const channelService = await new ChannelService();
+	const { page, projects, projectType } = await channelService.projects(number, size, projectTypeId, ctx._subId);
+
+	if (!projectType) {
+		//404
+		await next()
+	} else {
+		if (page && page.haveNext()) {
+			isNext = true;
+		}
+
+		if (ctx.accepts('html', 'text', 'json') === 'json') {
+	        ctx.body = {
+	            projects,
+	            isNext
+	        };
+	    } else {
+	    	
+	    	const title = projectType.name + ' - ' + ctx._shop.title;
+
+			const pageJs = webpackIsomorphicTools.assets().javascript.channel;
+
+			const imgHost = config.get('qiniu.bucket.subImg.url');
+
+			const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+
+			await ctx.render('channel/projectType', {
+				projectTypeId,
+				title,
+				pageJs,
+				number,
+				isNext,
+				projects,
+				projectType,
+				imgHost,
+				imgStyle
+			});
+		}
+	}
+}

@@ -8,6 +8,8 @@ import ArticleAdapter from '../adapter/ArticleAdapter';
 import Article from '../model/Article';
 import ProjectAdapter from '../adapter/ProjectAdapter';
 import Project from '../model/Project';
+import ProjectTypeAdapter from '../adapter/ProjectTypeAdapter';
+import ProjectType from '../model/ProjectType';
 import config from 'config';
 import lodash from 'lodash';
 
@@ -133,6 +135,53 @@ export default class ChannelService {
 			page,
 			articles,
 			category
+		};
+	}
+
+	async projects(number, size, projectTypeId, userId) {
+		let page, projects, projectType;
+
+		const projectTypeAdapter = new ProjectTypeAdapter()
+		projectType = await projectTypeAdapter.get({ idList: projectTypeId }, ProjectType);
+
+		console.log(projectType.userId)
+		console.log(userId)
+
+		if (projectType && +projectType.userId === +userId) {
+			const pages = {
+		        number,
+		        size
+		    };
+
+			const filters = {
+				projectType: projectTypeId,
+			    status: PROJECT_STATUS_PUBLISH,
+			    category: PROJECT_CATEGORY_B2C
+			};
+
+			const sort = '-id';
+
+			const projectAdapter = new ProjectAdapter();
+			const projectResult = await projectAdapter.get({
+				filters,
+				pages,
+				sort
+			}, Project);
+
+			if (projectResult !== null) {
+				//没有获取数据 直接返回空
+				page = projectResult.page;
+				projects = projectResult.result;
+			} 
+		} else {
+			projectType = null
+		}
+
+		//返回 分页 和 projects 数据
+		return {
+			page,
+			projects,
+			projectType
 		};
 	}
 

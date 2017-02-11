@@ -2,6 +2,13 @@ import IndexService from '../models/application/IndexService';
 import ProductService from '../models/application/ProductService';
 import ArticlesService from '../models/application/ArticlesService';
 import ProjectService from '../models/application/ProjectService';
+import {
+    PROJECT_STATUS_PUBLISH,
+    PROJECT_CATEGORY_B2C
+} from '../config/projectConf';
+import {
+    ARTICLE_STATUS_PUBLISH
+} from '../config/articleConf';
 import config from 'config';
 import lodash from 'lodash';
 
@@ -170,6 +177,31 @@ export default async(ctx, next) => {
             }
         }
 
+
+        //获取项目与定制
+        const projectService = new ProjectService()
+        const { projects } = await projectService.index({
+                userId: ctx._subId,
+                status: PROJECT_STATUS_PUBLISH,
+                category: PROJECT_CATEGORY_B2C
+            }, {
+                number: 1,
+                size: 10
+            })
+
+        //获取咨询
+        const articlesService = new ArticlesService()
+        const { articles } = await articlesService.index({
+                userId: ctx._subId,
+                status: ARTICLE_STATUS_PUBLISH,
+            }, {
+                number: 1,
+                size: 10
+            })
+
+
+
+
         if (ctx.accepts('html', 'text', 'json') === 'json') {
             ctx.body = {
                 products,
@@ -189,6 +221,8 @@ export default async(ctx, next) => {
                 title,
                 slidesData,
                 products,
+                projects,
+                articles,
                 isNext,
                 number,
                 pageJs,

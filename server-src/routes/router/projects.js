@@ -17,6 +17,8 @@ import {
 	detail
 } from '../../controllers/projects';
 
+import navigation from '../../middlewares/navigation';
+
 
 const router = Router();
 
@@ -54,7 +56,7 @@ router.prefix('/projects');
 // router.put('/:id/revert', revert);
 
 //项目预览
-router.get('/:id', detail);
+router.get('/:id', navigation, detail);
 
 
 

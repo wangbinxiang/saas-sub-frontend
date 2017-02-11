@@ -29,31 +29,73 @@
 <div class="blk-margin"></div>
 
 
-<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer" data-bind="foreach:prods">
-    <div class="column">
-        <a data-bind="attr:{href: '/products/' + id}" class="masonry-item masonry-item--index" data-equalizer-watch>
-            <img data-bind="attr:{src: imgHost + logo + imgStyle, srcset: imgHost + logo + '?imageView2/0/w/640/ 1x, ' + imgHost + logo + imgStyle + ' 1.5x' }" />
-            <b data-bind="text:name"></b>
-            <em></em>
-            <span>￥<strong data-bind="text:minPrice"></strong> <small>起</small></span>
-        </a>
-    </div>
+<div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalizer data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
+    <% if(products) { %>
+        <div class="column tourboard__title tourboard__title--0">
+            <a style="cursor:default" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <h3>产品</h3>
+                <cite>(<%= products.length %>)</cite>
+                <i class="material-icons mi-arrow_forward"></i>
+            </a>
+        </div>
+        <% for(let v of products) { %>
+        <div class="column">
+            <a href="/products/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <img src="<%= imgHost %><%= v.logo %>" />
+                <b>
+                    <%= v.name %>
+                </b>
+                <p class="with-price"><%= v.feature %></p>
+                <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
+            </a>
+        </div>
+        <% } %>
+    <% } %>
+    <% if(projects) { %>
+        <div class="column tourboard__title tourboard__title--3">
+            <a style="cursor:default" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <h3>项目与定制</h3>
+                <cite>(<%= projects.length %>)</cite>
+                <i class="material-icons mi-arrow_forward"></i>
+            </a>
+        </div>
+        <% for(let v of projects) { %>
+        <div class="column">
+            <a href="/projects/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <img src="<%= imgHost %><%= v.logo %>" />
+                <b>
+                    <%= v.name %>
+                </b>
+                <p class="with-price"><%= v.feature %></p>
+                <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
+            </a>
+        </div>
+        <% } %>
+    <% } %>
+    <% if(articles) { %>
+        <div class="column tourboard__title tourboard__title--2">
+            <a style="cursor:default" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <h3>资讯</h3>
+                <cite>(<%= articles.length %>)</cite>
+                <i class="material-icons mi-arrow_forward"></i>
+            </a>
+        </div>
+        <% for(let v of articles) { %>
+        <div class="column">
+            <a href="/articles/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+                <img src="<%= imgHost %><%= v.logo %>" />
+                <b>
+                    <%= v.title %>
+                </b>
+                <p class="with-price"><%= v.abstract %></p>
+            </a>
+        </div>
+        <% } %>
+    <% } %>
+
+
 </div>
 
-<!--
-<div class="row column bottom-search">
-    <h3>Got no ideal? Find more here</h3>
-    <div class="input-group">
-        <input class="input-group-field" type="text">
-        <div class="input-group-button">
-            <!!!--<a class="button">Primary Action</a>
-            <a class="dropdown button arrow-only">
-                <span class="show-for-sr">Show menu</span>
-            </a>-_-!>
-            <input type="submit" class="button" value="Search">
-        </div>
-    </div>
-</div>-->
 
 <div class="list-button row column">
     <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>

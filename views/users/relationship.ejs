@@ -11,10 +11,10 @@
 <h1 class="row column user-margin">关系信息</h1>
 
 <div class="row column">
-    <h3>我的父关系</h2>
+    <h3>我的父关联人</h2>
     <p><%= relationship.parent? (relationship.parent.nickName? relationship.parent.nickName: relationship.parent.userName): 'chloroplast' %></p>
 
-    <h3>我的子关系(<%= relationship.children? relationship.children.length: 0 %>人)</h2>
+    <h3>我的子关联人(<%= relationship.children? relationship.children.length: 0 %>人)</h2>
     
     	<p>
     	<% if(relationship.children){ %>

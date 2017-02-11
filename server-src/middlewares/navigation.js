@@ -1,5 +1,4 @@
 import NavigationService from '../models/application/NavigationService';
-import CategoriesService from '../models/application/CategoriesService';
 import config from 'config';
 
 /**
@@ -38,6 +37,16 @@ export default async function navigation(ctx, next) {
 			ctx.state._categories = categories;
 		} else {
 			ctx.state._categories = undefined;
+		}
+
+
+		//项目合作
+		const projectTypes = await navigationService.projectTypes(ctx._subId);
+
+		if (projectTypes !== null) {
+			ctx.state._projectTypes = projectTypes;
+		} else {
+			ctx.state._projectTypes = undefined;
 		}
 	}
 

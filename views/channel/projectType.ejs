@@ -1,0 +1,35 @@
+<%- include('../layout/header') -%>
+<nav aria-label="您的位置:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">首页</a></li>
+        <li>
+            <span class="show-for-sr">当前: </span> 定制与合作频道
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column"><%= projectType.name %></h1>
+
+<div class="row column blk-margin">
+    <div data-bind="foreach:projects" id="projects">
+        <a class="article-item clearfix" data-bind="attr:{href: '/projects/' + id}">
+
+            <figure data-bind="attr:{style: 'background-image:url(<%= imgHost %>' + logo + '<%= imgStyle%>)'}"></figure>
+            <h4 data-bind="text:name"></h4>
+            <p data-bind="text:feature"></p>
+        </a>
+    </div>
+    
+</div>
+<div class="list-button row column">
+    <a class="button large btnMore" style="display: none;" data-bind="click: more, visible: isNext()" id="more">显示更多商品</a>
+</div>
+
+<script>
+	var projectTypeId = <%= projectTypeId %>;
+	var data = <%- JSON.stringify(projects? projects: []) %>;
+    var isNext = <%= isNext %>;
+</script>
+
+
+<%- include('../layout/footer') -%>

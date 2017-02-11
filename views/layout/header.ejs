@@ -62,6 +62,11 @@
                             <li><a href="/channel/productTypes/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
                             <% } %>
                         <% } %>
+                        <% if(typeof _projectTypes !== 'undefined') { %>
+                            <% for(const i in _projectTypes) { %>
+                            <li><a href="/channel/projectTypes/<%= _projectTypes[i].id %>"><%= _projectTypes[i].name %></a></li>
+                            <% } %>
+                        <% } %>
                         <% if(typeof _categories !== 'undefined') { %>
                             <% for(const i in _categories) { %>
                             <li><a href="/channel/categories/<%= _categories[i].id %>"><%= _categories[i].name %></a></li>
