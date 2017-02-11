@@ -47,7 +47,7 @@
     </div>
 </div>
 <div class="precautions-outer row column">
-    <% if(project.attachments) { %>
+    <% if(project.attachments && project.attachments.length > 0) { %>
     <fieldset class="fieldset">
         <legend><h4>附件下载</h4></legend>
         <div class="attachments">
