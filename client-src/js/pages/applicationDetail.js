@@ -100,7 +100,7 @@ if (document.getElementById('formReply')) {
                 addRemoveLinks: true,
                 maxFiles: 5,
                 parallelUploads: 1,
-                acceptedFiles: ".rar, .zip",
+                acceptedFiles: ".rar, .zip, .pdf, .word",
                 autoProcessQueue : false,
                 init: function () {
                     this.on('addedfile', function(file){
