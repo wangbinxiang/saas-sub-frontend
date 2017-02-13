@@ -94,6 +94,10 @@ if (document.getElementById('formReply')) {
         require.ensure([], function(require) {
             let dropzone = require('../vendors/dropzone.js')
             let key_tokens = [];
+            let attachmentUploaderRemovedIndex
+            $('#attachmentUploader').on('mousedown', '.dz-remove', function() {
+                attachmentUploaderRemovedIndex = $(this).parents('div').index()-1
+            })
             $('#attachmentUploader').dropzone({
                 url: imgUploadUrl,
                 maxFilesize: 50, // MB
@@ -136,8 +140,7 @@ if (document.getElementById('formReply')) {
                     })
                     this.on('removedfile', function(file){
                         if($(file.previewElement).hasClass('dz-complete')){
-                            var idx = $(file.previewElement).index()
-                            replyModel.removeFile(idx)
+                            replyModel.removeFile(attachmentUploaderRemovedIndex)
                         }
                     })
                 }

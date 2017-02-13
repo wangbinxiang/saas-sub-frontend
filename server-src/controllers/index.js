@@ -21,7 +21,7 @@ import {
 
 
 
-export default async(ctx, next) => {
+export async function index(ctx, next) {
     
     const title = '首页 - ' + ctx._shop.title;
 
@@ -105,6 +105,7 @@ export default async(ctx, next) => {
         if (projectIds.length > 0) {
             const projectService = new ProjectService()
             const projects = await projectService.get(projectIds)
+
             if (projects) {
                 for (let i in projects) {
                     slidesData.push({
@@ -179,8 +180,9 @@ export default async(ctx, next) => {
 
 
         //获取项目与定制
+        let projects = null
         const projectService = new ProjectService()
-        const { projects } = await projectService.index({
+        const projectsResult = await projectService.index({
                 userId: ctx._subId,
                 status: PROJECT_STATUS_PUBLISH,
                 category: PROJECT_CATEGORY_B2C
@@ -188,18 +190,22 @@ export default async(ctx, next) => {
                 number: 1,
                 size: 10
             })
-
+        if (projectsResult) {
+            projects = projectsResult.projects
+        }
         //获取咨询
+        let articles = null
         const articlesService = new ArticlesService()
-        const { articles } = await articlesService.index({
+        const articlesResult = await articlesService.index({
                 userId: ctx._subId,
                 status: ARTICLE_STATUS_PUBLISH,
             }, {
                 number: 1,
                 size: 10
             })
-
-
+        if (articlesResult) {
+            articles = articlesResult.articles
+        }
 
 
         if (ctx.accepts('html', 'text', 'json') === 'json') {
