@@ -182,21 +182,19 @@ export default class ApplicationService {
 		const application = await this.applicationAdapter.get({
 			idList: id
 		}, Application);
-
 		if (application === null) {
 			return null;
 		} else {
 			let source;
 			//检查回复来源
-			if (application.userId === userId) {
+			if (parseInt(application.userId) === userId) {
 				source = REPLY_SOURCE_APPLICATION
 			} else {
 				const projectAdapter = new ProjectAdapter();
 				const project = await projectAdapter.get({
 					idList: application.projectId
 				}, Project);
-
-				if (project.userId === userId) {
+				if (parseInt(project.userId) === userId) {
 					source = REPLY_SOURCE_PROJECT
 				} else {
 					return null;	
