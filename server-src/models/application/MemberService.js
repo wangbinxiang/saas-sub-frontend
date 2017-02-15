@@ -127,24 +127,29 @@ export default class MemberService {
 
 
 	async relationship(uid) {
-		let parent, children
+		let parent, children, childrenCount
 		try {
 			parent = await this.userAdapter.parent({id: uid}, Member)
 		} catch (err) {
 			
 		}
 		try {
-			children = await this.userAdapter.children({id: uid}, Member)
-			if (children && children.result) {
-				children = children.result
+			const childrenResult = await this.userAdapter.children({id: uid}, Member)
+			console.log(childrenResult)
+			if (childrenResult && childrenResult.result) {
+				children = childrenResult.result
+				childrenCount = childrenResult.count? childrenResult.count: 0
 			}
 		} catch (err) {
 			
 		}
-
+		console.log(parent,
+			children,
+			childrenCount)
 		return {
 			parent,
-			children
+			children,
+			childrenCount
 		}
 	}
 }

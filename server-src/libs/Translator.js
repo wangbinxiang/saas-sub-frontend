@@ -12,11 +12,17 @@ export default class Translator {
     //翻译users信息
     toObject(body, aActiveClass) {
 
+        let count;
         let page;
         let result;
 
         if (typeof body.links !== 'undefined') {
             page = this.createPage(body.links);
+        }
+        if (typeof body.meta !== 'undefined') {
+            if (typeof body.meta.count !== 'undefined') {
+                count = body.meta.count
+            }
         }
         this.activeClass = aActiveClass;
         if (typeof body.data.length !== 'undefined') {
@@ -37,7 +43,7 @@ export default class Translator {
         }
 
         if (page) {
-            return { page, result };    
+            return { count, page, result };    
         }
         return result;
     }

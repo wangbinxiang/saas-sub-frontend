@@ -14,7 +14,7 @@
     <h3>我的父关联人</h2>
     <p><%= relationship.parent? (relationship.parent.nickName? relationship.parent.nickName: relationship.parent.userName): 'chloroplast' %></p>
 
-    <h3>我的子关联人(<%= relationship.children? relationship.children.length: 0 %>人)</h2>
+    <h3>我的子关联人(<%= relationship.childrenCount %>人)</h2>
     
     	<p>
     	<% if(relationship.children){ %>
