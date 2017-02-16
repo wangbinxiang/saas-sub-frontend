@@ -59,9 +59,15 @@ export const MEMBER_SOURCE_SIGNUP = Symbol();
 export const MEMBER_LOGIN         = Symbol();
 //第三方网站用户登陆
 export const MEMBER_SOURCE_LOGIN  = Symbol();
+//获取用户父关系
+export const MEMBER_PARENT        = Symbol();
+//获取用户子关系
+export const MEMBER_CHILDREN      = Symbol();
+
+
 
 //获取用户账户余额
-export const ACCOUNT_GET           = Symbol();
+export const ACCOUNT_GET          = Symbol();
 
 
 export const ORDER_ADD            = Symbol();

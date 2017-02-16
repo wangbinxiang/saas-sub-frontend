@@ -47,31 +47,25 @@
     </div>
 </div>
 <div class="precautions-outer row column">
+    <% if(project.attachments) { %>
     <fieldset class="fieldset">
         <legend><h4>附件下载</h4></legend>
         <div class="attachments">
-            <a href="#">
-            Lorem ipsum dolor.zip
-            </a>
-            <a href="#">
-            Lorem ipsum.pdf
-            </a>
-            <a href="#">
-            Lorem ipsum.zip
-            </a>
-            <a href="#">
-            Lorem.rar
-            </a>
-            <a href="#">
-            amet.rar
-            </a>
+        <% for (let attachment of project.attachments) { %>
+            <a href="<%= imgHost + attachment %>"><%= attachment %></a><br />
+        <% } %>
         </div>
     </fieldset>
+    <% } %>
     <div class="profile-main">
     <% for(var i = 0; i < project.description.length; i++) { %>
         <% if (project.description[i].type == "image" && project.description[i].value){ %>
             <% if (project.description[i].value.url){ %>
-                <img src="<%= imgHost + project.description[i].value.url %>" />
+                <% if (project.description[i].value.link){ %>
+                    <a href="<%= 'http://' + project.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + project.description[i].value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                <% } else { %>
+                    <img src="<%= imgHost + project.description[i].value.url %>" />
+                <% } %>
             <% } %>
         <% } else if (project.description[i].type == "text" && project.description[i].value) { %>
             <% if(project.description[i].value.title != ''){ %>

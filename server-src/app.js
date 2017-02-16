@@ -29,6 +29,12 @@ import passportRegister from './passport';
 
 
 const app = new Koa()
+
+// static
+//缓存一个月
+app.use(convert(koaStaticCache(path.join(__dirname, '../client'), { maxAge: 2592000 })));
+
+
 const bodyparser = Bodyparser()
 
 // logger
@@ -109,9 +115,7 @@ if (__DEVELOPMENT__) {
   })
 };
 
-// static
-//缓存一个月
-app.use(convert(koaStaticCache(path.join(__dirname, '../client'), { maxAge: 2592000 })));
+
 
 
 //underscore写入全局方法

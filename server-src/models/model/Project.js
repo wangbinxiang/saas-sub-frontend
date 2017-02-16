@@ -13,6 +13,7 @@ export default class Project{
 		minPrice,
 		maxPrice,
         description,
+        attachments,
         slides,
         prices,
         applyCount,
@@ -31,6 +32,7 @@ export default class Project{
 		this.minPrice    = minPrice;
 		this.maxPrice    = maxPrice;
 		this.description = description;
+		this.attachments = attachments;
 		this.slides      = slides;
 		this.prices      = prices;
 		this.applyCount  = applyCount;

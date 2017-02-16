@@ -49,7 +49,18 @@ require.ensure([], function(require) {
     $('#priceLabels a').on('click', function(){
         if(!$(this).hasClass('checked')){
             $(this).addClass('checked').siblings('.checked').removeClass('checked')
-            $('#priceStat').text($(this).attr('data-price'))
+            if ($(this).attr('data-rebate') > 0) {
+                $('#priceRelationship').text($(this).attr('data-price'))
+                $('#rebateRelationship').text($(this).attr('data-rebate'))
+                $('#priceRelationshipDiv').show()
+                $('#rebateRelationshipDiv').show()
+                $('#priceStatDiv').hide()
+            } else {
+                $('#priceStat').text($(this).attr('data-price'))
+                $('#priceRelationshipDiv').hide()
+                $('#rebateRelationshipDiv').hide()
+                $('#priceStatDiv').show()
+            }
         }
     })
 

@@ -53,7 +53,8 @@ export async function index(ctx, next) {
 	        isNext
 	    };
 	} else {
-		const title = '项目列表';
+
+		const title = '项目列表 - ' + ctx._shop.title;
 
 		const pageJs = webpackIsomorphicTools.assets().javascript.projects;
 
@@ -142,183 +143,6 @@ export async function search(ctx, next) {
 	}
 }
 
-
-
-// export async function showAdd(ctx, next) {
-
-// 	const title = "发布项目"
-
-// 	const pageJs = webpackIsomorphicTools.assets().javascript.projectEdit;
-
-// 	const data = null;
-
-// 	const imgHost = config.get('qiniu.bucket.subImg.url');
-//     const imgUploadUrl = config.get('qiniu.bucket.subImg.uploadUrl');
-//     const csrf = ctx.csrf;
-
-// 	await ctx.render('projects/add', {
-// 		title,
-// 		pageJs,
-// 	    data,
-// 	    imgHost,
-// 	    imgUploadUrl,
-// 	    csrf,
-// 	    PROJECT_CATEGORY_B2B,
-// 	    PROJECT_CATEGORY_B2C,
-// 	    PROJECT_CATEGORY_NAMES,
-// 	});
-// }
-
-// export async function add(ctx, next) {
-// 	//当前店铺id
-//     const userId = ctx._subId;
-
-//     const name = ctx.request.body.name; //string
-//     const feature = ctx.request.body.feature; //string
-//     const category = ctx.request.body.category; //string
-//     const projectType = ctx.request.body.projectType; //int
-//     const description = ctx.request.body.description? ctx.request.body.description: []; //string
-//     const slides = ctx.request.body.slides? ctx.request.body.slides: []; //string
-
-//     const projectService = new ProjectService();
-//     const project = await projectService.add(userId, name, feature, category, projectType, description, slides);
-//     if (project === null) {
-//     	throw new Error('add fail');
-//     } else {
-//     	ctx.body = project;
-//     }
-// }
-
-// export async function showEdit(ctx, next) {
-
-// 	const id = ctx.params.id;
-
-// 	const projectService = new ProjectService();
-// 	const project = await projectService.get(id, ctx._subId);
-// 	console.log(project)
-// 	if (project === null) {
-// 		await next()
-// 	} else {
-// 		const title = '编辑项目';
-
-// 		const pageJs = webpackIsomorphicTools.assets().javascript.projectEdit;
-
-// 		const imgHost = config.get('qiniu.bucket.subImg.url');
-
-//         const imgUploadUrl = config.get('qiniu.bucket.subImg.uploadUrl');
-
-//         const csrf = ctx.csrf;
-
-//         await ctx.render('projects/add', {
-// 			title,
-// 			pageJs,
-// 		    data: project,
-// 		    imgHost,
-// 		    imgUploadUrl,
-// 		    csrf,
-// 		    PROJECT_CATEGORY_B2B,
-// 		    PROJECT_CATEGORY_B2C,
-// 		    PROJECT_CATEGORY_NAMES,
-// 		});
-// 	}
-// }
-
-// export async function edit(ctx, next) {
-// 	const userId = ctx._subId;
-// 	const id = ctx.params.id; //integer
-
-// 	const name = ctx.request.body.name; //string
-// 	const projectType = ctx.request.body.projectType; //int
-// 	const feature = ctx.request.body.feature; //string
-// 	const description = ctx.request.body.description; //string
-// 	const slides = ctx.request.body.slides; //string
-
-// 	const projectService = new ProjectService();
-// 	const project = await projectService.edit(userId, id, name, feature, projectType,  description, slides);
-
-// 	if (project === null) {
-//         throw new Error('edit fail');
-//     } else {
-//         ctx.body = project;
-//     }
-// }
-
-// export async function del(ctx, next) {
-
-// }
-
-// export async function showPrices(ctx, next) {
-
-// 	let id = ctx.params.id;
-// 	const projectService = new ProjectService();
-// 	const project = await projectService.get(id, ctx._subId);
-
-// 	if (project === null) {
-// 	    await next()
-// 	} else {
-// 		//产品id
-// 		const title = '产品价格管理';
-
-// 		const pageJs = webpackIsomorphicTools.assets().javascript.projectPrices;
-// 		console.log(project);
-// 	    const name = project.name
-// 	    const prices = project.prices
-// 	    const csrf = ctx.csrf;
-// 	    // ctx.body = project;
-// 	    await ctx.render('projects/prices', {
-// 	        title,
-// 	        id,
-// 	        name,
-// 	        prices,
-// 	        pageJs,
-// 	        csrf
-// 	    });
-// 	}
-// }
-
-// export async function prices(ctx, next) {
-// 	//产品id
-// 	const id = ctx.params.id;
-// 	const prices = ctx.request.body.prices; //string
-
-//     const projectService = new ProjectService();
-//     const project = await projectService.addPrices(id, prices);
-// 	if (project === null) {
-//         throw new Error('prices fail');
-//     } else {
-//         ctx.body = project;
-//     }
-// }
-
-// export async function publish(ctx, next) {
-// 	//项目id
-// 	let id = ctx.params.id;
-
-// 	const projectService = new ProjectService();
-// 	const project = await projectService.publish(id);
-
-// 	if (project === null) {
-//         throw new Error('publish fail');
-//     } else {
-//         ctx.body = project;
-//     }
-// }
-
-// export async function revert(ctx, next) {
-// 	//项目id
-// 	let id = ctx.params.id;
-
-// 	const projectService = new ProjectService();
-// 	const project = await projectService.revert(id);
-
-// 	if (project === null) {
-//         throw new Error('revert fail');
-//     } else {
-//         ctx.body = project;
-//     }
-// }
-
-
 export async function detail(ctx, next) {
 	const id = ctx.params.id;
 	const projectService = new ProjectService();
@@ -333,7 +157,8 @@ export async function detail(ctx, next) {
 	    	if(project.slides.length === 0) {
 	    		template = 'detailEmptySlides'
 	    	}
-	        const title = '项目预览';
+
+	        const title = project.name + ' - ' + ctx._shop.title;
 
 	        const pageJs = webpackIsomorphicTools.assets().javascript.projectDetail;
 

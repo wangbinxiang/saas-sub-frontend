@@ -16,7 +16,7 @@ import {
 
 export default async(ctx, next) => {
     
-    const title = ctx._shop.title? ctx._shop.title: '首页';
+    const title = '首页 - ' + ctx._shop.title;
 
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
@@ -112,8 +112,6 @@ export default async(ctx, next) => {
         }
     }
 
-    console.log(slidesData)
-
     if (ctx.state.shopInfo.theme && ctx.state.shopInfo.theme == 'garden') {
         //园林首页
         const pageJs = webpackIsomorphicTools.assets().javascript.index;
@@ -123,7 +121,7 @@ export default async(ctx, next) => {
         //页面数据
         const info = await indexService.garden(ctx._subId);
 
-        const blocks = info.products.concat(info.projects);
+        const blocks = info.projects.concat(info.products);
 
         await ctx.render('garden/index', {
             title, 

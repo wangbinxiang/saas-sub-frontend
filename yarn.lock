@@ -2833,9 +2833,9 @@ koa-error@^2.1.0:
     co-render "1"
     lodash "4"
 
-koa-generic-session@^1.11.3:
-  version "1.11.3"
-  resolved "http://registry.npm.taobao.org/koa-generic-session/download/koa-generic-session-1.11.3.tgz#7dfe2031b85ee866594576affd8650b719c0acac"
+koa-generic-session@^1.11.5:
+  version "1.11.5"
+  resolved "http://registry.npm.taobao.org/koa-generic-session/download/koa-generic-session-1.11.5.tgz#430467152ccfc6f81baa944bad8683dd37df24ff"
   dependencies:
     copy-to "~2.0.1"
     crc "~3.4.0"
@@ -4727,11 +4727,7 @@ uuid@^2.0.1:
   version "2.0.3"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.0.0.tgz#6728fc0459c450d796a99c31837569bdf672d728"
-
-uuid@^3.0.1:
+uuid@^3.0.0, uuid@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
