@@ -13,6 +13,9 @@
             <link rel="stylesheet" href="/css/app.css?20161202" />
             <link rel="stylesheet" href="/css/appfix.css?20161031" />
         <% } %>
+        <% if(__IN_WECHAT__ && shopInfo.shopInfo) { %>
+            <%- include('../common/wechatRelationship') -%>
+        <% } %>
     </head>
     <body>
         <header class="top-bar <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden'){ %> top-bar--garden<% } %>" id="headerGlobal">

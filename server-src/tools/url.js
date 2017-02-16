@@ -16,6 +16,22 @@ export function addQuery(urlStr, query) {
 	return url.format(urlObj);
 }
 
+/**
+ * 删除url内的指定query
+ * @author wangbinxiang
+ * @date   2017-02-16T15:17:17+0800
+ * @param  {[type]}                 urlStr [description]
+ * @param  {[type]}                 query  删除的query key, 数组格式
+ * @return {[type]}                        [description]
+ */
+export function removeQuery(urlStr, query) {
+    let urlObj = url.parse(urlStr, true);
+    urlObj.search = '';
+    urlObj.query = lodash.unset(urlObj.query, query);
+
+    return url.format(urlObj);
+}
+
 export function queryNotMatch(urlStr, query) {
     const urlObj = url.parse(urlStr, true);
     if (lodash.isEmpty(urlObj.query)) {
