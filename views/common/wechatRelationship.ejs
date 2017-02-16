@@ -1,0 +1,9 @@
+<!-- 微信浏览器下，关系型注册网址添加修改页面url,增加关联人id和returnTo -->
+<script type="text/javascript">
+	console.log(location.href)
+	//parentId
+	console.log(<%= user.id %>)
+	//returnTo
+	console.log(window.btoa(location.href))		
+	history.pushState(null, null, location.href + '123')
+</script>
