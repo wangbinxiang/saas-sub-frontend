@@ -62,12 +62,14 @@ export default class MemberAdapter extends RequestAdapter {
 	children({
 		id,
 		filters,
-		pages
+		pages,
+		sort
 	}, aMemberClass) {
 		this.buildRequest(MEMBER_CHILDREN, {
 			id,
 			filters,
-			pages
+			pages,
+			sort
 		});
 
 		this.translator.pageClass = pageCLass;

@@ -144,9 +144,6 @@ export default class ChannelService {
 		const projectTypeAdapter = new ProjectTypeAdapter()
 		projectType = await projectTypeAdapter.get({ idList: projectTypeId }, ProjectType);
 
-		console.log(projectType.userId)
-		console.log(userId)
-
 		if (projectType && +projectType.userId === +userId) {
 			const pages = {
 		        number,

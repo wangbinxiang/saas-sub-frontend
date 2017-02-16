@@ -7,14 +7,14 @@
         </li>
     </ul>
 </nav>
-<% console.log(relationship) %>
+
 <h1 class="row column user-margin">关系信息</h1>
 
 <div class="row column">
     <h3>我的父关联人</h2>
     <p><%= relationship.parent? (relationship.parent.nickName? relationship.parent.nickName: relationship.parent.userName): 'chloroplast' %></p>
 
-    <h3>我的子关联人(<%= relationship.childrenCount %>人)</h2>
+    <h3>我的子关联人，总数<%= relationship.childrenCount %>人，显示最新的50人</h2>
     
     	<p>
     	<% if(relationship.children){ %>

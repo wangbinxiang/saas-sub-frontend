@@ -4,6 +4,7 @@
 	//parentId
 	console.log(<%= user.id %>)
 	//returnTo
-	console.log(window.btoa(location.href))		
+	console.log(window.btoa(location.href))
+	console.log(location.href.indexOf("?"))
 	history.pushState(null, null, location.href + '123')
 </script>

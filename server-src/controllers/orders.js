@@ -84,8 +84,6 @@ export async function addOrder(ctx, next) {
 		ctx.body = {};
 	} else {
 
-		console.log(result);
-
 		ctx.body = result;
 	}
 }
@@ -112,7 +110,6 @@ export async function get(ctx, next) {
 	const orderService = new OrderService();
 	let result = await orderService.index(filters, pages);
 	// let result = await orderService.get(8);
-	console.log(result);
 	ctx.body = result;
 }
 

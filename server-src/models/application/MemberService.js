@@ -134,8 +134,12 @@ export default class MemberService {
 			
 		}
 		try {
-			const childrenResult = await this.userAdapter.children({id: uid}, Member)
-			console.log(childrenResult)
+			const sort = '-id';
+			const pages = {
+		        number: 1,
+		        size: 50
+		    };
+			const childrenResult = await this.userAdapter.children({ id: uid, pages, sort }, Member)
 			if (childrenResult && childrenResult.result) {
 				children = childrenResult.result
 				childrenCount = childrenResult.count? childrenResult.count: 0
@@ -143,9 +147,6 @@ export default class MemberService {
 		} catch (err) {
 			
 		}
-		console.log(parent,
-			children,
-			childrenCount)
 		return {
 			parent,
 			children,

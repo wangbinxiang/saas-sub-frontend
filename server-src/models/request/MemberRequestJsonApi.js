@@ -55,7 +55,9 @@ export default class MemberRequestJsonApi extends BaseRequest {
 
         const pages = this.originData.pages ? this.originData.pages : '';
 
-        this.url = jsonApiGetUrl(baseUrl, null, { filters, pages });
+        const sort = this.originData.sort ? this.originData.sort : '';
+
+        this.url = jsonApiGetUrl(baseUrl, null, { filters, pages, sort });
 
         this.method = GET;
     }

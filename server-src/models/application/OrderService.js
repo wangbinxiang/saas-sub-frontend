@@ -42,7 +42,6 @@ export default class OrderService {
 			const account =	await accountAdapter.get({
 				idList: userId
 			}, Account)
-			console.log(account)
 
 			//获取分类信息
 			//
@@ -182,7 +181,6 @@ export default class OrderService {
 			const account =	await accountAdapter.get({
 				idList: userId
 			}, Account)
-			console.log(account)
 
 
 			return {
