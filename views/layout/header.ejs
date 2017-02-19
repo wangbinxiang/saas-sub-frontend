@@ -16,6 +16,17 @@
         <% if(__IN_WECHAT__ && shopInfo.relationship) { %>
             <%- include('../common/wechatRelationship') -%>
         <% } %>
+        <% if(shopInfo.id === '10021') { %>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?a75e1fef8364d40464550f7c3454c257";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+        <% } %>
     </head>
     <body>
         <header class="top-bar <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden'){ %> top-bar--garden<% } %>" id="headerGlobal">

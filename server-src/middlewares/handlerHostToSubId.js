@@ -75,6 +75,7 @@ export async function handlerHostToSubId(ctx, next) {
             const relationship = isAuthRelationship(ctx);
 
             ctx.state.shopInfo = {
+                id: shop.id,
                 logo,
                 contactPeoplePhone,
                 contactPeopleQQ,
