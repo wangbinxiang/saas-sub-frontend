@@ -24,12 +24,15 @@ export const ORDER_STATUS_NAME_LIST = {
 
 
 
-export const ORDER_PAY_TYPE_NORMAL = 1;
+export const ORDER_PAY_TYPE_NORMAL = 1;//微信支付
 
-export const ORDER_PAY_TYPE_THIRD = 3;
+export const ORDER_PAY_TYPE_OFFLINE = 2;//线下支付
+
+export const ORDER_PAY_TYPE_THIRD = 3;//第三方支付
 
 
 export const ORDER_PAY_TYPE_NAME_LIST = {
 	[ORDER_PAY_TYPE_NORMAL]: '微信支付',
+	[ORDER_PAY_TYPE_OFFLINE]: '线下支付',
 	[ORDER_PAY_TYPE_THIRD]: '海米支付',
 }

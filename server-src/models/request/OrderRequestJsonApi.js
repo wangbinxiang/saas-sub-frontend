@@ -80,7 +80,8 @@ export default class OrderRequestJsonApi extends BaseRequest {
 		this.method = PUT;
 
 		let attributes = {
-			payType: this.originData.payType
+			payType: this.originData.payType,
+			payComment: this.originData.payComment
 		};
 
 		this.buildData(attributes);

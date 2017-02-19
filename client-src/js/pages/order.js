@@ -47,7 +47,7 @@ if($('#orderDetail').length){
     ko.applyBindings(orderModel, document.getElementById('orderDetail'))
 }
 
-let OrderssModel = function(data){
+let OrdersModel = function(data){
     let self = this;
     self.orders = ko.observableArray(data.orders)
 
@@ -65,11 +65,11 @@ let OrderssModel = function(data){
 }
 
 if($('#listOrders').length){
-    let ordersModel = new OrderssModel(orders) 
+    let ordersModel = new OrdersModel(orders) 
     ko.applyBindings(ordersModel, document.getElementById('listOrders'))
 }
 
-let OrdersModel = function(orders){
+let OrderssModel = function(orders){
     let self = this
     self.orders = ko.observableArray(orders)
     self.isNext = ko.observable(isNext)
@@ -96,9 +96,83 @@ let OrdersModel = function(orders){
     }
 }
 if($('#ordersWrap').length){
-    let orderModel = new OrdersModel(data);
+    let orderModel = new OrderssModel(data);
     ko.applyBindings(orderModel, document.getElementById('ordersWrap'));
 }
+
+const PayTypeModel = function(payType) {
+    const self = this
+    this.comment = ko.observable()
+    this.payType = ko.observable(null)
+    this.showOffline = ko.observable(false)
+    this.showPayButton = ko.observable(false)
+    this.payType.subscribe((newValue) => {
+        switch(newValue) {
+            case '1':
+            case '3':
+                this.showOffline(false)
+                this.showPayButton(true)
+               break; 
+            case '2':
+                this.showOffline(true)
+                this.showPayButton(false)
+                break;
+        }
+    })  
+    this.payType(payType) 
+
+    this.offlineButtonText = ko.observable('提交转账信息')
+    this.offlineButtonDisable = ko.observable(false)
+    this.offlineButtonClick = function() {
+        Foundation.reInit($('#formOrderPayOffline'));
+        $('#formOrderPayOffline').foundation('validateForm');
+
+        if($('[data-invalid]').length === 0){
+            self.offlineButtonDisable(true)
+            self.offlineButtonText('正在提交转账信息,请稍后.')
+
+            const comment = self.comment()
+
+            $.ajax({
+                method: 'PUT',
+                url: '/orders/' + orderId + '/offline-pay' ,
+                dataType: "json",
+                data: { comment }
+            })
+            .done(function(response) {
+                alert('提交成功');
+                location.reload();
+            })
+            .fail(function(response){
+                alert('提交失败，请稍后再试。');
+                self.offlineButtonDisable(false)
+                self.offlineButtonText('提交转账信息')
+            })
+
+        } else {
+            $("html, body").animate({ scrollTop: $('.is-invalid-label, is-invalid-input').eq(0).offset().top });
+        }
+    }
+
+    this.payButtonDisable = ko.observable(false)
+    this.payButtonClick = function() {
+        self.payButtonDisable(true)
+        const payType = self.payType()
+        let url = '';
+        if (payType === '1') {
+            url = 'http://' + hubHost + '/wechat/pay/?id=' + orderId
+        } else if(payType === '3') {
+            url = '/orders/' + orderId + '/third-pay'
+        }
+        location.href = url
+    }
+}
+if($('#payTypeDiv').length){
+    const payTypeModel = new PayTypeModel(payType);
+    ko.applyBindings(payTypeModel, document.getElementById('payTypeDiv'));
+}
+
+
 
 //第三方支付
 $('#thirdPay').click(function(){
@@ -115,21 +189,4 @@ $('#thirdPay').click(function(){
         alert('支付失败。');
         $('#thirdPay').attr('disabled', false);
     })
-})
-
-//第三方支付
-$('#payButton').click(function(){
-    $('#payButton').attr('disabled', true);
-
-    const payType = $("input[name='payType']:checked").val()
-
-    let url = '';
-
-    if (payType == 1) {
-        url = 'http://' + hubHost + '/wechat/pay/?id=' + orderId
-    } else if(payType == 3) {
-        url = '/orders/' + orderId + '/third-pay'
-    }
-
-    location.href = url
 })

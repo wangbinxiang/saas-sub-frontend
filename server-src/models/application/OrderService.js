@@ -17,6 +17,7 @@ import { checkOther } from '../../libs/helper';
 import {
 	ORDER_PAY_TYPE_NORMAL,
 	ORDER_PAY_TYPE_THIRD,
+	ORDER_PAY_TYPE_OFFLINE,
 	ORDER_PAY_TYPE_NAME_LIST
 } from '../../config/orderConf';
 
@@ -204,9 +205,17 @@ export default class OrderService {
 	}
 
 
+	async offlinePay(id, payComment, userId, shopId) {
+		let order = await this.orderAdapter.get({
+			idList: id
+		}, Order);
 
-
-
+		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
+			return null;
+		} else {
+			return await this.orderAdapter.pay({ id, payComment, payType: ORDER_PAY_TYPE_OFFLINE }, Order);
+		}
+	}
 
 	async addOrder(userId, shopId, price, comment, productList) {
 		//获取产品信息

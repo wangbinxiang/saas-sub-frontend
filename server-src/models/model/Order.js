@@ -12,6 +12,7 @@ export default class Order {
 		payType,
 		category,
 		payTime,
+		payComment,
 		comment,
 		freight,
 		users,
@@ -27,6 +28,7 @@ export default class Order {
  		this.payType = payType;
  		this.category = category;
  		this.payTime = payTime;
+ 		this.payComment = payComment;
  		this.comment = comment;
  		this.freight = freight;
 		this.userId = users;

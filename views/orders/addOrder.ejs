@@ -74,6 +74,7 @@
                     <% if(haimi && account.source && account.source.balance) { %>
                         <input type="radio" name="payType" <% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>(余额不足)<% } %></label>
                     <% } %>
+                    <input type="radio" name="payType" value="2"><label for="pokemonRed">线下支付</label>
                 </fieldset>
             </div>
         </fieldset>
@@ -82,7 +83,7 @@
         <fieldset class="fieldset">
             <legend><h4>合同信息</h4></legend>
             <div class="row column">
-                <label><input type="checkbox" required /> 接受合同<a data-open="contractPanel" onclick="return false;"><%= contract.title %></a>的条款
+                <label><input type="checkbox"  required  checked /> 接受合同<a data-open="contractPanel" onclick="return false;"><%= contract.title %></a>的条款
                 <span class="form-error">
                     请查看并选择接受合同条款
                 </span>

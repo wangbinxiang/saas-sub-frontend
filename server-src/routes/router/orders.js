@@ -6,6 +6,7 @@ import {
 	get,
 	showThirdPay,
 	thirdPay,
+	offlinePay,
     index,
 	detail,
 	jumpPay
@@ -33,6 +34,8 @@ router.post('/', addOrder);
 router.get('/:id/third-pay', showThirdPay);
 
 router.put('/:id/third-pay', thirdPay);
+
+router.put('/:id/offline-pay', offlinePay);
 
 //订单列表页面
 router.get('/', navigation, index);

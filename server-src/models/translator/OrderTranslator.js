@@ -15,6 +15,7 @@ export default class OrderTranslator extends Translator {
         let payType = bodyReader.value('payType');
         let category = bodyReader.value('category');
         let payTime = bodyReader.value('payTime');
+        let payComment = bodyReader.value('payComment');
         let comment = bodyReader.value('comment');
         let freight = bodyReader.value('freight');
         let users = bodyReader.value('users');
@@ -31,6 +32,7 @@ export default class OrderTranslator extends Translator {
             payType,
             category,
             payTime,
+            payComment,
             comment,
             freight,
             users,

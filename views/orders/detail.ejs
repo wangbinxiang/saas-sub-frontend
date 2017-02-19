@@ -29,50 +29,84 @@
 <div class="row column">
     <div class="callout alert">
         <h4>等待用户完成订单支付！</h4>
-        <p>订购时间 2016-12-12 13:30:30。</p>
     </div>
 </div>
 
-<% if(haimi && account.source && account.source.balance){ %>
-<div class="row column">
+
+<div class="row column" id="payTypeDiv">
+    <% if(haimi && account.source && account.source.balance){ %>
     <fieldset class="fieldset">
         <legend><h4>海米余额</h4></legend>
         <div class="row column">
             <label><%= account.source.balance %>海米</label>
         </div>
     </fieldset>
+    <% } %>
 
     <fieldset class="fieldset">
         <legend><h4>支付方式</h4></legend>
         <div class="row">
             <fieldset class="columns">
-                <input type="radio" name="payType" value="1" checked><label for="pokemonRed">微信支付</label>
+                <input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_NORMAL%>" checked><label for="pokemonRed">微信支付</label>
+                <% if(haimi && account.source && account.source.balance){ %>
+                <input type="radio" name="payType" data-bind="checked: payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="<%= ORDER_PAY_TYPE_THIRD%>" ><label for="pokemonRed">海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %></label>
+                <% } %>
 
-                <input type="radio" name="payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %></label>
+                <input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_OFFLINE%>" ><label for="pokemonRed">线下支付</label>
             </fieldset>
         </div>
     </fieldset>
+    <form data-abide="ajax" novalidate id="formOrderPayOffline" data-bind="visible: showOffline" style="display: none;">
+        <fieldset class="fieldset">
+            <legend><h4>线下支付方式收款账户信息</h4></legend>
+            <label>
+                开户行：招商银行北京分行海淀支行 <br />
+
+                账号：110925217610902 <br />
+
+                名称：景运（北京）科技有限公司 <br />
+
+                （提示：线下付款订单生效以收款账号收到付款为有效）
+            </label>
+        </fieldset>
+        <fieldset class="fieldset">
+        <legend><h4>转账信息</h4></legend>
+        
+        <div>
+            <label>请填写付款人姓名和付款账号
+                <textarea rows="3" id="comment" data-bind="textInput: comment" required></textarea>
+                <span class="form-error">
+                    请填写转账信息
+                </span>
+            </label>                
+        </div>
+        </fieldset>
+
+        <div class="row text-center form-submit-wrap">
+            <button id="offlineButton" data-bind="click: offlineButtonClick, disable: offlineButtonDisable, text: offlineButtonText" class="button large"></button>
+        </div>
+    </form>
+    <div class="row text-center form-submit-wrap" data-bind="visible: showPayButton">
+        <button id="payButton" data-bind="click: payButtonClick, disable: payButtonDisable" class="button large">支付定单</button>
+    </div>
 </div>
-<div class="row text-center form-submit-wrap">
-    <button id="payButton" class="button large">支付定单</button>
-</div>
-<% } else { %>
-<div class="row text-center form-submit-wrap">
-    <a class="button large" href="http://<%=hubHost%>/wechat/pay/?id=<%= order.id %>">支付定单</a>
-</div>
-<% } %>
 
 <% } else if(order.status === 5) { %>
 
 <div class="row column">
     <div class="callout success">
         <h4>订单已完成！</h4>
-        <p>订购时间 2016-12-12 13:30:30。</p>
     </div>
 </div>
 
-<% } %>
+<% } else if(order.status == 3 && order.payType == 2) { %>
 
+<div class="row column">
+    <div class="callout success">
+        <h4>已选择线下支付，请等待后台确认转账信息</h4>
+    </div>
+</div>
+<% } %>
 
 
 <div class="row column">
@@ -101,9 +135,6 @@
     </table>   
 
     <form data-abide novalidate>
-        <div data-abide-error class="alert callout" style="display: none;">
-            <p><i class="fi-alert"></i> There are some errors in your form.</p>
-        </div>
         <fieldset class="fieldset">
             <legend><h4>客户留言</h4></legend>
             <div class="row">
@@ -125,7 +156,18 @@
             </div>
         </fieldset>
         <% } %>
-
+        <% if(order.payComment) { %>
+        <fieldset class="fieldset">
+            <legend><h4>线下转账信息</h4></legend>
+            <div class="row">
+                <div class="small-12 columns">
+                    <label>
+                        <%= order.payComment.comment %>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+        <% } %>
         <% if(order.products[0].contractSnapshot.id) { %>
             <fieldset class="fieldset">
                 <legend><h4>合同信息</h4></legend>
@@ -171,6 +213,7 @@
 </div>
 <% } %>
 <script>
+    var payType = '<%= payType %>'
     var orderId = <%= order.id %>
     var hubHost = '<%= hubHost %>'
 </script>

@@ -5,6 +5,7 @@ import nl2br from 'nl2br';
 import {
 	ORDER_PAY_TYPE_NORMAL,
 	ORDER_PAY_TYPE_THIRD,
+	ORDER_PAY_TYPE_OFFLINE,
 	ORDER_PAY_TYPE_NAME_LIST
 } from '../config/orderConf';
 
@@ -182,6 +183,24 @@ export async function thirdPay(ctx, next) {
 }
 
 
+export async function offlinePay(ctx, next) {
+	const userId = ctx.state.user.id;
+	const shopId = ctx._subId;
+	//订单id
+	const id = ctx.params.id;
+
+	const payComment = { comment: ctx.request.body.comment }
+
+	const orderService = new OrderService();
+	const order = await orderService.offlinePay(id, payComment, userId, shopId);
+
+	if (order === null) {
+        throw new Error('thirdPay fail');
+    } else {
+        ctx.body = order;
+    }
+}
+
 
 
 /**
@@ -269,6 +288,8 @@ export async function detail(ctx, next) {
 	//订单id
 	let id = ctx.params.id;
 
+	const payType = ctx.query.payType? ctx.query.payType: 1;
+
 	const orderService = new OrderService();
 	const result = await orderService.detail(id, userId, shopId);
 	if (result === null) {
@@ -290,6 +311,7 @@ export async function detail(ctx, next) {
 		const imgHost = config.get('qiniu.bucket.subImg.url');
 
 		await ctx.render('orders/detail', {
+			payType,
 			haimi,
 			title,
 			pageJs,
@@ -298,6 +320,9 @@ export async function detail(ctx, next) {
 			hubHost,
 			imgHost,
 			nl2br,
+			ORDER_PAY_TYPE_NORMAL,
+			ORDER_PAY_TYPE_THIRD,
+			ORDER_PAY_TYPE_OFFLINE,
 			ORDER_PAY_TYPE_NAME_LIST
 		});
 	}
@@ -321,9 +346,12 @@ export async function jumpPay(ctx, next) {
 	let redirect = ''
 	if (payType == ORDER_PAY_TYPE_THIRD) {
 		redirect = '/orders/' + id + '/third-pay'
-	} else {
+	} else if(payType == ORDER_PAY_TYPE_NORMAL) {
 		redirect = 'http://' + config.get('host.hub') + '/wechat/pay/?id=' + id;
+	} else if (payType == ORDER_PAY_TYPE_OFFLINE) {
+		redirect = '/orders/' + id + '?payType=2'
 	}
+
 
 	ctx.redirect(redirect);
 
