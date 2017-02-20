@@ -9,6 +9,7 @@ import logger from 'koa-logger'
 import koaStaticCache from 'koa-static-cache';
 import koaerro from 'koa-error';
 import session from 'koa-generic-session';
+import compress from 'koa-compress'
 // import mysqlSession from 'koa-mysql-session';
 import memcacheSession from 'koa-memcached';
 import passport from 'koa-passport';
@@ -29,10 +30,12 @@ import passportRegister from './passport';
 
 
 const app = new Koa()
-
+app.use(compress())
 // static
 //缓存一个月
-app.use(convert(koaStaticCache(path.join(__dirname, '../client'), { maxAge: 2592000 })));
+app.use(convert(koaStaticCache(path.join(__dirname, '../client'), { 
+  maxAge: 2592000
+})));
 
 
 const bodyparser = Bodyparser()
