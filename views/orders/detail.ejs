@@ -156,13 +156,13 @@
             </div>
         </fieldset>
         <% } %>
-        <% if(order.payComment) { %>
+        <% if(order.payType == 2 && order.payComment.comment) { %>
         <fieldset class="fieldset">
             <legend><h4>线下转账信息</h4></legend>
             <div class="row">
                 <div class="small-12 columns">
                     <label>
-                        <%= order.payComment.comment %>
+                        <%- nl2br(order.payComment.comment) %>
                     </label>
                 </div>
             </div>

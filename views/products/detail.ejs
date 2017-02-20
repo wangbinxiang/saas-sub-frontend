@@ -8,14 +8,14 @@
         </li>
     </ul>
 </nav>
-<h1 class="row pageHeader"><%= product.name %></h1>
+<h1 class="row pageHeader"><%- product.name %></h1>
 <div class="expanded row detail-top">
     <div class="large-6 medium-12 columns">
         <div class="jcarousel-wrapper">
             <div class="jcarousel">
                 <ul>
                     <% for(let slide of product.slides) { %>
-                    <li><img src="<%= imgHost +  slide %>" /></li>
+                    <li><img src="<%- imgHost +  slide %>" /></li>
                     <% } %>
                 </ul>
             </div>
@@ -25,19 +25,19 @@
     </div>
     <div class="large-6 medium-12 columns">
         <div class="clearfix detailPrice">
-            <div class="p-margin-bottom lbPrice" id="priceStatDiv" style="display:<%= product.prices.length > 0 && product.prices[0].rebate? 'none': '' %>;">
+            <div class="p-margin-bottom lbPrice" id="priceStatDiv" style="display:<%= product.prices.length > 0 && product.prices[0].rebate > 0? 'none': '' %>;">
                 单价￥<b class="stat" id="priceStat"><%= product.prices.length > 0 ? product.prices[0].price : '' %></b>
             </div>
-            <div class="small-6 columns medium-text-center" id="priceRelationshipDiv" style="display:<%= product.prices.length == 0 || !product.prices[0].rebate? 'none': '' %>;">
+            <div class="small-6 columns medium-text-center" id="priceRelationshipDiv" style="display:<%= product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
                 <label>单价</label>￥<b class="stat" id="priceRelationship"><%= product.prices.length > 0 ? product.prices[0].price : '' %></b>
             </div>
-            <div class="small-6 columns medium-text-center" id="rebateRelationshipDiv" style="display:<%= product.prices.length == 0 || !product.prices[0].rebate? 'none': '' %>;">
+            <div class="small-6 columns medium-text-center" id="rebateRelationshipDiv" style="display:<%= product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
                 <label>分享分红</label>￥<b class="stat" id="rebateRelationship"><%= product.prices.length > 0 ? product.prices[0].rebate : '' %></b>
             </div>
             <div class=" filter-bar filter-bar--sku" id="skuBar">
                 <div class="button-group single" id="priceLabels">
                     <% for(let i in product.prices) { %>
-                    <a class="button<%= i == 0 ? ' checked' : '' %>" data-price="<%= product.prices[i].price %>" <% if(product.prices[i].rebate) { %>data-rebate="<%= product.prices[i].rebate %>"<% } %> ><%= product.prices[i].title %></a>
+                    <a class="button<%= i == 0 ? ' checked' : '' %>" data-price="<%= product.prices[i].price %>" <% if(product.prices[i].rebate) { %>data-rebate="<%= product.prices[i].rebate %>"<% } %> ><%- product.prices[i].title %></a>
                     <% } %>
                 </div>
             </div>
@@ -77,14 +77,14 @@
         <% if (product.description[i].type == "image" && product.description[i].value){ %>
             <% if (product.description[i].value.url){ %>
                 <% if (product.description[i].value.link){ %>
-                    <a href="<%= 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + product.description[i].value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                    <a href="<%- 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%- imgHost + product.description[i].value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
                 <% } else { %>
-                    <img src="<%= imgHost + product.description[i].value.url %>" />
+                    <img src="<%- imgHost + product.description[i].value.url %>" />
                 <% } %>
             <% } %>
         <% } else if (product.description[i].type == "text" && product.description[i].value) { %>
             <% if(product.description[i].value.title != ''){ %>
-            <h6<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%= product.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+            <h6<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- product.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
             <% } %>
             <p<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
         <% } %>

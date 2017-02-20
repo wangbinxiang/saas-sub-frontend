@@ -311,6 +311,7 @@ export async function detail(ctx, next) {
 		const imgHost = config.get('qiniu.bucket.subImg.url');
 
 		await ctx.render('orders/detail', {
+			nl2br,
 			payType,
 			haimi,
 			title,
