@@ -288,8 +288,6 @@ export async function detail(ctx, next) {
 	//订单id
 	let id = ctx.params.id;
 
-	const payType = ctx.query.payType? ctx.query.payType: 1;
-
 	const orderService = new OrderService();
 	const result = await orderService.detail(id, userId, shopId);
 	if (result === null) {
@@ -303,6 +301,10 @@ export async function detail(ctx, next) {
 			order,
 			account
 		} = result
+
+		const payType = ctx.query.payType? ctx.query.payType: 
+						order.payType > 0? order.payType:
+						1
 
 		const title = '订单详情'
 		const pageJs = webpackIsomorphicTools.assets().javascript.order;
