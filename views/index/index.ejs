@@ -41,7 +41,7 @@
         <% for(let v of products) { %>
         <div class="column">
             <a href="/products/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
-                <img src="<%= imgHost %><%= v.logo %>?imageView2/1/interlace/1" />
+                <img src="<%= imgHost %><%= v.logo %>" />
                 <b>
                     <%= v.name %>
                 </b>
@@ -64,7 +64,7 @@
         <% for(let v of projects) { %>
         <div class="column">
             <a href="/projects/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
-                <img src="<%= imgHost %><%= v.logo %>?imageView2/1/interlace/1" />
+                <img src="<%= imgHost %><%= v.logo %>" />
                 <b>
                     <%= v.name %>
                 </b>
@@ -87,7 +87,7 @@
         <% for(let v of articles) { %>
         <div class="column">
             <a href="/articles/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
-                <img src="<%= imgHost %><%= v.logo %>?imageView2/1/interlace/1" />
+                <img src="<%= imgHost %><%= v.logo %>" />
                 <b>
                     <%= v.title %>
                 </b>
