@@ -5,12 +5,12 @@
         <ul>
             <% for(let i of info.slideProducts) { %>
             <li>
-                <a href="/products/<%= i.id %>">
+                <a href="/products/<%- i.id %>">
                     <div>
-                        <img src="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427" srcset="<%= imgHost + i.logo %>?imageView2/1/w/640/h/427 1x, <%= imgHost + i.logo %> 1.5x">
+                        <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x">
                     </div>
-                    <b class="lead" style="padding-right:7.5rem;"><%= i.name %></b>
-                    <span style="display:block;"><sup>￥</sup><strong><%= i.minPrice %></strong> <small>起</small></span>
+                    <b class="lead" style="padding-right:7.5rem;"><%- i.name %></b>
+                    <span style="display:block;"><sup>￥</sup><strong><%- i.minPrice %></strong> <small>起</small></span>
                 </a>
             </li>
             <% } %>
@@ -25,13 +25,13 @@
 <div class="hot-bar-wrap clearfix">
     <div class="top-bar hot-bar clearfix">
         <ul class="dropdown menu index" data-dropdown-menu id="tagFilter">
-            <li class="menu-text"><%= info.channelName %></li>
+            <li class="menu-text"><%- info.channelName %></li>
             <li>
                 <a href="/garden/products/">全部</a>
             </li>
             <% for(let i of info.productTypes) { %>
             <li>
-                <a href="/channel/productTypes/<%= i.id %>"><%= i.name %></a>
+                <a href="/channel/productTypes/<%- i.id %>"><%- i.name %></a>
             </li>
             <% } %>
         </ul>
@@ -42,12 +42,12 @@
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap">
         <% for(let i of info.products) { %>
         <div class="column">
-            <a class="masonry-item" href="/products/<%= i.id %>">
-                <img src="<%= imgHost + i.logo %>" />
+            <a class="masonry-item" href="/products/<%- i.id %>">
+                <img src="<%- imgHost + i.logo %><%- imgListStyle %>" />
                 <b>
-                    <%= i.name %>
+                    <%- i.name %>
                 </b>
-                <em><%= i.feature %><br />
+                <em><%- i.feature %><br />
                 </em>
                 <span> ￥<strong>15678</strong> <small>起</small></span>
                 <i class="small expanded button">查看详情</i>

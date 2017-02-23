@@ -5,7 +5,10 @@ import {
 import nl2br from 'nl2br';
 import config from 'config';
 import { isAuthRelationship } from '../tools/auth';
-
+import {
+    detailSlideStyle,
+    detailStyle
+} from '../tools/imgStyle';
 
 /**
  * 产品详情页面
@@ -27,6 +30,9 @@ export async function detail(ctx, next) {
         await next();
     } else {
 
+        const imgDetailSlideStyle = detailSlideStyle(ctx)
+        const imgDetailStyle = detailStyle(ctx)
+
         const showRelationship = isAuthRelationship(ctx);
 
         const title = product.name + ' - ' + ctx._shop.title;
@@ -42,7 +48,9 @@ export async function detail(ctx, next) {
             nl2br,
             subId,
             imgHost,
-            showRelationship
+            showRelationship,
+            imgDetailSlideStyle,
+            imgDetailStyle
         });
     }
 }

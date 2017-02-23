@@ -1,6 +1,9 @@
 import ChannelService from '../models/application/ChannelService';
 import config from 'config';
-
+import {
+    slideStyle,
+    listStyle
+} from '../tools/imgStyle';
 
 
 export async function articles(ctx, next) {
@@ -11,8 +14,6 @@ export async function articles(ctx, next) {
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
-    const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-
     const channelService = new ChannelService()
     const info = await channelService.gardenArticles(ctx._subId)
     // const categories = {}
@@ -21,12 +22,18 @@ export async function articles(ctx, next) {
     // }
     const title = info.channelName + ' - ' + ctx._shop.title;
 
+    const imgSlideStyle = slideStyle(ctx)
+
+    const imgListStyle = listStyle(ctx)
+
+
     await ctx.render('garden/articles', {
         title, 
         pageJs,
         info,
         imgHost,
-        imgStyle
+        imgSlideStyle,
+        imgListStyle
     });
 }
 
@@ -37,8 +44,6 @@ export async function products(ctx, next) {
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
-    const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-
     const id = ctx.params.id? ctx.params.id: 0;
 
     const channelService = new ChannelService()
@@ -46,12 +51,16 @@ export async function products(ctx, next) {
 
     const title = info.channelName + ' - ' + ctx._shop.title;
 
+    const imgSlideStyle = slideStyle(ctx)
+    const imgListStyle = listStyle(ctx)
+
     await ctx.render('garden/products', {
         title, 
         pageJs,
         info,
         imgHost,
-        imgStyle
+        imgListStyle,
+        imgSlideStyle
     });
 }
 
@@ -63,8 +72,6 @@ export async function projects(ctx, next) {
 
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
-    const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-
     const id = ctx.params.id? ctx.params.id: 0;
 
     const channelService = new ChannelService()
@@ -72,12 +79,14 @@ export async function projects(ctx, next) {
 
     const title = info.channelInfo.name + ' - ' + ctx._shop.title;
 
+    const imgListStyle = listStyle(ctx)
+
     await ctx.render('garden/projects', {
         title,
         pageJs,
         info,
         imgHost,
-        imgStyle
+        imgListStyle
     });
 }
 

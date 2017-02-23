@@ -4,20 +4,20 @@
     <ul class="breadcrumbs onionLink">
         <li><a href="/">首页</a></li>
         <li>
-            <span class="show-for-sr">当前: </span> <%= info.channelInfo.name %>
+            <span class="show-for-sr">当前: </span> <%- info.channelInfo.name %>
         </li>
     </ul>
 </nav>
 
-<h1 class="row column"><%= info.channelInfo.name %></h1>
+<h1 class="row column"><%- info.channelInfo.name %></h1>
 <% if(info.projects) { %>
 <div class="row column blk-margin">
     <% for(let i of info.projects) { %>
     <div>
-        <a class="article-item clearfix" href="/projects/<%= i.id %>">
-            <figure style="background-image:url('<%= imgHost + i.logo %>')"></figure>
-            <h4><%= i.name %></h4>
-            <p><%= i.feature %></p>
+        <a class="article-item clearfix" href="/projects/<%- i.id %>">
+            <figure style="background-image:url('<%- imgHost + i.logo %><%- imgListStyle %>')"></figure>
+            <h4><%- i.name %></h4>
+            <p><%- i.feature %></p>
         </a>
     </div>
     <% } %>

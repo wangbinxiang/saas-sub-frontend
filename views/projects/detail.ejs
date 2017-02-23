@@ -14,7 +14,7 @@
             <div class="jcarousel">
                 <ul>
                     <% for(let slide of project.slides) { %>
-                    <li><img src="<%= imgHost + slide %>" /></li>
+                    <li><img src="<%- imgHost + slide %><%- imgDetailSlideStyle %>" /></li>
                     <% } %>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
             <div class="filter-bar filter-bar--sku" id="skuBar">
                 <div class="button-group single" id="priceLabels">
                     <% for(let i in project.prices) { %>
-                    <a class="button<%= i == 0 ? ' checked' : '' %>" data-price="<%= project.prices[i].price %>"><%= project.prices[i].title %></a>
+                    <a class="button<%- i == 0 ? ' checked' : '' %>" data-price="<%- project.prices[i].price %>"><%- project.prices[i].title %></a>
                     <% } %>
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <legend><h4>附件下载</h4></legend>
         <div class="attachments">
         <% for (let attachment of project.attachments) { %>
-            <a href="<%= imgHost + attachment %>"><%= attachment %></a><br />
+            <a href="<%- imgHost + attachment %>"><%- attachment %></a><br />
         <% } %>
         </div>
     </fieldset>
@@ -62,14 +62,14 @@
         <% if (project.description[i].type == "image" && project.description[i].value){ %>
             <% if (project.description[i].value.url){ %>
                 <% if (project.description[i].value.link){ %>
-                    <a href="<%= 'http://' + project.description[i].value.link %>" class="image-link-"><img src="<%= imgHost + project.description[i].value.url %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                    <a href="<%- 'http://' + project.description[i].value.link %>" class="image-link-"><img src="<%- imgHost + project.description[i].value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
                 <% } else { %>
-                    <img src="<%= imgHost + project.description[i].value.url %>" />
+                    <img src="<%- imgHost + project.description[i].value.url %><%- imgDetailStyle %>" />
                 <% } %>
             <% } %>
         <% } else if (project.description[i].type == "text" && project.description[i].value) { %>
             <% if(project.description[i].value.title != ''){ %>
-            <h6<% if (project.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%= project.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+            <h6<% if (project.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- project.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
             <% } %>
             <p<% if (project.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(project.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
         <% } %>

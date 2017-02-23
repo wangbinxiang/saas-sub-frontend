@@ -8,7 +8,7 @@
     </ul>
 </nav>
 
-<h1 class="row column"><%= productType.name %></h1>
+<h1 class="row column"><%- productType.name %></h1>
 <div class="masonry-wrap-outer">
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="template: { foreach: prods, afterAdd: afterAdd }">
         <div class="column">
@@ -27,11 +27,11 @@
 </div>
 
 <script>
-	var productTypeId = <%= productTypeId %>;
+	var productTypeId = <%- productTypeId %>;
 	var data = <%- JSON.stringify(products? products: []) %>;
-    var isNext = <%= isNext %>;
-    var imgHost = '<%= imgHost %>';
-    var imgStyle = '<%= imgStyle %>';
+    var isNext = <%- isNext %>;
+    var imgHost = '<%- imgHost %>';
+    var imgStyle = '<%- imgListStyle %>';
 </script>
 
 

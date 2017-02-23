@@ -19,6 +19,11 @@ import {
     SHOP_SLIDES_TYPE_NAMES
 } from '../config/shopConf'
 
+import {
+    slideStyle,
+    slideOneStyle,
+    listStyle
+} from '../tools/imgStyle';
 
 
 export async function index(ctx, next) {
@@ -29,6 +34,8 @@ export async function index(ctx, next) {
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+
+    const imgListStyle = listStyle(ctx)
 
     //幻灯片
     let slidesData = [];
@@ -126,6 +133,9 @@ export async function index(ctx, next) {
 
         const indexService = new IndexService();  
 
+        const imgSlideOneStyle = slideOneStyle(ctx)
+
+
         //页面数据
         const info = await indexService.garden(ctx._subId);
 
@@ -139,6 +149,8 @@ export async function index(ctx, next) {
             blocks,
             imgHost,
             imgStyle,
+            imgSlideOneStyle,
+            imgListStyle,
             SHOP_SLIDES_TYPE_PRODUCT,
             SHOP_SLIDES_TYPE_ARTICLE,
             SHOP_SLIDES_TYPE_PROJECT,
@@ -221,7 +233,7 @@ export async function index(ctx, next) {
 
             const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
-            
+            const imgSlideStyle = slideStyle(ctx)
 
             await ctx.render('index/index', {
                 title,
@@ -234,6 +246,8 @@ export async function index(ctx, next) {
                 pageJs,
                 imgHost,
                 imgStyle,
+                imgSlideStyle,
+                imgListStyle,
                 SHOP_SLIDES_TYPE_PRODUCT,
                 SHOP_SLIDES_TYPE_ARTICLE,
                 SHOP_SLIDES_TYPE_PROJECT,
