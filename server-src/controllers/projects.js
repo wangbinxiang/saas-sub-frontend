@@ -10,6 +10,10 @@ import {
 } from '../config/projectConf';
 import nl2br from 'nl2br';
 import config from 'config';
+import {
+    detailSlideStyle,
+    detailStyle
+} from '../tools/imgStyle';
 
 
 export async function index(ctx, next) {
@@ -158,6 +162,9 @@ export async function detail(ctx, next) {
 	    		template = 'detailEmptySlides'
 	    	}
 
+	    	const imgDetailSlideStyle = detailSlideStyle(ctx)
+        	const imgDetailStyle = detailStyle(ctx)
+
 	        const title = project.name + ' - ' + ctx._shop.title;
 
 	        const pageJs = webpackIsomorphicTools.assets().javascript.projectDetail;
@@ -169,7 +176,9 @@ export async function detail(ctx, next) {
 	            project,
 	            pageJs,
 	            nl2br,
-	            imgHost
+	            imgHost,
+	            imgDetailSlideStyle,
+	            imgDetailStyle
 	        });
 	    }
 	}

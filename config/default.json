@@ -93,7 +93,15 @@
         "url": "http://oew2ozpi2.bkt.clouddn.com/",
         "style": {
           "productList": "-productList",
-          "productWaterFall": "-productWaterFall"
+          "productWaterFall": "-productWaterFall",
+          "w1200jpg": "-w1200jpg",
+          "w1200jpgslim": "-w1200jpgslim",
+          "w1980jpg": "-w1980jpg",
+          "w1980jpgslim": "-w1980jpgslim",
+          "w640h427jpg": "-w640h427jpg",
+          "w640h427jpgslim": "-w640h427jpgslim",
+          "w640jpg": "-w640jpg",
+          "w640jpgslim": "-w640jpgslim"
         }
       }
     }

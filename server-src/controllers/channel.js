@@ -2,6 +2,9 @@ import ChannelService from '../models/application/ChannelService';
 import ProductService from '../models/application/ProductService';
 import config from 'config';
 import lodash from 'lodash';
+import {
+    listStyle
+} from '../tools/imgStyle';
 
 
 
@@ -51,6 +54,8 @@ export async function productType(ctx, next) {
 
 			const pageJs = webpackIsomorphicTools.assets().javascript.channel;
 
+			const imgListStyle = listStyle(ctx)
+
 			await ctx.render('channel/productType', {
 				productTypeId,
 				title,
@@ -58,6 +63,7 @@ export async function productType(ctx, next) {
 				number,
 				imgHost,
 				imgStyle,
+				imgListStyle,
 				isNext,
 				products,
 				productType,
@@ -102,6 +108,8 @@ export async function category(ctx, next) {
 
 			const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
+			const imgListStyle = listStyle(ctx)
+
 			await ctx.render('channel/category', {
 				categoryId,
 				title,
@@ -111,7 +119,8 @@ export async function category(ctx, next) {
 				articles,
 				category,
 				imgHost,
-				imgStyle
+				imgStyle,
+				imgListStyle
 			});
 		}
 	}
@@ -153,6 +162,8 @@ export async function projectType(ctx, next) {
 
 			const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
 
+			const imgListStyle = listStyle(ctx)
+
 			await ctx.render('channel/projectType', {
 				projectTypeId,
 				title,
@@ -162,7 +173,8 @@ export async function projectType(ctx, next) {
 				projects,
 				projectType,
 				imgHost,
-				imgStyle
+				imgStyle,
+				imgListStyle
 			});
 		}
 	}

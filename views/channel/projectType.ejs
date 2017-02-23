@@ -8,13 +8,13 @@
     </ul>
 </nav>
 
-<h1 class="row column"><%= projectType.name %></h1>
+<h1 class="row column"><%- projectType.name %></h1>
 
 <div class="row column blk-margin">
     <div data-bind="foreach:projects" id="projects">
         <a class="article-item clearfix" data-bind="attr:{href: '/projects/' + id}">
 
-            <figure data-bind="attr:{style: 'background-image:url(<%= imgHost %>' + logo + '<%= imgStyle%>)'}"></figure>
+            <figure data-bind="attr:{style: 'background-image:url(<%- imgHost %>' + logo + '<%= imgListStyle%>)'}"></figure>
             <h4 data-bind="text:name"></h4>
             <p data-bind="text:feature"></p>
         </a>
@@ -26,9 +26,9 @@
 </div>
 
 <script>
-	var projectTypeId = <%= projectTypeId %>;
+	var projectTypeId = <%- projectTypeId %>;
 	var data = <%- JSON.stringify(projects? projects: []) %>;
-    var isNext = <%= isNext %>;
+    var isNext = <%- isNext %>;
 </script>
 
 

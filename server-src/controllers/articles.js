@@ -1,6 +1,9 @@
 import ArticlesService from '../models/application/ArticlesService';
 import nl2br from 'nl2br';
 import config from 'config';
+import {
+    detailStyle
+} from '../tools/imgStyle';
 
 export async function detail(ctx, next) {
 	//文章id
@@ -16,12 +19,15 @@ export async function detail(ctx, next) {
 
 	    const imgHost = config.get('qiniu.bucket.subImg.url');
 
+        const imgDetailStyle = detailStyle(ctx)
+
 	    await ctx.render('articles/detail', {
 	        title,
 	        article,
 	        pageJs,
 	        nl2br,
-	        imgHost
+	        imgHost,
+            imgDetailStyle
 	    });
 	}
 }

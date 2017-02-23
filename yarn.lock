@@ -1997,7 +1997,7 @@ formstream@0.0.7:
     mime "1.2.9"
     pause-stream ">=0.0.10"
 
-foundation-sites@^6.2.3:
+foundation-sites@6.2.4:
   version "6.2.4"
   resolved "http://registry.npm.taobao.org/foundation-sites/download/foundation-sites-6.2.4.tgz#554746c9f3d505bd5646b4dcc03f8a9941e67f7b"
   dependencies:
