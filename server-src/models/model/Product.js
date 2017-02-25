@@ -22,6 +22,7 @@ export default class Product {
 		createTime,
 		statusTime,
 		status,
+		visible,
 		user,
 		productType,
 		snapshots
@@ -40,6 +41,7 @@ export default class Product {
 		this.createTime    = createTime;
 		this.statusTime    = statusTime;
 		this.status        = status;
+		this.visible       = visible;
 		this.userId        = user;
 		this.user          = undefined;
 		this.productTypeId = productType;

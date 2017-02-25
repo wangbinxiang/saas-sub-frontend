@@ -14,11 +14,12 @@ import {
     ARTICLE_STATUS_PUBLISH
 } from '../../config/articleConf';
 import {
-    PRODUCT_STATUS_ON_SALE
+    PRODUCT_STATUS_ON_SALE,
+    PRODUCT_VISIBLE
 } from '../../config/productConf';
 import {
     PROJECT_STATUS_PUBLISH,
-    PROJECT_CATEGORY_B2C
+    PROJECT_CATEGORY_B2C,
 } from '../../config/projectConf';
 
 
@@ -39,7 +40,8 @@ export default class IndexService {
 
 		const filters = {
 			userId,
-			status: PRODUCT_STATUS_ON_SALE
+			status: PRODUCT_STATUS_ON_SALE,
+			visible: PRODUCT_VISIBLE
 		}
 
 		const sort = '-id';
@@ -202,7 +204,8 @@ export default class IndexService {
 
 				const filters = {
 				    productType: shopLayout['product'][i]['typeIds'],
-				    status: PRODUCT_STATUS_ON_SALE
+				    status: PRODUCT_STATUS_ON_SALE,
+				    visible: PRODUCT_VISIBLE
 				};
 
 				const productsResult = await this.productAdapter.get({
