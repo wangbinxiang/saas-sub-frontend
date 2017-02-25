@@ -18,7 +18,8 @@ import {
 } from '../../config/articleConf';
 
 import {
-    PRODUCT_STATUS_ON_SALE
+    PRODUCT_STATUS_ON_SALE,
+    PRODUCT_VISIBLE
 } from '../../config/productConf';
 
 import {
@@ -62,7 +63,8 @@ export default class ChannelService {
 
 			const filters = {
 				productType: productTypeId,
-				status: PRODUCT_STATUS_ON_SALE
+				status: PRODUCT_STATUS_ON_SALE,
+			    visible: PRODUCT_VISIBLE
 			}
 
 			const sort = '-id';
@@ -319,7 +321,8 @@ export default class ChannelService {
 
 			const filters = {
 			    productType: channelInfo.typeIds,
-			    status: PRODUCT_STATUS_ON_SALE
+			    status: PRODUCT_STATUS_ON_SALE,
+			    visible: PRODUCT_VISIBLE
 			};
 
 			const sort = '-id';

@@ -56,3 +56,24 @@ export const PRODUCT_STATUS_LIST = {
 	[PRODUCT_STATUS_DELETE]: '删除',
 	[PRODUCT_STATUS_PERMANENTLY_DELETE]: '永久删除'
 }
+
+/**
+ * 商品搜索可见,默认为可见
+ * @type {Number}
+ */
+export const PRODUCT_VISIBLE = 0
+
+/**
+ * 商品搜索不可见
+ * @type {Number}
+ */
+export const PRODUCT_INVISIBLE = -2
+
+/**
+ * 商品列表显示状态名称列表
+ * @type {Object}
+ */
+export const PRODUCT_VISIBLE_NAME_LIST = {
+	[PRODUCT_VISIBLE]: '显示',
+	[PRODUCT_INVISIBLE]: '隐藏'
+}
