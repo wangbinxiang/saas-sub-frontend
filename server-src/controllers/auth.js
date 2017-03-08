@@ -68,7 +68,6 @@ export async function sendBindCellphoneVerificationCode(ctx, next) {
     const verificationCodeService = new VerificationCodeService(ctx.session);
     const result = verificationCodeService.sendBind(cellPhone);
 
-    console.log(result);
     // console.log(moment().unix());
     //检查session是否发送
     // let high = 999999;

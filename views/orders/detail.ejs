@@ -47,12 +47,17 @@
         <legend><h4>支付方式</h4></legend>
         <div class="row">
             <fieldset class="columns">
-                <input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_NORMAL%>" checked><label for="pokemonRed">微信支付</label>
-                <% if(haimi && account.source && account.source.balance){ %>
-                <input type="radio" name="payType" data-bind="checked: payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="<%= ORDER_PAY_TYPE_THIRD%>" ><label for="pokemonRed">海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %></label>
-                <% } %>
-
-                <input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_OFFLINE%>" ><label for="pokemonRed">线下支付</label>
+                <div class="clearfix">
+                    <label class="inline-grounp-label">
+                        <input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_NORMAL%>" checked>微信支付
+                    </label>
+                    <% if(haimi && account.source && account.source.balance){ %>
+                        <label class="inline-grounp-label">
+                            <input type="radio" name="payType" data-bind="checked: payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="<%= ORDER_PAY_TYPE_THIRD%>" >海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %>
+                        </label>
+                    <% } %>
+                    <label class="inline-grounp-label"><input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_OFFLINE%>" >线下支付</label>
+                </div>
             </fieldset>
         </div>
     </fieldset>

@@ -26,4 +26,15 @@
     <% if (typeof pageJs != "undefined" && pageJs) { %>
     <script src="<%= pageJs %>"></script>
     <% } %>
+    <% if(shopInfo.id === '10021') { %>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?a75e1fef8364d40464550f7c3454c257";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    <% } %>
 </body>

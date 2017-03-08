@@ -1,4 +1,4 @@
-﻿if (module.hot) {
+if (module.hot) {
     module.hot.accept()
 }
 
@@ -7,6 +7,8 @@ import jQueryBridget from 'jquery-bridget'
 import Masonry from 'masonry-layout'
 
 jQueryBridget( 'masonry', Masonry, $ );
+
+
 
 require.ensure([], function(require) {
     let jcarousel = require('jcarousel')
@@ -67,6 +69,8 @@ require.ensure([], function(require) {
                 }
             });
 })
+
+
 
 let ProdModel = function(data){
     // var arrData = $.map(data, function(value, index) {
