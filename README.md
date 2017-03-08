@@ -9,7 +9,7 @@
 
     npm install -g yarn
 
-其他安装方式查看[https://yarnpkg.com/en/](https://yarnpkg.com/en/)
+其他安装方式查看[https://yarnpkg.com/zh-Hans/](https://yarnpkg.com/zh-Hans/)
 安装完成后代码根目录下执行
 
     yarn install
