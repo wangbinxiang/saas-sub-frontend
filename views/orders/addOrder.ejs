@@ -23,11 +23,11 @@
         </thead>
         <tbody>
             <tr>
-                <td data-th="产品ID"><%= product.id %></td>
-                <td data-th="产品名称"><%= product.name %></td>
-                <td data-th="规格"><%= priceInfo.title %></td>
-                <td data-th="单价"><%= priceInfo.price %></td>
-                <td data-th="数量"><%= productNum %></td>
+                <td data-th="产品ID"><%- product.id %></td>
+                <td data-th="产品名称"><%- product.name %></td>
+                <td data-th="规格"><%- priceInfo.title %></td>
+                <td data-th="单价"><%- priceInfo.price %></td>
+                <td data-th="数量"><%- productNum %></td>
             </tr>
         </tbody>
     </table>   
@@ -60,21 +60,21 @@
             <fieldset class="fieldset">
                 <legend><h4>海米余额</h4></legend>
                 <div class="row column">
-                    <label><%= account.source.balance %>海米</label>
+                    <label><%- account.source.balance %>海米</label>
                 </div>
             </fieldset>
         <% } %>
-
-
         <fieldset class="fieldset">
             <legend><h4>支付方式</h4></legend>
             <div class="row">
                 <fieldset class="columns">
-                    <input type="radio" name="payType" value="1" checked><label for="pokemonRed">微信支付</label>
-                    <% if(haimi && account.source && account.source.balance) { %>
-                        <input type="radio" name="payType" <% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>  disabled<% } %> value="3" ><label for="pokemonRed">海米支付<% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>(余额不足)<% } %></label>
-                    <% } %>
-                    <input type="radio" name="payType" value="2"><label for="pokemonRed">线下支付</label>
+                    <div class="clearfix">
+                        <label class="inline-grounp-label"><input type="radio" name="payType" value="1" checked>微信支付</label>
+                        <% if(haimi && account.source && account.source.balance) { %>
+                            <label class="inline-grounp-label"><input type="radio" name="payType" <% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>  disabled<% } %> value="3" >海米支付<% if( account.source.balance * account.source.exchangeRate < totalPrice ){ %>(余额不足)<% } %></label>
+                        <% } %>
+                        <label class="inline-grounp-label"><input type="radio" name="payType" value="2">线下支付</label>
+                    </div>
                 </fieldset>
             </div>
         </fieldset>
@@ -83,7 +83,7 @@
         <fieldset class="fieldset">
             <legend><h4>合同信息</h4></legend>
             <div class="row column">
-                <label><input type="checkbox"  required  checked /> 接受合同<a data-open="contractPanel" onclick="return false;"><%= contract.title %></a>的条款
+                <label><input type="checkbox"  required  checked /> 接受合同<a data-open="contractPanel" onclick="return false;"><%- contract.title %></a>的条款
                 <span class="form-error">
                     请查看并选择接受合同条款
                 </span>
@@ -93,7 +93,7 @@
         <% } %>
 
         <div class="row text-right cart-total">
-            订单合计：￥<strong class="stat"><%= totalPrice %></strong>
+            订单合计：￥<strong class="stat"><%- totalPrice %></strong>
         </div>
 
         <div class="row text-center form-submit-wrap">
@@ -104,22 +104,22 @@
 
 <% if(contract) { %>
 <div class="reveal large" id="contractPanel" data-reveal>
-    <h3><%= contract.title %></h3>
+    <h3><%- contract.title %></h3>
     <div class="profile-main">
         <h6>合同内容</h6>
         <% for(var i in contract.content) { %>
             <% if (contract.content[i].type == "image" && contract.content[i].value){ %>
                 <% if (contract.content[i].value.url){ %>
                     <% if (contract.content[i].value.link){ %>
-                        <a href="<%= 'http://' + contract.content[i].value.link %>" class="image-link-"><img src="<%= imgHost + contract.content[i].value.url %>" /></a>
+                        <a href="<%- 'http://' + contract.content[i].value.link %>" class="image-link-"><img src="<%- imgHost + contract.content[i].value.url %>" /></a>
                     <% } else { %>
-                        <img src="<%= imgHost + contract.content[i].value.url %>" />
+                        <img src="<%- imgHost + contract.content[i].value.url %>" />
                     <% } %>
                     
                 <% } %>
             <% } else if (contract.content[i].type == "text" && contract.content[i].value) { %>
                 <% if(contract.content[i].value.title != ''){ %>
-                <h6<% if (contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%= contract.content[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+                <h6<% if (contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%- contract.content[i].value.title.replace(/ /g, '&nbsp;') %></h6>
                 <% } %>
                 <p<% if (contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(contract.content[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
             <% } %>
@@ -187,10 +187,10 @@
 </div>
 </div>
 <script>
-    var price = <%= totalPrice %>;
-    var prodId = <%= productId %>;
-    var priceOrder = <%= priceOrder %>;
-    var productNum = <%= productNum %>;
+    var price = <%- totalPrice %>;
+    var prodId = <%- productId %>;
+    var priceOrder = <%- priceOrder %>;
+    var productNum = <%- productNum %>;
     var account = <%- JSON.stringify(account) %>;
 </script>
 <%- include('../layout/footer') -%>

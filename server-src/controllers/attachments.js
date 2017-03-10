@@ -40,9 +40,6 @@ export async function token(ctx, next) {
 
 
     let bucket = config.get('qiniu.bucket.subImg.name');
-    console.log(bucket);
-
-
 
     let key = ctx._subId + '-' + (ctx.query.key? ctx.query.key: uuid.v4());
 

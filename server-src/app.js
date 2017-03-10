@@ -6,27 +6,14 @@ import convert from 'koa-convert'
 import json from 'koa-json'
 import Bodyparser from 'koa-bodyparser'
 import logger from 'koa-logger'
-import koaStaticCache from 'koa-static-cache';
-import koaerro from 'koa-error';
-import session from 'koa-generic-session';
+import koaStaticCache from 'koa-static-cache'
+import koaerro from 'koa-error'
+import session from 'koa-generic-session'
 import compress from 'koa-compress'
-// import mysqlSession from 'koa-mysql-session';
-import memcacheSession from 'koa-memcached';
-import passport from 'koa-passport';
-// import _ from 'underscore';
-import config from 'config';
-
-
-// console.log(getConfig.get('Customer.dbConfig'));
-
-//配置文件
-// import config from './config';
-//config全局化
-// global.config = config;
-
-
-//注册账号验证规则
-import passportRegister from './passport'; 
+import memcacheSession from 'koa-memcached'
+import passport from 'koa-passport'
+import config from 'config'
+import passportRegister from './passport' //注册账号验证规则
 
 
 const app = new Koa()
@@ -40,13 +27,6 @@ app.use(convert(koaStaticCache(path.join(__dirname, '../client'), {
 
 const bodyparser = Bodyparser()
 
-// logger
-// app.use(async (ctx, next) => {
-//   const start = new Date();
-//   await next();
-//   const ms = new Date() - start;
-//   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-// })
 
 // middlewares
 app.use(Bodyparser())//body数据解析中间件
@@ -91,8 +71,8 @@ if (__DEVELOPMENT__) {
 
       // watch options (only lazy: false)
       watchOptions: {
-          aggregateTimeout: 300,
-          poll: true
+          aggregateTimeout: 500,
+          // poll: true
       },
 
       // public path to bind the middleware to
@@ -118,15 +98,6 @@ if (__DEVELOPMENT__) {
   })
 };
 
-
-
-
-//underscore写入全局方法
-// app.use( async (ctx, next) => {
-//   ctx.state._ = _;
-//   await next();
-// });
-
 // views
 app.use(views(path.join(__dirname, '../views'), {
   extension: 'ejs'
@@ -139,14 +110,28 @@ app.use(convert(koaerro({
   template: 'views/500.ejs'
 })));
 
-import { handlerHostToSubId } from './middlewares/handlerHostToSubId';
-app.use(handlerHostToSubId);
 
-import { isInWechat } from './middlewares/wechat';
-app.use(isInWechat);
+import compose from './compose'
 
-import { authWechatSign } from './middlewares/auth/wechat';
-app.use(authWechatSign);
+
+if (__DEVELOPMENT__) {
+  app.use(async (ctx, next) => {
+    await require('./compose')(ctx, next)
+  })
+} else {
+  app.use(compose)
+}
+
+
+
+// import { handlerHostToSubId } from './middlewares/handlerHostToSubId';
+// app.use(handlerHostToSubId);
+
+
+// app.use(isInWechat);
+
+// import { authWechatSign } from './middlewares/auth/wechat';
+// app.use(authWechatSign);
 
 
 
@@ -155,9 +140,12 @@ app.use(authWechatSign);
 // app.use(async (ctx, next) => {
 //   await require('./routes').routes()(ctx, next)
 // })
-import router from './routes/router';
-app.use(router.routes()).use(router.allowedMethods());
+// import router from './routes/router';
+// app.use(router.routes()).use(router.allowedMethods());
 
+// app.use(async (ctx, next) => {
+//   await require('./routes/router').routes()(ctx, next)
+// })
 
 
 // 404

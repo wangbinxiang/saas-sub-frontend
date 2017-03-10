@@ -10,22 +10,15 @@
         <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden') { %>
             <link rel="stylesheet" href="/css/appFall.css?20170310" />
         <% } else { %>
+<<<<<<< HEAD
             <link rel="stylesheet" href="/css/app.css?20170310" />
+=======
+            <link rel="stylesheet" href="/css/app.css?20170308" />
+>>>>>>> 5f18a2091d7d3204cb7afd63ebbadce6399e4491
             <link rel="stylesheet" href="/css/appfix.css?20161031" />
         <% } %>
         <% if(__IN_WECHAT__ && shopInfo.relationship) { %>
             <%- include('../common/wechatRelationship') -%>
-        <% } %>
-        <% if(shopInfo.id === '10021') { %>
-        <script>
-            var _hmt = _hmt || [];
-            (function() {
-              var hm = document.createElement("script");
-              hm.src = "https://hm.baidu.com/hm.js?a75e1fef8364d40464550f7c3454c257";
-              var s = document.getElementsByTagName("script")[0]; 
-              s.parentNode.insertBefore(hm, s);
-            })();
-        </script>
         <% } %>
     </head>
     <body>
@@ -37,16 +30,28 @@
                 <strong><a href="/"><img src="<%= typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
                 <div class="top-bar-fix">
                     <ul class="menu">
-                        <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
-                        <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li>
-                        <li data-toggle="userShortcuts"><a class="user"><i class="material-icons mi-account_circle"></i><b>欢迎</b><i class="material-icons mi-expand_more"></i></a></li>
+                        <!-- <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
+                        <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li> -->
+                        <li data-toggle="userShortcuts">
+                            <a class="user">
+                            <i class="material-icons mi-account_circle"></i>
+                            <b>
+                                欢迎<%- typeof user === 'undefined'? '':  
+                                        ',&nbsp' + (user.nickName? user.nickName:
+                                        user.userName)
+                                    %>
+                            </b>
+                            <i class="material-icons mi-expand_more"></i>
+                            </a>
+                        </li>
                         <!--<li><a class="cart"><i class="material-icons mi-shopping_cart"></i><em></em></a></li>-->
                     </ul>
                 </div>
             </div>
+
             <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
                 <% if(typeof user === 'undefined') { %>
-                <a href="<%= __AUTH_WECHAT_LINK__ %>">授权登录</a>
+                <a href="<%= __AUTH_WECHAT_LINK__ %>">微信登录</a>
                 <% } else if(typeof user !== 'undefined') { %>
                     <% if(shopInfo.relationship) { %>
                     <a href="/users/relationship">关联信息</a>

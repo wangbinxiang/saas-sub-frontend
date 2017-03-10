@@ -47,8 +47,9 @@
             </div>
             <div class="small-12 small-centered large-uncentered clearfix button-book">
                 <% if(__IN_WECHAT__ && product.isOnSale() && product.prices && product.prices.length) { %>
-
                 <button class="expanded large button" id="orderNow" >立即订购</button>
+                <% } else { %>
+                    <b>此商品暂时只支持微信端购买</b><br />
                 <% } %>
             </div>
         </div>

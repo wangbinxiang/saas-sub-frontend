@@ -11,13 +11,8 @@ import { isAuthRelationship } from '../tools/auth';
  * @return {[type]}                      [description]
  */
 export async function handlerHostToSubId(ctx, next) {
-
-
     console.log(ctx.host);
-
     const hostMapping = config.get('hostMapping');
-    console.log(hostMapping);
-    console.log(hostMapping[ctx.host]);
 
     let subId;
     if (hostMapping && hostMapping[ctx.host]) {
@@ -36,8 +31,6 @@ export async function handlerHostToSubId(ctx, next) {
         
         const shopService = new ShopService();
         let shop = await shopService.get(subId);
-        console.log(shop);
-        console.log(subId);
         if (shop.id === subId) {
             ctx._subId = subId;
             ctx._shop = shop;

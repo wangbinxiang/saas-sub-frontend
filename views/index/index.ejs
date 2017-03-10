@@ -5,14 +5,14 @@
         <ul>
             <% for(let i of slidesData) { %>
 			<li>
-                <a href="<%= i.url %>">
+                <a href="<%- i.url %>">
                     <div style="background-image:url(<%- i.img %><%- imgSlideStyle %>)">
                     </div>
                     <b class="lead">
-                        <%= i.title %>
+                        <%- i.title %>
                     </b>
                     <% if(i.slideType == SHOP_SLIDES_TYPE_PRODUCT) { %>
-                    <span><sup>￥</sup><strong><%= i.price %></strong> <small>起</small></span>
+                    <span><sup>￥</sup><strong><%- i.price %></strong> <small>起</small></span>
                     <% } %>
                 </a>
             </li>
@@ -40,15 +40,15 @@
         </div>
         <% for(let v of products) { %>
         <div class="column">
-            <a href="/products/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a href="/products/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
                 <img src="<%- imgHost %><%- v.logo %><%- imgListStyle %>" />
                 <b>
-                    <%= v.name %>
+                    <%- v.name %>
                 </b>
                 <em>
-                <small><%= v.feature %></small>
+                <small><% v.feature %></small>
                 </em>
-                <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
+                <span>￥<strong><%- v.minPrice %></strong> <small>起</small></span>
             </a>
         </div>
         <% } %>
@@ -63,15 +63,15 @@
         </div>
         <% for(let v of projects) { %>
         <div class="column">
-            <a href="/projects/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a href="/projects/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
                 <img src="<%- imgHost %><%- v.logo %><%- imgListStyle %>" />
                 <b>
-                    <%= v.name %>
+                    <%- v.name %>
                 </b>
                 <em>
-                <small><%= v.feature %></small>
+                <small><%- v.feature %></small>
                 </em>
-                <span>￥<strong><%= v.minPrice %></strong> <small>起</small></span>
+                <span>￥<strong><%- v.minPrice %></strong> <small>起</small></span>
             </a>
         </div>
         <% } %>
@@ -86,13 +86,13 @@
         </div>
         <% for(let v of articles) { %>
         <div class="column">
-            <a href="/articles/<%= v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a href="/articles/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
                 <img src="<%- imgHost %><%- v.logo %><%- imgListStyle %>" />
                 <b>
-                    <%= v.title %>
+                    <%- v.title %>
                 </b>
                 <em>
-                <small><%= v.abstract %></small>
+                <small><%- v.abstract %></small>
                 </em>
             </a>
         </div>
@@ -108,9 +108,9 @@
 </div> -->
 <script>
 	var data = <%- JSON.stringify(products? products: []) %>;
-    var pageno = <%= number %>;
-    var isNext = <%= isNext %>;
-    var imgHost = '<%= imgHost %>';
-    var imgStyle = '<%= imgStyle %>';
+    var pageno = <%- number %>;
+    var isNext = <%- isNext %>;
+    var imgHost = '<%- imgHost %>';
+    var imgStyle = '<%- imgStyle %>';
 </script>
 <%- include('../layout/footer') -%>
