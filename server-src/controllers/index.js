@@ -169,7 +169,7 @@ export async function index(ctx, next) {
             const productService = new ProductService();
             const otherProducts = await productService.list(otherIds);
             if (otherProducts) {
-                products = lodash.concat(products, otherProducts);
+                products = products ? lodash.concat(products, otherProducts): otherProducts;
             }
         }
 
