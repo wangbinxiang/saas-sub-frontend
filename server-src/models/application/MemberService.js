@@ -67,7 +67,7 @@ export default class MemberService {
 		let member, success = false; //关联是否成功标示
 
 		try {
-			member = await this.userAdapter.wechatLogin(unionId, Member);
+			member = await this.userAdapter.wechatLogin(unionId, parentId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
