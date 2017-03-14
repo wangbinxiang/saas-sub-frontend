@@ -95,9 +95,10 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 	//验证用户 async函数
-	wechatLogin(unionId, aUserClass) {
+	wechatLogin(unionId, parentId, aUserClass) {
 	    this.buildRequest(MEMBER_LOGIN, { 
-	        unionId: unionId
+	        unionId,
+			parentId
 	    });
 
 	    this.activeClass = aUserClass;

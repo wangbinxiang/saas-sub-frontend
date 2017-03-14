@@ -76,7 +76,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
             openId: this.originData.openId, 
             nickName: this.originData.nickName,
             parentId: this.originData.parentId,
-            unionId: this.originData.unionId
+            unionId: this.originData.unionId,
+            parentId: this.originData.parentId
         };
 
         this.buildData(attributes);

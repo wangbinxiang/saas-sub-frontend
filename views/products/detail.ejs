@@ -49,7 +49,11 @@
                 <% if(__IN_WECHAT__ && product.isOnSale() && product.prices && product.prices.length) { %>
                 <button class="expanded large button" id="orderNow" >立即订购</button>
                 <% } else { %>
-                    <b>此商品暂时只支持微信端购买</b><br />
+                    <b>此商品<%- 
+                        !__IN_WECHAT__? '暂时只支持微信端购买':
+                        !product.isOnSale()? '已下架暂时无法购买':
+                        !product.prices || product.prices.length === 0? '赞无有效价格' :'';
+                    %></b><br />
                 <% } %>
             </div>
         </div>
