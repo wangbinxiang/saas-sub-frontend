@@ -57,6 +57,9 @@ const normalCallback = function(ctx, next) {
             console.log('member');
             console.log(member);
             if (member) {
+                //如果member没有头像，上传微信头像
+
+
                 ctx.login(member);
                 // ctx.status = 200;
                 // ctx.body = member;
@@ -133,9 +136,16 @@ const relationshipCallback = function(ctx, next) {
 
             const { member, success } = loginResult
 
+            
+
+
             console.log('member');
             console.log(member);
             if (member) {
+                //如果member没有头像，上传微信头像
+
+
+
                 ctx.login(member);
                 // ctx.status = 200;
                 // ctx.body = member;

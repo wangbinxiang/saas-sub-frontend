@@ -13,6 +13,7 @@ export default class MemberTranslator extends Translator {
 		const cellPhone = bodyReader.value('cellPhone');
 		const nickName = bodyReader.value('nickName');
 		const userName = bodyReader.value('userName');
+		const avatar = bodyReader.value('avatar');
 		const status = bodyReader.value('status');
 		const createTime = bodyReader.value('createTime');
 		const updateTime = bodyReader.value('updateTime');
@@ -26,6 +27,7 @@ export default class MemberTranslator extends Translator {
 			cellPhone,
 			nickName,
 			userName,
+			avatar,
 			status,
 			createTime,
 			updateTime,

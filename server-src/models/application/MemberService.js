@@ -63,7 +63,12 @@ export default class MemberService {
 		//登陆用户
 	}
 
-	async wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId) {
+	async wechatRelationshipLogin(profile, openid, nickName, shopId, parentId, unionId) {
+		const openid = profile.openid;
+		const nickName = profile.nickname;
+		const unionId = profile.unionid;
+		const headimgurl = profile.headimgurl;
+
 		let member, success = false; //关联是否成功标示
 
 		try {
