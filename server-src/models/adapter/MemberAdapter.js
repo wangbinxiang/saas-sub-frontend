@@ -107,11 +107,12 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 	//第三方网站登陆
-	sourceLogin(unionId, source, sourceId, aUserClass) {
+	sourceLogin(unionId, source, sourceId, parentId, aUserClass) {
 		this.buildRequest(MEMBER_SOURCE_LOGIN, { 
 			unionId,
 	        source,
-	        sourceId
+	        sourceId,
+			parentId
 	    });
 
 	    this.activeClass = aUserClass;
