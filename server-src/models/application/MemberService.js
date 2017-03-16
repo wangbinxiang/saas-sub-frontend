@@ -47,12 +47,12 @@ export default class MemberService {
 		let member;
 
 		try {
-			member = await this.userAdapter.wechatLogin(unionId, undefined, Member);
+			member = await this.userAdapter.wechatLogin(unionId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, undefined, unionId, Member);
+					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, Member);
 					break;
 				default:
 					throw err;
@@ -67,12 +67,12 @@ export default class MemberService {
 		let member, success = false; //关联是否成功标示
 
 		try {
-			member = await this.userAdapter.wechatLogin(unionId, parentId, Member);
+			member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, parentId, unionId, Member);
+					member = await this.userAdapter.wechatRelationshipSignup(openid, nickName, shopId, parentId, unionId, Member);
 					//关联成功
 					success = true;
 					break;
@@ -92,12 +92,12 @@ export default class MemberService {
 		let member, success = false; //关联是否成功标示
 
 		try {
-			member = await this.userAdapter.sourceLogin(unionId, source, sourceId, parentId, Member);
+			member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.sourceSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, Member);
+					member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, Member);
 					//关联成功
 					success = true;
 					break;
