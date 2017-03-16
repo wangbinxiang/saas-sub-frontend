@@ -3,33 +3,33 @@ if (module.hot) {
 }
 
 import './base.js'
+import '../vendors/fcarousel.js'
+// let jcarousel = require('jcarousel')
 
-let jcarousel = require('jcarousel')
-
-$('.jcarousel').jcarousel({
-    scroll: 1,
-})
-.next()
-.on('jcarouselcontrol:active', function () {
-    $(this).removeClass('inactive');
-})
-.on('jcarouselcontrol:inactive', function () {
-    $(this).addClass('inactive');
-})
-.jcarouselControl({
-    target: '-=1',
-    carousel: $('.jcarousel')
-}).next()
-.on('jcarouselcontrol:active', function () {
-    $(this).removeClass('inactive');
-})
-.on('jcarouselcontrol:inactive', function () {
-    $(this).addClass('inactive');
-})
-.jcarouselControl({
-    target: '+=1',
-    carousel: $('.jcarousel')
-});
+// $('.jcarousel').jcarousel({
+//     scroll: 1,
+// })
+// .next()
+// .on('jcarouselcontrol:active', function () {
+//     $(this).removeClass('inactive');
+// })
+// .on('jcarouselcontrol:inactive', function () {
+//     $(this).addClass('inactive');
+// })
+// .jcarouselControl({
+//     target: '-=1',
+//     carousel: $('.jcarousel')
+// }).next()
+// .on('jcarouselcontrol:active', function () {
+//     $(this).removeClass('inactive');
+// })
+// .on('jcarouselcontrol:inactive', function () {
+//     $(this).addClass('inactive');
+// })
+// .jcarouselControl({
+//     target: '+=1',
+//     carousel: $('.jcarousel')
+// });
 
 $('#priceLabels a').on('click', function(){
     if(!$(this).hasClass('checked')){

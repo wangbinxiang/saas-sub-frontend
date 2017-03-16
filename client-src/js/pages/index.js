@@ -5,7 +5,7 @@ if (module.hot) {
 import './base.js';
 import jQueryBridget from 'jquery-bridget'
 import Masonry from 'masonry-layout'
-//import '../vendors/fcarousel.js'
+import '../vendors/fcarousel.js'
 jQueryBridget( 'masonry', Masonry, $ );
 
 require.ensure([], function(require) {
@@ -99,7 +99,7 @@ let ProdModel = function(data){
     }
 }
 
-if($('.orbit--garden').length === 0 && $('.top-carousel--nopadding').length === 0){
+if($('.fgarden').length === 0){
     let prodModel = new ProdModel(data)
     ko.applyBindings(prodModel)
 
