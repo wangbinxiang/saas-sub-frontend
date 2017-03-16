@@ -47,7 +47,7 @@ export default class MemberService {
 		let member;
 
 		try {
-			member = await this.userAdapter.wechatLogin(unionId, Member);
+			member = await this.userAdapter.wechatLogin(unionId, undefined, Member);
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
