@@ -76,8 +76,7 @@ export default class MemberRequestJsonApi extends BaseRequest {
             openId: this.originData.openId, 
             nickName: this.originData.nickName,
             parentId: this.originData.parentId,
-            unionId: this.originData.unionId,
-            parentId: this.originData.parentId
+            unionId: this.originData.unionId
         };
 
         this.buildData(attributes);
@@ -113,7 +112,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
         this.method = POST;
 
         let attributes = {
-            unionId: this.originData.unionId
+            unionId: this.originData.unionId,
+            parentId: this.originData.parentId
         };
 
         this.buildData(attributes);
@@ -130,7 +130,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
         let attributes = {
             unionId: this.originData.unionId,
             source: this.originData.source,
-            sourceId: this.originData.sourceId
+            sourceId: this.originData.sourceId,
+            parentId: this.originData.parentId
         };
 
         this.buildData(attributes);
