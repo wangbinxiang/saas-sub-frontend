@@ -1,33 +1,23 @@
 <%- include('../layout/header') -%>
+
 <% if(slidesData.length > 0){ %>
-<div class="row expanded column top-carousel">
-    <div class="jcarousel jcarousel--home">
-        <ul>
-            <% for(let i of slidesData) { %>
-			<li>
-                <a href="<%- i.url %>">
-                    <div style="background-image:url(<%- i.img %><%- imgSlideStyle %>)">
-                    </div>
-                    <b class="lead">
-                        <%- i.title %>
-                    </b>
-                    <% if(i.slideType == SHOP_SLIDES_TYPE_PRODUCT) { %>
-                    <span><sup>￥</sup><strong><%- i.price %></strong> <small>起</small></span>
-                    <% } %>
-                </a>
-            </li>
-			<% } %>
-        </ul>
+<div class="slick-wrap slick-fix640 clearfix">
+    <div class="fcarousel">
+        <% for(let i of slidesData) { %>
+        <div class="fcarousel__item">
+            <a href="<%- i.url %>">
+                <div>
+                    <img src="<%- i.img %><%- imgSlideStyle %>" />
+                </div>
+                <b class="lead<% if (i.price) { %> fcarousel__price<% } %>"><%- i.title %></b>
+                <% if (i.price) { %><span><sup>￥</sup><strong><%- i.price %></strong> <small>from</small></span><% } %>
+            </a>
+        </div>
+        <% } %>
     </div>
-    <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
-    <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
-    <div class="jcarousel-pagination"></div>
 </div>
 <% } %>
-
-
 <div class="blk-margin"></div>
-
 
 <div class="row expanded column small-up-1 medium-up-3 large-up-4 xxlarge-up-5 tourboard-wrap" data-equalizer data-equalize-on="medium" data-equalize-by-row="true" id="listEqualizer">
     <% if(products) { %>

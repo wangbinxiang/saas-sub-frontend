@@ -5,10 +5,8 @@ if (module.hot) {
 import './base.js';
 import jQueryBridget from 'jquery-bridget'
 import Masonry from 'masonry-layout'
-
+//import '../vendors/fcarousel.js'
 jQueryBridget( 'masonry', Masonry, $ );
-
-
 
 require.ensure([], function(require) {
     let jcarousel = require('jcarousel')
@@ -96,7 +94,7 @@ let ProdModel = function(data){
                self.prods.push(product)
            }
            self.isNext(respones.isNext);
-           Foundation.reInit($('#listEqualizer'));
+           Foundation.reInit('equalizer');
        })
     }
 }
