@@ -11,7 +11,6 @@ export default class Translator {
 
     //翻译users信息
     toObject(body, aActiveClass) {
-
         let count;
         let page;
         let result;

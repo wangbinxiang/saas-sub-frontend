@@ -1,7 +1,7 @@
 import MemberAdapter from '../adapter/MemberAdapter';
 import Member from '../model/Member';
 import RequestJsonApiParamsError from '../../libs/error/RequestJsonApiParamsError';
-
+import { qiniuUpload } from '../../tools/upload';
 
 export default class MemberService {
 	constructor() {
@@ -43,41 +43,61 @@ export default class MemberService {
 		return await this._isCellphoneBind(cellPhone);
 	}
 
-	async wechatLogin(openid, nickName, shopId, unionId) {
+	async wechatLogin(openid, nickName, shopId, unionId, headimgurl) {
 		let member;
-
 		try {
 			member = await this.userAdapter.wechatLogin(unionId, Member);
+			if(member.noAvatar()) {
+				//member没有头像就上传
+				//上传成功后头像地址写入member
+				// console.log(123);
+				// console.log(headimgurl);
+				const avatarResult = await qiniuUpload(headimgurl);
+				console.log(avatarResult);
+				member = await this.userAdapter.updateAvatar({ id: member.id, avatar: avatarResult.key }, Member);
+			}
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, Member);
+					//注册前上传
+					const avatarResult = await qiniuUpload(headimgurl);
+					console.log(avatarResult);
+					//头像地址
+					const avatar = avatarResult && avatarResult.key? avatarResult.key: '';
+					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, avatar, Member);
 					break;
 				default:
 					throw err;
 			}
 		}
-
 		return member;
 		//登陆用户
 	}
 
-	async wechatRelationshipLogin(profile, openid, nickName, shopId, parentId, unionId) {
-		const openid = profile.openid;
-		const nickName = profile.nickname;
-		const unionId = profile.unionid;
-		const headimgurl = profile.headimgurl;
-
+	async wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId, headimgurl) {
 		let member, success = false; //关联是否成功标示
 
 		try {
 			member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member);
+			if(member.noAvatar()) {
+				//member没有头像就上传
+				//上传成功后头像地址写入member
+				// console.log(123);
+				// console.log(headimgurl);
+				const avatarResult = await qiniuUpload(headimgurl);
+				console.log(avatarResult);
+				member = await this.userAdapter.updateAvatar({ id: member.id, avatar: avatarResult.key }, Member);
+			}
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatRelationshipSignup(openid, nickName, shopId, parentId, unionId, Member);
+					const avatarResult = await qiniuUpload(headimgurl);
+					console.log(avatarResult);
+					//头像地址
+					const avatar = avatarResult && avatarResult.key? avatarResult.key: '';
+					member = await this.userAdapter.wechatRelationshipSignup(openid, nickName, shopId, parentId, unionId, avatar, Member);
 					//关联成功
 					success = true;
 					break;
@@ -93,16 +113,29 @@ export default class MemberService {
 		//登陆用户
 	}
 
-	async wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, source, sourceId) {
+	async wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, source, sourceId, headimgurl) {
 		let member, success = false; //关联是否成功标示
 
 		try {
 			member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member);
+			if(member.noAvatar()) {
+				//member没有头像就上传
+				//上传成功后头像地址写入member
+				// console.log(123);
+				// console.log(headimgurl);
+				const avatarResult = await qiniuUpload(headimgurl);
+				console.log(avatarResult);
+				member = await this.userAdapter.updateAvatar({ id: member.id, avatar: avatarResult.key }, Member);
+			}
 		} catch (err) {
 			switch (err.constructor) {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
-					member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, Member);
+					const avatarResult = await qiniuUpload(headimgurl);
+					console.log(avatarResult);
+					//头像地址
+					const avatar = avatarResult && avatarResult.key? avatarResult.key: '';
+					member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, avatar, Member);
 					//关联成功
 					success = true;
 					break;

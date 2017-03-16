@@ -26,4 +26,11 @@ export default class Member {
         this.unionId = unionId;
         this.source = source
     }
+
+    //判断用户没有头像
+    noAvatar() {
+        return this.avatar === ''; 
+    }
+
+
 }

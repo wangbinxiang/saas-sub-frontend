@@ -9,7 +9,8 @@ import {
 	MEMBER_SOURCE_LOGIN,
 	MEMBER_SOURCE_SIGNUP,
     MEMBER_PARENT,
-    MEMBER_CHILDREN
+    MEMBER_CHILDREN,
+	MEMBER_UPDATE_AVATAR
 } from '../../config/apiFeatureConf';
 
 
@@ -81,12 +82,13 @@ export default class MemberAdapter extends RequestAdapter {
 	
 	//普通微信注册和关系微信注册分开
 	//微信普通注册
-	wechatSignup(openId, nickName, shopId, unionId, aUserClass) {
+	wechatSignup(openId, nickName, shopId, unionId, avatar, aUserClass) {
 	    this.buildRequest(MEMBER_SIGNUP, { 
 	    	shopId,
 	        openId,
 	        nickName,
-	        unionId
+	        unionId,
+			avatar
 	    });
 
 	    this.activeClass = aUserClass;
@@ -95,13 +97,14 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 	//微信关系类型注册
-	wechatRelationshipSignup(openId, nickName, shopId, parentId, unionId, aUserClass) {
+	wechatRelationshipSignup(openId, nickName, shopId, parentId, unionId, avatar, aUserClass) {
 	    this.buildRequest(MEMBER_SIGNUP, { 
 	    	shopId,
 	        openId,
 	        nickName,
 	        parentId,
-	        unionId
+	        unionId,
+			avatar
 	    });
 
 	    this.activeClass = aUserClass;
@@ -111,7 +114,7 @@ export default class MemberAdapter extends RequestAdapter {
 
 
 	//微信第三方网站关系型注册
-	wechatSourceRelationshipSignup(openId, nickName, shopId, parentId, unionId, source, sourceId, aUserClass) {
+	wechatSourceRelationshipSignup(openId, nickName, shopId, parentId, unionId, source, sourceId, avatar, aUserClass) {
 		this.buildRequest(MEMBER_SOURCE_SIGNUP, { 
 			shopId,
 		    openId,
@@ -119,7 +122,8 @@ export default class MemberAdapter extends RequestAdapter {
 		    parentId,
 		    unionId,
 		    source,
-		    sourceId
+		    sourceId,
+			avatar
 		});
 
 		this.activeClass = aUserClass;
@@ -163,5 +167,20 @@ export default class MemberAdapter extends RequestAdapter {
 	    this.activeClass = aUserClass;
 
 	    return this.request();
+	}
+
+
+	updateAvatar({
+		id,
+		avatar
+	}, aMemberClass) {
+		this.buildRequest(MEMBER_UPDATE_AVATAR, {
+			id,
+			avatar
+		});
+
+		this.activeClass = aMemberClass;
+
+		return this.request();
 	}
 }

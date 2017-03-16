@@ -51,9 +51,12 @@ const normalCallback = function(ctx, next) {
             const unionId = profile.unionid;
             const openid = profile.openid;
             const nickName = profile.nickname;
+            const headimgurl = profile.headimgurl;//头像
             const shopId = ctx._subId;
             const memberService = new MemberService();
-            const member = await memberService.wechatLogin(openid, nickName, shopId, unionId);
+
+            //profile
+            const member = await memberService.wechatLogin(openid, nickName, shopId, unionId, headimgurl);
             console.log('member');
             console.log(member);
             if (member) {
@@ -107,10 +110,12 @@ const relationshipCallback = function(ctx, next) {
             const parentId = ctx.query.parentId;
             const openid = profile.openid;
             const nickName = profile.nickname;
+            const headimgurl = profile.headimgurl;//头像
             // const unionId = 'otuttxMhJwPxPnCbLQ2MaHAanmrg'
             // const parentId = 1
             // const openid = 'ob5uxwZjH81AEeiVutEGnR2hU-W1'
             // const nickName = '波风皆人'
+            //profile.headimgurl
             const shopId = ctx._subId;
             const memberService = new MemberService();
 
@@ -127,10 +132,10 @@ const relationshipCallback = function(ctx, next) {
             //如果有ctx.query.returnTo, 并有from和sourceId
             //
             if (ctx._subId === '10021' && returnToQuery && returnToQuery.from == 'qd' && returnToQuery.sourceId) {
-                loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, returnToQuery.sourceId);
+                loginResult = await memberService.wechatRelationshipSourceLogin(openid, nickName, shopId, parentId, unionId, MEMBER_SOURCE_QIDE, returnToQuery.sourceId, headimgurl);
                 console.log('sourceLogin');
             } else {
-                loginResult = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId);
+                loginResult = await memberService.wechatRelationshipLogin(openid, nickName, shopId, parentId, unionId, headimgurl);
                 console.log('login');
             }
 

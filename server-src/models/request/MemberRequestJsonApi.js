@@ -18,7 +18,8 @@ import {
     MEMBER_SOURCE_LOGIN,
     MEMBER_SOURCE_SIGNUP,
     MEMBER_PARENT,
-    MEMBER_CHILDREN
+    MEMBER_CHILDREN,
+    MEMBER_UPDATE_AVATAR
 } from '../../config/apiFeatureConf';
 
 export default class MemberRequestJsonApi extends BaseRequest {
@@ -76,7 +77,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
             openId: this.originData.openId, 
             nickName: this.originData.nickName,
             parentId: this.originData.parentId,
-            unionId: this.originData.unionId
+            unionId: this.originData.unionId,
+            avatar: this.originData.avatar
         };
 
         this.buildData(attributes);
@@ -98,7 +100,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
             parentId: this.originData.parentId,
             unionId: this.originData.unionId,
             source: this.originData.source,
-            sourceId: this.originData.sourceId
+            sourceId: this.originData.sourceId,
+            avatar: this.originData.avatar
         };
 
         this.buildData(attributes);
@@ -138,6 +141,19 @@ export default class MemberRequestJsonApi extends BaseRequest {
     }
 
 
+    updateAvatar() {
+        this.url = '/users/' + this.originData.id + '/avatar';
+
+        this.method = PUT;
+
+        let attributes = {
+            avatar: this.originData.avatar
+        };
+
+        this.buildData(attributes);
+    }
+
+
 
     buildFeature() {
         switch(this.feature) {
@@ -161,6 +177,9 @@ export default class MemberRequestJsonApi extends BaseRequest {
                 break;
             case MEMBER_CHILDREN:
                 this.children();
+                break;
+            case MEMBER_UPDATE_AVATAR:
+                this.updateAvatar();
                 break;
             default:
                 throw new Error('Invalid feature method');
