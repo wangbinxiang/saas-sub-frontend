@@ -98,7 +98,7 @@ export default class MemberAdapter extends RequestAdapter {
 	wechatLogin(unionId, parentId, aUserClass) {
 	    this.buildRequest(MEMBER_LOGIN, { 
 	        unionId,
-			parentId
+			// parentId
 	    });
 
 	    this.activeClass = aUserClass;
@@ -112,7 +112,7 @@ export default class MemberAdapter extends RequestAdapter {
 			unionId,
 	        source,
 	        sourceId,
-			parentId
+			// parentId
 	    });
 
 	    this.activeClass = aUserClass;
