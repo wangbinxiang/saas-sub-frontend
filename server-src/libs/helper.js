@@ -148,6 +148,14 @@ export function checkResourcesOwner(resources, checkTarget, owner, isList) {
     }
 }
 
+/**
+ * 检查是否是本站外挂产品
+ * @author wangbinxiang
+ * @export
+ * @param {any} id
+ * @param {any} shopId
+ * @returns
+ */
 export function checkOther(id, shopId){
     const other = config.get('productMapping');
     let live = false
