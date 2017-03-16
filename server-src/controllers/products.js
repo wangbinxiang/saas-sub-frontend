@@ -41,6 +41,8 @@ export async function detail(ctx, next) {
 
         const imgHost = config.get('qiniu.bucket.subImg.url');
 
+        const showRebate = isAuthRelationship(ctx)? true: false;
+
         await ctx.render('products/detail', {
             title,
             product,
@@ -50,7 +52,8 @@ export async function detail(ctx, next) {
             imgHost,
             showRelationship,
             imgDetailSlideStyle,
-            imgDetailStyle
+            imgDetailStyle,
+            showRebate
         });
     }
 }

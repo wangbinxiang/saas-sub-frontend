@@ -25,19 +25,19 @@
     </div>
     <div class="large-6 medium-12 columns">
         <div class="clearfix detailPrice">
-            <div class="p-margin-bottom lbPrice" id="priceStatDiv" style="display:<%= product.prices.length > 0 && product.prices[0].rebate > 0? 'none': '' %>;">
+            <div class="p-margin-bottom lbPrice" id="priceStatDiv" style="display:<%- product.prices.length > 0 && showRebate && product.prices[0].rebate > 0? 'none': '' %>;">
                 单价￥<b class="stat" id="priceStat"><%- product.prices.length > 0 ? product.prices[0].price : '' %></b>
             </div>
-            <div class="small-6 columns medium-text-center" id="priceRelationshipDiv" style="display:<%= product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
-                <label>单价</label>￥<b class="stat" id="priceRelationship"><%= product.prices.length > 0 ? product.prices[0].price : '' %></b>
+            <div class="small-6 columns medium-text-center" id="priceRelationshipDiv" style="display:<%- !showRebate || product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
+                <label>单价</label>￥<b class="stat" id="priceRelationship"><%- product.prices.length > 0 ? product.prices[0].price : '' %></b>
             </div>
-            <div class="small-6 columns medium-text-center" id="rebateRelationshipDiv" style="display:<%= product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
-                <label>分享分红</label>￥<b class="stat" id="rebateRelationship"><%= product.prices.length > 0 ? product.prices[0].rebate : '' %></b>
+            <div class="small-6 columns medium-text-center" id="rebateRelationshipDiv" style="display:<%- !showRebate || product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
+                <label>分享分红</label>￥<b class="stat" id="rebateRelationship"><%- product.prices.length > 0 ? product.prices[0].rebate : '' %></b>
             </div>
             <div class=" filter-bar filter-bar--sku" id="skuBar">
                 <div class="button-group single" id="priceLabels">
                     <% for(let i in product.prices) { %>
-                    <a class="button<%= i == 0 ? ' checked' : '' %>" data-price="<%= product.prices[i].price %>" <% if(product.prices[i].rebate) { %>data-rebate="<%= product.prices[i].rebate %>"<% } %> ><%- product.prices[i].title %></a>
+                    <a class="button<%-i == 0 ? ' checked' : '' %>" data-price="<%- product.prices[i].price %>" <% if(product.prices[i].rebate) { %>data-rebate="<%- product.prices[i].rebate %>"<% } %> ><%- product.prices[i].title %></a>
                     <% } %>
                 </div>
             </div>
@@ -49,7 +49,11 @@
                 <% if(__IN_WECHAT__ && product.isOnSale() && product.prices && product.prices.length) { %>
                 <button class="expanded large button" id="orderNow" >立即订购</button>
                 <% } else { %>
-                    <b>此商品暂时只支持微信端购买</b><br />
+                    <b>此商品<%- 
+                        !__IN_WECHAT__? '暂时只支持微信端购买':
+                        !product.isOnSale()? '已下架暂时无法购买':
+                        !product.prices || product.prices.length === 0? '赞无有效价格' :'';
+                    %></b><br />
                 <% } %>
             </div>
         </div>
@@ -63,7 +67,7 @@
             该操作要求登录。
         </p>
         <div class="row text-center form-submit-wrap">
-            <a class="button" href="<%= __AUTH_WECHAT_LINK__ %>">登录微信</a>
+            <a class="button" href="<%- __AUTH_WECHAT_LINK__ %>">登录微信</a>
             <button class="button secondary" data-close>取消</button>
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
@@ -95,14 +99,14 @@
 <% if( showRelationship && typeof user !== 'undefined') {%>
 <div class="text-center">
     <h3>扫码加入会员</h3>
-    <img src="/qrcode/relationship?productId=<%= product.id %>">
+    <img src="/qrcode/relationship?productId=<%- product.id %>">
 <div>
 <% } %>
 <% if( shopInfo && shopInfo.kefuId > 0) {%>
-    <!-- <script type="text/javascript" charset="utf-8" src="https://www.v5kf.com/<%= shopInfo.kefuId %>/v5kf.js?style=3"></script> -->
+    <!-- <script type="text/javascript" charset="utf-8" src="https://www.v5kf.com/<%- shopInfo.kefuId %>/v5kf.js?style=3"></script> -->
 <% } %>
 <script>
-	var id = <%= product.id %>;
-    var needRebate = <%= showRelationship %>;
+	var id = <%- product.id %>;
+    var needRebate = <%- showRelationship %>;
 </script>
 <%- include('../layout/footer') -%>

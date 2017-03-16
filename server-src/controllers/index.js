@@ -27,7 +27,7 @@ import {
 
 export async function index(ctx, next) {
     
-    const title = '首页111 - ' + ctx._shop.title;
+    const title = '首页 - ' + ctx._shop.title;
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
     const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
@@ -169,7 +169,7 @@ export async function index(ctx, next) {
             const productService = new ProductService();
             const otherProducts = await productService.list(otherIds);
             if (otherProducts) {
-                products = lodash.concat(products, otherProducts);
+                products = products ? lodash.concat(products, otherProducts): otherProducts;
             }
         }
 

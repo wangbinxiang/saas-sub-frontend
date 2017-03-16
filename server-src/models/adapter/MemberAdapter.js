@@ -95,9 +95,10 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 	//验证用户 async函数
-	wechatLogin(unionId, aUserClass) {
+	wechatLogin(unionId, parentId, aUserClass) {
 	    this.buildRequest(MEMBER_LOGIN, { 
-	        unionId: unionId
+	        unionId,
+			// parentId
 	    });
 
 	    this.activeClass = aUserClass;
@@ -106,11 +107,12 @@ export default class MemberAdapter extends RequestAdapter {
 	}
 
 	//第三方网站登陆
-	sourceLogin(unionId, source, sourceId, aUserClass) {
+	sourceLogin(unionId, source, sourceId, parentId, aUserClass) {
 		this.buildRequest(MEMBER_SOURCE_LOGIN, { 
 			unionId,
 	        source,
-	        sourceId
+	        sourceId,
+			// parentId
 	    });
 
 	    this.activeClass = aUserClass;

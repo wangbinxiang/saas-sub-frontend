@@ -1,5 +1,6 @@
 import url from 'url';
 import lodash from 'lodash';
+import urlParse from 'url-parse';
 
 /**
  * urlStr 添加querty
@@ -53,6 +54,6 @@ export function queryNotMatch(urlStr, query) {
  * @return {[type]}                        [description]
  */
 export function getQuery(urlStr) {
-    var urlObj = url.parse(urlStr, true)
+    var urlObj = new urlParse(urlStr, true);
     return urlObj.query
 }

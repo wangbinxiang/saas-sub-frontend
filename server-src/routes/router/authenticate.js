@@ -58,13 +58,13 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 //关联用户注册
 router.get('/wechat/auth/relationship', authRelationshipWechatBlock, async (ctx, next) => {
 	//检查parentId是否有效,无效则设置ctx.query.parentId为Null
-	if (ctx.query.parentId && ctx.query.parentId > 0) {
-		const memberService = new MemberService();
-		const member = await memberService.get(ctx.query.parentId);
-		if (member === null) {
-			ctx.query.parentId = null;
-		}
-	}
+	// if (ctx.query.parentId && ctx.query.parentId > 0) {
+	// 	const memberService = new MemberService();
+	// 	const member = await memberService.get(ctx.query.parentId);
+	// 	if (member === null) {
+	// 		ctx.query.parentId = null;
+	// 	}
+	// }
 	
 	const parentId = ctx.query.parentId? ctx.query.parentId: config.get('relationshipParentId');
 	const returnTo = ctx.query.returnTo? ctx.query.returnTo: base64url(ctx.headers.referer? ctx.headers.referer: '/');
