@@ -40,6 +40,8 @@ export default class RequestJsonApi {
     post() {
         const that = this;
         return this.promise((resolve, reject) => {
+            console.log(that.url);
+            console.log(that.data);
             that.client.post(that.url, that.data, that.promiseThunk(resolve, reject));
         });
     }
@@ -47,6 +49,8 @@ export default class RequestJsonApi {
     put() {
         const that = this;
         return this.promise((resolve, reject) => {
+            console.log(that.url);
+            console.log(that.data);
             that.client.put(that.url, that.data, that.promiseThunk(resolve, reject));
         });
     }

@@ -63,7 +63,8 @@ export const MEMBER_SOURCE_LOGIN  = Symbol();
 export const MEMBER_PARENT        = Symbol();
 //获取用户子关系
 export const MEMBER_CHILDREN      = Symbol();
-
+//更新头像
+export const MEMBER_UPDATE_AVATAR = Symbol();
 
 
 //获取用户账户余额

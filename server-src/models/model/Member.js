@@ -4,6 +4,7 @@ export default class Member {
         cellPhone = '',
         nickName = '',
         userName = '',
+        avatar = '',
         status = '',
         createTime = '',
         updateTime = '',
@@ -16,6 +17,7 @@ export default class Member {
         this.cellPhone = cellPhone;
         this.nickName = nickName;
         this.userName = userName;
+        this.avatar = avatar;
         this.status = status;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -24,4 +26,11 @@ export default class Member {
         this.unionId = unionId;
         this.source = source
     }
+
+    //判断用户没有头像
+    noAvatar() {
+        return this.avatar === ''; 
+    }
+
+
 }

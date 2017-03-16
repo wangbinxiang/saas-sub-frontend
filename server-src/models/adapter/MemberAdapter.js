@@ -9,7 +9,8 @@ import {
 	MEMBER_SOURCE_LOGIN,
 	MEMBER_SOURCE_SIGNUP,
     MEMBER_PARENT,
-    MEMBER_CHILDREN
+    MEMBER_CHILDREN,
+	MEMBER_UPDATE_AVATAR
 } from '../../config/apiFeatureConf';
 
 
@@ -79,13 +80,61 @@ export default class MemberAdapter extends RequestAdapter {
 		return this.request();
 	}
 	
+	//普通微信注册和关系微信注册分开
+	//微信普通注册
+	wechatSignup(openId, nickName, shopId, unionId, avatar, aUserClass) {
+	    this.buildRequest(MEMBER_SIGNUP, { 
+	    	shopId,
+	        openId,
+	        nickName,
+	        unionId,
+			avatar
+	    });
 
-	wechatSignup(openId, nickName, shopId, parentId, unionId, aUserClass) {
+	    this.activeClass = aUserClass;
+
+	    return this.request();
+	}
+
+	//微信关系类型注册
+	wechatRelationshipSignup(openId, nickName, shopId, parentId, unionId, avatar, aUserClass) {
 	    this.buildRequest(MEMBER_SIGNUP, { 
 	    	shopId,
 	        openId,
 	        nickName,
 	        parentId,
+	        unionId,
+			avatar
+	    });
+
+	    this.activeClass = aUserClass;
+
+	    return this.request();
+	}
+
+
+	//微信第三方网站关系型注册
+	wechatSourceRelationshipSignup(openId, nickName, shopId, parentId, unionId, source, sourceId, avatar, aUserClass) {
+		this.buildRequest(MEMBER_SOURCE_SIGNUP, { 
+			shopId,
+		    openId,
+		    nickName,
+		    parentId,
+		    unionId,
+		    source,
+		    sourceId,
+			avatar
+		});
+
+		this.activeClass = aUserClass;
+
+		return this.request();
+	}
+
+	//普通微信登陆和关系微信登陆分开
+	//验证用户 async函数
+	wechatLogin(unionId, aUserClass) {
+	    this.buildRequest(MEMBER_LOGIN, { 
 	        unionId
 	    });
 
@@ -94,11 +143,11 @@ export default class MemberAdapter extends RequestAdapter {
 	    return this.request();
 	}
 
-	//验证用户 async函数
-	wechatLogin(unionId, parentId, aUserClass) {
+	//关系类型登陆
+	wechatRelationshipLogin(unionId, parentId, aUserClass) {
 	    this.buildRequest(MEMBER_LOGIN, { 
 	        unionId,
-			// parentId
+			parentId
 	    });
 
 	    this.activeClass = aUserClass;
@@ -106,8 +155,8 @@ export default class MemberAdapter extends RequestAdapter {
 	    return this.request();
 	}
 
-	//第三方网站登陆
-	sourceLogin(unionId, source, sourceId, parentId, aUserClass) {
+	//第三方网站关系类型登陆
+	wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, aUserClass) {
 		this.buildRequest(MEMBER_SOURCE_LOGIN, { 
 			unionId,
 	        source,
@@ -120,20 +169,17 @@ export default class MemberAdapter extends RequestAdapter {
 	    return this.request();
 	}
 
-	//第三方网站注册
-	sourceSignup(openId, nickName, shopId, parentId, unionId, source, sourceId, aUserClass) {
 
-		this.buildRequest(MEMBER_SOURCE_SIGNUP, { 
-			shopId,
-		    openId,
-		    nickName,
-		    parentId,
-		    unionId,
-		    source,
-		    sourceId
+	updateAvatar({
+		id,
+		avatar
+	}, aMemberClass) {
+		this.buildRequest(MEMBER_UPDATE_AVATAR, {
+			id,
+			avatar
 		});
 
-		this.activeClass = aUserClass;
+		this.activeClass = aMemberClass;
 
 		return this.request();
 	}
