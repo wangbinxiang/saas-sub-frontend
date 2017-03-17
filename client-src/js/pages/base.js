@@ -20,9 +20,11 @@ $('#responsive-menu .top-bar-left--global').on('click', 'ul', function (e) {
     e.stopPropagation();
 });
 
-$('#userShortcuts').on('show.zf.dropdown', () => {
-    $('#userShortcuts').css('max-height', $(window).height() - 47)
-})
+if (Foundation.MediaQuery.current == 'small') {
+    $('#userShortcuts').on('show.zf.dropdown', () => {
+        $('#userShortcuts').css('max-height', $(window).height() - 47)
+    })
+}
 
 var lastScrollTop = 0;
 if (Foundation.MediaQuery.current == 'small') {
