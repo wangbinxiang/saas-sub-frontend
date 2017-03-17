@@ -20,6 +20,12 @@ $('#responsive-menu .top-bar-left--global').on('click', 'ul', function (e) {
     e.stopPropagation();
 });
 
+if (Foundation.MediaQuery.current == 'small') {
+    $('#userShortcuts').on('show.zf.dropdown', () => {
+        $('#userShortcuts').css('max-height', $(window).height() - 47)
+    })
+}
+
 var lastScrollTop = 0;
 if (Foundation.MediaQuery.current == 'small') {
     $(window).scroll(function (event) {
@@ -33,49 +39,49 @@ if (Foundation.MediaQuery.current == 'small') {
     });
 }
 
-export let closeTimer = null
+// export let closeTimer = null
 
-export function motionAlert(option) {    
-    let html = `<div class="reveal reveal-motion callout alert fast ease-out" id="motionAlert" data-animate="slide-in-right slide-out-right">
-                    <h5></h5>
-                    <p></p>
-                    <div></div>
-                    <button class ="close-button" type="button" data-toggle="motionAlert">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>`
-    if ($('#motionAlert').length === 0) {
-        $('body').append(html)
-        var elem = new Foundation.Toggler($('#motionAlert'));
-    }
-    $('#motionAlert h5').text(option.title)
-    if (option.note === null) {
-        $('#motionAlert p').hide()
-    } else {
-        $('#motionAlert p').text(option.note).show()
-    }
-    $('#motionAlert div').html(option.links)
-    if (option.status == 'success') {
-        $('#motionAlert').removeClass('alert').addClass('success')
-    } else {
-        $('#motionAlert').removeClass('success').addClass('alert')
-    }
-    $('#motionAlert [data-toggle="motionAlert"]').on('click', function(){
-        if (closeTimer != null) {
-            window.clearTimeout(closeTimer);
-            closeTimer = null;
-        }
-    })
-    Foundation.Motion.animateIn($('#motionAlert'), 'slide-in-right')
-    if (closeTimer != null) {
-        window.clearTimeout(closeTimer);
-        closeTimer = null;
-    }
-    closeTimer = setTimeout(() => {
-        Foundation.Motion.animateOut($('#motionAlert'), 'slide-out-right')
-        closeTimer = null
-    }, 3000)
-}
+// export function motionAlert(option) {    
+//     let html = `<div class="reveal reveal-motion callout alert fast ease-out" id="motionAlert" data-animate="slide-in-right slide-out-right">
+//                     <h5></h5>
+//                     <p></p>
+//                     <div></div>
+//                     <button class ="close-button" type="button" data-toggle="motionAlert">
+//                         <span aria-hidden="true">&times;</span>
+//                     </button>
+//                 </div>`
+//     if ($('#motionAlert').length === 0) {
+//         $('body').append(html)
+//         var elem = new Foundation.Toggler($('#motionAlert'));
+//     }
+//     $('#motionAlert h5').text(option.title)
+//     if (option.note === null) {
+//         $('#motionAlert p').hide()
+//     } else {
+//         $('#motionAlert p').text(option.note).show()
+//     }
+//     $('#motionAlert div').html(option.links)
+//     if (option.status == 'success') {
+//         $('#motionAlert').removeClass('alert').addClass('success')
+//     } else {
+//         $('#motionAlert').removeClass('success').addClass('alert')
+//     }
+//     $('#motionAlert [data-toggle="motionAlert"]').on('click', function(){
+//         if (closeTimer != null) {
+//             window.clearTimeout(closeTimer);
+//             closeTimer = null;
+//         }
+//     })
+//     Foundation.Motion.animateIn($('#motionAlert'), 'slide-in-right')
+//     if (closeTimer != null) {
+//         window.clearTimeout(closeTimer);
+//         closeTimer = null;
+//     }
+//     closeTimer = setTimeout(() => {
+//         Foundation.Motion.animateOut($('#motionAlert'), 'slide-out-right')
+//         closeTimer = null
+//     }, 3000)
+// }
 
 //HOW TO
 //import {closeTimer, motionAlert} from './base.js'
