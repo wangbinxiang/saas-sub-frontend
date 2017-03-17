@@ -1,24 +1,22 @@
 ﻿<%- include('../layout/header') -%>
+
+<div class="fgarden"></div>
+
 <% if(info.slideProducts) { %>
-<div class="row expanded column top-carousel top-carousel--nopadding">
-    <div class="jcarousel jcarousel--home">
-        <ul>
-            <% for(let i of info.slideProducts) { %>
-            <li>
-                <a href="/products/<%- i.id %>">
-                    <div>
-                        <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x">
-                    </div>
-                    <b class="lead" style="padding-right:7.5rem;"><%- i.name %></b>
-                    <span style="display:block;"><sup>￥</sup><strong><%- i.minPrice %></strong> <small>起</small></span>
-                </a>
-            </li>
-            <% } %>
-        </ul>
+<div class="slick-wrap slick-fix640 clearfix">
+    <div class="fcarousel">
+        <% for(let i of info.slideProducts) { %>
+        <div class="fcarousel__item">
+            <a href="/products/<%- i.id %>">
+                <div>
+                    <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x" />
+                </div>
+                <b class="lead<% if (i.minPrice) { %> fcarousel__price<% } %>"><%- i.name %></b>
+                <% if (i.minPrice) { %><span><sup>￥</sup><strong><%- i.minPrice %></strong> <small>from</small></span><% } %>
+            </a>
+        </div>
+        <% } %>
     </div>
-    <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
-    <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
-    <div class="jcarousel-pagination"></div>
 </div>
 <% } %>
 

@@ -5,3 +5,6 @@
 .button--fix {
     position:absolute; right:0; bottom:0;
 }
+.good-carousel img{
+    max-width: none;
+}

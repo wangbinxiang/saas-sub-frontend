@@ -11,17 +11,14 @@
 <h1 class="row pageHeader"><%- product.name %></h1>
 <div class="expanded row detail-top">
     <div class="large-6 medium-12 columns">
-        <div class="jcarousel-wrapper">
-            <div class="jcarousel">
-                <ul>
-                    <% for(let slide of product.slides) { %>
-                    <li><img src="<%- imgHost +  slide %><%- imgDetailSlideStyle %>" /></li>
-                    <% } %>
-                </ul>
-            </div>
-            <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
-            <a href="#" class="jcarousel-control-next right material-icons mi-keyboard_arrow_right"></a>
+        
+
+        <div class="good-carousel">
+            <% for(let slide of product.slides) { %>
+                <a><img src="<%- imgHost +  slide %><%- imgDetailSlideStyle %>" /></a>
+            <% } %>
         </div>
+
     </div>
     <div class="large-6 medium-12 columns">
         <div class="clearfix detailPrice">
