@@ -35,14 +35,7 @@ ajv-keywords@^1.0.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/ajv-keywords/download/ajv-keywords-1.1.1.tgz#02550bc605a3e576041565628af972e06c549d50"
 
-ajv@^4.7.0:
-  version "4.9.0"
-  resolved "http://registry.npm.taobao.org/ajv/download/ajv-4.9.0.tgz#5a358085747b134eb567d6d15e015f1d7802f45c"
-  dependencies:
-    co "^4.6.0"
-    json-stable-stringify "^1.0.1"
-
-ajv@^4.9.1:
+ajv@^4.7.0, ajv@^4.9.1:
   version "4.11.5"
   resolved "http://registry.npm.taobao.org/ajv/download/ajv-4.11.5.tgz#b6ee74657b993a01dce44b7944d56f485828d5bd"
   dependencies:
@@ -2757,7 +2750,7 @@ jquery-touchswipe@^1.6.15:
   version "1.6.15"
   resolved "http://registry.npm.taobao.org/jquery-touchswipe/download/jquery-touchswipe-1.6.15.tgz#be8372f2c799f9fd6b3c15e5034bf7e25e28dd83"
 
-"jquery@>=1.4.2 <4", jquery@>=1.7, jquery@^2.2.0, jquery@^2.2.4:
+"jquery@>=1.4.2 <4", jquery@>=1.7, jquery@>=1.7.2, jquery@^2.2.0, jquery@^2.2.4:
   version "2.2.4"
   resolved "http://registry.npm.taobao.org/jquery/download/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
@@ -3879,11 +3872,11 @@ qrcode_js@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/qrcode_js/download/qrcode_js-1.0.0.tgz#e688b4a5fde28d6ac4815352e0426713b7fe70d2"
 
-qs@2.3.3, qs@^6.1.0, qs@~4.0.0, qs@~6.3.0:
+qs@2.3.3, qs@~4.0.0, qs@~6.3.0:
   version "6.3.0"
   resolved "http://registry.npm.taobao.org/qs/download/qs-6.3.0.tgz#f403b264f23bc01228c74131b407f18d5ea5d442"
 
-qs@~6.4.0:
+qs@^6.1.0, qs@~6.4.0:
   version "6.4.0"
   resolved "http://registry.npm.taobao.org/qs/download/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
@@ -4063,7 +4056,7 @@ request-json@^0.6.1:
     depd "1.1.0"
     request "2.74.0"
 
-request@2.60.0, request@2.74.0, request@^2.45.0, request@^2.75.0:
+request@2.60.0, request@2.74.0:
   version "2.79.0"
   resolved "http://registry.npm.taobao.org/request/download/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:
@@ -4088,7 +4081,7 @@ request@2.60.0, request@2.74.0, request@^2.45.0, request@^2.75.0:
     tunnel-agent "~0.4.1"
     uuid "^3.0.0"
 
-request@^2.81.0:
+request@^2.45.0, request@^2.75.0, request@^2.81.0:
   version "2.81.0"
   resolved "http://registry.npm.taobao.org/request/download/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -4286,6 +4279,12 @@ slash@^1.0.0:
 slice-ansi@0.0.4:
   version "0.0.4"
   resolved "http://registry.npm.taobao.org/slice-ansi/download/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
+
+slick-carousel@^1.6.0:
+  version "1.6.0"
+  resolved "http://registry.npm.taobao.org/slick-carousel/download/slick-carousel-1.6.0.tgz#780f378e470f4e6f6bec1aa2bae0475f4f9eb085"
+  dependencies:
+    jquery ">=1.7.2"
 
 slide@^1.1.5:
   version "1.1.6"
