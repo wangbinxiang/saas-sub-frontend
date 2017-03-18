@@ -2,13 +2,10 @@
     <nav aria-label="You are here:" role="navigation" class="clearfix">
         <ul class="breadcrumbs onionLink">
             <li><a href="/">首页</a></li>
-            <li>
-                <span class="show-for-sr">Current: </span> 用户注册
-            </li>
         </ul>
     </nav>
     <h1 class="row column user-margin"><%= title %></h1>
     <div data-abide-error class="alert callout" >
-        <p><i class="fi-alert"></i><%= info %><a href="<%= location %>">稍后将跳转</a></p>
+        <p><i class="fi-alert"></i><%= info %><a href="<%- typeof location !== 'undefined'? location: '/' %>">点击后将跳转</a></p>
     </div>
 <%- include('../layout/footer') -%>
