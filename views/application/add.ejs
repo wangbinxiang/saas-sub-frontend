@@ -24,7 +24,7 @@
         <fieldset class="fieldset">
             <legend><h4>申请用户信息</h4></legend>
             <div class="row">
-                <div class="medium-4 columns">
+                <div class="medium-6 columns">
                     <label>
                         姓名
                         <input type="text" id="realName" required value="">
@@ -33,16 +33,10 @@
                         <input type="hidden" id="_csrf" name="_csrf" value="<%= csrf %>" />
                     </label>
                 </div>
-                <div class="medium-4 columns">
+                <div class="medium-6 columns">
                     <label>
                         联系电话
                         <input type="text" id="contactPhone" required value="" pattern="number">
-                    </label>
-                </div>
-                <div class="medium-4 columns">
-                    <label>
-                        身份证号码
-                        <input type="text" id="identifyCardNumber" required value="" pattern="number">
                     </label>
                 </div>
             </div>
@@ -50,13 +44,13 @@
                 <div class="medium-6 columns">
                     <label>
                         公司名称
-                        <input type="text" id="companyName" required value="">        
+                        <input type="text" id="companyName" value="">        
                     </label>
                 </div>
                 <div class="medium-6 columns">
                     <label>
                         公司地址
-                        <input type="text" id="companyAddress" required value="">
+                        <input type="text" id="companyAddress" value="">
                     </label>
                 </div>
             </div>
@@ -67,7 +61,7 @@
         </div>
         <fieldset class="fieldset" id="fieldAddress">
             <legend><h4>申请信息</h4></legend>
-            <textarea rows="5" id="information" required placeholder="申请说明"></textarea>
+            <textarea rows="5" id="information" placeholder="申请说明"></textarea>
             <label>上传文件仅支持rar, zip, pdf, word格式，文件大小不超过50M，最多5个文件。</label>
             <div class="dropzone dropzone-single" id="attachmentUploader"></div>
         </fieldset>

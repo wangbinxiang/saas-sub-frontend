@@ -142,7 +142,7 @@ export async function add(ctx, next) {
 		const userId = ctx.state.user.id;
 		const realName = ctx.request.body.realName; //string
 		const contactPhone = ctx.request.body.contactPhone; //string
-		const identifyCardNumber = ctx.request.body.identifyCardNumber; //string
+		const identifyCardNumber = ctx.request.body.identifyCardNumber? ctx.request.body.identifyCardNumber: ''; //string
 		const companyName = ctx.request.body.companyName; //string
 		const companyAddress = ctx.request.body.companyAddress; //string
 		const information = ctx.request.body.information; //string

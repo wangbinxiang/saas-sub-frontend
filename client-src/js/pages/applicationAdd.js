@@ -125,7 +125,8 @@ $('#saveGood').on('click', () => {
             $('#formAlert').show()
         })
     } else {
-        $(window).scroll();
+        // $(window).scroll();
+        $("html, body").animate({ scrollTop: $('.is-invalid-label, is-invalid-input').eq(0).offset().top });
     }
 
     return false
