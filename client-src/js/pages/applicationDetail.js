@@ -3,6 +3,7 @@ if (module.hot) {
 }
 
 import './base.js'
+import '../vendors/ko.bindingHandlers'
 
 //回复列表模型
 const RepliesModel = function(data, hostId, applicantId) {
@@ -25,6 +26,7 @@ $.ajax({
 }).done(function(respone) {
     if (respone.replies) {
         for(let reply of respone.replies){
+            // reply.content[0] = nl2br(reply.content[0].replace(/ /g, '&nbsp;'));
             repliesModel.replies.push(reply)
         }
     }
@@ -178,11 +180,19 @@ if (document.getElementById('contractInfo')) {
     ko.applyBindings(contractModel, document.getElementById('contractInfo'));
 }
 
+
+const contractFormButton = {
+    submit: ko.observable(false)
+}
+if (document.getElementById('contractFormButton')) {
+    ko.applyBindings(contractFormButton, document.getElementById('contractFormButton'))
+}
+
 $('#approveButton').on('click', () => {
     $('#contractForm').foundation('validateForm');
     if($('[data-invalid]').length === 0){
         if(confirm('确定同意该方案？')){
-            formButton.submit(true)
+            contractFormButton.submit(true)
             $('#approveButton').text('正在同意方案')
 
             const _csrf = $('#_csrf').val()
@@ -200,7 +210,7 @@ $('#approveButton').on('click', () => {
             })
             .fail(function(response){
                 alert('提交失败！');
-                formButton.submit(false);
+                contractFormButton.submit(false);
                 $('#approveButton').text('同意方案')
             })
         } else {
@@ -214,7 +224,7 @@ $('#approveButton').on('click', () => {
 $('#declineButton').on('click', () => {
 
     if(confirm('确定结束申请？')){
-        formButton.submit(true)
+        contractFormButton.submit(true)
         $('#declineButton').text('正在结束申请')
 
         const _csrf = $('#_csrf').val()
@@ -232,7 +242,7 @@ $('#declineButton').on('click', () => {
         })
         .fail(function(response){
             alert('提交失败！');
-            formButton.submit(false);
+            contractFormButton.submit(false);
             $('#declineButton').text('结束申请')
         })
     } else {
