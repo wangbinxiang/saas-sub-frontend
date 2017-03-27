@@ -35,7 +35,7 @@ var getEntry = function (pathName, hotMiddlewareScript) {
  * @type {Object}
  */
 var config = {
-  devtool: debug? 'eval-source-map': 'source-map',
+  devtool: debug? 'cheap-module-eval-source-map': 'cheap-module-source-map',
   name: 'client-src',
   debug: debug,
   context: __dirname,
