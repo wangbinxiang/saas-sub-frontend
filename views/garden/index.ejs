@@ -1,21 +1,21 @@
 <%- include('../layout/header') -%>
 
-<div class="orbit orbit--garden" role="region" aria-label="Favorite Space Pictures" data-orbit data-timer-delay="50000000">
-    <ul class="orbit-container">
-        <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
-        <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+<div class="fgarden"></div>
+
+<div class="slick-wrap slick-center clearfix">
+    <div class="fcarousel">
         <% for(let i of slidesData) { %>
-        <li class="orbit-slide">
-            <div class="figure" style="background-image:url('<%- i.img %><%- imgSlideOneStyle %>')"></div>
-            <h3 class="orbit-caption"><span><%- i.title %></span><a href="<%- i.url %>" class="button large">查看详情</a></h3>
-        </li>
+        <div class="fcarousel__item">
+            <a href="<%- i.url %>">
+                <div>
+                    <img src="<%- i.img %><%- imgSlideOneStyle %>" />
+                </div>
+                <b class="lead<% if (i.price) { %> fcarousel__price<% } %>"><%- i.title %></b>
+                <% if (i.price) { %><span><sup>￥</sup><strong><%- i.price %></strong> <small>from</small></span><% } %>
+            </a>
+        </div>
         <% } %>
-    </ul>
-    <nav class="orbit-bullets">
-        <% for(let i=0; i<slidesData.length; i++) { %>
-        <button class="<%= i == 0 ? 'is-active' : '' %>" data-slide="<%= i %>"><span class="show-for-sr"><%- slidesData[i].title %></span></button>
-        <% } %>
-    </nav>
+    </div>
 </div>
 
 <div class="hot-bar-wrap clearfix hot-bar-wrap--garden">

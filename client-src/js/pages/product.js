@@ -3,48 +3,49 @@
 }
 
 import './base.js';
+import '../vendors/fcarousel.js'
 
 require.ensure([], function(require) {
-    let jcarousel = require('jcarousel')
+    // let jcarousel = require('jcarousel')
 
-    $('.jcarousel').jcarousel({
-        scroll: 1,
-        //center:true
-    })
-    //    .swipe({
-    //    allowPageScroll: 'vertical',
-    //    //Generic swipe handler for all directions
-    //    swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
-    //        event.stopPropagation();
-    //        if (direction == 'left') {
-    //            $(element).jcarousel('scroll', '+=1');
-    //        }
-    //        if (direction == 'right') {
-    //            $(element).jcarousel('scroll', '-=1');
-    //        }
-    //    }
-    //})
-        .next()
-        .on('jcarouselcontrol:active', function () {
-            $(this).removeClass('inactive');
-        })
-        .on('jcarouselcontrol:inactive', function () {
-            $(this).addClass('inactive');
-        })
-        .jcarouselControl({
-            target: '-=1',
-            carousel: $('.jcarousel')
-        }).next()
-        .on('jcarouselcontrol:active', function () {
-            $(this).removeClass('inactive');
-        })
-        .on('jcarouselcontrol:inactive', function () {
-            $(this).addClass('inactive');
-        })
-        .jcarouselControl({
-            target: '+=1',
-            carousel: $('.jcarousel')
-        });
+    // $('.jcarousel').jcarousel({
+    //     scroll: 1,
+    //     //center:true
+    // })
+    // //    .swipe({
+    // //    allowPageScroll: 'vertical',
+    // //    //Generic swipe handler for all directions
+    // //    swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+    // //        event.stopPropagation();
+    // //        if (direction == 'left') {
+    // //            $(element).jcarousel('scroll', '+=1');
+    // //        }
+    // //        if (direction == 'right') {
+    // //            $(element).jcarousel('scroll', '-=1');
+    // //        }
+    // //    }
+    // //})
+    //     .next()
+    //     .on('jcarouselcontrol:active', function () {
+    //         $(this).removeClass('inactive');
+    //     })
+    //     .on('jcarouselcontrol:inactive', function () {
+    //         $(this).addClass('inactive');
+    //     })
+    //     .jcarouselControl({
+    //         target: '-=1',
+    //         carousel: $('.jcarousel')
+    //     }).next()
+    //     .on('jcarouselcontrol:active', function () {
+    //         $(this).removeClass('inactive');
+    //     })
+    //     .on('jcarouselcontrol:inactive', function () {
+    //         $(this).addClass('inactive');
+    //     })
+    //     .jcarouselControl({
+    //         target: '+=1',
+    //         carousel: $('.jcarousel')
+    //     });
     
     $('#priceLabels a').on('click', function(){
         if(!$(this).hasClass('checked')){

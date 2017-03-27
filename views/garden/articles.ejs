@@ -1,23 +1,22 @@
 ﻿<%- include('../layout/header') -%>
+
+<div class="fgarden"></div>
+
 <% if(info.slideArticles) { %>
-<div class="row expanded column top-carousel top-carousel--nopadding">
-    <div class="jcarousel jcarousel--home">
-        <ul>
-            <% for(let i of info.slideArticles) { %>
-            <li>
-                <a href="/articles/<%- i.id %>">
-                    <div>
-                        <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x">
-                    </div>
-                    <b class="lead"><%- i.title %></b>
-                </a>
-            </li>
-            <% } %>
-        </ul>
+<div class="slick-wrap slick-fix640 clearfix">
+    <div class="fcarousel">
+        <% for(let i of info.slideArticles) { %>
+        <div class="fcarousel__item">
+            <a href="/articles/<%- i.id %>">
+                <div>
+                    <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x" />
+                </div>
+                <b class="lead<% if (i.price) { %> fcarousel__price<% } %>"><%- i.title %></b>
+                <% if (i.price) { %><span><sup>￥</sup><strong><%- i.price %></strong> <small>from</small></span><% } %>
+            </a>
+        </div>
+        <% } %>
     </div>
-    <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
-    <a href="#" class="jcarousel-control-next material-icons mi-keyboard_arrow_right right"></a>
-    <div class="jcarousel-pagination"></div>
 </div>
 <% } %>
 <div class="hot-bar-wrap clearfix hot-bar-wrap--garden">
@@ -53,10 +52,12 @@
         </a>
         <% } %>
     </div>
+    
     <div class="large-8 medium-12 columns article-mix__sub">
-        <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
+        <% if(info.articles[key].length > 1) { %>
+        <div class="row expanded small-up-1 medium-up-2" <% if(info.articles[key].length > 3) { %>data-equalizer data-equalize-on="medium"<% } %>>
             <% for(let i = 1; i < info.articles[key].length; i++){ %>
-            <div class="column">
+            <div class="columns">
                 <a class="article-item" href="/articles/<%- info.articles[key][i].id %>" data-equalizer-watch>
                     <figure style="background-image:url('<%- imgHost + info.articles[key][i].logo %><%- imgListStyle %>"></figure>
                     <h4><%- info.articles[key][i].title %></h4>
@@ -65,7 +66,8 @@
             </div>
             <% } %>
         </div>
-    </div>
+        <% } %>
+    </div>    
 </div>
 <% } %>
 

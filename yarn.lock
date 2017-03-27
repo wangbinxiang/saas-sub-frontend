@@ -2750,7 +2750,7 @@ jquery-touchswipe@^1.6.15:
   version "1.6.15"
   resolved "http://registry.npm.taobao.org/jquery-touchswipe/download/jquery-touchswipe-1.6.15.tgz#be8372f2c799f9fd6b3c15e5034bf7e25e28dd83"
 
-"jquery@>=1.4.2 <4", jquery@>=1.7, jquery@^2.2.0, jquery@^2.2.4:
+"jquery@>=1.4.2 <4", jquery@>=1.7, jquery@>=1.7.2, jquery@^2.2.0, jquery@^2.2.4:
   version "2.2.4"
   resolved "http://registry.npm.taobao.org/jquery/download/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
@@ -4279,6 +4279,12 @@ slash@^1.0.0:
 slice-ansi@0.0.4:
   version "0.0.4"
   resolved "http://registry.npm.taobao.org/slice-ansi/download/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
+
+slick-carousel@^1.6.0:
+  version "1.6.0"
+  resolved "http://registry.npm.taobao.org/slick-carousel/download/slick-carousel-1.6.0.tgz#780f378e470f4e6f6bec1aa2bae0475f4f9eb085"
+  dependencies:
+    jquery ">=1.7.2"
 
 slide@^1.1.5:
   version "1.1.6"

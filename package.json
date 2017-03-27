@@ -135,6 +135,7 @@
     "rewire": "^2.5.2",
     "rimraf": "^2.5.4",
     "should": "^8.3.0",
+    "slick-carousel": "^1.6.0",
     "supertest": "^1.2.0",
     "webpack": "^1.13.2"
   },

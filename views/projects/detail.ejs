@@ -10,26 +10,23 @@
 <h1 class="row pageHeader"><%= project.name %></h1>
 <div class="expanded row detail-top">
     <div class="large-6 medium-12 columns">
-        <div class="jcarousel-wrapper">
-            <div class="jcarousel">
-                <ul>
-                    <% for(let slide of project.slides) { %>
-                    <li><img src="<%- imgHost + slide %><%- imgDetailSlideStyle %>" /></li>
-                    <% } %>
-                </ul>
-            </div>
-            <a href="#" class="jcarousel-control-prev material-icons mi-keyboard_arrow_left"></a>
-            <a href="#" class="jcarousel-control-next right material-icons mi-keyboard_arrow_right"></a>
+        <div class="good-carousel">
+            <% for(let slide of project.slides) { %>
+                <a><img src="<%- imgHost +  slide %><%- imgDetailSlideStyle %>" /></a>
+            <% } %>
         </div>
     </div>
     <div class="large-6 medium-12 columns">
         <div class="clearfix detailPrice">
-            <div class="small-6 large-6 medium-6 columns">
+            <div class="p-margin-bottom lbPrice">
+                金额￥<b class="stat"><%= project.prices.length > 0 ? project.prices[0].price : '' %></b>
+            </div>
+            <!--<div class="small-6 large-6 medium-6 columns">
                 <label>金额</label>￥<b class="stat" id="priceStat"><%= project.prices.length > 0 ? project.prices[0].price : '' %></b>
             </div>
             <div class="small-6 large-6 medium-6 columns">
-                <!-- <label>申请人数</label><b class="stat"><%= project.applyCount %></b> -->
-            </div>
+                <label>申请人数</label><b class="stat"><%= project.applyCount %></b>
+            </div>-->
             <div class="filter-bar filter-bar--sku" id="skuBar">
                 <div class="button-group single" id="priceLabels">
                     <% for(let i in project.prices) { %>
