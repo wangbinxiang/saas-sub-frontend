@@ -18,7 +18,9 @@
         </div>
     </footer>
 
-    <script src="/js/pages/commons.js"></script> 
+    <% if (typeof commonsJs != "undefined" && commonsJs) { %>
+    <script src="<%- commonsJs %>"></script> 
+    <% } %>
     <% if (typeof pageJs != "undefined" && pageJs) { %>
     <script src="<%= pageJs %>"></script>
     <% } %>

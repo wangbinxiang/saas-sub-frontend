@@ -21,10 +21,11 @@
             <br />Power by <a href="http://www.yundianshang.cc">www.yundianshang.cc</a>
         </div>
     </footer>
-
-    <script src="/js/pages/commons.js"></script> 
+    <% if (typeof commonsJs != "undefined" && commonsJs) { %>
+    <script src="<%- commonsJs %>"></script> 
+    <% } %>
     <% if (typeof pageJs != "undefined" && pageJs) { %>
-    <script src="<%= pageJs %>"></script>
+    <script src="<%- pageJs %>"></script>
     <% } %>
     <% if(shopInfo.id === '10021') { %>
         <script>

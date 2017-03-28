@@ -43,7 +43,7 @@ var config = {
   output: {
     path: path.join(__dirname, './client/js/pages/'), 
     publicPath: '/js/pages/', 
-    filename: "[name]-[hash].js"
+    filename: "[name]-[chunkhash].js"
   },
   // watch: true,
   plugins: [
@@ -58,7 +58,7 @@ var config = {
         "window.jQuery": "jquery",
         ko: 'knockout'
     }),
-    new webpack.optimize.CommonsChunkPlugin({ name: "commons", filename: "commons.js", minChunks: 2 }),
+    new webpack.optimize.CommonsChunkPlugin({ name: "commons", filename: "commons-[hash].js", minChunks: 2 }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
