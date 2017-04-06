@@ -2,6 +2,12 @@ import config from 'config';
 import _ from 'lodash'
 import ShopService from '../models/application/ShopService';
 import { isAuthRelationship } from '../tools/auth';
+import {
+    decryptShopid
+} from '../tools/host'
+import {
+    isPositiveInteger
+} from '../tools/util'
 /**
  * 验证子站id
  * @author wangbinxiang
@@ -19,7 +25,12 @@ export async function handlerHostToSubId(ctx, next) {
         subId = hostMapping[ctx.host];
     } else {
         const hostSplit = ctx.host.split('.');
-        subId = hostSplit[0];
+        try {
+            subId = __DEVELOPMENT__? hostSplit[0]: decryptShopid(hostSplit[0])
+        } catch (e) {
+            ctx.status = 404
+            await ctx.render('404')
+        }
     }
 
     // const hostSplit = ctx.request.host.split('.');
@@ -87,9 +98,4 @@ export async function handlerHostToSubId(ctx, next) {
         ctx.status = 404;
         await ctx.render('404');
     }
-}
-
-function isPositiveInteger(s){//是否为正整数
-    var re = /^[1-9]+[0-9]*[0-9]*$/ ;
-    return re.test(s)
 }

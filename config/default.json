@@ -40,6 +40,11 @@
       ]
     }
   },
+  "crypt": {
+    "key": {
+      "shopId": "034663ed7f93f4d333512d543bf9a945"
+    }
+  },
   "hostMapping": {
   },
   "apiServiceLocation": {

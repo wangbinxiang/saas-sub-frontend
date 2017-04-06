@@ -18,7 +18,6 @@ const ProdModel = function(data, productTypeId){
     self.isNext = ko.observable(isNext);
 
     this.afterAdd = function(element) {
-        console.log('shiver')
         //$('#masonryWrap').masonry('appended', element).masonry();
         Foundation.onImagesLoaded($('#masonryWrap img'), function () {
             $('#masonryWrap').masonry('appended', element).masonry()
