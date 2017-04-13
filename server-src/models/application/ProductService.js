@@ -63,7 +63,7 @@ export default class ProductService {
 	}
 
 	async list(idList) {
-		const products = await this.productAdapter.get({
+		let products = await this.productAdapter.get({
 			idList
 		}, Product);
 
