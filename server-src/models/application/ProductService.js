@@ -69,7 +69,7 @@ export default class ProductService {
 
 		if(products) {
 			products = lodash.remove(products, function(product) {
-				return product.status !== PRODUCT_STATUS_ON_SALE
+				return product.status === PRODUCT_STATUS_ON_SALE
 			});
 		}
 
