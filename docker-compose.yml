@@ -1,8 +1,16 @@
-node:
-  image: node:6.9.1-onbuild
-  volumes:
-    - .:/usr/src/app
-  ports:
-    - 3010:3010
-    - 3001:3001
-  command: npm run dev
+version: '3'
+services:
+  node:
+    image: saas-dev-node:0.1.0
+    volumes:
+      - .:/usr/src/app
+    networks:
+      default:
+        aliases:
+         - saas-local-sub-frontend
+    container_name: saas-sub-frontend
+
+networks:
+  default:
+    external:
+      name: saas-local-network
