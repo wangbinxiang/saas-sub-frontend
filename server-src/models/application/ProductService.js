@@ -4,6 +4,7 @@ import Product from '../model/Product';
 import ProductType from '../model/ProductType';
 import lodash from 'lodash';
 import { checkResourcesOwner, checkOther } from '../../libs/helper';
+import { PRODUCT_STATUS_ON_SALE } from '../../config/productConf'
 
 export default class ProductService {
 
@@ -65,6 +66,12 @@ export default class ProductService {
 		const products = await this.productAdapter.get({
 			idList
 		}, Product);
+
+		if(products) {
+			products = lodash.remove(products, function(product) {
+				return product.status !== PRODUCT_STATUS_ON_SALE
+			});
+		}
 
 		return products;
 	}
