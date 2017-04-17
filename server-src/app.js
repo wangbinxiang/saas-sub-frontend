@@ -11,9 +11,9 @@ import koaerro from 'koa-error'
 import session from 'koa-generic-session'
 import compress from 'koa-compress'
 import memcacheSession from 'koa-memcached'
-import passport from 'koa-passport'
+// import passport from 'koa-passport'
 import config from 'config'
-import passportRegister from './passport' //注册账号验证规则
+// import passportRegister from './passport' //注册账号验证规则
 
 
 const app = new Koa()
@@ -44,10 +44,10 @@ app.use(convert(session({
 })));
 
 
-//passport
-passportRegister(passport);
-app.use(passport.initialize());
-app.use(passport.session());
+//passport 转移到compose里
+// passportRegister(passport);
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 

@@ -9,7 +9,7 @@ services:
         aliases:
          - saas-local-sub-frontend
     container_name: saas-sub-frontend
-
+    command: npm run dev-docker-babel-compile
 networks:
   default:
     external:

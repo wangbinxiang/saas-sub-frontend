@@ -26,12 +26,14 @@ const watcher = chokidar.watch(path.join(__dirname, '../server-src'))
 const project_base_path = path.resolve(__dirname, '..');
 
 watcher.on('ready', function() {
-	log('Compiling...'.green)
-	babelCliDir({
+	if (!fs.existsSync('./server')) {
+		log('Compiling...'.green)
+		babelCliDir({
 			outDir: 'server/',
 			retainLines: true,
 			sourceMaps: true
 		}, ['server-src/']) // compile all when start
+	}
 	const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 	global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack-isomorphic-tools')).server(projectRootPath, () => {
     	//server方法检测webpack-assets.json存在后才执行callback，app.js里加载了devMiddleware中间件会生成webpack-assets.json

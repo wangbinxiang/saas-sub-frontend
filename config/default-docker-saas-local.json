@@ -1,0 +1,6 @@
+{
+  "memcache": {
+    "host": "saas-local-memcached",
+    "port": 11211
+  }
+}

@@ -5,7 +5,7 @@ var jsonfile = require('jsonfile');
 if (process.env.ETCD_ENV) {
     var etcdHost = '';
     if (process.env.NODE_ENV === 'development') {
-        etcdHost = 'http://121.199.48.91:2379';
+        etcdHost = 'http://121.199.18.127:2379';
     } else {
         etcdHost = 'http://etcd.etcd-ha:2379'; 
     }

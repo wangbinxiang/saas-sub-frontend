@@ -6,12 +6,20 @@ import { noCache } from './middlewares/header'
 import { jsLocation } from './middlewares/asset'
 import router from './routes/router'
 
+import passport from 'koa-passport'
+//注册账号验证规则
+import passportRegister from './passport'
+
+passportRegister(passport);
+
 export default compose([
 	handlerHostToSubId,
 	noCache,
 	isInWechat,
-	authWechatSign,
 	jsLocation,
+	passport.initialize(),
+	passport.session(),
+	authWechatSign,
 	router.routes(),
 	router.allowedMethods()
 ])
