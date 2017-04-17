@@ -42,7 +42,11 @@ export async function productType(ctx, next) {
 	    		const productService = new ProductService();
 	    		const otherProducts = await productService.list(other[ctx._subId][productTypeId]);
 	    		if (otherProducts) {
+					if (products) {
 	    			products = lodash.concat(products, otherProducts);
+					} else {
+						products = otherProducts
+					}
 	    		}
 	    	}
 	    	
