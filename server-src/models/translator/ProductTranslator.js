@@ -6,8 +6,8 @@ export default class ProductTranslator extends Translator {
         super();
     }
 
-    readData(data) {
-        const bodyReader = new ProductJsonApiBodyReader(data);
+    readData(data, included) {
+        const bodyReader = new ProductJsonApiBodyReader(data, included);
 
         let id          = bodyReader.value('id');
         let name        = bodyReader.value('name');
@@ -16,9 +16,9 @@ export default class ProductTranslator extends Translator {
         let logo        = bodyReader.value('logo');
         let minPrice    = bodyReader.value('minPrice');
         let maxPrice    = bodyReader.value('maxPrice');
-        let description = bodyReader.value('description');
-        let slides      = bodyReader.value('slides');
-        let prices      = bodyReader.value('prices');
+        let description = bodyReader.value('productDescription').description;
+        let slides      = bodyReader.value('productSlides').slides;
+        let prices      = bodyReader.value('productPrices').prices;
         let updateTime  = bodyReader.value('updateTime');
         let createTime  = bodyReader.value('createTime');
         let statusTime  = bodyReader.value('statusTime');

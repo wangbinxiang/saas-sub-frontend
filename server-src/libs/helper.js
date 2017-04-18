@@ -78,7 +78,7 @@ export function buildJsonApiIdsUrl(idList) {
  * @param  { object }                 filters [description]
  * @return {[string]}                         json api url 搜索参数
  */
-export function buildJsonApiQueryUrl(filters, pages, sort) {
+export function buildJsonApiQueryUrl(filters, pages, sort, include) {
     let url = '';
     let urlList = [];
     if (_.isPlainObject(filters) && Object.keys(filters).length > 0) {
@@ -94,6 +94,10 @@ export function buildJsonApiQueryUrl(filters, pages, sort) {
 
     if (sort) {
         urlList.push('sort=' + sort);
+    }
+
+    if (include && _.isArray(include)) {
+        urlList.push('include=' + include.join(','));
     }
 
     if (urlList.length > 0) {
@@ -116,11 +120,11 @@ export function buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl) {
 }
 
 
-export function jsonApiGetUrl(baseUrl, idList, { filters, pages, sort }) {
+export function jsonApiGetUrl(baseUrl, idList, { filters, pages, sort, include}) {
 
     let idsUrl = buildJsonApiIdsUrl(idList);
 
-    let queryUrl = buildJsonApiQueryUrl(filters, pages, sort);
+    let queryUrl = buildJsonApiQueryUrl(filters, pages, sort, include);
 
     return buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl);
 }

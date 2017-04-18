@@ -30,8 +30,6 @@ export async function index(ctx, next) {
     const title = '首页 - ' + ctx._shop.title;
     const imgHost = config.get('qiniu.bucket.subImg.url');
 
-    const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
-
     const imgListStyle = listStyle(ctx)
 
     //幻灯片
@@ -131,14 +129,45 @@ export async function index(ctx, next) {
             info, 
             blocks,
             imgHost,
-            imgStyle,
             imgSlideOneStyle,
             imgListStyle,
             SHOP_SLIDES_TYPE_PRODUCT,
             SHOP_SLIDES_TYPE_ARTICLE,
             SHOP_SLIDES_TYPE_PROJECT,
         });
+    } else if(ctx._subId === '10') {
+        let isNext = false;
 
+        const number = ctx.query.number ? ctx.query.number : 1;
+
+        const size = ctx.query.size ? ctx.query.size : 50;
+
+        const indexService = new IndexService();
+
+        let { page, products} = await indexService.diancan(number, size, ctx._subId);
+        if (page && page.haveNext()) {
+            isNext = true;
+        }
+
+
+        if (ctx.accepts('html', 'text', 'json') === 'json') {
+            ctx.body = {
+                products,
+                isNext
+            };
+        } else {
+            const pageJs = webpackIsomorphicTools.assets().javascript.diancan;
+
+            await ctx.render('index/diancan', {
+                title,
+                products,
+                isNext,
+                number,
+                pageJs,
+                imgHost,
+                imgListStyle,
+            });
+        }
     } else {
         let isNext = false;
 
@@ -210,15 +239,11 @@ export async function index(ctx, next) {
             };
         } else {
 
-            const pageJs = webpackIsomorphicTools.assets().javascript.diancan;
-
-            const imgHost = config.get('qiniu.bucket.subImg.url');
-
-            const imgStyle = config.get('qiniu.bucket.subImg.style.productWaterFall');
+            const pageJs = webpackIsomorphicTools.assets().javascript.index;
 
             const imgSlideStyle = slideStyle(ctx)
 
-            await ctx.render('index/diancan', {
+            await ctx.render('index/index', {
                 title,
                 slidesData,
                 products,
@@ -228,7 +253,6 @@ export async function index(ctx, next) {
                 number,
                 pageJs,
                 imgHost,
-                imgStyle,
                 imgSlideStyle,
                 imgListStyle,
                 SHOP_SLIDES_TYPE_PRODUCT,
