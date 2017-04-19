@@ -122,17 +122,18 @@ const DiancanModel = function (products, isNext, pageNumber) {
 
         
         
+        
         if(!lodash.isEmpty(self.cartProducts)) {
             for(let index in self.cartProducts) {
                 productsInfo[self.products()[index].id] = []
                 for(let priceIndex in self.cartProducts[index]) {
                     productsInfo[self.products()[index].id].push({
-                        [priceIndex]: self.cartProducts[index][priceIndex]
+                        index: priceIndex,
+                        number: self.cartProducts[index][priceIndex]
                     })
                 }
             }
-            console.log(productsInfo)
-            $.form('/orders/new', productsInfo).submit()
+            $.form('/orders/add', { productsInfo: JSON.stringify(productsInfo) }).submit()
         }
     }
 

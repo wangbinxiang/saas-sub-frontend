@@ -10,122 +10,108 @@ import {
 } from '../config/orderConf';
 
 export async function showAddOrder(ctx, next) {
-	//商品id  ctx.query.id
-	//商品价格索引 ctx.query.price
-	//商品数量 ctx.query.number
-	const productId = ctx.query.id;
-	const priceOrder = ctx.query.price;
-	const productNum = ctx.query.number;
-	const shopId = ctx._subId;
-	const userId = ctx.state.user.id;
+	if(ctx.method === 'POST') {
+		const productsInfo = JSON.parse(ctx.request.body.productsInfo)
 
+		const orderService = new OrderService()
+		const result = await orderService.showMulitAddOrder(productsInfo)
 
-	const orderService = new OrderService();
+		if (result === null) {
+			ctx.status = 404
+			await ctx.render('404');
+		} else {
 
-	const result = await orderService.showAddOrder(productId, priceOrder, productNum, shopId, userId);
+			const {
+				products,
+				totalPrice,
+			} = result
 
-	if (result !== null) {
-
-		const haimi = config.get('qide') == shopId
-
-		let {
-			product,
-			priceInfo,
-			totalPrice,
-			contract,
-			account
-		} = result;
-		const title = '订单详情';
-		const pageJs = webpackIsomorphicTools.assets().javascript.order;
-		const imgHost = config.get('qiniu.bucket.subImg.url');
-		await ctx.render('orders/addOrder', {
-			title,
-			haimi,
-			account,
-			product,
-			priceInfo,
-			totalPrice,
-			productNum,
-			productId,
-			priceOrder,
-			pageJs,
-			contract,
-			nl2br,
-			imgHost
-		});
+			const title = '订单详情';
+			const pageJs = webpackIsomorphicTools.assets().javascript.order;
+			await ctx.render('orders/addMultiOrder', {
+				title,
+				pageJs,
+				productsInfo,
+				products,
+				totalPrice
+			});
+		}
 	} else {
-		ctx.status = 404
-		await ctx.render('404');
-	}
-}
+		//商品id  ctx.query.id
+		//商品价格索引 ctx.query.price
+		//商品数量 ctx.query.number
+		const productId = ctx.query.id;
+		const priceOrder = ctx.query.price;
+		const productNum = ctx.query.number;
+		const shopId = ctx._subId;
+		const userId = ctx.state.user.id;
 
 
-export async function showMulitAddOrder(ctx, next) {
+		const orderService = new OrderService();
 
+		const result = await orderService.showAddOrder(productId, priceOrder, productNum, shopId, userId);
 
-	console.log(ctx.request.body.productsInfo)
+		if (result !== null) {
 
-	const productsInfo = {
-		34: [{
-				index: 1,
-				number: 1
-			},
-			{
-				index: 0,
-				number: 2
-			}
-		],
-		30: [{
-			index: 0,
-			number: 2
-		}]
-	}
+			const haimi = config.get('qide') == shopId
 
-
-	const orderService = new OrderService()
-	const result = await orderService.showMulitAddOrder(productsInfo)
-
-	if (result === null) {
-		ctx.status = 404
-		await ctx.render('404');
-	} else {
-
-		const {
-			products,
-			totalPrice,
-		} = result
-
-		const title = '订单详情';
-		const pageJs = webpackIsomorphicTools.assets().javascript.order;
-		await ctx.render('orders/addMultiOrder', {
-			title,
-			pageJs,
-			productsInfo,
-			products,
-			totalPrice
-		});
+			let {
+				product,
+				priceInfo,
+				totalPrice,
+				contract,
+				account
+			} = result;
+			const title = '订单详情';
+			const pageJs = webpackIsomorphicTools.assets().javascript.order;
+			const imgHost = config.get('qiniu.bucket.subImg.url');
+			await ctx.render('orders/addOrder', {
+				title,
+				haimi,
+				account,
+				product,
+				priceInfo,
+				totalPrice,
+				productNum,
+				productId,
+				priceOrder,
+				pageJs,
+				contract,
+				nl2br,
+				imgHost
+			});
+		} else {
+			ctx.status = 404
+			await ctx.render('404');
+		}
 	}
 }
 
 
 export async function addOrder(ctx, next) {
 
-	let userId = ctx.state.user.id;
-
-	let shopId = ctx._subId;
-
-	let price = ctx.request.body.price;
-
-	let comment = ctx.request.body.comment;
+	let result = null
 
 	const orderService = new OrderService();
-	let productList = [{
-		productId: ctx.request.body.productId,
-		number: ctx.request.body.number,
-		priceIndex: ctx.request.body.priceIndex
-	}];
 
-	let result = await orderService.addOrder(userId, shopId, price, comment, productList);
+	const comment = ctx.request.body.comment;
+
+	if(ctx.request.body.productsInfo) {
+
+		const productsInfo = JSON.parse(ctx.request.body.productsInfo)
+
+		result = await orderService.mulitAddOrder(ctx.state.user.id, ctx._subId, comment, productsInfo);
+
+	} else {
+
+		let productList = [{
+			productId: ctx.request.body.productId,
+			number: ctx.request.body.number,
+			priceIndex: ctx.request.body.priceIndex
+		}];
+
+		result = await orderService.addOrder(ctx.state.user.id, ctx._subId, comment, productList);
+	}
 
 	if (result === null) {
 		ctx.status = 404;

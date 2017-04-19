@@ -4,7 +4,7 @@ if (module.hot) {
 
 import './base.js'
 
-let ConfirmModel = function(data){
+const ConfirmModel = function(data){
     let self = this;
     // self.goods = ko.observableArray(data.goods)
     // self.addresses = ko.observableArray(data.addresses)
@@ -16,6 +16,7 @@ let ConfirmModel = function(data){
             $.ajax({
                 method: "POST",
                 url: "/orders",
+                dataType: "json",
                 data: { price: price, comment: $('#comment').val(), productId: prodId, number: productNum, priceIndex: priceOrder }
             })
             .done(function(respones) {
@@ -35,6 +36,34 @@ if($('#orderConfirm').length){
     let confirmModel = new ConfirmModel();
     ko.applyBindings(confirmModel, document.getElementById('orderConfirm'))
 }
+
+const ConfirmMulitModel = function(productsInfo){
+    // self.goods = ko.observableArray(data.goods)
+    // self.addresses = ko.observableArray(data.addresses)
+
+    this.save = function(){
+        $('#confirmButton').attr('disabled', true);
+        $.ajax({
+            method: "POST",
+            url: "/orders",
+            data: { productsInfo: JSON.stringify(productsInfo), comment: $('#comment').val() }
+        })
+        .done(function(respones) {
+            alert('下单成功。');
+            location.href = '/orders/jumpPay?id=' + respones.id + '&payType=1';
+        })
+        .fail(function(respones){
+            alert('下单失败。');
+            $('#confirmButton').attr('disabled', false);
+        })
+        return false
+    }
+}
+if($('#orderMulitConfirm').length){
+    let confirmMulitModel = new ConfirmMulitModel(productsInfo);
+    ko.applyBindings(confirmMulitModel, document.getElementById('orderMulitConfirm'))
+}
+
 
 let OrderModel = function(data){
     let self = this;

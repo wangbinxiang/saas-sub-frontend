@@ -2,7 +2,6 @@ import Router from 'koa-router';
 
 import {
 	showAddOrder,
-	showMulitAddOrder,
 	addOrder,
 	get,
 	showThirdPay,
@@ -23,17 +22,11 @@ router.prefix('/orders');
 
 router.use(requiresLogin);
 
-router.post('/new', async(ctx, next) => {
-	console.log(ctx.method === 'POST')
-	console.log(ctx.request.body.productOrder)
-
-	await next()
-
-}, showMulitAddOrder)
-
 
 //添加路由页面
 router.get('/add', navigation, showAddOrder);
+router.post('/add', navigation, showAddOrder);
+
 
 router.post('/', addOrder);
 

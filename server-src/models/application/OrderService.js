@@ -111,7 +111,6 @@ export default class OrderService {
 				//
 				//获取合同信息
 				
-
 				return {
 					products,
 					totalPrice,
@@ -275,7 +274,7 @@ export default class OrderService {
 		}
 	}
 
-	async addOrder(userId, shopId, price, comment, productList) {
+	async addOrder(userId, shopId, comment, productList) {
 		//获取产品信息
 		const product = await this.productAdapter.get({
 			idList: productList[0].productId
@@ -283,7 +282,6 @@ export default class OrderService {
 		if (product === null || !product.isOnSale() || (!checkOther(productList[0].productId, shopId) && !product.own(shopId))) {
 			return null;
 		} else {
-			productList[0].snapshotId = product.snapshotIds[0];
 
 			return await this.orderAdapter.add({
 				userId,
@@ -295,7 +293,7 @@ export default class OrderService {
 		}
 	}
 
-	async mulitAddOrder(userId, shopId, comment,productsInfo) {
+	async mulitAddOrder(userId, shopId, comment, productsInfo) {
 		const productIds = lodash.keys(productsInfo)
 		if(productIds) {
 			const include = ['prices']
@@ -308,34 +306,30 @@ export default class OrderService {
 				return null
 			} else {
 				let totalPrice = 0
-
+				const productList = []
 				for(let product of products) {
 					if(productsInfo[product.id]) {
 						for(let price of productsInfo[product.id]) {
 							if(lodash.isEmpty(product.prices[price.index])) {
 								return null
 							}
+							productList.push({
+								productId: product.id,
+								number: price.number,
+								priceIndex: price.index
+							})
 						}
 					} else {
 						return null
 					}
 				}
-				
-				const productList = [
-					{
-						productId: 1,
-						number: 1,
-						priceIndex: 0
-					},
-					{
-						productId: 1,
-						number: 1,
-						priceIndex: 1
-					}
-				]
-						
 
-
+				return await this.orderAdapter.add({
+					userId,
+					shopId,
+					comment,
+					productList
+				}, Order);
 			}
 		}	
 	}

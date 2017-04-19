@@ -9,75 +9,75 @@
 </nav>
 
 <h1 class="row column">提交商品订单</h1>
-<div id="orderConfirm">
-<div class="row column">
+<div id="orderMulitConfirm">
     <div class="row column">
-        <table class="stack stack--small hover listCart tableList">
-            <thead>
-                <tr>
-                    <th>名称</th>
-                    <th width="150">规格</th>
-                <th width="150">单价</th>
-                <th width="150">数量</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(let product of products) { %>
-                    <% if(productsInfo[product.id]) { %>
-                        <% for(let price of productsInfo[product.id]) { %>
-                            <% if(product.prices[price.index]) { %>
-                                <tr>
-                                    <td data-th="名称"><%- product.name %></td>
-                                    <td data-th="规格"><%- product.prices[price.index].title %></td>
-                                    <td data-th="单价"><%- product.prices[price.index].price %></td>
-                                    <td data-th="数量"><%- price.number %></td>
-                                </tr>
+        <div class="row column">
+            <table class="stack stack--small hover listCart tableList">
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th width="150">规格</th>
+                    <th width="150">单价</th>
+                    <th width="150">数量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let product of products) { %>
+                        <% if(productsInfo[product.id]) { %>
+                            <% for(let price of productsInfo[product.id]) { %>
+                                <% if(product.prices[price.index]) { %>
+                                    <tr>
+                                        <td data-th="名称"><%- product.name %></td>
+                                        <td data-th="规格"><%- product.prices[price.index].title %></td>
+                                        <td data-th="单价"><%- product.prices[price.index].price %></td>
+                                        <td data-th="数量"><%- price.number %></td>
+                                    </tr>
+                                <% } %>
                             <% } %>
                         <% } %>
                     <% } %>
-                <% } %>
-            </tbody>
-        </table>
-    </div> 
+                </tbody>
+            </table>
+        </div> 
 
-    <form data-abide="ajax" novalidate id="formOrderConfirm">
-        <div data-abide-error class="alert callout alert-form-error" style="display: none;">
-            <p class="row column">请填写所有表单内容</p>
-        </div>
-        <fieldset class="fieldset" id="fieldAddress">
-            <legend><h4>附加留言</h4></legend>
-            <div>
-                <label>
-                    <textarea rows="3" id="comment" required></textarea>
-                    <span class="form-error">
-                        请填写收货人信息
-                    </span>
-                </label>                
+        <form data-abide="ajax" novalidate id="formOrderConfirm">
+            <div data-abide-error class="alert callout alert-form-error" style="display: none;">
+                <p class="row column">请填写所有表单内容</p>
             </div>
-        </fieldset>
-        
-        <fieldset class="fieldset">
-            <legend><h4>支付方式</h4></legend>
-            <div class="row">
-                <fieldset class="columns">
-                    <div class="clearfix">
-                        <label class="inline-grounp-label"><input type="radio" name="payType" value="1" checked>微信支付</label>
-                    </div>
-                </fieldset>
+            <fieldset class="fieldset" id="fieldAddress">
+                <legend><h4>附加留言</h4></legend>
+                <div>
+                    <label>
+                        <textarea rows="3" id="comment"></textarea>
+                        <span class="form-error">
+                            请填写收货人信息
+                        </span>
+                    </label>                
+                </div>
+            </fieldset>
+            
+            <fieldset class="fieldset">
+                <legend><h4>支付方式</h4></legend>
+                <div class="row">
+                    <fieldset class="columns">
+                        <div class="clearfix">
+                            <label class="inline-grounp-label"><input type="radio" name="payType" value="1" checked>微信支付</label>
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
+            
+            <div class="row text-right cart-total">
+                订单合计：￥<strong class="stat"><%- totalPrice %></strong>
             </div>
-        </fieldset>
-        
-        <div class="row text-right cart-total">
-            订单合计：￥<strong class="stat"><%- totalPrice %></strong>
-        </div>
 
-        <div class="row text-center form-submit-wrap">
-            <button href="/order" id="confirmButton" class="button large" data-bind="click: save">确认并提交商品订单</button>
-        </div>
-    </form>
+            <div class="row text-center form-submit-wrap">
+                <button id="confirmButton" type="button" class="button large" data-bind="click: save">确认并提交商品订单</button>
+            </div>
+        </form>
+    </div>
 </div>
-
 <script>
-
+    var productsInfo = <%- JSON.stringify(productsInfo) %>;
 </script>
 <%- include('../layout/footer') -%>
