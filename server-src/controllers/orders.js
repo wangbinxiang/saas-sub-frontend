@@ -34,7 +34,7 @@ export async function showAddOrder(ctx, next) {
 			totalPrice,
 			contract,
 			account
-			} = result;
+		} = result;
 		const title = '订单详情';
 		const pageJs = webpackIsomorphicTools.assets().javascript.order;
 		const imgHost = config.get('qiniu.bucket.subImg.url');
@@ -59,6 +59,53 @@ export async function showAddOrder(ctx, next) {
 	}
 }
 
+
+export async function showMulitAddOrder(ctx, next) {
+
+
+	console.log(ctx.request.body.productsInfo)
+
+	const productsInfo = {
+		34: [{
+				index: 1,
+				number: 1
+			},
+			{
+				index: 0,
+				number: 2
+			}
+		],
+		30: [{
+			index: 0,
+			number: 2
+		}]
+	}
+
+
+	const orderService = new OrderService()
+	const result = await orderService.showMulitAddOrder(productsInfo)
+
+	if (result === null) {
+		ctx.status = 404
+		await ctx.render('404');
+	} else {
+
+		const {
+			products,
+			totalPrice,
+		} = result
+
+		const title = '订单详情';
+		const pageJs = webpackIsomorphicTools.assets().javascript.order;
+		await ctx.render('orders/addMultiOrder', {
+			title,
+			pageJs,
+			productsInfo,
+			products,
+			totalPrice
+		});
+	}
+}
 
 
 export async function addOrder(ctx, next) {
@@ -142,7 +189,7 @@ export async function showThirdPay(ctx, next) {
 		await ctx.render('404');
 	} else {
 
-		
+
 
 		const {
 			order,
@@ -176,10 +223,10 @@ export async function thirdPay(ctx, next) {
 	const order = await orderService.thirdPay(id, userId, shopId);
 
 	if (order === null) {
-        throw new Error('thirdPay fail');
-    } else {
-        ctx.body = order;
-    }
+		throw new Error('thirdPay fail');
+	} else {
+		ctx.body = order;
+	}
 }
 
 
@@ -189,16 +236,18 @@ export async function offlinePay(ctx, next) {
 	//订单id
 	const id = ctx.params.id;
 
-	const payComment = { comment: ctx.request.body.comment }
+	const payComment = {
+		comment: ctx.request.body.comment
+	}
 
 	const orderService = new OrderService();
 	const order = await orderService.offlinePay(id, payComment, userId, shopId);
 
 	if (order === null) {
-        throw new Error('thirdPay fail');
-    } else {
-        ctx.body = order;
-    }
+		throw new Error('thirdPay fail');
+	} else {
+		ctx.body = order;
+	}
 }
 
 
@@ -272,6 +321,7 @@ export async function index(ctx, next) {
 	}
 }
 
+
 /**
  * 订单详情
  * @author wangbinxiang
@@ -302,9 +352,9 @@ export async function detail(ctx, next) {
 			account
 		} = result
 
-		const payType = ctx.query.payType? ctx.query.payType: 
-						order.payType > 0? order.payType:
-						1
+		const payType = ctx.query.payType ? ctx.query.payType :
+			order.payType > 0 ? order.payType :
+			1
 
 		const title = '订单详情'
 		const pageJs = webpackIsomorphicTools.assets().javascript.order;
@@ -349,7 +399,7 @@ export async function jumpPay(ctx, next) {
 	let redirect = ''
 	if (payType == ORDER_PAY_TYPE_THIRD) {
 		redirect = '/orders/' + id + '/third-pay'
-	} else if(payType == ORDER_PAY_TYPE_NORMAL) {
+	} else if (payType == ORDER_PAY_TYPE_NORMAL) {
 		redirect = 'http://' + config.get('host.hub') + '/wechat/pay/?id=' + id;
 	} else if (payType == ORDER_PAY_TYPE_OFFLINE) {
 		redirect = '/orders/' + id + '?payType=2'

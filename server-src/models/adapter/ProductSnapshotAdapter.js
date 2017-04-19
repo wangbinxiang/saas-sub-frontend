@@ -20,12 +20,14 @@ export default class ProductSnapshotAdapter extends RequestAdapter {
 		get({
 			idList,
 			filters,
-			pages
+			pages,
+			include
 		}, aProductSnapshotClass) {
 			this.buildRequest(PRODUCT_SNAPSHOT_GET, {
 				idList,
 				filters,
-				pages
+				pages,
+				include
 			});
 
 			//如果idList是数组 则需要数组形式的结果
