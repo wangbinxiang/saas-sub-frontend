@@ -33,7 +33,6 @@ export default class RequestJsonApi {
     get() {
         const that = this;
         return this.promise((resolve, reject) => {
-            console.log(that.url)
             that.client.get(that.url, that.data, that.promiseThunk(resolve, reject));
         });
     }

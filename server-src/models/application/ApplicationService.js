@@ -194,7 +194,6 @@ export default class ApplicationService {
 				const project = await projectAdapter.get({
 					idList: application.projectId
 				}, Project);
-				console.log(typeof project.userId);
 				if (project.userId === userId) {
 					source = REPLY_SOURCE_PROJECT
 				} else {
