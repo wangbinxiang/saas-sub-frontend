@@ -64,7 +64,6 @@ export default class OrderRequestJsonApi extends BaseRequest {
 		let attributes = {
 			userId: this.originData.userId,
 			shopId: this.originData.shopId,
-			price: this.originData.price,
 			comment: this.originData.comment,
 			productList: this.originData.productList
 		};

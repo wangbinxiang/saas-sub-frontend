@@ -13,7 +13,9 @@ import ContractSnapshot from '../model/ContractSnapshot';
 import AccountAdapter from '../adapter/AccountAdapter';
 import Account from '../model/Account';
 import lodash from 'lodash';
-import { checkOther } from '../../libs/helper';
+import {
+	checkOther
+} from '../../libs/helper';
 import {
 	ORDER_PAY_TYPE_NORMAL,
 	ORDER_PAY_TYPE_THIRD,
@@ -31,8 +33,10 @@ export default class OrderService {
 
 	async showAddOrder(productId, priceOrder, productNum, shopId, userId) {
 		//获取产品信息
+		const include = ['prices']
 		let product = await this.productAdapter.get({
-			idList: productId
+			idList: productId,
+			include
 		}, Product);
 		if (product === null || !product.isOnSale() || (!checkOther(productId, shopId) && !product.own(shopId))) {
 			return null;
@@ -40,7 +44,7 @@ export default class OrderService {
 
 			//获取用户信息
 			const accountAdapter = new AccountAdapter();
-			const account =	await accountAdapter.get({
+			const account = await accountAdapter.get({
 				idList: userId
 			}, Account)
 
@@ -58,8 +62,8 @@ export default class OrderService {
 				//获取合同信息
 				const contractAdapter = new ContractAdapter();
 				contract = await contractAdapter.get({
-		            idList: productType.contractId
-		        }, Contract);
+					idList: productType.contractId
+				}, Contract);
 			}
 
 
@@ -79,6 +83,41 @@ export default class OrderService {
 		}
 	}
 
+	async showMulitAddOrder(productsInfo) {
+		const productIds = lodash.keys(productsInfo)
+
+		if (productIds) {
+			const include = ['prices']
+			let products = await this.productAdapter.get({
+				idList: productIds,
+				include
+			}, Product);
+
+			if (products === null) {
+				return null
+			} else {
+				let totalPrice = 0
+
+				for (let product of products) {
+					if (productsInfo[product.id]) {
+						for (let price of productsInfo[product.id]) {
+							if (product.prices[price.index]) {
+								totalPrice += product.prices[price.index].price * price.number
+							}
+						}
+					}
+				}
+				//获取分类信息
+				//
+				//获取合同信息
+
+				return {
+					products,
+					totalPrice,
+				};
+			}
+		}
+	}
 
 	/**
 	 * 搜索订单
@@ -108,6 +147,10 @@ export default class OrderService {
 
 
 	async detail(id, userId, shopId) {
+		id = +id
+		if (!lodash.isInteger(id) || id <= 0) {
+			return null
+		}
 		let order = await this.orderAdapter.get({
 			idList: id
 		}, Order);
@@ -117,28 +160,36 @@ export default class OrderService {
 		} else {
 			//获取用户信息
 			const accountAdapter = new AccountAdapter();
-			const account =	await accountAdapter.get({
+			const account = await accountAdapter.get({
 				idList: userId
 			}, Account)
 
 
-			
+
 			let productSnapshot;
 			let contractSnapshot;
 			let snapshotIds = [];
 			let contractSnapshotIds = [];
-			for(let snapshot of order.products) {
+			for (let snapshot of order.products) {
 				snapshotIds.push(snapshot.snapshot);
 				contractSnapshotIds.push(snapshot.contractSnapshot);
-			}			
+			}
+			snapshotIds = lodash.uniq(snapshotIds)
+			contractSnapshotIds = lodash.uniq(contractSnapshotIds)
 
+			//获取商品快照
 			if (snapshotIds.length) {
 				const productSnapshotAdapter = new ProductSnapshotAdapter();
+				const include = ['product', 'product.prices']
 				productSnapshot = await productSnapshotAdapter.get({
-					idList: snapshotIds
+					idList: snapshotIds,
+					include
 				}, ProductSnapshot);
 			}
 
+			// console.log(productSnapshot)
+
+			//获取合同快照
 			if (contractSnapshotIds.length) {
 				const contractSnapshotAdapter = new ContractSnapshotAdapter();
 				contractSnapshot = await contractSnapshotAdapter.get({
@@ -149,16 +200,18 @@ export default class OrderService {
 
 
 			if (productSnapshot) {
-				for(let key in order.products) {
-					const snapshotKey = lodash.findIndex(productSnapshot, function(o) { return o.id === order.products[key].snapshot; });
+				for (let key in order.products) {
+					const snapshotKey = lodash.findIndex(productSnapshot, function (snapshot) {
+						return snapshot.id === order.products[key].snapshot;
+					});
 					order.products[key]['productSnapshot'] = productSnapshot[snapshotKey];
-					const contractSnapshotKey = lodash.findIndex(contractSnapshot, function(o) { 
-						return o.id === order.products[key].contractSnapshot; 
+					const contractSnapshotKey = lodash.findIndex(contractSnapshot, function (o) {
+						return o.id === order.products[key].contractSnapshot;
 					});
 					if (contractSnapshotKey > -1) {
-						order.products[key]['contractSnapshot'] = contractSnapshot[contractSnapshotKey];	
+						order.products[key]['contractSnapshot'] = contractSnapshot[contractSnapshotKey];
 					}
-					
+
 				}
 			}
 			return {
@@ -179,7 +232,7 @@ export default class OrderService {
 
 			//获取用户信息
 			const accountAdapter = new AccountAdapter();
-			const account =	await accountAdapter.get({
+			const account = await accountAdapter.get({
 				idList: userId
 			}, Account)
 
@@ -200,7 +253,10 @@ export default class OrderService {
 		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
 			return null;
 		} else {
-			return await this.orderAdapter.pay({ id, payType: ORDER_PAY_TYPE_THIRD }, Order);
+			return await this.orderAdapter.pay({
+				id,
+				payType: ORDER_PAY_TYPE_THIRD
+			}, Order);
 		}
 	}
 
@@ -213,11 +269,15 @@ export default class OrderService {
 		if (order === null || !order.own(userId) || !order.belongShop(shopId)) {
 			return null;
 		} else {
-			return await this.orderAdapter.pay({ id, payComment, payType: ORDER_PAY_TYPE_OFFLINE }, Order);
+			return await this.orderAdapter.pay({
+				id,
+				payComment,
+				payType: ORDER_PAY_TYPE_OFFLINE
+			}, Order);
 		}
 	}
 
-	async addOrder(userId, shopId, price, comment, productList) {
+	async addOrder(userId, shopId, comment, productList) {
 		//获取产品信息
 		const product = await this.productAdapter.get({
 			idList: productList[0].productId
@@ -225,25 +285,68 @@ export default class OrderService {
 		if (product === null || !product.isOnSale() || (!checkOther(productList[0].productId, shopId) && !product.own(shopId))) {
 			return null;
 		} else {
-			productList[0].snapshotId = product.snapshotIds[0];
 
 			return await this.orderAdapter.add({
 				userId,
 				shopId,
-				price,
 				comment,
 				productList
 			}, Order);
 		}
 	}
 
+	async mulitAddOrder(userId, shopId, comment, productsInfo) {
+		const productIds = lodash.keys(productsInfo)
+		if (productIds) {
+			const include = ['prices']
+			let products = await this.productAdapter.get({
+				idList: productIds,
+				include
+			}, Product);
+
+			if (products === null) {
+				return null
+			} else {
+				let totalPrice = 0
+				const productList = []
+				for (let product of products) {
+					if (productsInfo[product.id]) {
+						for (let price of productsInfo[product.id]) {
+							if (lodash.isEmpty(product.prices[price.index])) {
+								return null
+							}
+							productList.push({
+								productId: product.id,
+								number: price.number,
+								priceIndex: price.index
+							})
+						}
+					} else {
+						return null
+					}
+				}
+
+				return await this.orderAdapter.add({
+					userId,
+					shopId,
+					comment,
+					productList
+				}, Order);
+			}
+		}
+	}
+
 
 	async pay(id) {
-		return await this.orderAdapter.pay({ id }, Order);
+		return await this.orderAdapter.pay({
+			id
+		}, Order);
 	}
 
 	async confirmPay(id) {
-		return await this.orderAdapter.confirmPay({ id }, Order);	
+		return await this.orderAdapter.confirmPay({
+			id
+		}, Order);
 	}
 
 

@@ -46,7 +46,9 @@ export default class ProductRequestJsonApi extends BaseRequest {
 
 		let sort = this.originData.sort ? this.originData.sort : '';
 
-		this.url = jsonApiGetUrl(BaseUrl, idList, { filters, pages, sort });
+		const include = this.originData.include? this.originData.include: ''
+
+		this.url = jsonApiGetUrl(BaseUrl, idList, { filters, pages, sort, include });
 		this.method = GET;
 	}
 

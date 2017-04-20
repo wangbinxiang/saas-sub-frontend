@@ -78,8 +78,10 @@ export default class ProductService {
 
 
 	async get(idList, userId) {
+		const include = ['slides', 'description', 'prices']
 		let product = await this.productAdapter.get({
-			idList
+			idList,
+			include
 		}, Product);
 		;
 		if (product === null || (!checkOther(idList, userId) && !checkResourcesOwner(product, 'userId', userId, lodash.isArray(idList)))) {

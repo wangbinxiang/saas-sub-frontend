@@ -6,8 +6,8 @@ export default class ProductTranslator extends Translator {
         super();
     }
 
-    readData(data) {
-        const bodyReader = new ProductJsonApiBodyReader(data);
+    readData(data, included) {
+        const bodyReader = new ProductJsonApiBodyReader(data, included);
 
         let id          = bodyReader.value('id');
         let name        = bodyReader.value('name');
@@ -16,9 +16,9 @@ export default class ProductTranslator extends Translator {
         let logo        = bodyReader.value('logo');
         let minPrice    = bodyReader.value('minPrice');
         let maxPrice    = bodyReader.value('maxPrice');
-        let description = bodyReader.value('description');
-        let slides      = bodyReader.value('slides');
-        let prices      = bodyReader.value('prices');
+        let description = bodyReader.value('productDescription').description;
+        let slides      = bodyReader.value('productSlides').slides;
+        let prices      = bodyReader.value('productPrices').prices;
         let updateTime  = bodyReader.value('updateTime');
         let createTime  = bodyReader.value('createTime');
         let statusTime  = bodyReader.value('statusTime');
@@ -31,4 +31,27 @@ export default class ProductTranslator extends Translator {
 
         return { id, name, category, feature, logo, minPrice, maxPrice, description, slides, prices, updateTime, createTime, statusTime, status, visible, user, productType, snapshots};
     }
+
+    static convertSnapshot(data) {
+        const id          = data.id
+        const name        = data.name
+        const category    = data.category
+        const feature     = data.feature
+        const logo        = data.logo
+        const minPrice    = data.minPrice
+        const maxPrice    = data.maxPrice
+        const description = data.productDescription.description 
+        const slides      = data.productSlides.slides
+        const prices      = data.productPrices.prices
+        const updateTime  = data.updateTime
+        const createTime  = data.createTime
+        const statusTime  = data.statusTime
+        const status      = data.status
+        const visible     = data.visible
+
+        const user        = data.users 
+        const productType = data.productTypes
+
+        return { id, name, category, feature, logo, minPrice, maxPrice, description, slides, prices, updateTime, createTime, statusTime, status, visible, user, productType};
+	}
 }

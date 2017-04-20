@@ -9,7 +9,7 @@ export default class OrderTranslator extends Translator {
 
     readData(data, included) {
         const bodyReader = new OrderJsonApiBodyReader(data, included);
-        
+
         let id = bodyReader.value('id');
         let price = bodyReader.value('price');
         let payType = bodyReader.value('payType');

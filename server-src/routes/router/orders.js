@@ -25,6 +25,8 @@ router.use(requiresLogin);
 
 //添加路由页面
 router.get('/add', navigation, showAddOrder);
+router.post('/add', navigation, showAddOrder);
+
 
 router.post('/', addOrder);
 

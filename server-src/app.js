@@ -72,7 +72,7 @@ if (__DEVELOPMENT__) {
       // watch options (only lazy: false)
       watchOptions: {
           aggregateTimeout: 500,
-          poll: 500
+          // poll: 500
       },
 
       // public path to bind the middleware to

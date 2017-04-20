@@ -3,7 +3,7 @@ export default class ProductSnapshot {
 		id,
 		product
 	}) {
-		this.id = id;
+		this.id = +id;
 		this.product = product;
 	}
 }

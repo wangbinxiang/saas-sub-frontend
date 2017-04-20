@@ -10,7 +10,7 @@
     </ul>
 </nav>
 
-<h1 class="row column">订单详情 No.<%= order.id %></h1>
+<h1 class="row column">订单详情 No.<%- order.id %></h1>
 
 <!-- <div class="row block-margin-bottom">
     <div class="workflow-wrap">
@@ -38,7 +38,7 @@
     <fieldset class="fieldset">
         <legend><h4>海米余额</h4></legend>
         <div class="row column">
-            <label><%= account.source.balance %>海米</label>
+            <label><%- account.source.balance %>海米</label>
         </div>
     </fieldset>
     <% } %>
@@ -49,14 +49,14 @@
             <fieldset class="columns">
                 <div class="clearfix">
                     <label class="inline-grounp-label">
-                        <input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_NORMAL%>" checked>微信支付
+                        <input type="radio" name="payType" data-bind="checked: payType" value="<%- ORDER_PAY_TYPE_NORMAL%>" checked>微信支付
                     </label>
                     <% if(haimi && account.source && account.source.balance){ %>
                         <label class="inline-grounp-label">
-                            <input type="radio" name="payType" data-bind="checked: payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="<%= ORDER_PAY_TYPE_THIRD%>" >海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %>
+                            <input type="radio" name="payType" data-bind="checked: payType" <% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>  disabled<% } %> value="<%- ORDER_PAY_TYPE_THIRD%>" >海米支付<% if(!account.source || account.source.balance * account.source.exchangeRate < order.price ){ %>(余额不足)<% } %>
                         </label>
                     <% } %>
-                    <label class="inline-grounp-label"><input type="radio" name="payType" data-bind="checked: payType" value="<%= ORDER_PAY_TYPE_OFFLINE%>" >线下支付</label>
+                    <label class="inline-grounp-label"><input type="radio" name="payType" data-bind="checked: payType" value="<%- ORDER_PAY_TYPE_OFFLINE%>" >线下支付</label>
                 </div>
             </fieldset>
         </div>
@@ -129,11 +129,11 @@
 
             <% for(let product of order.products){ %>
 			<tr>
-                <td data-th="产品ID"><%= product.productSnapshot.product.id %></td>
-                <td data-th="产品名称"><a target="_blank" href="/products/<%= product.productSnapshot.product.id %>"><%= product.productSnapshot.product.name %></a></td>
-                <td data-th="规格"><%= product.productSnapshot.product.prices[product.priceIndex].title %></td>
-                <td data-th="单价">￥<%= product.productSnapshot.product.prices[product.priceIndex].price %></td>
-                <td data-th="数量"><%= product.number %></td>
+                <td data-th="产品ID"><%- product.productSnapshot.product.id %></td>
+                <td data-th="产品名称"><a target="_blank" href="/products/<%- product.productSnapshot.product.id %>"><%- product.productSnapshot.product.name %></a></td>
+                <td data-th="规格"><%- product.productSnapshot.product.prices[product.priceIndex].title %></td>
+                <td data-th="单价">￥<%- product.productSnapshot.product.prices[product.priceIndex].price %></td>
+                <td data-th="数量"><%- product.number %></td>
             </tr>
             <% } %>
         </tbody>
@@ -145,7 +145,7 @@
             <div class="row">
                 <div class="small-12 columns">
                     <label>
-                        <%= order.comment %>
+                        <%- order.comment %>
                     </label>
                 </div>
             </div>
@@ -156,7 +156,7 @@
             <legend><h4>支付方式</h4></legend>
             <div class="row">
                 <fieldset class="columns">
-                    <label for="pokemonRed"><%= ORDER_PAY_TYPE_NAME_LIST[order.payType]%></label>
+                    <label for="pokemonRed"><%- ORDER_PAY_TYPE_NAME_LIST[order.payType]%></label>
                 </fieldset>
             </div>
         </fieldset>
@@ -177,12 +177,12 @@
             <fieldset class="fieldset">
                 <legend><h4>合同信息</h4></legend>
                 <div class="row column">
-                    <a data-open="contractPanel" onclick="return false;"><%= order.products[0].contractSnapshot.contract.title %></a>
+                    <a data-open="contractPanel" onclick="return false;"><%- order.products[0].contractSnapshot.contract.title %></a>
                 </div>
             </fieldset> 
         <% } %>
     <div class="row text-right cart-total">
-        订单合计：￥<strong class="stat"><%= order.price %></strong>
+        订单合计：￥<strong class="stat"><%- order.price %></strong>
     </div>
 </div>
 
@@ -191,22 +191,22 @@
     <% if(order.status === 5) { %>
         合同未找到
     <% } else { %>
-        <h3><%= order.products[0].contractSnapshot.contract.title %></h3>
+        <h3><%- order.products[0].contractSnapshot.contract.title %></h3>
         <div class="profile-main">
             <h6>合同内容</h6>
             <% for(var i in order.products[0].contractSnapshot.contract.content) { %>
                 <% if (order.products[0].contractSnapshot.contract.content[i].type == "image" && order.products[0].contractSnapshot.contract.content[i].value){ %>
                     <% if (order.products[0].contractSnapshot.contract.content[i].value.url){ %>
                         <% if (order.products[0].contractSnapshot.contract.content[i].value.link){ %>
-                            <a href="<%= 'http://' + order.products[0].contractSnapshot.contract.content[i].value.link %>" class="image-link-"><img src="<%= imgHost + order.products[0].contractSnapshot.contract.content[i].value.url %>" /></a>
+                            <a href="<%- 'http://' + order.products[0].contractSnapshot.contract.content[i].value.link %>" class="image-link-"><img src="<%- imgHost + order.products[0].contractSnapshot.contract.content[i].value.url %>" /></a>
                         <% } else { %>
-                            <img src="<%= imgHost + order.products[0].contractSnapshot.contract.content[i].value.url %>" />
+                            <img src="<%- imgHost + order.products[0].contractSnapshot.contract.content[i].value.url %>" />
                         <% } %>
                         
                     <% } %>
                 <% } else if (order.products[0].contractSnapshot.contract.content[i].type == "text" && order.products[0].contractSnapshot.contract.content[i].value) { %>
                     <% if(order.products[0].contractSnapshot.contract.content[i].value.title != ''){ %>
-                    <h6<% if (order.products[0].contractSnapshot.contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%= order.products[0].contractSnapshot.contract.content[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+                    <h6<% if (order.products[0].contractSnapshot.contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%- order.products[0].contractSnapshot.contract.content[i].value.title.replace(/ /g, '&nbsp;') %></h6>
                     <% } %>
                     <p<% if (order.products[0].contractSnapshot.contract.content[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(order.products[0].contractSnapshot.contract.content[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
                 <% } %>
@@ -222,9 +222,9 @@
 </div>
 <% } %>
 <script>
-    var payType = '<%= payType %>'
-    var orderId = <%= order.id %>
-    var hubHost = '<%= hubHost %>'
+    var payType = '<%- payType %>'
+    var orderId = <%- order.id %>
+    var hubHost = '<%- hubHost %>'
 </script>
 
 <%- include('../layout/footer') -%>

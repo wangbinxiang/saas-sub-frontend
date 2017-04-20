@@ -3,71 +3,147 @@ if (module.hot) {
 }
 
 import './base.js'
+import lodash from 'lodash'
+import {
+    unescapeData
+} from '../vendors/tools/string'
+import '../vendors/jquery.extend/form'
 
 
-const DiancanModel = function (products = [{
-    id: 1,
-    prices: [{
-        name: '测试1号',
-        price: 200
-    }, {
-        name: '测试2号',
-        price: 300
-    }, {
-        name: '测试3号',
-        price: 400
-    }]
-}]) {
-    console.log(products)
+const DiancanModel = function (products, isNext, pageNumber) {
+    const self = this
+    this.isNext = ko.observable(isNext)
+    this.cartProducts = {}
+    this.toggleCart = ko.observable(false)
+
     this.products = ko.observableArray(products ? products : []);
-    this.addition = function (index, data, event) {
-        console.log(index)
-        console.log(data)
-        console.log(event)
+
+    this.more = function () {
+        pageNumber++
+        $.ajax({
+                method: "GET",
+                url: "/?number=" + pageNumber,
+                dataType: "json"
+            })
+            .done(function (respones) {
+                const products = respones.products
+                unescapeData(products, 'name')
+                for (let product of products) {
+                    self.products.push(product)
+                }
+
+                self.isNext(respones.isNext);
+            })
     }
+
+
+
+    this.addition = function (index, parentIndex, data, event) {
+        const product = lodash.clone(self.products()[parentIndex])
+        data.count = lodash.isUndefined(data.count) ? 1 : ++data.count
+        product.prices[index] = data
+        self.updateCartProduct(parentIndex, index, data.count)
+        self.products.splice(parentIndex, 1, product)
+        //增加产品数量
+    }
+
+    this.subtract = function (index, parentIndex, data, event) {
+        const product = lodash.clone(self.products()[parentIndex])
+        data.count = data.count > 0 ? --data.count : 0
+        self.updateCartProduct(parentIndex, index, data.count)
+        self.products.splice(parentIndex, 1, product)
+        //减少产品数量
+    }
+
+    //更新购物车内产品
+    this.updateCartProduct = function (productIndex, priceIndex, count) {
+        if (!self.cartProducts[productIndex]) {
+            self.cartProducts[productIndex] = {}
+        }
+        if (count > 0) {
+            self.cartProducts[productIndex][priceIndex] = count
+        } else {
+            delete self.cartProducts[productIndex][priceIndex]
+            if (lodash.isEmpty(self.cartProducts[productIndex])) {
+                delete self.cartProducts[productIndex]
+            }
+        }
+        self.updateTotalPrice(self.cartProducts)
+    }
+
+    let orderStatus = false
+    //显示已选商品
+    this.toggleCartProduct = function () {
+
+        const toggleCart = !self.toggleCart()
+
+        //显示清单
+        if (toggleCart) {
+            if (lodash.isEmpty(self.cartProducts)) {
+                //购物车没有商品，跳出
+                return
+            }
+        } else {
+            //显示全部
+        }
+
+        self.toggleCart(toggleCart)
+    }
+
+    this.updateTotalPrice = function () {
+        let totalPrice = 0
+        if (!lodash.isEmpty(self.cartProducts)) {
+            for (let key in self.cartProducts) {
+                for (let priceKey in self.cartProducts[key]) {
+                    totalPrice += self.products()[key].prices[priceKey].price * self.cartProducts[key][priceKey]
+                }
+            }
+        }
+        self.totalPrice(totalPrice)
+    }
+
+    this.settleAccounts = function () {
+
+        let productsInfo = {
+            // 34: [{
+            //         index: 1,
+            //         number: 1
+            //     },
+            //     {
+            //         index: 0,
+            //         number: 2
+            //     }
+            // ],
+            // 30: [{
+            //     index: 0,
+            //     number: 2
+            // }]
+        }
+
+        
+        
+        
+        if(!lodash.isEmpty(self.cartProducts)) {
+            for(let index in self.cartProducts) {
+                productsInfo[self.products()[index].id] = []
+                for(let priceIndex in self.cartProducts[index]) {
+                    productsInfo[self.products()[index].id].push({
+                        index: priceIndex,
+                        number: self.cartProducts[index][priceIndex]
+                    })
+                }
+            }
+            $.form('/orders/add', { productsInfo: JSON.stringify(productsInfo) }).submit()
+        }
+    }
+
+    this.totalPrice = ko.observable(0)
 }
 if ($('#diancan').length) {
-    let diancanModel = new DiancanModel();
+    let diancanModel = new DiancanModel(products, isNext, pageNumber);
     ko.applyBindings(diancanModel, document.getElementById('diancan'));
 }
 
-// $('#dishOrderB').on('click', '.add', function(e) {
-//     let obj = $(this)
-//     let q = parseInt(obj.prev().text()) + 1
-//     obj.prev().text(q).show().prev().show().parents('tr').addClass('selected')
-// })
-
-// $('#dishOrderB').on('click', '.subtract', function(e) {
-//     let obj = $(this)
-//     let q = parseInt(obj.next().text()) - 1
-//     obj.next().text(q)
-//     if(q === 0){
-//         obj.hide().next().text(q).hide().parents('tr').removeClass('selected')
-//     }
-// })
-
-// let orderStatus = false
-// $('#finalTotalB').on('click', () => {
-//     if(!orderStatus){
-//         if($('#finalTotalB b').text !== '0'){
-//             $('.article-item--dish--b').each((i, e) => {
-//                 if($(e).find('tr.selected').length){
-//                     $(e).find('tr:not(".selected")').hide()
-//                 } else {
-//                     $(e).hide()
-//                 }
-//             })
-//             orderStatus = !orderStatus
-//             $('#finalOrder').addClass('detail')
-//         }
-//     } else {
-//         $('.article-item--dish--b').show()
-//         $('.article-item--dish--b tr').show()
-//         orderStatus = !orderStatus
-//         $('#finalOrder').removeClass('detail')
-//     }
-// })
-
-// $('.article-item--dish--b figure').on('click', function() {
-//     $(this).parents('.article-item--dish--b').toggleClass('detail')
-// })
+$('.article-item--dish--b figure').on('click', function () {
+    $(this).parents('.article-item--dish--b').toggleClass('detail')
+})

@@ -31,7 +31,7 @@ export default class IndexService {
 
 	async index(number, size, userId) {
 		//分页，产品列表，分类列表(导航使用)
-		let page, products, productTypes;
+		let page, products
 
 		const pages = {
 	        number,
@@ -63,6 +63,53 @@ export default class IndexService {
 			page,
 			products
 		};
+	}
+
+	/**
+	 * 点餐页面
+	 * 
+	 * @param {any} number 
+	 * @param {any} size 
+	 * @param {any} userId 
+	 * 
+	 * @memberOf IndexService
+	 */
+	async diancan(number, size, userId) {
+		let page, products
+
+		const pages = {
+	        number,
+	        size
+	    };
+
+		const filters = {
+			userId,
+			status: PRODUCT_STATUS_ON_SALE,
+			visible: PRODUCT_VISIBLE
+		}
+
+		const sort = '-id';
+
+		const include = ['prices']
+
+		const productsResult = await this.productAdapter.get({
+			filters,
+			pages,
+			sort,
+			include
+		}, Product)
+
+		if (productsResult !== null) {
+			//没有获取数据 直接返回空
+			page = productsResult.page
+			products = productsResult.result
+		} 
+
+		//返回 分页 和 Products 数据
+		return {
+			page,
+			products
+		}
 	}
 
 

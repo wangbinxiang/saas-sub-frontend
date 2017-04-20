@@ -27,13 +27,15 @@ export default class ProductAdapter extends RequestAdapter {
 		idList,
 		filters,
 		pages,
-		sort
+		sort,
+		include
 	}, aProductClass) {
 		this.buildRequest(PRODUCT_GET, {
 			idList,
 			filters,
 			pages,
-			sort
+			sort,
+			include
 		});
 
 		//如果idList是数组 则需要数组形式的结果

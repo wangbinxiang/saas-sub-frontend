@@ -37,7 +37,9 @@ export default class ProductSnapshotRequestJsonApi extends BaseRequest {
 
 		let pages = this.originData.pages ? this.originData.pages : '';
 
-		this.url = jsonApiGetUrl(BaseUrl, idList, { filters, pages });
+		const include = this.originData.include? this.originData.include: ''
+
+		this.url = jsonApiGetUrl(BaseUrl, idList, { filters, pages, include });
 		this.method = GET;
 	}
 

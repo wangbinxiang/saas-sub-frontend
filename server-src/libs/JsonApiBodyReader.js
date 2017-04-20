@@ -8,7 +8,7 @@ export default class JsonApiBodyReader {
         this.data = body.attributes;
         this.data.id =  body.id;
         this.included = included;
-        this.relationships(body.relationships);
+        this.relationships(body.relationships, this.data);
      
     }
 
@@ -23,18 +23,18 @@ export default class JsonApiBodyReader {
      * @param  {[type]}                 relationships [description]
      * @return {[type]}                               [description]
      */
-    relationships(relationships) {
+    relationships(relationships, data) {
         if (relationships) {
-
             for(let relationship in relationships) {
                 if (_.isArray(relationships[relationship].data) && relationships[relationship].data.length > 0) {
-                    this.data[relationships[relationship].data[0].type] = []
+                    //如果有relationship并且是数组
+                    data[relationships[relationship].data[0].type] = []
                     for(let info of relationships[relationship].data) {
-
                         this.data[info.type].push(this.relationshipInfoFormIncluded(info.type, info.id));
                     }
                 } else if(relationships[relationship].data && relationships[relationship].data.type) {
-                    this.data[relationships[relationship].data.type] = this.relationshipInfoFormIncluded(relationships[relationship].data.type, relationships[relationship].data.id);
+                    //如果有relationship 是单个数据
+                    data[relationships[relationship].data.type] = this.relationshipInfoFormIncluded(relationships[relationship].data.type, relationships[relationship].data.id);
                 }
             }
         }
@@ -46,6 +46,10 @@ export default class JsonApiBodyReader {
             for(let info of this.included) {
                 if (info.type === type && info.id === id) {
                     info.attributes.id = id;
+                    // console.log(info.relationships)
+                    if(info.relationships) {
+                        this.relationships(info.relationships, info.attributes)
+                    }
                     return info.attributes;
                 }
             }

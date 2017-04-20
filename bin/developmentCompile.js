@@ -21,7 +21,7 @@ const srcPath = path.join(projectRootPath, 'server-src');
 const appPath = path.join(projectRootPath, 'server');
 const log = console.log.bind(console, '> [DEV]:'.red)
 
-const watcher = chokidar.watch(path.join(__dirname, '../server-src'), { usePolling: true })
+const watcher = chokidar.watch(path.join(__dirname, '../server-src'), { usePolling: false })
 
 const project_base_path = path.resolve(__dirname, '..');
 
