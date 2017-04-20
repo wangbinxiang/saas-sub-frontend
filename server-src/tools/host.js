@@ -32,3 +32,15 @@ export function encryptShopid(dec) {
     const cryptKey = config.get('crypt.key.shopId')
     return encrypt(dec, cryptKey)
 }
+
+//解密cartTable
+export function decryptCartTable(enc) {
+    const cryptKey = config.get('crypt.key.cartTable')
+    return decrypt(enc, cryptKey)
+}
+
+//加密cartTable
+export function encryptCartTable(dec) {
+    const cryptKey = config.get('crypt.key.cartTable')
+    return encrypt(dec, cryptKey)
+}

@@ -42,7 +42,8 @@
   },
   "crypt": {
     "key": {
-      "shopId": "034663ed7f93f4d333512d543bf9a945"
+      "shopId": "034663ed7f93f4d333512d543bf9a945",
+      "cartTable": "febcbaae13751f7f8e44c2f107afb08d"
     }
   },
   "hostMapping": {

@@ -25,6 +25,10 @@ import {
     listStyle
 } from '../tools/imgStyle';
 
+import {
+    decryptCartTable
+} from '../tools/host';
+
 export async function index(ctx, next) {
     
     const title = '首页 - ' + ctx._shop.title;
