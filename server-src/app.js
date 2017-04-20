@@ -57,6 +57,7 @@ import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware';
 import webpackConfig from '../webpack.config';
 
 if (__DEVELOPMENT__) {
+  const pollOption = config.get('os') === 'win'? 100 : false
   const compile = webpack(webpackConfig)
   app.use(devMiddleware(compile, {
       // display no info to console (only warnings and errors)
@@ -72,7 +73,7 @@ if (__DEVELOPMENT__) {
       // watch options (only lazy: false)
       watchOptions: {
           aggregateTimeout: 500,
-          // poll: 500
+          poll: pollOption
       },
 
       // public path to bind the middleware to

@@ -8,6 +8,9 @@ import CategoryAdapter from '../adapter/CategoryAdapter';
 import Category from '../model/Category';
 import ProjectAdapter from '../adapter/ProjectAdapter';
 import Project from '../model/Project';
+import CartTableAdapter from '../adapter/CartTableAdapter'
+import CartTable from '../model/CartTable'
+import { checkResourcesOwner } from '../../libs/helper';
 import _ from 'lodash';
 import config from 'config';
 import {
@@ -74,7 +77,14 @@ export default class IndexService {
 	 * 
 	 * @memberOf IndexService
 	 */
-	async diancan(number, size, userId) {
+	async diancan(cartTableId, number, size, userId) {
+		const cartTableAdapter = new CartTableAdapter()
+		const cartTable = await cartTableAdapter.get({ idList: cartTableId }, CartTable)
+
+        if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', userId)) {
+            return null
+        }
+
 		let page, products
 
 		const pages = {
@@ -108,7 +118,8 @@ export default class IndexService {
 		//返回 分页 和 Products 数据
 		return {
 			page,
-			products
+			products,
+			cartTable
 		}
 	}
 

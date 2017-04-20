@@ -7,6 +7,7 @@ const debug = require('debug')('dev');
 const babelCliDir = require('babel-cli/lib/babel/dir')
 const babelCliFile = require('babel-cli/lib/babel/file')
 const chokidar = require('chokidar')
+const config = require('config')
 
 
 global.__CLIENT__ = false;
@@ -21,7 +22,8 @@ const srcPath = path.join(projectRootPath, 'server-src');
 const appPath = path.join(projectRootPath, 'server');
 const log = console.log.bind(console, '> [DEV]:'.red)
 
-const watcher = chokidar.watch(path.join(__dirname, '../server-src'), { usePolling: false })
+const watcherOption = config.get('os') === 'win'? { usePolling: true  }: {} 
+const watcher = chokidar.watch(path.join(__dirname, '../server-src'), watcherOption)
 
 const project_base_path = path.resolve(__dirname, '..');
 

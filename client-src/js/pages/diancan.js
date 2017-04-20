@@ -8,6 +8,7 @@ import {
     unescapeData
 } from '../vendors/tools/string'
 import '../vendors/jquery.extend/form'
+import { addQuery } from '../vendors/tools/url';
 
 
 const DiancanModel = function (products, isNext, pageNumber) {
@@ -22,7 +23,7 @@ const DiancanModel = function (products, isNext, pageNumber) {
         pageNumber++
         $.ajax({
                 method: "GET",
-                url: "/?number=" + pageNumber,
+                url: addQuery(window.location.href, { number: pageNumber }),
                 dataType: "json"
             })
             .done(function (respones) {

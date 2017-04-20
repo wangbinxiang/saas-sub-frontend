@@ -139,7 +139,10 @@ export async function index(ctx, next) {
             SHOP_SLIDES_TYPE_ARTICLE,
             SHOP_SLIDES_TYPE_PROJECT,
         });
-    } else if(ctx._subId === '10') {
+    } else if(ctx.query.__cartTable__) {
+
+        const cartTableId = decryptCartTable(ctx.query.__cartTable__)
+
         let isNext = false;
 
         const number = ctx.query.number ? ctx.query.number : 1;
@@ -148,7 +151,7 @@ export async function index(ctx, next) {
 
         const indexService = new IndexService();
 
-        let { page, products} = await indexService.diancan(number, size, ctx._subId);
+        const { page, products, cartTable} = await indexService.diancan(cartTableId, number, size, ctx._subId);
         if (page && page.haveNext()) {
             isNext = true;
         }
@@ -165,6 +168,7 @@ export async function index(ctx, next) {
             await ctx.render('index/diancan', {
                 title,
                 products,
+                cartTable,
                 isNext,
                 number,
                 pageJs,
