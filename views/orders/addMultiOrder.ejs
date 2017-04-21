@@ -66,6 +66,17 @@
                     </fieldset>
                 </div>
             </fieldset>
+
+            <fieldset class="fieldset">
+            <legend><h4>系统备注</h4></legend>
+            <div class="row">
+                <div class="small-12 columns">
+                    <label>
+                        <%- cartTable.name %>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
             
             <div class="row text-right cart-total">
                 订单合计：￥<strong class="stat"><%- totalPrice %></strong>
@@ -78,6 +89,7 @@
     </div>
 </div>
 <script>
-    var productsInfo = <%- JSON.stringify(productsInfo) %>;
+    var cartTable = <%- JSON.stringify(cartTable) %>
+    var productsInfo = <%- JSON.stringify(productsInfo) %>
 </script>
 <%- include('../layout/footer') -%>

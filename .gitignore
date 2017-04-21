@@ -48,6 +48,7 @@ uploads/*
 client/js/pages/*
 
 config/production.json
+config/local-docker-saas-local.json
 
 webpack-assets.json
 webpack-stats.json

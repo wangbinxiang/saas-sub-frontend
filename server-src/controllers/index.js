@@ -139,7 +139,7 @@ export async function index(ctx, next) {
             SHOP_SLIDES_TYPE_ARTICLE,
             SHOP_SLIDES_TYPE_PROJECT,
         });
-    } else if(ctx.query.__cartTable__) {
+    } else if(ctx.state.__IN_WECHAT__ && ctx.query.__cartTable__) {
 
         const cartTableId = decryptCartTable(ctx.query.__cartTable__)
 

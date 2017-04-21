@@ -34,6 +34,7 @@
     </div>
 </div>
 <script>
+var cartTable = <%- JSON.stringify(cartTable) %> 
 var products = <%- JSON.stringify(products? products: []) %>
 var pageNumber = <%- number %>
 var isNext = <%- isNext %>

@@ -12,6 +12,9 @@ import ContractSnapshotAdapter from '../adapter/ContractSnapshotAdapter';
 import ContractSnapshot from '../model/ContractSnapshot';
 import AccountAdapter from '../adapter/AccountAdapter';
 import Account from '../model/Account';
+import CartTableAdapter from '../adapter/CartTableAdapter'
+import CartTable from '../model/CartTable'
+import { checkResourcesOwner } from '../../libs/helper'
 import lodash from 'lodash';
 import {
 	checkOther
@@ -83,7 +86,15 @@ export default class OrderService {
 		}
 	}
 
-	async showMulitAddOrder(productsInfo) {
+	async showMulitAddOrder(cartTableId, productsInfo, shopId) {
+
+		const cartTableAdapter = new CartTableAdapter()
+		const cartTable = await cartTableAdapter.get({ idList: cartTableId }, CartTable)
+
+        if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', shopId)) {
+            return null
+        }
+
 		const productIds = lodash.keys(productsInfo)
 
 		if (productIds) {
@@ -114,6 +125,7 @@ export default class OrderService {
 				return {
 					products,
 					totalPrice,
+					cartTable
 				};
 			}
 		}
@@ -295,7 +307,15 @@ export default class OrderService {
 		}
 	}
 
-	async mulitAddOrder(userId, shopId, comment, productsInfo) {
+	async mulitAddOrder(userId, shopId, comment, cartTableId, productsInfo) {
+		//检查桌位信息
+		const cartTableAdapter = new CartTableAdapter()
+		const cartTable = await cartTableAdapter.get({ idList: cartTableId }, CartTable)
+
+        if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', shopId)) {
+            return null
+        }
+
 		const productIds = lodash.keys(productsInfo)
 		if (productIds) {
 			const include = ['prices']
@@ -307,6 +327,7 @@ export default class OrderService {
 			if (products === null) {
 				return null
 			} else {
+				const systemComment = cartTable.name
 				let totalPrice = 0
 				const productList = []
 				for (let product of products) {
@@ -330,7 +351,8 @@ export default class OrderService {
 					userId,
 					shopId,
 					comment,
-					productList
+					productList,
+					systemComment
 				}, Order);
 			}
 		}

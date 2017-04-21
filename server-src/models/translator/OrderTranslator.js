@@ -1,30 +1,31 @@
-import Translator from '../../libs/Translator';
-import OrderJsonApiBodyReader from '../reader/OrderJsonApiBodyReader';
+import Translator from '../../libs/Translator'
+import OrderJsonApiBodyReader from '../reader/OrderJsonApiBodyReader'
 
 export default class OrderTranslator extends Translator {
     constructor() {
-        super();
+        super()
     }
 
 
     readData(data, included) {
-        const bodyReader = new OrderJsonApiBodyReader(data, included);
+        const bodyReader = new OrderJsonApiBodyReader(data, included)
 
-        let id = bodyReader.value('id');
-        let price = bodyReader.value('price');
-        let payType = bodyReader.value('payType');
-        let category = bodyReader.value('category');
-        let payTime = bodyReader.value('payTime');
-        let payComment = bodyReader.value('payComment');
-        let comment = bodyReader.value('comment');
-        let freight = bodyReader.value('freight');
-        let users = bodyReader.value('users');
-        let shops = bodyReader.value('shops');
-        let orderProducts = bodyReader.value('orderProducts');
-        let updateTime = bodyReader.value('updateTime');
-        let createTime = bodyReader.value('createTime');
-        let statusTime = bodyReader.value('statusTime');
-        let status = bodyReader.value('status');
+        const id            = bodyReader.value('id')
+        const price         = bodyReader.value('price')
+        const payType       = bodyReader.value('payType')
+        const category      = bodyReader.value('category')
+        const payTime       = bodyReader.value('payTime')
+        const systemComment = bodyReader.value('systemComment')
+        const payComment    = bodyReader.value('payComment')
+        const comment       = bodyReader.value('comment')
+        const freight       = bodyReader.value('freight')
+        const users         = bodyReader.value('users')
+        const shops         = bodyReader.value('shops')
+        const orderProducts = bodyReader.value('orderProducts')
+        const updateTime    = bodyReader.value('updateTime')
+        const createTime    = bodyReader.value('createTime')
+        const statusTime    = bodyReader.value('statusTime')
+        const status        = bodyReader.value('status')
 
         return {
             id,
@@ -32,6 +33,7 @@ export default class OrderTranslator extends Translator {
             payType,
             category,
             payTime,
+            systemComment,
             payComment,
             comment,
             freight,
@@ -42,6 +44,6 @@ export default class OrderTranslator extends Translator {
             createTime,
             statusTime,
             status
-        };
+        }
     }
 }

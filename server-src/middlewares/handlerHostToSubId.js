@@ -17,7 +17,6 @@ import {
  * @return {[type]}                      [description]
  */
 export async function handlerHostToSubId(ctx, next) {
-    console.log(ctx.host);
     const hostMapping = config.get('hostMapping');
 
     let subId;

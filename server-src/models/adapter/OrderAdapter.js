@@ -48,13 +48,15 @@ export default class OrderAdapter extends RequestAdapter {
 			userId,
 			shopId,
 			comment,
-			productList
+			productList,
+			systemComment
 		}, aOrderClass) {
 			this.buildRequest(ORDER_ADD, {
 				userId,
 				shopId,
 				comment,
-				productList
+				productList,
+				systemComment
 			});
 
 			this.activeClass = aOrderClass;

@@ -8,11 +8,14 @@ import {
     unescapeData
 } from '../vendors/tools/string'
 import '../vendors/jquery.extend/form'
-import { addQuery } from '../vendors/tools/url';
+import {
+    addQuery
+} from '../vendors/tools/url';
 
 
-const DiancanModel = function (products, isNext, pageNumber) {
+const DiancanModel = function (cartTable, products, isNext, pageNumber) {
     const self = this
+    this.cartTable = cartTable
     this.isNext = ko.observable(isNext)
     this.cartProducts = {}
     this.toggleCart = ko.observable(false)
@@ -23,7 +26,9 @@ const DiancanModel = function (products, isNext, pageNumber) {
         pageNumber++
         $.ajax({
                 method: "GET",
-                url: addQuery(window.location.href, { number: pageNumber }),
+                url: addQuery(window.location.href, {
+                    number: pageNumber
+                }),
                 dataType: "json"
             })
             .done(function (respones) {
@@ -121,27 +126,30 @@ const DiancanModel = function (products, isNext, pageNumber) {
             // }]
         }
 
-        
-        
-        
-        if(!lodash.isEmpty(self.cartProducts)) {
-            for(let index in self.cartProducts) {
+
+
+
+        if (!lodash.isEmpty(self.cartProducts)) {
+            for (let index in self.cartProducts) {
                 productsInfo[self.products()[index].id] = []
-                for(let priceIndex in self.cartProducts[index]) {
+                for (let priceIndex in self.cartProducts[index]) {
                     productsInfo[self.products()[index].id].push({
                         index: priceIndex,
                         number: self.cartProducts[index][priceIndex]
                     })
                 }
             }
-            $.form('/orders/add', { productsInfo: JSON.stringify(productsInfo) }).submit()
+            $.form('/orders/add', {
+                productsInfo: JSON.stringify(productsInfo),
+                cartTableId: cartTable.id
+            }).submit()
         }
     }
 
     this.totalPrice = ko.observable(0)
 }
 if ($('#diancan').length) {
-    let diancanModel = new DiancanModel(products, isNext, pageNumber);
+    let diancanModel = new DiancanModel(cartTable, products, isNext, pageNumber);
     ko.applyBindings(diancanModel, document.getElementById('diancan'));
 }
 

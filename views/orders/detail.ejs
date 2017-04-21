@@ -131,8 +131,8 @@
 			<tr>
                 <td data-th="产品ID"><%- product.productSnapshot.product.id %></td>
                 <td data-th="产品名称"><a target="_blank" href="/products/<%- product.productSnapshot.product.id %>"><%- product.productSnapshot.product.name %></a></td>
-                <td data-th="规格"><%- product.productSnapshot.product.prices[product.priceIndex].title %></td>
-                <td data-th="单价">￥<%- product.productSnapshot.product.prices[product.priceIndex].price %></td>
+                <td data-th="规格"><%- product.productSnapshot.product.prices[product.priceIndex]? product.productSnapshot.product.prices[product.priceIndex].title: '' %></td>
+                <td data-th="单价">￥<%- product.productSnapshot.product.prices[product.priceIndex]? product.productSnapshot.product.prices[product.priceIndex].price: '' %></td>
                 <td data-th="数量"><%- product.number %></td>
             </tr>
             <% } %>

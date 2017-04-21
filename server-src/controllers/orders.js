@@ -11,10 +11,11 @@ import {
 
 export async function showAddOrder(ctx, next) {
 	if(ctx.method === 'POST') {
+		const cartTableId = ctx.request.body.cartTableId
 		const productsInfo = JSON.parse(ctx.request.body.productsInfo)
 
 		const orderService = new OrderService()
-		const result = await orderService.showMulitAddOrder(productsInfo)
+		const result = await orderService.showMulitAddOrder(cartTableId, productsInfo, ctx._subId)
 
 		if (result === null) {
 			ctx.status = 404
@@ -24,6 +25,7 @@ export async function showAddOrder(ctx, next) {
 			const {
 				products,
 				totalPrice,
+				cartTable
 			} = result
 
 			const title = '订单详情';
@@ -32,6 +34,7 @@ export async function showAddOrder(ctx, next) {
 				title,
 				pageJs,
 				productsInfo,
+				cartTable,
 				products,
 				totalPrice
 			});
@@ -96,11 +99,11 @@ export async function addOrder(ctx, next) {
 
 	const comment = ctx.request.body.comment;
 
-	if(ctx.request.body.productsInfo) {
-
+	if(ctx.request.body.productsInfo && ctx.request.body.cartTableId) {
+		const cartTableId = ctx.request.body.cartTableId
 		const productsInfo = JSON.parse(ctx.request.body.productsInfo)
 
-		result = await orderService.mulitAddOrder(ctx.state.user.id, ctx._subId, comment, productsInfo);
+		result = await orderService.mulitAddOrder(ctx.state.user.id, ctx._subId, comment, cartTableId, productsInfo);
 
 	} else {
 

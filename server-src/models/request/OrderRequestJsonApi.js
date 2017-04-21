@@ -65,7 +65,8 @@ export default class OrderRequestJsonApi extends BaseRequest {
 			userId: this.originData.userId,
 			shopId: this.originData.shopId,
 			comment: this.originData.comment,
-			productList: this.originData.productList
+			productList: this.originData.productList,
+			systemComment: this.originData.systemComment
 		};
 
 		this.buildData(attributes);
