@@ -14,10 +14,6 @@ export default new Strategy({
     },
     async (accessToken, refreshToken, profile, expires_in, done) => {
         //查询openid是否已存在 profile.openid
-        console.log(accessToken);
-        console.log(refreshToken);
-        console.log(profile);
-        console.log(expires_in);
 
         // let openid = profile.openid;
         // let nickName = profile.nickname;

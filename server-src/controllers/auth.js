@@ -88,8 +88,6 @@ export async function checkBindCellphoneVerificationCode(ctx, next) {
 
     const verificationCodeService = new VerificationCodeService(ctx.session);
     const result = verificationCodeService.checkBind(cellPhone, code);
-    console.log('checkBindCellphoneVerificationCode');
-    console.log(result);
     if (result) {
         await next();
     } else {

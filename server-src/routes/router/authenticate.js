@@ -36,11 +36,7 @@ router.get('/wechat/auth', authNormalWechatBlock, async (ctx, next) => {
 	let redirectTo = 'http://' + ctx.host + (inWehcat(ctx)? '/wechat': '/wechat-pc') + '/auth/callback?';
 
 	redirectTo += 'returnTo=' + returnTo;
-	console.log('redirectTo:' + redirectTo);
-	console.log(ctx.headers);
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
-
-	console.log(callbackUrl);
 
 	let location;
 
@@ -74,17 +70,13 @@ router.get('/wechat/auth/relationship', authRelationshipWechatBlock, async (ctx,
 	let redirectTo = 'http://' + ctx.host + (inWehcat(ctx)? '/wechat': '/wechat-pc') + '/auth/relationship/callback?parentId=' + parentId;
 
 	redirectTo += '&returnTo=' + returnTo;
-	console.log('redirectTo:' + redirectTo);
 	callbackUrl += 'redirectTo=' + base64url(redirectTo);
 
-	console.log(callbackUrl);
 	let location
 	if (inWehcat(ctx)) {
-		console.log('inWehcat')
 		const oauth = new OAuth(config.get('wechat.yundianshang.appID'), config.get('wechat.yundianshang.appsecret'));
 		location = oauth.getAuthorizeURL(callbackUrl, '123', 'snsapi_userinfo');
 	} else {
-		console.log('notinWehcat')
 		const oauth = new OAuth(config.get('wechat.pc.yundianshang.appID'), config.get('wechat.pc.yundianshang.appsecret'));
 		location = oauth.getAuthorizeURLForWebsite(callbackUrl, '123');
 	}

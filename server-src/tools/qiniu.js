@@ -25,11 +25,9 @@ export function uploadFile(localFile, bucket) {
         qiniu.io.putWithoutKey(uptoken(bucket), localFile, extra, function(err, ret) {
             if(!err) {
                 // 上传成功， 处理返回值
-                console.log(ret.hash, ret.key, ret.persistentId);  
                 resolve({ hash: ret.hash, key: ret.key });
             } else {
                 // 上传失败， 处理返回代码
-                console.log(err);
                 reject(err);
             }
         });

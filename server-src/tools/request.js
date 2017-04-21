@@ -24,13 +24,13 @@ export default async function(url) {
     httpStream.pipe(writeStream);
 
     httpStream.on('response', (response) => {
-        console.log('response headers is: ', response.headers);
+        // console.log('response headers is: ', response.headers);
     });
 
     httpStream.on('data', (chunk) => {
         totalLength += chunk.length;
         bufferHelper.concat(chunk);
-        console.log('recevied data size: ' + totalLength + 'KB');
+        // console.log('recevied data size: ' + totalLength + 'KB');
     });
 
 
@@ -39,7 +39,7 @@ export default async function(url) {
 
     await new Promise((resolve, reject) => {
         writeStream.on('close', () => {
-            console.log('download finished');
+            // console.log('download finished');
             resolve(null);
             //调用uploadFile上传
             
