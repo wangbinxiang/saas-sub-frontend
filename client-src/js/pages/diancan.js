@@ -75,6 +75,9 @@ const DiancanModel = function (cartTable, products, isNext, pageNumber) {
             }
         }
         self.updateTotalPrice(self.cartProducts)
+        if(lodash.isEmpty(self.cartProducts)) {
+            self.toggleCart(false)
+        }
     }
 
     let orderStatus = false
