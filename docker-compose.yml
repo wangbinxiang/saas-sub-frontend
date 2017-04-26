@@ -1,7 +1,7 @@
 version: '3'
 services:
   node:
-    image: registry.cn-hangzhou.aliyuncs.com/wangbinxiang/saas-dev-node:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/wangbinxiang/saas-dev-node:0.1.1
     volumes:
       - .:/usr/src/app
     networks:
