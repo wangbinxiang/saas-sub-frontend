@@ -62,7 +62,6 @@ export default class MemberService {
 					//登陆失败用openid和nickname注册用户
 					//注册前上传
 					const avatarResult = await qiniuUpload(headimgurl);
-					console.log(avatarResult);
 					//头像地址
 					const avatar = avatarResult && avatarResult.key? avatarResult.key: '';
 					member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, avatar, Member);
@@ -86,7 +85,6 @@ export default class MemberService {
 				// console.log(123);
 				// console.log(headimgurl);
 				const avatarResult = await qiniuUpload(headimgurl);
-				console.log(avatarResult);
 				member = await this.userAdapter.updateAvatar({ id: member.id, avatar: avatarResult.key }, Member);
 			}
 		} catch (err) {
@@ -124,7 +122,6 @@ export default class MemberService {
 				// console.log(123);
 				// console.log(headimgurl);
 				const avatarResult = await qiniuUpload(headimgurl);
-				console.log(avatarResult);
 				member = await this.userAdapter.updateAvatar({ id: member.id, avatar: avatarResult.key }, Member);
 			}
 		} catch (err) {
@@ -132,7 +129,6 @@ export default class MemberService {
 				case RequestJsonApiParamsError:
 					//登陆失败用openid和nickname注册用户
 					const avatarResult = await qiniuUpload(headimgurl);
-					console.log(avatarResult);
 					//头像地址
 					const avatar = avatarResult && avatarResult.key? avatarResult.key: '';
 					member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, avatar, Member);

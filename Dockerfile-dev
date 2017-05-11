@@ -4,4 +4,4 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 VOLUME ["/usr/src/app"]
 
-CMD [ "npm", "run", "dev-babel-compile" ]
+CMD [ "npm", "run", "dev-docker-babel-compile" ]

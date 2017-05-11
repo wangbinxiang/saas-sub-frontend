@@ -8,10 +8,22 @@
     </ul>
 </nav>
 
-<h1 class="row column"><%- projectType.name %></h1>
+
+<div class="hot-bar-wrap clearfix">
+    <div class="top-bar hot-bar clearfix">
+        <ul class="dropdown menu index" data-dropdown-menu id="tagFilter">
+            <li class="menu-text"><%- channelName %></li>
+            <% for(let i of projectTypes) { %>
+            <li>
+                <a href="/channel/projectTypes/<%- i.id %>"><%- i.name %></a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</div>
 
 <div class="row column blk-margin">
-    <div data-bind="foreach:projects" id="projects">
+    <div data-bind="foreach:projects" id="projectNavigation">
         <a class="article-item clearfix" data-bind="attr:{href: '/projects/' + id}">
 
             <figure data-bind="attr:{style: 'background-image:url(<%- imgHost %>' + logo + '<%= imgListStyle%>)'}"></figure>
@@ -26,9 +38,9 @@
 </div>
 
 <script>
-	var projectTypeId = <%- projectTypeId %>;
-	var data = <%- JSON.stringify(projects? projects: []) %>;
-    var isNext = <%- isNext %>;
+	var id = <%- id %>;
+	var data = <%- JSON.stringify(projects? projects: []) %>
+  var isNext = <%- isNext %>
 </script>
 
 

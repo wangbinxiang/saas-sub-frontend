@@ -18,7 +18,7 @@ export default async function navigation(ctx, next) {
 	const shopLayout = layout[ctx._subId]
 
 	if (shopLayout && shopLayout.navigation) {
-		
+		console.log(shopLayout.navigation)
 		ctx.state._navigation = shopLayout.navigation
 
 	} else {
@@ -26,9 +26,9 @@ export default async function navigation(ctx, next) {
 		const productTypes = await navigationService.productTypes(ctx._subId);
 
 		if (productTypes !== null) {
-			ctx.state._navigation = productTypes;
+			ctx.state._productTypes = productTypes;
 		} else {
-			ctx.state._navigation = undefined;
+			ctx.state._productTypes = undefined;
 		}
 
 		const categories = await navigationService.categories(ctx._subId);
