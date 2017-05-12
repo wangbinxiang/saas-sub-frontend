@@ -10,11 +10,11 @@
         <% if(shopInfo.theme === 'garden') { %>
           <link rel="stylesheet" href="/css/appFall.css?20170418" />
         <% } else if(shopInfo.theme === 'blue') { %>
-          <link rel="stylesheet" href="/css/appFallBlue.css?20170418" />
+          <link rel="stylesheet" href="/css/appSummer.css?20170512" />
         <% } else { %>
-            <link rel="stylesheet" href="/css/app.css?20170418" />
-            <link rel="stylesheet" href="/css/appfix.css?20170327" />
+          <link rel="stylesheet" href="/css/appSummer.css?20170512" />
         <% } %>
+        <link rel="stylesheet" href="/css/appfix.css?20170327" />
         <% if(__IN_WECHAT__ && shopInfo.relationship) { %>
             <%- include('../common/wechatRelationship') -%>
         <% } %>
@@ -32,7 +32,12 @@
                         <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li> -->
                         <li data-toggle="userShortcuts">
                             <a class="user">
-                            <i class="material-icons mi-account_circle"></i>
+                            <% if(typeof user !== 'undefined' && typeof avatarImgHost !== 'undefined' && user.avatar) { %>
+                              <i class="material-icons mi-account_circle user-login"><img src="<%- avatarImgHost + user.avatar %>" /></i>
+                            <% } else { %>
+                              <i class="material-icons mi-account_circle"></i>
+                            <% } %>
+                            <% console.log(user) %>
                             <b>
                                 欢迎<%- typeof user === 'undefined'? '':  
                                         ',&nbsp' + (user.nickName? user.nickName:
@@ -60,7 +65,7 @@
             </div>
             <div id="responsive-menu" class="menu-body">
                 <div class="top-bar-left top-bar-left--global">
-                    <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
+                    <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu id="responsive-menu-ul">
                     <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden') { %>
                         <% if(typeof _navigation !== 'undefined') { %>
                             <% for(const nav of _navigation) { %>
@@ -101,7 +106,6 @@
                         <% } %>
                     <% } %>
                     </ul>
-                    
                 </div>
             </div>
         </header>

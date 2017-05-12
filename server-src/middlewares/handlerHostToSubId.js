@@ -90,6 +90,11 @@ export async function handlerHostToSubId (ctx, next) {
         kefuId,
         relationship
       }
+
+      if (ctx.accepts('html', 'text', 'json') === 'html') {
+        ctx.state.avatarImgHost = config.get('qiniu.bucket.subImg.url')
+      }
+
       await next()
     } else {
       ctx.status = 404
