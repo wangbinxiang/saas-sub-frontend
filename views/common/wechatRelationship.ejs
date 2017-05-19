@@ -1,7 +1,7 @@
 <!-- 微信浏览器下，关系型注册网址添加修改页面url,增加关联人id和returnTo -->
 <script type="text/javascript">
 	//parentId
-	var __parentId = <%= user.id %>
+	var __parentId = <%- user.id %>
 	var __parentIdKey = '__p__'
 	var __newHref = location.href
 	if (__newHref.indexOf('__p__=')) {
@@ -12,6 +12,6 @@
 	__newHref = __newHref + 
 				(__newHref.indexOf("?") === -1? '?':
 				((__newHref.charAt(__newHref.length - 1) !== '&' && (__newHref.charAt(__newHref.length - 1) !== '?'))? '&': '')) + 
-				'__p__=' + __parentId
+				'__p__=' + __parentId + '&'
 	history.pushState(null, null, __newHref)
 </script>
