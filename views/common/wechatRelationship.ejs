@@ -12,7 +12,9 @@
 	__newHref = __newHref + 
 				(__newHref.indexOf("?") === -1? '?':
 				((__newHref.charAt(__newHref.length - 1) !== '&' && (__newHref.charAt(__newHref.length - 1) !== '?'))? '&': '')) + 
-				'__p__=' + __parentId + '&'
+				'__p__=' + __parentId
 	history.pushState(null, null, __newHref)
+  var hash = location.hash
   location.hash = '__p__'
+  location.hash = hash
 </script>
