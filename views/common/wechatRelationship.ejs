@@ -14,4 +14,5 @@
 				((__newHref.charAt(__newHref.length - 1) !== '&' && (__newHref.charAt(__newHref.length - 1) !== '?'))? '&': '')) + 
 				'__p__=' + __parentId + '&'
 	history.pushState(null, null, __newHref)
+  location.hash = '__p__'
 </script>
