@@ -46,68 +46,105 @@ export default class MemberService {
 
   async wechatLogin (openid, nickName, shopId, unionId, headimgurl) {
     let member
-    try {
-      member = await this.userAdapter.wechatLogin(unionId, Member)
+    member = await this.userAdapter.wechatLogin(unionId, Member)
+
+    if (member) {
       if (member.noAvatar()) {
         // member没有头像就上传
         // 上传成功后头像地址写入member
-        // console.log(123);
-        // console.log(headimgurl);
         const avatarResult = await qiniuUpload(headimgurl)
         member = await this.userAdapter.updateAvatar({
           id: member.id,
           avatar: avatarResult.key
         }, Member)
       }
-    } catch (err) {
-      switch (err.constructor) {
-        case RequestJsonApiParamsError:
-          // 登陆失败用openid和nickname注册用户
-          // 注册前上传
-          const avatarResult = await qiniuUpload(headimgurl)
-          // 头像地址
-          const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
-          member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, avatar, Member)
-          break
-        default:
-          throw err
-      }
+    } else {
+      // 登陆失败用openid和nickname注册用户
+      // 注册前上传
+      const avatarResult = await qiniuUpload(headimgurl)
+      // 头像地址
+      const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
+      member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, avatar, Member)
     }
+    // try {
+    //   member = await this.userAdapter.wechatLogin(unionId, Member)
+    //   if (member.noAvatar()) {
+    //     // member没有头像就上传
+    //     // 上传成功后头像地址写入member
+    //     // console.log(123);
+    //     // console.log(headimgurl);
+    //     const avatarResult = await qiniuUpload(headimgurl)
+    //     member = await this.userAdapter.updateAvatar({
+    //       id: member.id,
+    //       avatar: avatarResult.key
+    //     }, Member)
+    //   }
+    // } catch (err) {
+    //   switch (err.constructor) {
+    //     case RequestJsonApiParamsError:
+    //       // 登陆失败用openid和nickname注册用户
+    //       // 注册前上传
+    //       const avatarResult = await qiniuUpload(headimgurl)
+    //       // 头像地址
+    //       const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
+    //       member = await this.userAdapter.wechatSignup(openid, nickName, shopId, unionId, avatar, Member)
+    //       break
+    //     default:
+    //       throw err
+    //   }
+    // }
     return member
     // 登陆用户
   }
 
   async wechatRelationshipLogin (openid, nickName, shopId, parentId, unionId, headimgurl) {
-    let member, success = false // 关联是否成功标示
+    let member = null
+    let success = false // 关联是否成功标示
+    member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member)
 
-    try {
-      member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member)
-      if (member.noAvatar()) {
-        // member没有头像就上传
-        // 上传成功后头像地址写入member
-        // console.log(123);
-        // console.log(headimgurl);
-        const avatarResult = await qiniuUpload(headimgurl)
-        member = await this.userAdapter.updateAvatar({
-          id: member.id,
-          avatar: avatarResult.key
-        }, Member)
-      }
-    } catch (err) {
-      switch (err.constructor) {
-        case RequestJsonApiParamsError:
-          // 登陆失败用openid和nickname注册用户
-          const avatarResult = await qiniuUpload(headimgurl)
-          // 头像地址
-          const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
-          member = await this.userAdapter.wechatRelationshipSignup(openid, nickName, shopId, parentId, unionId, avatar, Member)
-          // 关联成功
-          success = true
-          break
-        default:
-          throw err
-      }
+    if (member) {
+      const avatarResult = await qiniuUpload(headimgurl)
+      member = await this.userAdapter.updateAvatar({
+        id: member.id,
+        avatar: avatarResult.key
+      }, Member)
+    } else {
+      // 登陆失败用openid和nickname注册用户
+      const avatarResult = await qiniuUpload(headimgurl)
+      // 头像地址
+      const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
+      member = await this.userAdapter.wechatRelationshipSignup(openid, nickName, shopId, parentId, unionId, avatar, Member)
+      // 关联成功
+      success = true
     }
+    // try {
+    //   member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member)
+    //   if (member.noAvatar()) {
+    //     // member没有头像就上传
+    //     // 上传成功后头像地址写入member
+    //     // console.log(123);
+    //     // console.log(headimgurl);
+    //     const avatarResult = await qiniuUpload(headimgurl)
+    //     member = await this.userAdapter.updateAvatar({
+    //       id: member.id,
+    //       avatar: avatarResult.key
+    //     }, Member)
+    //   }
+    // } catch (err) {
+    //   switch (err.constructor) {
+    //     case RequestJsonApiParamsError:
+    //       // 登陆失败用openid和nickname注册用户
+    //       const avatarResult = await qiniuUpload(headimgurl)
+    //       // 头像地址
+    //       const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
+    //       member = await this.userAdapter.wechatRelationshipSignup(openid, nickName, shopId, parentId, unionId, avatar, Member)
+    //       // 关联成功
+    //       success = true
+    //       break
+    //     default:
+    //       throw err
+    //   }
+    // }
 
     return {
       member,
@@ -117,10 +154,11 @@ export default class MemberService {
   }
 
   async wechatRelationshipSourceLogin (openid, nickName, shopId, parentId, unionId, source, sourceId, headimgurl) {
-    let member, success = false // 关联是否成功标示
+    let member = null
+    let success = false // 关联是否成功标示
 
-    try {
-      member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member)
+    member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member)
+    if (member) {
       if (member.noAvatar()) {
         // member没有头像就上传
         // 上传成功后头像地址写入member
@@ -132,21 +170,43 @@ export default class MemberService {
           avatar: avatarResult.key
         }, Member)
       }
-    } catch (err) {
-      switch (err.constructor) {
-        case RequestJsonApiParamsError:
-          // 登陆失败用openid和nickname注册用户
-          const avatarResult = await qiniuUpload(headimgurl)
-          // 头像地址
-          const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
-          member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, avatar, Member)
-          // 关联成功
-          success = true
-          break
-        default:
-          throw err
-      }
+    } else {
+      const avatarResult = await qiniuUpload(headimgurl)
+      // 头像地址
+      const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
+      member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, avatar, Member)
+      // 关联成功
+      success = true
     }
+
+    // try {
+    //   member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member)
+    //   if (member.noAvatar()) {
+    //     // member没有头像就上传
+    //     // 上传成功后头像地址写入member
+    //     // console.log(123);
+    //     // console.log(headimgurl);
+    //     const avatarResult = await qiniuUpload(headimgurl)
+    //     member = await this.userAdapter.updateAvatar({
+    //       id: member.id,
+    //       avatar: avatarResult.key
+    //     }, Member)
+    //   }
+    // } catch (err) {
+    //   switch (err.constructor) {
+    //     case RequestJsonApiParamsError:
+    //       // 登陆失败用openid和nickname注册用户
+    //       const avatarResult = await qiniuUpload(headimgurl)
+    //       // 头像地址
+    //       const avatar = avatarResult && avatarResult.key ? avatarResult.key : ''
+    //       member = await this.userAdapter.wechatSourceRelationshipSignup(openid, nickName, shopId, parentId, unionId, source, sourceId, avatar, Member)
+    //       // 关联成功
+    //       success = true
+    //       break
+    //     default:
+    //       throw err
+    //   }
+    // }
 
     return {
       member,
