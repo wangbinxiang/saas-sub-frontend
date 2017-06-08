@@ -19,8 +19,8 @@ export default class RequestAdapter {
     } else if (header.statusCode === this.requestObject.noContentCode) {
       result = null
     } else if (header.statusCode === this.requestObject.getParamsErrorCode()) {
-      result = null
-      // throw new RequestJsonApiParamsError('request JsonApi no params Error')
+      // result = null
+      throw new RequestJsonApiParamsError('request JsonApi no params Error')
     } else {
       throw new Error('Invalid status')
     }
