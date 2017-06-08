@@ -4,7 +4,7 @@ import ProductJsonApiBodyReader from '../reader/ProductJsonApiBodyReader'
 export default class ProductTranslator extends Translator {
   readData (data, included) {
     const bodyReader = new ProductJsonApiBodyReader(data, included)
-    console.log(bodyReader.data)
+
     let id = bodyReader.value('id')
     let name = bodyReader.value('name')
     let category = bodyReader.value('category')

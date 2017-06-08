@@ -86,7 +86,6 @@ export default class ProductService {
       idList,
       include
     }, Product)
-    console.log(product)
     if (product === null || (!checkOther(idList, userId) && !checkResourcesOwner(product, 'userId', userId, lodash.isArray(idList)))) {
       return null
     } else {
