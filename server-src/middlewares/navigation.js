@@ -43,6 +43,6 @@ export default async function navigation (ctx, next) {
       ctx.state._projectTypes = undefined
     }
   }
-
+  console.log(ctx.state)
   await next()
 }

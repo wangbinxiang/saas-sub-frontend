@@ -11,6 +11,8 @@
           <link rel="stylesheet" href="/css/appFall.css?20170418" />
         <% } else if(shopInfo.theme === 'blue') { %>
           <link rel="stylesheet" href="/css/appSummer.css?20170512" />
+        <% } else if(shopInfo.theme === 'red') { %>
+          <link rel="stylesheet" href="/css/appRed.css?20170512" />
         <% } else { %>
           <link rel="stylesheet" href="/css/appSummer.css?20170512" />
         <% } %>
@@ -37,7 +39,6 @@
                             <% } else { %>
                               <i class="material-icons mi-account_circle"></i>
                             <% } %>
-                            <% console.log(user) %>
                             <b>
                                 欢迎<%- typeof user === 'undefined'? '':  
                                         ',&nbsp' + (user.nickName? user.nickName:

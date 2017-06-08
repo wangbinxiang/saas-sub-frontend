@@ -88,7 +88,8 @@
   },
   "theme": {
     "10002": "garden",
-    "10022": "blue"
+    "10022": "blue",
+    "10038": "red"
   },
   "host": {
     "zhuce": "zhuce.dianshangwan.com",
