@@ -43,7 +43,7 @@
       ]
     }
   },
-  "os": "",
+  "os": "win",
   "crypt": {
     "key": {
       "shopId": "034663ed7f93f4d333512d543bf9a945",
@@ -87,7 +87,8 @@
     }
   },
   "theme": {
-    "10002": "garden"
+    "10002": "garden",
+    "10022": "blue"
   },
   "host": {
     "zhuce": "zhuce.dianshangwan.com",
@@ -180,6 +181,56 @@
         "2": {
           "name": "产业金融",
           "typeIds": "5"
+        }
+      }
+    },
+    "10022": {
+      "navigation": [
+        {
+          "name": "公司简介",
+          "type": "categories",
+          "id": "9"
+        },
+        {
+          "name": "新闻资讯",
+          "type": "articleChannel",
+          "id": 0
+        },
+        {
+          "name": "项目合作",
+          "type": "projectChannel",
+          "id": 0
+        },
+        {
+          "name": "采购合作",
+          "type": "projectChannel",
+          "id": 1
+        },
+        {
+          "name": "联系我们",
+          "type": "categories",
+          "id": 12
+        },
+        {
+          "name": "月球游",
+          "type": "product",
+          "id": 1
+        }
+      ],
+      "articleChannel": {
+        "0": {
+          "name": "园林咨询",
+          "id": "10,11"
+        }
+      },
+      "projectChannel": {
+        "0": {
+          "name": "项目合作",
+          "id": "7,8,9"
+        },
+        "1": {
+          "name": "采购合作",
+          "id": "10,11"
         }
       }
     }

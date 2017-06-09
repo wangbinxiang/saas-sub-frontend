@@ -7,12 +7,14 @@
         <title><%= typeof title !== 'undefined'? title: ''%></title>
         <meta name="description" content="<%= typeof title !== 'undefined'? title: ''%>" />
         <link rel="icon" href="/img/sa_logo.png" type="image/x-icon" />
-        <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden') { %>
-            <link rel="stylesheet" href="/css/appFall.css?20170418" />
+        <% if(shopInfo.theme === 'garden') { %>
+          <link rel="stylesheet" href="/css/appFall.css?20170418" />
+        <% } else if(shopInfo.theme === 'blue') { %>
+          <link rel="stylesheet" href="/css/appSummer.css?20170512" />
         <% } else { %>
-            <link rel="stylesheet" href="/css/app.css?20170418" />
-            <link rel="stylesheet" href="/css/appfix.css?20170327" />
+          <link rel="stylesheet" href="/css/appSummer.css?20170512" />
         <% } %>
+        <link rel="stylesheet" href="/css/appfix.css?20170327" />
         <% if(__IN_WECHAT__ && shopInfo.relationship) { %>
             <%- include('../common/wechatRelationship') -%>
         <% } %>
@@ -30,7 +32,12 @@
                         <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li> -->
                         <li data-toggle="userShortcuts">
                             <a class="user">
-                            <i class="material-icons mi-account_circle"></i>
+                            <% if(typeof user !== 'undefined' && typeof avatarImgHost !== 'undefined' && user.avatar) { %>
+                              <i class="material-icons mi-account_circle user-login"><img src="<%- avatarImgHost + user.avatar %>" /></i>
+                            <% } else { %>
+                              <i class="material-icons mi-account_circle"></i>
+                            <% } %>
+                            <% console.log(user) %>
                             <b>
                                 欢迎<%- typeof user === 'undefined'? '':  
                                         ',&nbsp' + (user.nickName? user.nickName:
@@ -50,46 +57,55 @@
                 <a href="<%= __AUTH_WECHAT_LINK__ %>">微信登录</a>
                 <% } else if(typeof user !== 'undefined') { %>
                     <% if(shopInfo.relationship) { %>
-                    <a target="_blank" href="/users/relationship">关联信息</a>
+                    <a href="/users/relationship">关联信息</a>
                     <% } %>
-                    <a target="_blank" href="/orders">我的定单</a>
-                    <a target="_blank" href="/applications">我的申请</a>
+                    <a href="/orders">我的定单</a>
+                    <a href="/applications">我的申请</a>
                 <% } %>
             </div>
             <div id="responsive-menu" class="menu-body">
                 <div class="top-bar-left top-bar-left--global">
-                    <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu>
+                    <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu id="responsive-menu-ul">
                     <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden') { %>
                         <% if(typeof _navigation !== 'undefined') { %>
                             <% for(const nav of _navigation) { %>
                                 <% if(nav.type === 'cms') { %>
                                     <li><a target="_blank" href="/garden/articles %>"><%= nav.name %></a></li>
                                 <% } else if(nav.type === 'product') { %>
-                                    <li><a target="_blank" href="/garden/products/<%= nav.id %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/products/<%- nav.id %>"><%= nav.name %></a></li>
                                 <% } else if(nav.type === 'project') { %>
-                                    <li><a target="_blank" href="/garden/projects/<%= nav.id %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/projects/<%- nav.id %>"><%= nav.name %></a></li>
                                 <% } %>
                             <% } %>
                         <% } %>
+                    <% } else if(typeof _navigation !== 'undefined') { %>
+                        <% for(const nav of _navigation) { %>
+                            <% if(nav.type === 'categories') { %>
+                                <li><a target="_blank" href="/channel/categories/<%- nav.id %>"><%- nav.name %></a></li>
+                            <% } else if(nav.type === 'articleChannel') { %>
+                                <li><a target="_blank" href="/channel/navigation/articles/<%- nav.id %>"><%- nav.name %></a></li>
+                            <% } else if(nav.type === 'projectChannel') { %>
+                                <li><a target="_blank" href="/channel/navigation/projects/<%- nav.id %>"><%- nav.name %></a></li>
+                            <% } %>
+                        <% } %>
                     <% } else { %>
-                        <% if(typeof _navigation !== 'undefined') { %>
-                            <% for(const i in _navigation) { %>
-                            <li><a target="_blank" href="/channel/productTypes/<%= _navigation[i].id %>"><%= _navigation[i].name %></a></li>
+                        <% if(typeof _productTypes !== 'undefined') { %>
+                            <% for(const i in _productTypes) { %>
+                            <li><a target="_blank" href="/channel/productTypes/<%- _productTypes[i].id %>"><%= _productTypes[i].name %></a></li>
                             <% } %>
                         <% } %>
                         <% if(typeof _projectTypes !== 'undefined') { %>
                             <% for(const i in _projectTypes) { %>
-                            <li><a target="_blank" href="/channel/projectTypes/<%= _projectTypes[i].id %>"><%= _projectTypes[i].name %></a></li>
+                            <li><a target="_blank" href="/channel/projectTypes/<%- _projectTypes[i].id %>"><%= _projectTypes[i].name %></a></li>
                             <% } %>
                         <% } %>
                         <% if(typeof _categories !== 'undefined') { %>
                             <% for(const i in _categories) { %>
-                            <li><a target="_blank" href="/channel/categories/<%= _categories[i].id %>"><%= _categories[i].name %></a></li>
+                            <li><a target="_blank" href="/channel/categories/<%- _categories[i].id %>"><%= _categories[i].name %></a></li>
                             <% } %>
                         <% } %>
                     <% } %>
                     </ul>
-                    
                 </div>
             </div>
         </header>

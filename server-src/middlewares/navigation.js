@@ -1,5 +1,5 @@
-import NavigationService from '../models/application/NavigationService';
-import config from 'config';
+import NavigationService from '../models/application/NavigationService'
+import config from 'config'
 
 /**
  * 导航中间件
@@ -9,46 +9,40 @@ import config from 'config';
  * @param  {Function}               next [description]
  * @return {[type]}                      [description]
  */
-export default async function navigation(ctx, next) {
+export default async function navigation (ctx, next) {
+  const layout = config.get('layout')
 
-	const layout = config.get('layout');
+  const shopLayout = layout[ctx._subId]
 
+  if (shopLayout && shopLayout.navigation) {
+    ctx.state._navigation = shopLayout.navigation
+  } else {
+    const navigationService = new NavigationService()
+    const productTypes = await navigationService.productTypes(ctx._subId)
 
+    if (productTypes !== null) {
+      ctx.state._productTypes = productTypes
+    } else {
+      ctx.state._productTypes = undefined
+    }
 
-	const shopLayout = layout[ctx._subId]
+    const categories = await navigationService.categories(ctx._subId)
 
-	if (shopLayout && shopLayout.navigation) {
-		
-		ctx.state._navigation = shopLayout.navigation
+    if (categories !== null) {
+      ctx.state._categories = categories
+    } else {
+      ctx.state._categories = undefined
+    }
 
-	} else {
-		const navigationService = new NavigationService();
-		const productTypes = await navigationService.productTypes(ctx._subId);
+    // 项目合作
+    const projectTypes = await navigationService.projectTypes(ctx._subId)
 
-		if (productTypes !== null) {
-			ctx.state._navigation = productTypes;
-		} else {
-			ctx.state._navigation = undefined;
-		}
+    if (projectTypes !== null) {
+      ctx.state._projectTypes = projectTypes
+    } else {
+      ctx.state._projectTypes = undefined
+    }
+  }
 
-		const categories = await navigationService.categories(ctx._subId);
-
-		if (categories !== null) {
-			ctx.state._categories = categories;
-		} else {
-			ctx.state._categories = undefined;
-		}
-
-
-		//项目合作
-		const projectTypes = await navigationService.projectTypes(ctx._subId);
-
-		if (projectTypes !== null) {
-			ctx.state._projectTypes = projectTypes;
-		} else {
-			ctx.state._projectTypes = undefined;
-		}
-	}
-
-	await next();
+  await next()
 }

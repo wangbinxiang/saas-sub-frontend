@@ -1,0 +1,13 @@
+root = true
+
+[*]
+indent_style = space
+charset = utf-8
+tab_width = 4
+end_of_line = lf
+
+[*.{js,ejs,json}]
+indent_size = 2
+
+[{.travis.yml,.eslintrc}]
+indent_size = 2

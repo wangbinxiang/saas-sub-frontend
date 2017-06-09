@@ -8,11 +8,22 @@
     </ul>
 </nav>
 
-<h1 class="row column"><%- category.name %></h1>
+<div class="hot-bar-wrap clearfix">
+    <div class="top-bar hot-bar clearfix">
+        <ul class="dropdown menu index" data-dropdown-menu id="tagFilter">
+            <li class="menu-text"><%- channelName %></li>
+            <% for(let i of categories) { %>
+            <li>
+                <a href="/channel/categories/<%- i.id %>"><%- i.name %></a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</div>
 
 <div class="row column blk-margin">
-    <div data-bind="foreach:articles" id="articles">
-        <a target="_blank" class="article-item clearfix" data-bind="attr:{href: '/articles/' + id}">
+    <div data-bind="foreach:articles" id="articleNavigation">
+        <a class="article-item clearfix" data-bind="attr:{href: '/articles/' + id}">
 
             <figure data-bind="attr:{style: 'background-image:url(<%- imgHost %>' + logo + '<%- imgListStyle%>)'}"></figure>
             <h4 data-bind="text:title"></h4>
@@ -26,9 +37,9 @@
 </div>
 
 <script>
-	var categoryId = <%= categoryId %>;
-	var data = <%- JSON.stringify(articles? articles: []) %>;
-    var isNext = <%= isNext %>;
+	var id = <%- id %>
+	var data = <%- JSON.stringify(articles? articles: []) %>
+  var isNext = <%- isNext %>
 </script>
 
 
