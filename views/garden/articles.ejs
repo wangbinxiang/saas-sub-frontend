@@ -7,7 +7,7 @@
     <div class="fcarousel">
         <% for(let i of info.slideArticles) { %>
         <div class="fcarousel__item">
-            <a href="/articles/<%- i.id %>">
+            <a target="_blank" href="/articles/<%- i.id %>">
                 <div>
                     <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x" />
                 </div>
@@ -28,7 +28,7 @@
             </li>
             <% for(let i of info.categories) { %>
             <li>
-                <a href="/channel/categories/<%- i.id %>"><%- i.name %></a>
+                <a target="_blank" href="/channel/categories/<%- i.id %>"><%- i.name %></a>
             </li>
             <% } %>
         </ul>
@@ -39,13 +39,13 @@
 <div class="row expanded article-mix">
     <div class="large-4 medium-12 columns">
         <hgroup class="tourboard__title tourboard__title--<%- key % 7 %>">
-            <a href="/channel/categories/<%- info.categories.find(x => x.id === key).id %>" class="masonry-item masonry-item--title masonry-item--index">
+            <a target="_blank" href="/channel/categories/<%- info.categories.find(x => x.id === key).id %>" class="masonry-item masonry-item--title masonry-item--index">
                 <h3><%- info.categories.find(x => x.id === key).name %></h3>
                 <i class="material-icons mi-arrow_forward"></i>
             </a>
         </hgroup>
         <% if(info.articles[key][0]) { %>
-        <a class="article-mix__top" href="/articles/<%- info.articles[key][0].id %>">
+        <a target="_blank" class="article-mix__top" href="/articles/<%- info.articles[key][0].id %>">
             <img src="<%- imgHost + info.articles[key][0].logo %><%- imgListStyle %>" />
             <h4><%- info.articles[key][0].title %></h4>
             <p><%- info.articles[key][0].abstract %></p>
@@ -58,7 +58,7 @@
         <div class="row expanded small-up-1 medium-up-2" <% if(info.articles[key].length > 3) { %>data-equalizer data-equalize-on="medium"<% } %>>
             <% for(let i = 1; i < info.articles[key].length; i++){ %>
             <div class="columns">
-                <a class="article-item" href="/articles/<%- info.articles[key][i].id %>" data-equalizer-watch>
+                <a target="_blank" class="article-item" href="/articles/<%- info.articles[key][i].id %>" data-equalizer-watch>
                     <figure style="background-image:url('<%- imgHost + info.articles[key][i].logo %><%- imgListStyle %>"></figure>
                     <h4><%- info.articles[key][i].title %></h4>
                     <p><%- info.articles[key][i].abstract %></p>

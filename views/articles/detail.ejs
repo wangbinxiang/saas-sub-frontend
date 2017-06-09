@@ -16,7 +16,7 @@
             <% if (description.type === "image" && description.value){ %>
                 <% if (description.value.url){ %>
                     <% if (description.value.link){ %>
-                        <a href="<%- 'http://' + description.value.link %>" class="image-link-"><img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                        <a target="_blank" href="<%- 'http://' + description.value.link %>" class="image-link-"><img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
                     <% } else { %>
                         <img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" />
                     <% } %>

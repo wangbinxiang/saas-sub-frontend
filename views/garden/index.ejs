@@ -6,7 +6,7 @@
     <div class="fcarousel">
         <% for(let i of slidesData) { %>
         <div class="fcarousel__item">
-            <a href="<%- i.url %>">
+            <a target="_blank" href="<%- i.url %>">
                 <div>
                     <img src="<%- i.img %><%- imgSlideOneStyle %>" />
                 </div>
@@ -24,7 +24,7 @@
             <li class="menu-text">产业资讯</li>
             <% for(let category of info.categories) { %>
             <li>
-                <a href="<%- '/channel/categories/' + category.id %>"><%- category.name %></a>
+                <a target="_blank" href="<%- '/channel/categories/' + category.id %>"><%- category.name %></a>
             </li>
             <% } %>
         </ul>
@@ -35,7 +35,7 @@
 <div class="row expanded article-mix">
     
     <div class="large-4 medium-12 columns">
-        <a class="article-mix__top" href="/articles/<%- info.articles[0].id %>">
+        <a target="_blank" class="article-mix__top" href="/articles/<%- info.articles[0].id %>">
             <img src="<%- imgHost %><%- info.articles[0].logo%><%- imgListStyle %>" />
             <h4><%- info.articles[0].title %></h4>
             <p><%- info.articles[0].content %></p>
@@ -45,7 +45,7 @@
         <div class="row expanded small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
             <% for(var i = 1; i < info.articles.length; i++) { %>
             <div class="column">
-                <a class="article-item" href="/articles/<%- info.articles[i].id %>" data-equalizer-watch>
+                <a target="_blank" class="article-item" href="/articles/<%- info.articles[i].id %>" data-equalizer-watch>
                     <figure style="background-image:url('<%- imgHost %><%- info.articles[i].logo %><%- imgListStyle %>')"></figure>
                     <h4><%- info.articles[i].title %></h4>
                     <p><%- info.articles[i].abstract %></p>
@@ -60,7 +60,7 @@
     <% for(let [key, value] of blocks.entries()) { %>
         
         <div class="column tourboard__title tourboard__title--<%- key % 7 %>">
-            <a href="/garden/<%- value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%- value.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a target="_blank" href="/garden/<%- value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%- value.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
                 <h3><%- value.name %></h3>
                 <cite></cite>
                 <i class="material-icons mi-arrow_forward"></i>
@@ -68,7 +68,7 @@
         </div>
         <% for(let v of value.value) { %>
         <div class="column">
-            <a href="/<%- value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a target="_blank" href="/<%- value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
                 <img src="<%- imgHost %><%- v.logo %><%- imgListStyle %>" />
                 <b>
                     <%- v.name %>

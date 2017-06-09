@@ -7,7 +7,7 @@
     <div class="fcarousel">
         <% for(let i of info.slideProducts) { %>
         <div class="fcarousel__item">
-            <a href="/products/<%- i.id %>">
+            <a target="_blank" href="/products/<%- i.id %>">
                 <div>
                     <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x" />
                 </div>
@@ -25,11 +25,11 @@
         <ul class="dropdown menu index" data-dropdown-menu id="tagFilter">
             <li class="menu-text"><%- info.channelName %></li>
             <li>
-                <a href="/garden/products/">全部</a>
+                <a target="_blank" href="/garden/products/">全部</a>
             </li>
             <% for(let i of info.productTypes) { %>
             <li>
-                <a href="/channel/productTypes/<%- i.id %>"><%- i.name %></a>
+                <a target="_blank" href="/channel/productTypes/<%- i.id %>"><%- i.name %></a>
             </li>
             <% } %>
         </ul>
@@ -40,7 +40,7 @@
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap">
         <% for(let i of info.products) { %>
         <div class="column">
-            <a class="masonry-item" href="/products/<%- i.id %>">
+            <a target="_blank" class="masonry-item" href="/products/<%- i.id %>">
                 <img src="<%- imgHost + i.logo %><%- imgListStyle %>" />
                 <b>
                     <%- i.name %>
