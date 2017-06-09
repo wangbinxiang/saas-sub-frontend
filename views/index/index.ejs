@@ -37,7 +37,7 @@
         </div>
         <% for(let v of products) { %>
         <div class="column">
-            <a target="_blank" href="/products/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a href="/products/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
                 <img src="<%- imgHost %><%- v.logo %><%- imgListStyle %>" />
                 <b>
                     <%- v.name %>
@@ -109,5 +109,4 @@
     var isNext = <%- isNext %>;
     var imgHost = '<%- imgHost %>';
 </script>
-
 <%- include('../layout/footer') -%>
