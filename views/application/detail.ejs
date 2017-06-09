@@ -10,7 +10,7 @@
     </ul>
 </nav>
 
-<h1 class="row column">申请详情 No.<%= application.id %></h1>
+<h1 class="row column">申请详情 No.<%- application.id %></h1>
 
 <div class="row block-margin-bottom">
     <div class="workflow-wrap">
@@ -26,12 +26,12 @@
 
 
 <div class="row column">
-    <div class="callout <%= application.status === APPLICATION_STATUS_DECLINE? 'alert': 'success' %>">
-        <h4><%=noticeTitle%></h4>
+    <div class="callout <%- application.status === APPLICATION_STATUS_DECLINE? 'alert': 'success' %>">
+        <h4><%-noticeTitle%></h4>
     </div>
     <div class="callout">
         <p>
-            (ID)名称：<a target="_blank" href="/projects/<%= project.id %>">(<%= project.id %>)<%= project.name %></a> 规格: <%= project.prices[application.priceIndex].title %>; 金额: <%= project.prices[application.priceIndex].price %>
+            (ID)名称：<a target="_blank" href="/projects/<%- project.id %>">(<%- project.id %>)<%- project.name %></a> 规格: <%- project.prices[application.priceIndex].title %>; 金额: <%- project.prices[application.priceIndex].price %>
         </p>
     </div>
 </div>
@@ -41,12 +41,12 @@
         <div class="row">
             <div class="medium-4 columns">
                 <label>
-                    姓名：<%= application.realName %>
+                    姓名：<%- application.realName %>
                 </label>
             </div>
             <div class="medium-4 columns">
                 <label>
-                    联系电话：<%= application.contactPhone %>
+                    联系电话：<%- application.contactPhone %>
                 </label>
             </div>
             <div class="medium-4 columns">
@@ -55,24 +55,24 @@
         <div class="row">
             <div class="medium-6 columns">
                 <label>
-                    公司名称：<%= application.companyName %>
+                    公司名称：<%- application.companyName %>
                 </label>
             </div>
             <div class="medium-6 columns">
                 <label>
-                    公司地址：<%= application.companyAddress %>
+                    公司地址：<%- application.companyAddress %>
                 </label>
             </div>
         </div>
     </fieldset>
     <fieldset class="fieldset">
         <legend><h4>申请信息</h4></legend>
-        <small><%= application._createTimeDate %></small>
+        <small><%- application._createTimeDate %></small>
         <div><%- application.information[0]? nl2br(application.information[0].replace(/ /g, '&nbsp;')):'' %></div>
         <% if(application.information[1]){ %>
             <p><br /><strong>附件下载</strong>
             <% for(let attachment of application.information[1]){ %>
-                <br /><a target="_blank" href="<%= imgHost + attachment %>"><%= attachment %></a>
+                <br /><a  href="<%- imgHost + attachment %>"><%- attachment %></a>
             <% } %>
             </p>
         <% } %>
@@ -107,7 +107,7 @@
                     <p>
                         合同附件：
                         <b data-bind="foreach:pdfs">
-                            <br /><a data-bind="attr:{href: '<%= imgHost %>' + $data}, text: $data" target="_blank"></a>
+                            <br /><a data-bind="attr:{href: '<%- imgHost %>' + $data}, text: $data" target="_blank"></a>
                         </b>
                     </p>
                     <div class="row column">
@@ -171,7 +171,7 @@
                 <p>
                     合同附件：
                     <b data-bind="foreach:pdfs">
-                        <br /><a data-bind="attr:{href: '<%= imgHost %>' + $data}, text: $data" target="_blank"></a>
+                        <br /><a data-bind="attr:{href: '<%- imgHost %>' + $data}, text: $data" target="_blank"></a>
                     </b>
                 </p>
             </fieldset>
@@ -179,23 +179,23 @@
     <% } %>
     <div id="replies" data-bind="foreach:replies">
         <fieldset class="fieldset">
-            <legend><h4 data-bind="text: source == <%= REPLY_SOURCE_APPLICATION %> ? '申请信息': '项目方反馈'"></h4></legend>
+            <legend><h4 data-bind="text: source == <%- REPLY_SOURCE_APPLICATION %> ? '申请信息': '项目方反馈'"></h4></legend>
             <small data-bind="text:_createTimeDate"></small>
             <div data-bind="nbspbr:content[0]"></div>
             <b data-bind="foreach:content[1]">
-                <br /><a data-bind="attr:{href: '<%= imgHost %>' + $data}, text: $data" target="_blank"></a>
+                <br /><a data-bind="attr:{href: '<%- imgHost %>' + $data}, text: $data" target="_blank"></a>
             </b>
         </fieldset>
     </div>
-    <input type="hidden" id="_csrf" name="_csrf" value="<%= csrf %>" />
+    <input type="hidden" id="_csrf" name="_csrf" value="<%- csrf %>" />
 </div>
 <script>
-    var projectId = <%= project.id %>;
-    var applicationId = <%= application.id %>;
+    var projectId = <%- project.id %>;
+    var applicationId = <%- application.id %>;
     var applicationContract = <%- JSON.stringify(applicationContract) %>;
-    var hostId = <%= hostId %>;
-    var applicantId = <%= applicantId %>;
-    var imgHost = '<%= imgHost %>';
-    var imgUploadUrl = '<%= imgUploadUrl %>';
+    var hostId = <%- hostId %>;
+    var applicantId = <%- applicantId %>;
+    var imgHost = '<%- imgHost %>';
+    var imgUploadUrl = '<%- imgUploadUrl %>';
 </script>
 <%- include('../layout/footer') -%>

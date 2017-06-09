@@ -12,9 +12,9 @@ export default class ProductTranslator extends Translator {
     let logo = bodyReader.value('logo')
     let minPrice = bodyReader.value('minPrice')
     let maxPrice = bodyReader.value('maxPrice')
-    let description = bodyReader.value('description').description
-    let slides = bodyReader.value('slides').slides
-    let prices = bodyReader.value('prices').prices
+    let description = bodyReader.value('description')
+    let slides = bodyReader.value('slides')
+    let prices = bodyReader.value('prices')
     let updateTime = bodyReader.value('updateTime')
     let createTime = bodyReader.value('createTime')
     let statusTime = bodyReader.value('statusTime')
@@ -55,9 +55,9 @@ export default class ProductTranslator extends Translator {
     const logo = data.logo
     const minPrice = data.minPrice
     const maxPrice = data.maxPrice
-    const description = data.productDescription.description
-    const slides = data.productSlides.slides
-    const prices = data.productPrices.prices
+    const description = data.description
+    const slides = data.slides
+    const prices = data.prices
     const updateTime = data.updateTime
     const createTime = data.createTime
     const statusTime = data.statusTime

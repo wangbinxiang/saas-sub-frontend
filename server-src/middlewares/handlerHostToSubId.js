@@ -69,7 +69,7 @@ export async function handlerHostToSubId (ctx, next) {
 
       const themeConfig = config.get('theme')
 
-      let theme = 'default'
+      let theme = 'red'
 
       if (themeConfig) {
         if (themeConfig[ctx._subId]) {

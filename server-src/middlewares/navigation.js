@@ -43,6 +43,5 @@ export default async function navigation (ctx, next) {
       ctx.state._projectTypes = undefined
     }
   }
-
   await next()
 }

@@ -2,23 +2,53 @@ import 'foundation-sites'
 if (module.hot) {
   module.hot.accept()
 }
-
 $(document).foundation()
 
-$('#topBarSearch').click(function () {
-  if (!Foundation.MediaQuery.atLeast('medium')) {
-    $(this).toggleClass('even')
-    $('#topBarSearchInput').toggleClass('even')
+if ($('#responsive-menu-toggler').length) {
+  const toggleMenu = function () {
+    $('#nav-menu-wrap').toggleClass('show')
+    if (!$('#nav-menu-wrap').hasClass('show')) {
+      setTimeout(() => {
+        $('#nav-menu-wrap').css('left', '-100%')
+      }, 500)
+    } else {
+      $('#nav-menu-wrap').css('left', 0)
+    }
   }
-})
 
-$('#responsive-menu .top-bar-left--global').on('click', function () {
-  $('#responsive-menu').hide()
-})
+  $('#responsive-menu .top-bar-left--global').on('click', function () {
+    if (Foundation.MediaQuery.current === 'small') {
+      toggleMenu()
+    }
+  })
 
-$('#responsive-menu .top-bar-left--global').on('click', 'ul', function (e) {
-  e.stopPropagation()
-})
+  $('#responsive-menu-toggler').on('click', () => {
+    if (Foundation.MediaQuery.current === 'small') {
+      toggleMenu()
+    }
+  })
+
+  $('#userShortcuts').on('show.zf.dropdown', () => {
+    if (Foundation.MediaQuery.current === 'small') {
+      $('#userShortcuts').css('max-height', $(window).height() - 47)
+    }
+  })
+} else {
+  $('#topBarSearch').click(function () {
+    if (!Foundation.MediaQuery.atLeast('medium')) {
+      $(this).toggleClass('even')
+      $('#topBarSearchInput').toggleClass('even')
+    }
+  })
+
+  $('#responsive-menu .top-bar-left--global').on('click', function () {
+    $('#responsive-menu').hide()
+  })
+
+  $('#responsive-menu .top-bar-left--global').on('click', 'ul', function (e) {
+    e.stopPropagation()
+  })
+}
 
 if (Foundation.MediaQuery.current === 'small') {
   $('#userShortcuts').on('show.zf.dropdown', () => {
@@ -26,21 +56,19 @@ if (Foundation.MediaQuery.current === 'small') {
   })
 }
 
-// const getNavbarWith = () => {
-//   let navbarWidth = 0
-//   $('#nav-menu li').each(function (i, e) {
-//     navbarWidth += $(e).width() + 8
-//   })
-//   return navbarWidth + 16
-// }
-
-// if (Foundation.MediaQuery.current === 'small') {
-//   let navbarWidth = getNavbarWith()
-//   $('#nav-menu').css('width', navbarWidth)
-//   $('#nav-menu-wrap').animate({ scrollLeft: navbarWidth }, 800, () => {
-//     $('#nav-menu-wrap').animate({ scrollLeft: 0 }, 800)
-//   })
-// }
+var lastScrollTop = 0
+//  手机版向下滚动时，header自动隐藏
+if (Foundation.MediaQuery.current === 'small') {
+  $(window).scroll(function (event) {
+    var st = $(this).scrollTop()
+    if (st > lastScrollTop && st > 60 && !$('#responsive-menu').is(':visible')) {
+      $('#headerGlobal').addClass('hidee')
+    } else {
+      $('#headerGlobal').removeClass('hidee')
+    }
+    lastScrollTop = st
+  })
+}
 
 // export let closeTimer = null
 

@@ -4,13 +4,15 @@
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= typeof title !== 'undefined'? title: ''%></title>
-        <meta name="description" content="<%= typeof title !== 'undefined'? title: ''%>" />
+        <title><%- typeof title !== 'undefined'? title: ''%></title>
+        <meta name="description" content="<%- typeof title !== 'undefined'? title: ''%>" />
         <link rel="icon" href="/img/sa_logo.png" type="image/x-icon" />
         <% if(shopInfo.theme === 'garden') { %>
           <link rel="stylesheet" href="/css/appFall.css?20170418" />
         <% } else if(shopInfo.theme === 'blue') { %>
           <link rel="stylesheet" href="/css/appSummer.css?20170512" />
+        <% } else if(shopInfo.theme === 'red') { %>
+          <link rel="stylesheet" href="/css/appRed.css?20170512" />
         <% } else { %>
           <link rel="stylesheet" href="/css/appSummer.css?20170512" />
         <% } %>
@@ -22,10 +24,19 @@
     <body>
         <header class="top-bar <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden'){ %> top-bar--garden<% } %>" id="headerGlobal">
             <div class="top-bar-title">
-                <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
+                <% if(shopInfo.theme === 'red') { %>
+                  <span data-hide-for="medium" id="responsive-menu-toggler" class="menu-icon-wrap">
+                    <span data-toggle class="menu-icon-toggle"><span class="menu-icon"></span></span>
+                  </span>
+                <% } else { %>
+                  <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
                     <span class="menu-icon" data-toggle></span>
-                </span>
-                <strong><a href="/"><img src="<%= typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
+                  </span>
+                <% } %>
+
+                
+
+                <strong><a href="/"><img src="<%- typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
                 <div class="top-bar-fix">
                     <ul class="menu">
                         <!-- <li><input class="show-for-medium" type="search" placeholder="Search Anything" id="topBarSearchInput"></li>
@@ -37,7 +48,6 @@
                             <% } else { %>
                               <i class="material-icons mi-account_circle"></i>
                             <% } %>
-                            <% console.log(user) %>
                             <b>
                                 欢迎<%- typeof user === 'undefined'? '':  
                                         ',&nbsp' + (user.nickName? user.nickName:
@@ -54,7 +64,7 @@
 
             <div class="dropdown-pane user-shortcuts-wrap" id="userShortcuts" data-dropdown>
                 <% if(typeof user === 'undefined') { %>
-                <a href="<%= __AUTH_WECHAT_LINK__ %>">微信登录</a>
+                <a href="<%- __AUTH_WECHAT_LINK__ %>">微信登录</a>
                 <% } else if(typeof user !== 'undefined') { %>
                     <% if(shopInfo.relationship) { %>
                     <a href="/users/relationship">关联信息</a>
@@ -64,17 +74,17 @@
                 <% } %>
             </div>
             <div id="responsive-menu" class="menu-body">
-                <div class="top-bar-left top-bar-left--global">
+                <div class="top-bar-left top-bar-left--global" id="nav-menu-wrap">
                     <ul class="dropdown menu dropdownMenu--global" data-dropdown-menu id="responsive-menu-ul">
                     <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden') { %>
                         <% if(typeof _navigation !== 'undefined') { %>
                             <% for(const nav of _navigation) { %>
                                 <% if(nav.type === 'cms') { %>
-                                    <li><a target="_blank" href="/garden/articles %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/articles %>"><%- nav.name %></a></li>
                                 <% } else if(nav.type === 'product') { %>
-                                    <li><a target="_blank" href="/garden/products/<%- nav.id %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/products/<%- nav.id %>"><%- nav.name %></a></li>
                                 <% } else if(nav.type === 'project') { %>
-                                    <li><a target="_blank" href="/garden/projects/<%- nav.id %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/projects/<%- nav.id %>"><%- nav.name %></a></li>
 
                                 <% } %>
                             <% } %>
@@ -94,19 +104,19 @@
                         <% if(typeof _productTypes !== 'undefined') { %>
                             <% for(const i in _productTypes) { %>
 
-                            <li><a target="_blank" href="/channel/productTypes/<%- _productTypes[i].id %>"><%= _productTypes[i].name %></a></li>
+                            <li><a target="_blank" href="/channel/productTypes/<%- _productTypes[i].id %>"><%- _productTypes[i].name %></a></li>
 
                             <% } %>
                         <% } %>
                         <% if(typeof _projectTypes !== 'undefined') { %>
                             <% for(const i in _projectTypes) { %>
-                            <li><a target="_blank" href="/channel/projectTypes/<%- _projectTypes[i].id %>"><%= _projectTypes[i].name %></a></li>
+                            <li><a target="_blank" href="/channel/projectTypes/<%- _projectTypes[i].id %>"><%- _projectTypes[i].name %></a></li>
                             <% } %>
                         <% } %>
                         <% if(typeof _categories !== 'undefined') { %>
                             <% for(const i in _categories) { %>
 
-                            <li><a target="_blank" href="/channel/categories/<%- _categories[i].id %>"><%= _categories[i].name %></a></li>
+                            <li><a target="_blank" href="/channel/categories/<%- _categories[i].id %>"><%- _categories[i].name %></a></li>
 
                             <% } %>
                         <% } %>

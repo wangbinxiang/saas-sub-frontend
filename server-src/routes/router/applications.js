@@ -1,19 +1,19 @@
 import Router from 'koa-router'
 import {
-	requiresLogin
+  requiresLogin
 } from '../../middlewares/authorization'
 import {
-	index,
-	showAdd,
-	add,
-	finish,
-	approve,
-	decline,
-	detail,
-	reply,
-	getReplies,
-	addContract,
-	editContract
+  index,
+  showAdd,
+  add,
+  // finish,
+  approve,
+  decline,
+  detail,
+  reply,
+  getReplies
+  // addContract,
+  // editContract
 } from '../../controllers/applications'
 
 const router = Router()

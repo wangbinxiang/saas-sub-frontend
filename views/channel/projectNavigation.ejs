@@ -26,7 +26,7 @@
     <div data-bind="foreach:projects" id="projectNavigation">
         <a class="article-item clearfix" data-bind="attr:{href: '/projects/' + id}">
 
-            <figure data-bind="attr:{style: 'background-image:url(<%- imgHost %>' + logo + '<%= imgListStyle%>)'}"></figure>
+            <figure data-bind="attr:{style: 'background-image:url(<%- imgHost %>' + logo + '<%- imgListStyle%>)'}"></figure>
             <h4 data-bind="text:name"></h4>
             <p data-bind="text:feature"></p>
         </a>
