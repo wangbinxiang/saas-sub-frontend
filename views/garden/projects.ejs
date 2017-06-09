@@ -16,7 +16,7 @@
 <div class="row column blk-margin">
     <% for(let i of info.projects) { %>
     <div>
-        <a class="article-item clearfix" href="/projects/<%- i.id %>">
+        <a target="_blank" class="article-item clearfix" href="/projects/<%- i.id %>">
             <figure style="background-image:url('<%- imgHost + i.logo %><%- imgListStyle %>')"></figure>
             <h4><%- i.name %></h4>
             <p><%- i.feature %></p>

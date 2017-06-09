@@ -106,11 +106,11 @@ const relationshipCallback = function(ctx, next) {
             ctx.status = 403;
             ctx.body = info;
         } else {
-            const unionId = profile.unionid;
-            const parentId = ctx.query.parentId;
-            const openid = profile.openid;
-            const nickName = profile.nickname;
-            const headimgurl = profile.headimgurl;//头像
+            const unionId       = profile.unionid;
+            const parentId      = ctx.query.parentId;
+            const openid        = profile.openid;
+            const nickName      = profile.nickname;
+            const headimgurl    = profile.headimgurl;//头像
             // const unionId = 'otuttxMhJwPxPnCbLQ2MaHAanmrg'
             // const parentId = 1
             // const openid = 'ob5uxwZjH81AEeiVutEGnR2hU-W1'

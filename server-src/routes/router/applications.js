@@ -1,7 +1,7 @@
-import Router from 'koa-router';
+import Router from 'koa-router'
 import {
 	requiresLogin
-} from '../../middlewares/authorization';
+} from '../../middlewares/authorization'
 import {
 	index,
 	showAdd,
@@ -14,44 +14,38 @@ import {
 	getReplies,
 	addContract,
 	editContract
-} from '../../controllers/applications';
+} from '../../controllers/applications'
 
+const router = Router()
 
-const router = Router();
+// 需要登陆
+router.use(requiresLogin)
 
-//需要登陆
-router.use(requiresLogin);
+// 路由前缀
+router.prefix('/applications')
 
-//路由前缀
-router.prefix('/applications');
+router.get('/', index)
 
-router.get('/', index);
+// 订单列表页面
+router.get('/add', showAdd)
 
-//订单列表页面
-router.get('/add', showAdd);
+router.post('/', add)
 
-router.post('/', add);
+router.get('/:id/replies', getReplies)
 
-router.get('/:id/replies', getReplies);
-
-router.post('/:id/replies', reply);
+router.post('/:id/replies', reply)
 
 // router.put('/:id/finish', finish);
 
-router.put('/:id/approve', approve);
+router.put('/:id/approve', approve)
 
-router.put('/:id/decline', decline);
+router.put('/:id/decline', decline)
 
 // router.post('/:id/contract', addContract)
 
 // router.put('/:id/contract/:contractId', editContract)
 
+// 项目预览
+router.get('/:id', detail)
 
-
-//项目预览
-router.get('/:id', detail);
-
-
-
-
-export default router;
+export default router

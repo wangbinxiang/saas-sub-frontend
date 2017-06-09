@@ -12,7 +12,7 @@
 <div class="masonry-wrap-outer">
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="template: { foreach: prods, afterAdd: afterAdd }">
         <div class="column">
-            <a data-bind="attr:{href: '/products/' + id}" class="masonry-item">
+            <a target="_blank" data-bind="attr:{href: '/products/' + id}" class="masonry-item">
                 <img data-bind="attr:{src: imgHost + logo + imgStyle }" />
                 <b data-bind="text:name"></b>
                 <em></em>

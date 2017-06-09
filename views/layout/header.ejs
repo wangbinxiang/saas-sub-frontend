@@ -70,38 +70,44 @@
                         <% if(typeof _navigation !== 'undefined') { %>
                             <% for(const nav of _navigation) { %>
                                 <% if(nav.type === 'cms') { %>
-                                    <li><a href="/garden/articles %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/articles %>"><%= nav.name %></a></li>
                                 <% } else if(nav.type === 'product') { %>
-                                    <li><a href="/garden/products/<%- nav.id %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/products/<%- nav.id %>"><%= nav.name %></a></li>
                                 <% } else if(nav.type === 'project') { %>
-                                    <li><a href="/garden/projects/<%- nav.id %>"><%= nav.name %></a></li>
+                                    <li><a target="_blank" href="/garden/projects/<%- nav.id %>"><%= nav.name %></a></li>
+
                                 <% } %>
                             <% } %>
                         <% } %>
                     <% } else if(typeof _navigation !== 'undefined') { %>
                         <% for(const nav of _navigation) { %>
                             <% if(nav.type === 'categories') { %>
-                                <li><a href="/channel/categories/<%- nav.id %>"><%- nav.name %></a></li>
+                                <li><a target="_blank" href="/channel/categories/<%- nav.id %>"><%- nav.name %></a></li>
                             <% } else if(nav.type === 'articleChannel') { %>
-                                <li><a href="/channel/navigation/articles/<%- nav.id %>"><%- nav.name %></a></li>
+                                <li><a target="_blank" href="/channel/navigation/articles/<%- nav.id %>"><%- nav.name %></a></li>
                             <% } else if(nav.type === 'projectChannel') { %>
-                                <li><a href="/channel/navigation/projects/<%- nav.id %>"><%- nav.name %></a></li>
+                                <li><a target="_blank" href="/channel/navigation/projects/<%- nav.id %>"><%- nav.name %></a></li>
+
                             <% } %>
                         <% } %>
                     <% } else { %>
                         <% if(typeof _productTypes !== 'undefined') { %>
                             <% for(const i in _productTypes) { %>
-                            <li><a href="/channel/productTypes/<%- _productTypes[i].id %>"><%= _productTypes[i].name %></a></li>
+
+                            <li><a target="_blank" href="/channel/productTypes/<%- _productTypes[i].id %>"><%= _productTypes[i].name %></a></li>
+
                             <% } %>
                         <% } %>
                         <% if(typeof _projectTypes !== 'undefined') { %>
                             <% for(const i in _projectTypes) { %>
-                            <li><a href="/channel/projectTypes/<%- _projectTypes[i].id %>"><%= _projectTypes[i].name %></a></li>
+                            <li><a target="_blank" href="/channel/projectTypes/<%- _projectTypes[i].id %>"><%= _projectTypes[i].name %></a></li>
                             <% } %>
                         <% } %>
                         <% if(typeof _categories !== 'undefined') { %>
                             <% for(const i in _categories) { %>
-                            <li><a href="/channel/categories/<%- _categories[i].id %>"><%= _categories[i].name %></a></li>
+
+                            <li><a target="_blank" href="/channel/categories/<%- _categories[i].id %>"><%= _categories[i].name %></a></li>
+
                             <% } %>
                         <% } %>
                     <% } %>
