@@ -1,6 +1,8 @@
-import _ from 'lodash';
-import moment from 'moment';
-import config from 'config';
+import _ from 'lodash'
+import moment from 'moment'
+import config from 'config'
+import path from 'path'
+import multer from 'koa-multer'
 
 /**
  * 生成随机整数
@@ -10,47 +12,43 @@ import config from 'config';
  * @param  {Number}                 high [description]
  * @return {[type]}                      [description]
  */
-export function randomInt(low = 100000, high = 999999) {
-    return Math.floor(Math.random() * (high - low + 1) + low);
+export function randomInt (low = 100000, high = 999999) {
+  return Math.floor(Math.random() * (high - low + 1) + low)
 }
-
 
 /**
  * 生成随机字符串
  * @param  {Number} len 要生成的长度
  * @return {String} pwd 生成的随机字符串
  */
-export function randomString(len) {
-    len = len || 5
-    const chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
-    const maxPos = chars.length
-    let pwd = ''
-    for (let i = 0; i < len; i++) {
-        pwd += chars.charAt(Math.floor(Math.random() * maxPos))
-    }
-    return pwd
+export function randomString (len) {
+  len = len || 5
+  const chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
+  const maxPos = chars.length
+  let pwd = ''
+  for (let i = 0; i < len; i++) {
+    pwd += chars.charAt(Math.floor(Math.random() * maxPos))
+  }
+  return pwd
 }
 
 /**
  * 上传文件设置
  * @type {Object}
  */
-import path from 'path'
-import multer from 'koa-multer'
 
 export const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads/')
-    },
-    filename(req, file, cb) {
-        const {
-            name,
-            ext
-        } = path.parse(file.originalname)
-        cb(null, `${name}-${randomString(2)}-${ext}`)
-    }
+  destination (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename (req, file, cb) {
+    const {
+      name,
+      ext
+    } = path.parse(file.originalname)
+    cb(null, `${name}-${randomString(2)}-${ext}`)
+  }
 })
-
 
 /**
  * idList转换成ids； idlist 格式1: [1,2,3]; 格式2: 123; ids结果 格式1: 1,2,3; 格式2: 123;
@@ -60,15 +58,15 @@ export const storage = multer.diskStorage({
  * @return {err, string}                       err  null or Error('error params idList')
  *                                        ids  格式1: 1,2,3; 格式2: 123;
  */
-export function buildJsonApiIdsUrl(idList) {
-    let idString = undefined;
-    if (_.isArray(idList)) {
-        idString = idList.join();
-    } else if (_.isInteger(parseInt(idList))) {
-        idString = idList.toString();
-    }
+export function buildJsonApiIdsUrl (idList) {
+  let idString
+  if (_.isArray(idList)) {
+    idString = idList.join()
+  } else if (_.isInteger(parseInt(idList))) {
+    idString = idList.toString()
+  }
 
-    return idString;
+  return idString
 }
 
 /**
@@ -78,55 +76,65 @@ export function buildJsonApiIdsUrl(idList) {
  * @param  { object }                 filters [description]
  * @return {[string]}                         json api url 搜索参数
  */
-export function buildJsonApiQueryUrl(filters, pages, sort, include) {
-    let url = '';
-    let urlList = [];
-    if (_.isPlainObject(filters) && Object.keys(filters).length > 0) {
-        for (let i in filters) {
-            urlList.push('filter[' + i + ']=' + filters[i]);
-        }
+export function buildJsonApiQueryUrl (filters, pages, sort, include, fields) {
+  let url = ''
+  let urlList = []
+  if (_.isPlainObject(filters) && Object.keys(filters).length > 0) {
+    for (let i in filters) {
+      urlList.push('filter[' + i + ']=' + filters[i])
     }
-    if (_.isPlainObject(pages) && Object.keys(pages).length > 0) {
-        for (let i in pages) {
-            urlList.push('page[' + i + ']=' + pages[i]);
-        }
+  }
+  if (_.isPlainObject(pages) && Object.keys(pages).length > 0) {
+    for (let i in pages) {
+      urlList.push('page[' + i + ']=' + pages[i])
     }
+  }
 
-    if (sort) {
-        urlList.push('sort=' + sort);
+  if (_.isPlainObject(fields) && Object.keys(fields).length > 0) {
+    for (let i in fields) {
+      urlList.push('fields[' + i + ']=' + fields[i])
     }
+  }
 
-    if (include && _.isArray(include)) {
-        urlList.push('include=' + include.join(','));
-    }
+  if (sort) {
+    urlList.push('sort=' + sort)
+  }
 
-    if (urlList.length > 0) {
-        url = '?' + urlList.join('&');
-    }
+  if (include && _.isArray(include)) {
+    urlList.push('include=' + include.join(','))
+  }
 
-    return url;
+  if (urlList.length > 0) {
+    url = '?' + urlList.join('&')
+  }
+
+  return url
 }
 
-export function buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl) {
-    let url = baseUrl;
-    if (_.isString(idsUrl) && idsUrl !== '') {
-        url += '/' +  idsUrl;
-    }
+export function buildJsonApiGetUrl (baseUrl, idsUrl, queryUrl) {
+  let url = baseUrl
+  if (_.isString(idsUrl) && idsUrl !== '') {
+    url += '/' + idsUrl
+  }
 
-    if (_.isString(queryUrl) && queryUrl !== '') {
-        url += queryUrl;
-    }
-    return url;
+  if (_.isString(queryUrl) && queryUrl !== '') {
+    url += queryUrl
+  }
+  return url
 }
 
+export function jsonApiGetUrl (baseUrl, idList, {
+  filters,
+  pages,
+  sort,
+  include,
+  fields
+}) {
+  let idsUrl = buildJsonApiIdsUrl(idList)
 
-export function jsonApiGetUrl(baseUrl, idList, { filters, pages, sort, include}) {
+  let queryUrl = buildJsonApiQueryUrl(filters, pages, sort, include, fields)
 
-    let idsUrl = buildJsonApiIdsUrl(idList);
-
-    let queryUrl = buildJsonApiQueryUrl(filters, pages, sort, include);
-
-    return buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl);
+  return buildJsonApiGetUrl(baseUrl, idsUrl, queryUrl)
 }
 
 /**
@@ -139,17 +147,17 @@ export function jsonApiGetUrl(baseUrl, idList, { filters, pages, sort, include})
  * @param  { bool }                isList      是否是数据列表
  * @return { bool }                            返回是否是该拥有者的
  */
-export function checkResourcesOwner(resources, checkTarget, owner, isList) {
-    if (isList) {
-        for(let i in resources) {
-            if (resources[i][checkTarget] !== owner) {
-                return false;
-            }
-        }
-        return true;
-    } else {
-        return resources[checkTarget] === owner;
+export function checkResourcesOwner (resources, checkTarget, owner, isList) {
+  if (isList) {
+    for (let i in resources) {
+      if (resources[i][checkTarget] !== owner) {
+        return false
+      }
     }
+    return true
+  } else {
+    return resources[checkTarget] === owner
+  }
 }
 
 /**
@@ -160,20 +168,19 @@ export function checkResourcesOwner(resources, checkTarget, owner, isList) {
  * @param {any} shopId
  * @returns
  */
-export function checkOther(id, shopId){
-    const other = config.get('productMapping');
-    let live = false
-    if (other[shopId]) {
-        for(let i in other[shopId]) {
-            if (_.indexOf(other[shopId][i], +id) > -1) {
-                live = true;
-            }
-        }
+export function checkOther (id, shopId) {
+  const other = config.get('productMapping')
+  let live = false
+  if (other[shopId]) {
+    for (let i in other[shopId]) {
+      if (_.indexOf(other[shopId][i], +id) > -1) {
+        live = true
+      }
     }
-    return live;
+  }
+  return live
 }
 
-
-export function timestampToDate(timestamp, format = 'YYYY-MM-DD HH:mm:ss') {
-    return moment.unix(timestamp).utc().utcOffset(8).format('YYYY-MM-DD HH:mm:ss');
+export function timestampToDate (timestamp, format = 'YYYY-MM-DD HH:mm:ss') {
+  return moment.unix(timestamp).utc().utcOffset(8).format('YYYY-MM-DD HH:mm:ss')
 }

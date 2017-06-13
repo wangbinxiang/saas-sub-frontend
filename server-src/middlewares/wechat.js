@@ -1,4 +1,4 @@
-import { isWeixinBrowser } from '../tools/wechat';
+import { isWeixinBrowser } from '../tools/wechat'
 /**
  * 检查是否微信访问
  * @author wangbinxiang
@@ -7,19 +7,16 @@ import { isWeixinBrowser } from '../tools/wechat';
  * @param  {Function}               next [description]
  * @return {[type]}                      [description]
  */
-export async function isInWechat(ctx, next) {
+export async function isInWechat (ctx, next) {
+  ctx.state.__IN_WECHAT__ = false
 
-	ctx.state.__IN_WECHAT__ = false;
+  if (isWeixinBrowser(ctx.headers['user-agent'])) {
+    ctx.state.__IN_WECHAT__ = true
+  }
 
-	if (isWeixinBrowser(ctx.headers['user-agent'])) {
-		ctx.state.__IN_WECHAT__ = true;
-	}
+  if (__DEVELOPMENT__) {
+  //  ctx.state.__IN_WECHAT__ = true;
+  }
 
-	if (__DEVELOPMENT__) { 
-		// ctx.state.__IN_WECHAT__ = true;
-	}
-
-	await next();
+  await next()
 }
-
-
