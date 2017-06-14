@@ -21,7 +21,6 @@ export async function bindRelationship (ctx, next) {
   if (inWehcat(ctx) && ctx.isAuthenticated() && isAuthRelationship(ctx)) {
     const relationshipId = getParameterValidRelationshipId(ctx)
     if (relationshipId) {
-      console.log(relationshipId)
       const memberService = new MemberService()
       // 绑定用户关系 不用等待
       memberService.bindParent(ctx.state.user.id, relationshipId)
