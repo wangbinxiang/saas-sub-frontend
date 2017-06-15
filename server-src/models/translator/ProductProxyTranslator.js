@@ -47,9 +47,11 @@ export default class ProductProxyTranslator extends Translator {
       slides = bodyReader.value('product').referenceProduct.slides
       description = bodyReader.value('product').referenceProduct.description
       for (let i in bodyReader.value('product').prices) {
-        bodyReader.value('product').prices[i] = {
-          title: bodyReader.value('product').referenceProduct.prices[i].title,
-          price: bodyReader.value('product').prices[i].price
+        if (bodyReader.value('product').referenceProduct.prices) {
+          bodyReader.value('product').prices[i] = {
+            title: bodyReader.value('product').referenceProduct.prices[i].title,
+            price: bodyReader.value('product').prices[i].price
+          }
         }
       }
       prices = bodyReader.value('product').prices

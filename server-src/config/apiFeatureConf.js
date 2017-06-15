@@ -157,3 +157,21 @@ export const APPLICATION_CONTRACT_GET = Symbol('APPLICATION_CONTRACT_GET')
 export const APPLICATION_CONTRACT_ADD = Symbol('APPLICATION_CONTRACT_ADD')
 // 编辑申请合同
 export const APPLICATION_CONTRACT_EDIT = Symbol('APPLICATION_CONTRACT_EDIT')
+
+// 采购商品
+// 获取采购商品信息
+export const PURCHASE_GET = Symbol('PURCHASE_GET')
+// 加入采购
+export const PURCHASE_ADD = Symbol('PURCHASE_ADD')
+// 保存采购商品价格
+export const PURCHASE_SAVE_PRICES = Symbol('PURCHASE_SAVE_PRICES')
+// 上架采购商品
+export const PURCHASE_ON = Symbol('PURCHASE_ON')
+// 下架采购商品
+export const PURCHASE_OFF = Symbol('PURCHASE_OFF')
+// 显示采购商品
+export const PURCHASE_VISIBLE = Symbol('PURCHASE_VISIBLE')
+// 隐藏采购商品
+export const PURCHASE_INVISIBLE = Symbol('PURCHASE_INVISIBLE')
+// 撤销采购
+export const PURCHASE_DELETE = Symbol('PURCHASE_DELETE')

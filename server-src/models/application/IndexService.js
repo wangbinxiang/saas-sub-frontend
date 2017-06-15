@@ -69,7 +69,7 @@ export default class IndexService {
     ]
 
     const fields = {
-      'commonProducts': 'id,name,logo,prices,minPrice,maxPrice,status,visible'
+      'commonProducts': 'id,name,logo,minPrice,maxPrice,status,visible'
     }
 
     const productProxyAdapter = new ProductProxyAdapter()
@@ -311,18 +311,46 @@ export default class IndexService {
           visible: PRODUCT_VISIBLE
         }
 
-        const productsResult = await this.productAdapter.get({
-          filters,
-          pages,
-          sort
-        }, Product)
+        // const productsResult = await this.productAdapter.get({
+        //   filters,
+        //   pages,
+        //   sort
+        // }, Product)
 
-        if (productsResult !== null) {
+        // if (productsResult !== null) {
+        //   products.push({
+        //     'id': i,
+        //     'name': shopLayout['product'][i]['name'],
+        //     'type': 'product',
+        //     'value': productsResult.result
+        //   })
+        // }
+
+        const include = [
+          'product',
+          'product.referenceProduct',
+          'product.distributionProduct'
+        ]
+
+        const fields = {
+          'commonProducts': 'id,name,logo,feature,minPrice,maxPrice,status,visible'
+        }
+
+        const productProxyAdapter = new ProductProxyAdapter()
+        const productProxyResult = await productProxyAdapter.get({
+          pages,
+          filters,
+          include,
+          fields,
+          sort
+        }, ProductProxy)
+
+        if (productProxyResult !== null) {
           products.push({
             'id': i,
             'name': shopLayout['product'][i]['name'],
             'type': 'product',
-            'value': productsResult.result
+            'value': productProxyResult.result
           })
         }
       }

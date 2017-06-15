@@ -1,5 +1,5 @@
-import validate from 'koa-joi-schema';
-import Joi from 'joi';
+import validate from 'koa-joi-schema'
+import Joi from 'joi'
 
 // export const indexValidation = validate('query')(Joi.object().keys({
 // 	number: Joi.number().integer(),
@@ -39,9 +39,10 @@ import Joi from 'joi';
 
 //预览数据检查
 export const detailValidation = validate('params')(Joi.object().keys({
-	'0': Joi.string(),
-	id: Joi.number().integer().required()
-}));
+  '0': Joi.string(),
+  id: Joi.number().integer().required(),
+  source: Joi.number().integer()
+}))
 
 // export const pricesParamsValidation = validate('params')(Joi.object().keys({
 // 	'0': Joi.string(),

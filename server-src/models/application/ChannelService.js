@@ -10,6 +10,8 @@ import ProjectAdapter from '../adapter/ProjectAdapter'
 import Project from '../model/Project'
 import ProjectTypeAdapter from '../adapter/ProjectTypeAdapter'
 import ProjectType from '../model/ProjectType'
+import ProductProxyAdapter from '../adapter/ProductProxyAdapter'
+import ProductProxy from '../model/ProductProxy'
 import config from 'config'
 import lodash from 'lodash'
 
@@ -21,6 +23,10 @@ import {
   PRODUCT_STATUS_ON_SALE,
   PRODUCT_VISIBLE
 } from '../../config/productConf'
+import {
+  PRODUCT_PROXY_STATUS_ON_SALE,
+  PRODUCT_PROXY_VISIBLE
+} from '../../config/productProxyConf'
 
 import {
   PROJECT_STATUS_PUBLISH,
@@ -68,17 +74,42 @@ export default class ChannelService {
       }
 
       const sort = '-id'
-      const productAdapter = new ProductAdapter()
-      const productsResult = await productAdapter.get({
-        filters,
-        pages,
-        sort
-      }, Product)
+      // const productAdapter = new ProductAdapter()
+      // const productsResult = await productAdapter.get({
+      //   filters,
+      //   pages,
+      //   sort
+      // }, Product)
 
-      if (productsResult !== null) {
+      // if (productsResult !== null) {
+      //   // 没有获取数据 直接返回空
+      //   page = productsResult.page
+      //   products = productsResult.result
+      // }
+
+      const include = [
+        'product',
+        'product.referenceProduct',
+        'product.distributionProduct'
+      ]
+
+      const fields = {
+        'commonProducts': 'id,name,logo,feature,minPrice,maxPrice,status,visible'
+      }
+
+      const productProxyAdapter = new ProductProxyAdapter()
+      const productProxyResult = await productProxyAdapter.get({
+        pages,
+        filters,
+        include,
+        fields,
+        sort
+      }, ProductProxy)
+
+      if (productProxyResult !== null) {
         // 没有获取数据 直接返回空
-        page = productsResult.page
-        products = productsResult.result
+        page = productProxyResult.page
+        products = productProxyResult.result
       }
     }
 
@@ -327,27 +358,56 @@ export default class ChannelService {
 
       const sort = '-id'
 
-      const productAdapter = new ProductAdapter()
-      const productsResult = await productAdapter.get({
-        filters,
+      // const productAdapter = new ProductAdapter()
+      // const productsResult = await productAdapter.get({
+      //   filters,
+      //   pages,
+      //   sort
+      // }, Product)
+
+      // // console.log(productsResult)
+
+      // if (productsResult !== null) {
+      //   slideProducts = []
+      //   for (let i = 0; i < 5; i++) {
+      //     if (productsResult.result.length > 0) {
+      //       slideProducts.push(productsResult.result.shift())
+      //     }
+      //   }
+      //   products = productsResult.result
+      //   // products.push({
+      //   // 'name': shopLayout['product'][i]['name'],
+      //   // 'value': productsResult.result
+      //   // })
+      // }
+
+      const include = [
+        'product',
+        'product.referenceProduct',
+        'product.distributionProduct'
+      ]
+
+      const fields = {
+        'commonProducts': 'id,name,logo,feature,minPrice,maxPrice,status,visible'
+      }
+
+      const productProxyAdapter = new ProductProxyAdapter()
+      const productProxyResult = await productProxyAdapter.get({
         pages,
+        filters,
+        include,
+        fields,
         sort
-      }, Product)
+      }, ProductProxy)
 
-      // console.log(productsResult)
-
-      if (productsResult !== null) {
+      if (productProxyResult !== null) {
         slideProducts = []
         for (let i = 0; i < 5; i++) {
-          if (productsResult.result.length > 0) {
-            slideProducts.push(productsResult.result.shift())
+          if (productProxyResult.result.length > 0) {
+            slideProducts.push(productProxyResult.result.shift())
           }
         }
-        products = productsResult.result
-        // products.push({
-        // 'name': shopLayout['product'][i]['name'],
-        // 'value': productsResult.result
-        // })
+        products = productProxyResult.result
       }
     }
 

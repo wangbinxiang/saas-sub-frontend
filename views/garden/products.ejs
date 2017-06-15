@@ -7,7 +7,7 @@
     <div class="fcarousel">
         <% for(let i of info.slideProducts) { %>
         <div class="fcarousel__item">
-            <a target="_blank" href="/products/<%- i.id %>">
+            <a target="_blank" href="/products/<%- i.productId %><%- i.source? '/' + i.source:'' %>">
                 <div>
                     <img src="<%- imgHost + i.logo %><%- imgSlideStyle %>" srcset="<%- imgHost + i.logo %><%- imgSlideStyle %> 1x, <%- imgHost + i.logo %> 1.5x" />
                 </div>
@@ -40,7 +40,7 @@
     <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap">
         <% for(let i of info.products) { %>
         <div class="column">
-            <a target="_blank" class="masonry-item" href="/products/<%- i.id %>">
+            <a target="_blank" class="masonry-item" href="/products/<%- i.productId %><%- i.source? '/' + i.source:'' %>">
                 <img src="<%- imgHost + i.logo %><%- imgListStyle %>" />
                 <b>
                     <%- i.name %>

@@ -2,6 +2,8 @@ import ProductAdapter from '../adapter/ProductAdapter'
 import ProductTypeAdapter from '../adapter/ProductTypeAdapter'
 import Product from '../model/Product'
 import ProductType from '../model/ProductType'
+import PurchaseProductAdapter from '../adapter/PurchaseProductAdapter'
+import PurchaseProduct from '../model/PurchaseProduct'
 import lodash from 'lodash'
 import {
   checkResourcesOwner,
@@ -10,6 +12,9 @@ import {
 import {
   PRODUCT_STATUS_ON_SALE
 } from '../../config/productConf'
+import {
+  PRODUCT_PROXY_SOURCE_PRUCHASE_PRODUCT
+} from '../../config/productProxyConf'
 
 export default class ProductService {
   constructor () {
@@ -78,6 +83,37 @@ export default class ProductService {
     }
 
     return products
+  }
+
+  async detail (id, source, userId) {
+    let product = null
+    let isPruchase = false
+    if (source && parseInt(source) === PRODUCT_PROXY_SOURCE_PRUCHASE_PRODUCT) {
+      const include = ['referenceProduct']
+      const fields = {
+        'commonProducts': 'id,name,logo,prices,minPrice,maxPrice,status,visible,description'
+      }
+      const purchaseProductAdapter = new PurchaseProductAdapter()
+      product = await purchaseProductAdapter.get({
+        idList: id,
+        include,
+        fields
+      }, PurchaseProduct)
+      if (product === null || !checkResourcesOwner(product, 'userId', userId)) {
+        return { product: null }
+      }
+      isPruchase = true
+    } else {
+      const include = ['slides', 'description', 'prices']
+      product = await this.productAdapter.get({
+        idList: id,
+        include
+      }, Product)
+      if (product === null || (!checkOther(id, userId) && !checkResourcesOwner(product, 'userId', userId))) {
+        return { product: null }
+      }
+    }
+    return { product, isPruchase }
   }
 
   async get (idList, userId) {
