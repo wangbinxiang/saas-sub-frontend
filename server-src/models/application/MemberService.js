@@ -258,4 +258,19 @@ export default class MemberService {
       childrenCount
     }
   }
+
+  /**
+   *
+   * 绑定用户关系
+   *
+   * @param {any} id
+   * @param {any} parentId
+   * @returns
+   *
+   * @memberof MemberService
+   */
+  async bindParent (id, parentId) {
+    const member = await this.userAdapter.bindParent({id, parentId}, Member)
+    return member
+  }
 }

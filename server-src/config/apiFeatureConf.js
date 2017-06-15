@@ -65,6 +65,8 @@ export const MEMBER_CHILDREN = Symbol('MEMBER_CHILDREN')
 // 更新头像
 export const MEMBER_UPDATE_AVATAR = Symbol('MEMBER_UPDATE_AVATAR')
 
+export const MEMBER_BIND_PARENT = Symbol('MEMBER_BIND_PARENT')
+
 // 获取用户账户余额
 export const ACCOUNT_GET = Symbol('ACCOUNT_GET')
 

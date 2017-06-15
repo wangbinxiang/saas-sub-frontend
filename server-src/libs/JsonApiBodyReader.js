@@ -26,22 +26,6 @@ export default class JsonApiBodyReader {
     if (relationships) {
       for (let relationship in relationships) {
         this.relationshipToData(relationship, relationships[relationship], data)
-        // if (_.isArray(relationships[relationship].data) && relationships[relationship].data.length > 0) {
-        //   // 如果有relationship并且是数组
-        //   data[relationships[relationship].data[0].type] = []
-        //   for (let info of relationships[relationship].data) {
-        //     //  数据存储改为 relationship
-        //     console.log(relationship)
-        //     console.log(info.type)
-        //     data[info.type].push(this.relationshipInfoFormIncluded(info.type, info.id))
-        //   }
-        // } else if (relationships[relationship].data && relationships[relationship].data.type) {
-        //   // 如果有relationship 是单个数据
-        //   console.log(relationship)
-        //   console.log(relationships[relationship].data.type)
-
-        //   data[relationships[relationship].data.type] = this.relationshipInfoFormIncluded(relationships[relationship].data.type, relationships[relationship].data.id)
-        // }
       }
     }
   }

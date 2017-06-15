@@ -1,6 +1,7 @@
 export default class ProductProxy {
   constructor ({
     id,
+    source,
     productId,
     name,
     category,
@@ -20,6 +21,7 @@ export default class ProductProxy {
     productTypeId
   }) {
     this.id = id
+    this.source = source
     this.productId = productId
     this.name = name
     this.category = category

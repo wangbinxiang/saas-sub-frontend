@@ -50,7 +50,6 @@ export default class ProductProxyRequestJsonApi extends BaseRequest {
       include,
       fields
     })
-    console.log(include)
     this.method = GET
   }
 

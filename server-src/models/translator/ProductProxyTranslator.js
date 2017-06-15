@@ -10,17 +10,17 @@ export default class ProductProxyTranslator extends Translator {
     const bodyReader = new ProductProxyJsonApiBodyReader(data, included)
 
     const source = bodyReader.value('source')
-    const id = bodyReader.data.id
-    const productId = bodyReader.data.product.id
-    const minPrice = bodyReader.data.product.minPrice
-    const maxPrice = bodyReader.data.product.maxPrice
-    const status = bodyReader.data.product.status
-    const visible = bodyReader.data.product.visible
-    const updateTime = bodyReader.data.product.updateTime
-    const createTime = bodyReader.data.product.createTime
-    const statusTime = bodyReader.data.product.statusTime
-    const userId = bodyReader.data.product.user
-    const productTypeId = bodyReader.data.product.productType
+    const id = bodyReader.value('id')
+    const productId = bodyReader.value('product').id
+    const minPrice = bodyReader.value('product').minPrice
+    const maxPrice = bodyReader.value('product').maxPrice
+    const status = bodyReader.value('product').status
+    const visible = bodyReader.value('product').visible
+    const updateTime = bodyReader.value('product').updateTime
+    const createTime = bodyReader.value('product').createTime
+    const statusTime = bodyReader.value('product').statusTime
+    const userId = bodyReader.value('product').user
+    const productTypeId = bodyReader.value('product').productType
 
     let name = null
     let category = null
@@ -29,33 +29,35 @@ export default class ProductProxyTranslator extends Translator {
     let slides = null
     let description = null
     let prices = null
-
+    //  自有商品
     if (source === PRODUCT_PROXY_SOURCE_PRODUCT) {
-      name = bodyReader.data.product.name
-      category = bodyReader.data.product.category
-      feature = bodyReader.data.product.featurevis
-      logo = bodyReader.data.product.logo
-      slides = bodyReader.data.product.slides
-      description = bodyReader.data.product.description
-      prices = bodyReader.data.product.prices
+      name = bodyReader.value('product').name
+      category = bodyReader.value('product').category
+      feature = bodyReader.value('product').feature
+      logo = bodyReader.value('product').logo
+      slides = bodyReader.value('product').slides
+      description = bodyReader.value('product').description
+      prices = bodyReader.value('product').prices
     } else if (source === PRODUCT_PROXY_SOURCE_PRUCHASE_PRODUCT) {
-      name = bodyReader.data.product.referenceProduct.name
-      category = bodyReader.data.product.referenceProduct.category
-      feature = bodyReader.data.product.referenceProduct.feature
-      logo = bodyReader.data.product.referenceProduct.logo
-      slides = bodyReader.data.product.referenceProduct.slides
-      description = bodyReader.data.product.referenceProduct.description
-      for (let i in bodyReader.data.product.prices) {
-        bodyReader.data.product.prices[i] = {
-          title: bodyReader.data.product.referenceProduct.prices[i].title,
-          price: bodyReader.data.product.prices[i].price
+      //  采购商品
+      name = bodyReader.value('product').referenceProduct.name
+      category = bodyReader.value('product').referenceProduct.category
+      feature = bodyReader.value('product').referenceProduct.feature
+      logo = bodyReader.value('product').referenceProduct.logo
+      slides = bodyReader.value('product').referenceProduct.slides
+      description = bodyReader.value('product').referenceProduct.description
+      for (let i in bodyReader.value('product').prices) {
+        bodyReader.value('product').prices[i] = {
+          title: bodyReader.value('product').referenceProduct.prices[i].title,
+          price: bodyReader.value('product').prices[i].price
         }
       }
-      prices = bodyReader.data.product.prices
+      prices = bodyReader.value('product').prices
     }
 
     return {
       id,
+      source,
       productId,
       name,
       category,
