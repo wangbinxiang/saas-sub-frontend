@@ -19,7 +19,7 @@ export default class PurchaseProductTranslator extends Translator {
       if (bodyReader.value('referenceProduct').prices) {
         bodyReader.value('prices')[i] = {
           title: bodyReader.value('referenceProduct').prices[i].title,
-          price: bodyReader.value('prices').price
+          price: bodyReader.value('prices')[i].price
         }
       }
     }

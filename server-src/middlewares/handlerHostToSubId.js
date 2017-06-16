@@ -1,5 +1,5 @@
 import config from 'config'
-import _ from 'lodash'
+// import _ from 'lodash'
 import ShopService from '../models/application/ShopService'
 import {
   isAuthRelationship
@@ -56,7 +56,7 @@ export async function handlerHostToSubId (ctx, next) {
       if (shop.logo) {
         // 七牛host
         logo = imgHost + shop.logo
-        if (ctx._subId === '10021' && ctx.query.from == 'qd') {
+        if (ctx._subId === '10021' && ctx.query.from === 'qd') {
           logo = 'http://sub-imgs.yundianshang.cc/10021-5c7831cc-a4a3-4c09-b211-37da33f304fa'
         }
       }
