@@ -128,40 +128,76 @@ export default class OrderService {
     if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', shopId)) {
       return null
     }
-
-    const productIds = lodash.keys(productsInfo)
-
+    const productIds = []
+    const productChoicePrices = {}
+    const purchaseProductIds = []
+    const purchaseProductChoicePrices = {}
+    for (let productInfo of productsInfo) {
+      //  采购商品
+      if (parseInt(productInfo.source) === PRODUCT_PROXY_SOURCE_PRUCHASE_PRODUCT) {
+        purchaseProductIds.push(productInfo.productId)
+        purchaseProductChoicePrices[productInfo.productId] = productInfo.choicePrices
+      } else {
+        //  自有商品
+        productIds.push(productInfo.productId)
+        productChoicePrices[productInfo.productId] = productInfo.choicePrices
+      }
+    }
+    // const productIds = lodash.keys(productsInfo)
+    let products = []
+    let totalPrice = 0
     if (productIds) {
       const include = ['prices']
-      let products = await this.productAdapter.get({
+      products = await this.productAdapter.get({
         idList: productIds,
         include
       }, Product)
 
-      if (products === null) {
+      if (products === null || !checkResourcesOwner(products, 'userId', shopId, true)) {
         return null
-      } else {
-        let totalPrice = 0
-
-        for (let product of products) {
-          if (productsInfo[product.id]) {
-            for (let price of productsInfo[product.id]) {
-              if (product.prices[price.index]) {
-                totalPrice += product.prices[price.index].price * price.number
-              }
+      }
+      for (let product of products) {
+        if (productChoicePrices[product.id]) {
+          for (let price of productChoicePrices[product.id]) {
+            if (product.prices[price.index]) {
+              product.prices[price.index].number = price.number
+              totalPrice += product.prices[price.index].price * price.number
             }
           }
         }
-        // 获取分类信息
-        //
-        // 获取合同信息
-
-        return {
-          products,
-          totalPrice,
-          cartTable
-        }
       }
+    }
+    if (purchaseProductIds) {
+      const include = ['referenceProduct']
+      const fields = {
+        'commonProducts': 'id,name,logo,prices,status'
+      }
+      const purchaseProductAdapter = new PurchaseProductAdapter()
+      const purchaseProducts = await purchaseProductAdapter.get({
+        idList: purchaseProductIds,
+        include,
+        fields
+      }, PurchaseProduct)
+      if (purchaseProducts === null || !checkResourcesOwner(purchaseProducts, 'userId', shopId, true)) {
+        return null
+      }
+      for (let purchaseProduct of purchaseProducts) {
+        if (purchaseProductChoicePrices[purchaseProduct.id]) {
+          for (let price of purchaseProductChoicePrices[purchaseProduct.id]) {
+            if (purchaseProduct.prices[price.index]) {
+              purchaseProduct.prices[price.index].number = price.number
+              totalPrice += purchaseProduct.prices[price.index].price * price.number
+            }
+          }
+        }
+        products.push(purchaseProduct)
+      }
+    }
+
+    return {
+      products,
+      totalPrice,
+      cartTable
     }
   }
 
@@ -210,14 +246,21 @@ export default class OrderService {
       }, Account)
 
       let productSnapshot
+      let purchaseProducts
       let contractSnapshot
       let snapshotIds = []
+      let purchaseProductIds = []
       let contractSnapshotIds = []
-      for (let snapshot of order.products) {
-        snapshotIds.push(snapshot.snapshot)
-        contractSnapshotIds.push(snapshot.contractSnapshot)
+      for (let product of order.products) {
+        if (product.productCategory === ORDER_PRODUCT_CATEGORY_COMMON) {
+          snapshotIds.push(product.snapshot)
+        } else if (product.productCategory === ORDER_PRODUCT_CATEGORY_PURCHASE) {
+          purchaseProductIds.push(product.product)
+        }
+        contractSnapshotIds.push(product.contractSnapshot)
       }
       snapshotIds = lodash.uniq(snapshotIds)
+      purchaseProductIds = lodash.uniq(purchaseProductIds)
       contractSnapshotIds = lodash.uniq(contractSnapshotIds)
 
       // 获取商品快照
@@ -230,7 +273,18 @@ export default class OrderService {
         }, ProductSnapshot)
       }
 
-      // console.log(productSnapshot)
+      if (purchaseProductIds.length) {
+        const include = ['referenceProduct']
+        const fields = {
+          'commonProducts': 'id,name,logo,prices,status'
+        }
+        const purchaseProductAdapter = new PurchaseProductAdapter()
+        purchaseProducts = await purchaseProductAdapter.get({
+          idList: purchaseProductIds,
+          include,
+          fields
+        }, PurchaseProduct)
+      }
 
       // 获取合同快照
       if (contractSnapshotIds.length) {
@@ -240,12 +294,22 @@ export default class OrderService {
         }, ContractSnapshot)
       }
 
-      if (productSnapshot) {
+      if (productSnapshot || purchaseProducts) {
         for (let key in order.products) {
-          const snapshotKey = lodash.findIndex(productSnapshot, function (snapshot) {
-            return snapshot.id === order.products[key].snapshot
-          })
-          order.products[key]['productSnapshot'] = productSnapshot[snapshotKey]
+          if (order.products[key].productCategory === ORDER_PRODUCT_CATEGORY_COMMON) {
+            const snapshotKey = lodash.findIndex(productSnapshot, function (snapshot) {
+              return snapshot.id === order.products[key].snapshot
+            })
+            order.products[key]['productSnapshot'] = productSnapshot[snapshotKey].product
+            order.products[key]['url'] = '/products/' + productSnapshot[snapshotKey].product.id
+          } else if (order.products[key].productCategory === ORDER_PRODUCT_CATEGORY_PURCHASE) {
+            const purchaseProductKey = lodash.findIndex(purchaseProducts, function (purchaseProduct) {
+              return parseInt(purchaseProduct.id) === order.products[key].product
+            })
+            order.products[key]['productSnapshot'] = purchaseProducts[purchaseProductKey]
+            order.products[key]['url'] = '/products/' + purchaseProducts[purchaseProductKey].id + '/1'
+          }
+
           const contractSnapshotKey = lodash.findIndex(contractSnapshot, function (o) {
             return o.id === order.products[key].contractSnapshot
           })
@@ -314,7 +378,6 @@ export default class OrderService {
   }
 
   async addOrder (userId, shopId, comment, productList, source) {
-    let productCategory
     let product
 
     if (source && parseInt(source) === PRODUCT_PROXY_SOURCE_PRUCHASE_PRODUCT) {
@@ -325,7 +388,7 @@ export default class OrderService {
       if (product === null || !product.isOnSale() || !checkResourcesOwner(product, 'userId', shopId)) {
         return null
       }
-      productCategory = ORDER_PRODUCT_CATEGORY_PURCHASE
+      productList[0].productCategory = ORDER_PRODUCT_CATEGORY_PURCHASE
     } else {
       product = await this.productAdapter.get({
         idList: productList[0].productId
@@ -334,14 +397,13 @@ export default class OrderService {
         return null
       }
 
-      productCategory = ORDER_PRODUCT_CATEGORY_COMMON
+      productList[0].productCategory = ORDER_PRODUCT_CATEGORY_COMMON
     }
     const order = await this.orderAdapter.add({
       userId,
       shopId,
       comment,
-      productList,
-      productCategory
+      productList
     }, Order)
 
     return order
@@ -357,47 +419,136 @@ export default class OrderService {
     if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', shopId)) {
       return null
     }
+    const systemComment = cartTable.name
 
-    const productIds = lodash.keys(productsInfo)
+    const productIds = []
+    const productChoicePrices = {}
+    const purchaseProductIds = []
+    const purchaseProductChoicePrices = {}
+    for (let productInfo of productsInfo) {
+      //  采购商品
+      if (parseInt(productInfo.source) === PRODUCT_PROXY_SOURCE_PRUCHASE_PRODUCT) {
+        purchaseProductIds.push(productInfo.productId)
+        purchaseProductChoicePrices[productInfo.productId] = productInfo.choicePrices
+      } else {
+        //  自有商品
+        productIds.push(productInfo.productId)
+        productChoicePrices[productInfo.productId] = productInfo.choicePrices
+      }
+    }
+    const productList = []
+
     if (productIds) {
       const include = ['prices']
-      let products = await this.productAdapter.get({
+      const products = await this.productAdapter.get({
         idList: productIds,
         include
       }, Product)
 
-      if (products === null) {
+      if (products === null || !checkResourcesOwner(products, 'userId', shopId, true)) {
         return null
-      } else {
-        const systemComment = cartTable.name
-        let totalPrice = 0
-        const productList = []
-        for (let product of products) {
-          if (productsInfo[product.id]) {
-            for (let price of productsInfo[product.id]) {
-              if (lodash.isEmpty(product.prices[price.index])) {
-                return null
-              }
+      }
+      for (let product of products) {
+        if (productChoicePrices[product.id]) {
+          for (let price of productChoicePrices[product.id]) {
+            if (product.prices[price.index]) {
+              // product.prices[price.index].number = price.number
+              // totalPrice += product.prices[price.index].price * price.number
               productList.push({
                 productId: product.id,
                 number: price.number,
-                priceIndex: price.index
+                priceIndex: price.index,
+                productCategory: ORDER_PRODUCT_CATEGORY_COMMON
               })
             }
-          } else {
-            return null
           }
         }
-
-        return await this.orderAdapter.add({
-          userId,
-          shopId,
-          comment,
-          productList,
-          systemComment
-        }, Order)
       }
     }
+
+    if (purchaseProductIds) {
+      const include = ['referenceProduct']
+      const fields = {
+        'commonProducts': 'id,name,logo,prices,status'
+      }
+      const purchaseProductAdapter = new PurchaseProductAdapter()
+      const purchaseProducts = await purchaseProductAdapter.get({
+        idList: purchaseProductIds,
+        include,
+        fields
+      }, PurchaseProduct)
+      if (purchaseProducts === null || !checkResourcesOwner(purchaseProducts, 'userId', shopId, true)) {
+        return null
+      }
+      for (let purchaseProduct of purchaseProducts) {
+        if (purchaseProductChoicePrices[purchaseProduct.id]) {
+          for (let price of purchaseProductChoicePrices[purchaseProduct.id]) {
+            if (purchaseProduct.prices[price.index]) {
+              productList.push({
+                productId: purchaseProduct.id,
+                number: price.number,
+                priceIndex: price.index,
+                productCategory: ORDER_PRODUCT_CATEGORY_PURCHASE
+              })
+            }
+          }
+        }
+      }
+    }
+
+    if (productList.length) {
+      const order = await this.orderAdapter.add({
+        userId,
+        shopId,
+        comment,
+        productList,
+        systemComment
+      }, Order)
+      return order
+    } else {
+      return null
+    }
+
+    // const productIds = lodash.keys(productsInfo)
+    // if (productIds) {
+    //   const include = ['prices']
+    //   let products = await this.productAdapter.get({
+    //     idList: productIds,
+    //     include
+    //   }, Product)
+
+    //   if (products === null) {
+    //     return null
+    //   } else {
+    //     const systemComment = cartTable.name
+    //     let totalPrice = 0
+
+    //     for (let product of products) {
+    //       if (productsInfo[product.id]) {
+    //         for (let price of productsInfo[product.id]) {
+    //           if (lodash.isEmpty(product.prices[price.index])) {
+    //             return null
+    //           }
+    //           productList.push({
+    //             productId: product.id,
+    //             number: price.number,
+    //             priceIndex: price.index
+    //           })
+    //         }
+    //       } else {
+    //         return null
+    //       }
+    //     }
+
+    //     return await this.orderAdapter.add({
+    //       userId,
+    //       shopId,
+    //       comment,
+    //       productList,
+    //       systemComment
+    //     }, Order)
+    //   }
+    // }
   }
 
   async pay (id) {

@@ -23,18 +23,16 @@
                 </thead>
                 <tbody>
                     <% for(let product of products) { %>
-                        <% if(productsInfo[product.id]) { %>
-                            <% for(let price of productsInfo[product.id]) { %>
-                                <% if(product.prices[price.index]) { %>
+                            <% for(let price of product.prices) { %>
+                                <% if(price.number && price.number > 0) { %>
                                     <tr>
                                         <td data-th="名称"><%- product.name %></td>
-                                        <td data-th="规格"><%- product.prices[price.index].title %></td>
-                                        <td data-th="单价"><%- product.prices[price.index].price %></td>
+                                        <td data-th="规格"><%- price.title %></td>
+                                        <td data-th="单价"><%- price.price %></td>
                                         <td data-th="数量"><%- price.number %></td>
                                     </tr>
                                 <% } %>
                             <% } %>
-                        <% } %>
                     <% } %>
                 </tbody>
             </table>

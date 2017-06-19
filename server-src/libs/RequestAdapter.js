@@ -22,6 +22,8 @@ export default class RequestAdapter {
       result = null
       // throw new RequestJsonApiParamsError('request JsonApi no params Error')
     } else {
+      console.log(header.statusCode)
+      console.log(body)
       throw new Error('Invalid status')
     }
 
