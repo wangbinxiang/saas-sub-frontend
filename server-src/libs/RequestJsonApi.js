@@ -40,8 +40,6 @@ export default class RequestJsonApi {
   post () {
     const that = this
     return this.promise((resolve, reject) => {
-      console.log(that.url)
-      console.log(that.data.data.attributes.productList)
       that.client.post(that.url, that.data, that.promiseThunk(resolve, reject))
     })
   }

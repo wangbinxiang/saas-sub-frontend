@@ -68,7 +68,8 @@
         </div>
         <% for(let v of value.value) { %>
         <div class="column">
-            <a target="_blank" href="/<%- value.type == 'product'? 'products': (value.type == 'project')? 'projects':'' %>/<%- v.id %>" class="masonry-item masonry-item--index" data-equalizer-watch>
+            <a target="_blank" href="/<%- value.type == 'product'? 'products/' + v.productId + (v.source? '/' + v.source:''): (value.type == 'project')? 'projects/' + v.id: '' %>
+             " class="masonry-item masonry-item--index" data-equalizer-watch>
                 <img src="<%- imgHost %><%- v.logo %><%- imgListStyle %>" />
                 <b>
                     <%- v.name %>
