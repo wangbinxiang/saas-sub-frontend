@@ -1,5 +1,17 @@
 <%- include('../layout/header') -%>
 <div id="diancan">
+    <div data-sticky-container class="dish-sticky-bar row" id="dish-sticky-bar">
+        <div class="top-bar" data-sticky data-top-anchor="sticky-menu:top" data-btm-anchor="dishOrderB:bottom" data-margin-top="0" id="sticky-menu">
+            <div class="top-bar-right">
+                <ul class="menu" data-magellan  data-bind="foreach: productTypes">
+                    <li><a class="dish-sticky-bar__link" href="#cata_0">Breakfast</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row column" id="dishOrderB" data-bind="foreach:products">
         <div style="display: none;" data-bind="visible:true && (!$parent.toggleCart() ||  !!$parent.cartProducts[$index()])">
             <div class="article-item article-item--dish--b clearfix">
@@ -35,6 +47,7 @@
 </div>
 <script>
 var cartTable = <%- JSON.stringify(cartTable) %> 
+var productTypes = <%- JSON.stringify(productTypes？ productTypes: []) %> 
 var products = <%- JSON.stringify(products? products: []) %>
 var pageNumber = <%- number %>
 var isNext = <%- isNext %>

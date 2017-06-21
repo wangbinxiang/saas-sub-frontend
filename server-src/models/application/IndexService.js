@@ -113,7 +113,7 @@ export default class IndexService {
       return null
     }
 
-    let page, products
+    let page, products, productTypes
 
     const pages = {
       number,
@@ -135,7 +135,7 @@ export default class IndexService {
     ]
 
     const fields = {
-      'commonProducts': 'id,name,logo,prices,feature,minPrice,maxPrice,status,visible'
+      'commonProducts': 'id,name,logo,prices,feature,minPrice,maxPrice,status,visible,productType'
     }
 
     // const productsResult = await this.productAdapter.get({
@@ -163,13 +163,31 @@ export default class IndexService {
     if (productProxyResult !== null) {
       // 没有获取数据 直接返回空
       page = productProxyResult.page
-      products = productProxyResult.result
+      const productProxies = productProxyResult.result
+
+      const productTypeIds = []
+      products = {}
+      for (const productProxy of productProxies) {
+        if (!products[productProxy.productTypeId]) {
+          products[productProxy.productTypeId] = []
+        }
+        products[productProxy.productTypeId].push(productProxy)
+        productTypeIds.push(productProxy.productTypeId)
+      }
+
+      const productTypeAdapter = new ProductTypeAdapter()
+      productTypes = await productTypeAdapter.get({
+        'idList': productTypeIds
+      }, ProductType)
+
+      console.log(productTypes)
     }
 
     // 返回 分页 和 Products 数据
     return {
       page,
       products,
+      productTypes,
       cartTable
     }
   }
