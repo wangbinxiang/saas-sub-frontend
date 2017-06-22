@@ -21,7 +21,6 @@ export default class ProductProxyTranslator extends Translator {
     const statusTime = bodyReader.value('product').statusTime
     const userId = bodyReader.value('product').user
     const productTypeId = bodyReader.value('product').productType
-
     let name = null
     let category = null
     let feature = null

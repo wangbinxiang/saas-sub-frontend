@@ -8,7 +8,7 @@ import {
   addQuery
 } from '../vendors/tools/url'
 
-const DiancanModel = function (cartTable, products, isNext, pageNumber) {
+const DiancanModel = function (cartTable, products, productTypes, isNext, pageNumber) {
   const self = this
   this.cartTable = cartTable
   this.isNext = ko.observable(isNext)
@@ -16,7 +16,7 @@ const DiancanModel = function (cartTable, products, isNext, pageNumber) {
   this.toggleCart = ko.observable(false)
 
   this.products = ko.observableArray(products || [])
-  console.log(products)
+  this.productTypes = ko.observableArray(productTypes || [])
   this.more = function () {
     pageNumber++
     $.ajax({
@@ -118,7 +118,6 @@ const DiancanModel = function (cartTable, products, isNext, pageNumber) {
           choicePrices: []
         }
 
-        console.log(self.products()[index])
         for (let priceIndex in self.cartProducts[index]) {
           productInfo.choicePrices.push({
             index: priceIndex,
@@ -127,7 +126,6 @@ const DiancanModel = function (cartTable, products, isNext, pageNumber) {
         }
         productsInfo.push(productInfo)
       }
-      console.log(productsInfo)
       // return
       $.form('/orders/add', {
         productsInfo: JSON.stringify(productsInfo),
@@ -139,7 +137,7 @@ const DiancanModel = function (cartTable, products, isNext, pageNumber) {
   this.totalPrice = ko.observable(0)
 }
 if ($('#diancan').length) {
-  let diancanModel = new DiancanModel(cartTable, products, isNext, pageNumber)
+  let diancanModel = new DiancanModel(cartTable, products, productTypes, isNext, pageNumber)
   ko.applyBindings(diancanModel, document.getElementById('diancan'))
 }
 
