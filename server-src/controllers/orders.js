@@ -16,7 +16,6 @@ export async function showAddOrder (ctx, next) {
     const productsInfo = JSON.parse(ctx.request.body.productsInfo)
 
     const orderService = new OrderService()
-
     const result = await orderService.showMulitAddOrder(cartTableId, productsInfo, ctx._subId)
 
     if (result === null) {

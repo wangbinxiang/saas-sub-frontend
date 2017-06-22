@@ -74,6 +74,7 @@ export default class OrderService {
         idList: productId,
         include
       }, Product)
+      console.log(product)
       if (product === null || !product.isOnSale() || (!checkOther(productId, shopId) && !checkResourcesOwner(product, 'userId', shopId))) {
         return null
       }
@@ -124,7 +125,7 @@ export default class OrderService {
     const cartTable = await cartTableAdapter.get({
       idList: cartTableId
     }, CartTable)
-
+    
     if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', shopId)) {
       return null
     }
@@ -146,7 +147,7 @@ export default class OrderService {
     // const productIds = lodash.keys(productsInfo)
     let products = []
     let totalPrice = 0
-    if (productIds) {
+    if (productIds.length) {
       const include = ['prices']
       products = await this.productAdapter.get({
         idList: productIds,
@@ -167,7 +168,7 @@ export default class OrderService {
         }
       }
     }
-    if (purchaseProductIds) {
+    if (purchaseProductIds.length) {
       const include = ['referenceProduct']
       const fields = {
         'commonProducts': 'id,name,logo,prices,status'
@@ -438,7 +439,7 @@ export default class OrderService {
     }
     const productList = []
 
-    if (productIds) {
+    if (productIds.length) {
       const include = ['prices']
       const products = await this.productAdapter.get({
         idList: productIds,
@@ -466,7 +467,7 @@ export default class OrderService {
       }
     }
 
-    if (purchaseProductIds) {
+    if (purchaseProductIds.length) {
       const include = ['referenceProduct']
       const fields = {
         'commonProducts': 'id,name,logo,prices,status'

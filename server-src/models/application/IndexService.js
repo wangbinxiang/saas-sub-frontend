@@ -138,19 +138,6 @@ export default class IndexService {
       'commonProducts': 'id,name,logo,prices,feature,minPrice,maxPrice,status,visible,productType'
     }
 
-    // const productsResult = await this.productAdapter.get({
-    //   filters,
-    //   pages,
-    //   sort,
-    //   include
-    // }, Product)
-
-    // if (productsResult !== null) {
-    //   // 没有获取数据 直接返回空
-    //   page = productsResult.page
-    //   products = productsResult.result
-    // }
-
     const productProxyAdapter = new ProductProxyAdapter()
     const productProxyResult = await productProxyAdapter.get({
       pages,
@@ -163,26 +150,18 @@ export default class IndexService {
     if (productProxyResult !== null) {
       // 没有获取数据 直接返回空
       page = productProxyResult.page
-      const productProxies = productProxyResult.result
+      products = productProxyResult.result
 
       const productTypeIds = []
-      products = {}
-      for (const productProxy of productProxies) {
-        if (!products[productProxy.productTypeId]) {
-          products[productProxy.productTypeId] = []
-        }
-        products[productProxy.productTypeId].push(productProxy)
-        productTypeIds.push(productProxy.productTypeId)
+      for (const product of products) {
+        productTypeIds.push(product.productTypeId)
       }
 
       const productTypeAdapter = new ProductTypeAdapter()
       productTypes = await productTypeAdapter.get({
         'idList': productTypeIds
       }, ProductType)
-
-      console.log(productTypes)
     }
-
     // 返回 分页 和 Products 数据
     return {
       page,

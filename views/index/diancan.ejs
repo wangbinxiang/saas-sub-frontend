@@ -3,52 +3,55 @@
     <div data-sticky-container class="dish-sticky-bar row" id="dish-sticky-bar">
         <div class="top-bar" data-sticky data-top-anchor="sticky-menu:top" data-btm-anchor="dishOrderB:bottom" data-margin-top="0" id="sticky-menu">
             <div class="top-bar-right">
-                <ul class="menu" data-magellan  data-bind="foreach: productTypes">
-                    <li><a class="dish-sticky-bar__link" href="#cata_0">Breakfast</a></li>
+                <ul class="menu" data-magellan >
+                  <% for(let productType of productTypes) { %>
+                    <li><a class="dish-sticky-bar__link" href="#product_<%- productType.id %>" ><%- productType.name %></a></li>
+                  <% } %>
                 </ul>
             </div>
         </div>
     </div>
 
-
-
-    <div class="row column" id="dishOrderB" data-bind="foreach:products">
-        <div style="display: none;" data-bind="visible:true && (!$parent.toggleCart() ||  !!$parent.cartProducts[$index()])">
-            <div class="article-item article-item--dish--b clearfix">
-                <figure>
-                        <img data-bind="attr: { src: imgHost + logo + imgListStyle }">
-                </figure>
-                <h4><a data-bind="text: name"></a></h4>
-                <p data-bind="text: feature"></p>
-                <table class="hover listCart dish-list">
-                    <tbody data-bind="foreach: prices">
-                        <tr data-bind="visible: !($parents[1].toggleCart() && (!$data.count || $data.count === 0)) ,css: { selected: $data.count && $data.count > 0 }">
-                            <td data-bind="text: title"></td>
-                            <td width="100" data-bind="text: '￥' + price"></td>
-                            <td width="150">
-                                <button class="button subtract" data-bind="visible: $data.count && $data.count > 0? true: false"><i class="material-icons" data-bind="click: $parents[1].subtract.bind($data, $index(), $parentContext.$index()), clickBubble: true">&#xE15B;</i></button>
-                                <b class="quantity" data-bind="text: $data.count? $data.count: ''"></b>
-                                <button class="button add"><i class="material-icons" data-bind="click: $parents[1].addition.bind($data, $index(), $parentContext.$index()), clickBubble: false">&#xE145;</i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+  
+  <div class="row column" id="dishOrderB">
+    <% for(let productType of productTypes) { %>
+      <div id="product_<%- productType.id%>" data-magellan-target="product_<%- productType.id%>" data-bind="foreach: productTypeProducts[<%- productType.id%>], visible: true" style="display:none">
+        <div class="article-item article-item--dish--b clearfix" data-bind="visible:true && (!$parent.toggleCart() ||  ($parent.cartProducts[<%- productType.id%>] && !!$parent.cartProducts[<%- productType.id%>][$index()]))">
+          <figure>
+            <img data-bind="attr: { src: imgHost + logo + imgListStyle }">
+          </figure>
+          <h4><a data-bind="text: name"></a></h4>
+          <p data-bind="text: feature"></p>
+          <table class="hover listCart dish-list">
+            <tbody data-bind="foreach: prices">
+                <tr data-bind="visible: !($root.toggleCart() && (!$data.count || $data.count === 0)) ,css: { selected: $data.count && $data.count > 0 }">
+                    <td data-bind="text: title"></td>
+                    <td width="100" data-bind="text: '￥' + price"></td>
+                    <td width="150">
+                      <button class="button subtract" data-bind="visible: $data.count && $data.count > 0? true: false"><i class="material-icons" data-bind="click: $root.subtract.bind($data, $index(), <%- productType.id%>, $parentContext.$index()), clickBubble: true">&#xE15B;</i></button>
+                      <b class="quantity" data-bind="text: $data.count? $data.count: ''"></b>
+                      <button class="button add"><i class="material-icons" data-bind="click: $root.addition.bind($data, $index(), <%- productType.id%>, $parentContext.$index()), clickBubble: false">&#xE145;</i></button>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
         </div>
-    </div>
-    <div class="list-button row column" data-bind="click: more, visible: isNext()" style="display: none;">
-        <a class="button large btnMore">显示更多</a>
-    </div>
+      </div>
+    <% } %>
+  </div>
 
-    <div id="finalOrder" data-bind="css: { detail: toggleCart }" class="fixOpts fixOpts--b show" >
-        <span data-bind="click: toggleCartProduct" id="finalTotalB">￥<b data-bind="text:totalPrice">0</b></span>
-        <a data-bind="click: settleAccounts">结算</a>
-    </div>
+  
+
+  <div id="finalOrder"  data-bind="css: { show: showSettlement }" class="fixOpts fixOpts--b">
+      <span id="finalTotalB" data-bind="click: toggleCartProduct">￥<b data-bind="text:totalPrice">0</b></span>
+      <a class="filter" id="dish-label"></a>
+      <a data-bind="click: settleAccounts">结算</a>
+  </div>
 </div>
 <script>
 var cartTable = <%- JSON.stringify(cartTable) %> 
-var productTypes = <%- JSON.stringify(productTypes？ productTypes: []) %> 
-var products = <%- JSON.stringify(products? products: []) %>
+var productTypes = <%- JSON.stringify(productTypes || []) %>
+var products = <%- JSON.stringify(products || []) %>
 var pageNumber = <%- number %>
 var isNext = <%- isNext %>
 var imgHost = '<%- imgHost %>'

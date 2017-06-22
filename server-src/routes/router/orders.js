@@ -13,6 +13,9 @@ import {
 } from '../../controllers/orders';
 import { requiresLogin } from '../../middlewares/authorization';
 import navigation from '../../middlewares/navigation';
+import {
+  showAddOrderValidation
+} from '../../validations/orderValidation'
 
 
 const router = Router();
@@ -24,7 +27,7 @@ router.use(requiresLogin);
 
 
 //添加路由页面
-router.get('/add', navigation, showAddOrder);
+router.get('/add', showAddOrderValidation, navigation, showAddOrder);
 router.post('/add', navigation, showAddOrder);
 
 

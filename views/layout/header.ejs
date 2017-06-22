@@ -8,15 +8,15 @@
         <meta name="description" content="<%- typeof title !== 'undefined'? title: ''%>" />
         <link rel="icon" href="/img/sa_logo.png" type="image/x-icon" />
         <% if(shopInfo.theme === 'garden') { %>
-          <link rel="stylesheet" href="/css/appFall.css?20170418" />
+          <link rel="stylesheet" href="/css/appFall.css?20170621" />
         <% } else if(shopInfo.theme === 'blue') { %>
-          <link rel="stylesheet" href="/css/appSummer.css?20170512" />
+          <link rel="stylesheet" href="/css/appBlue.css?20170621" />
         <% } else if(shopInfo.theme === 'red') { %>
-          <link rel="stylesheet" href="/css/appRed.css?20170512" />
+          <link rel="stylesheet" href="/css/appRed.css?20170621" />
         <% } else { %>
-          <link rel="stylesheet" href="/css/appSummer.css?20170512" />
+          <link rel="stylesheet" href="/css/appBlue.css?20170621" />
         <% } %>
-        <link rel="stylesheet" href="/css/appfix.css?20170327" />
+        <link rel="stylesheet" href="/css/appfix.css?20170621" />
         <% if(__IN_WECHAT__ && shopInfo.relationship) { %>
             <%- include('../common/wechatRelationship') -%>
         <% } %>
@@ -24,18 +24,9 @@
     <body>
         <header class="top-bar <% if(typeof shopInfo !== 'undefined' &&  shopInfo.theme === 'garden'){ %> top-bar--garden<% } %>" id="headerGlobal">
             <div class="top-bar-title">
-                <% if(shopInfo.theme === 'red') { %>
                   <span data-hide-for="medium" id="responsive-menu-toggler" class="menu-icon-wrap">
                     <span data-toggle class="menu-icon-toggle"><span class="menu-icon"></span></span>
                   </span>
-                <% } else { %>
-                  <span data-responsive-toggle="responsive-menu" data-hide-for="medium" class="menu-icon-wrap">
-                    <span class="menu-icon" data-toggle></span>
-                  </span>
-                <% } %>
-
-                
-
                 <strong><a href="/"><img src="<%- typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
                 <div class="top-bar-fix">
                     <ul class="menu">
