@@ -14,6 +14,7 @@ const DiancanModel = function (cartTable, products, productTypes, isNext, pageNu
   this.isNext = ko.observable(isNext)
   this.cartProducts = {}
   this.toggleCart = ko.observable(false)
+  this.settlementButtonDisable = ko.observable(false)
   this.showSettlement = ko.observable(false)
   this.productTypeProducts = {}
   this.products = products || []
@@ -62,8 +63,6 @@ const DiancanModel = function (cartTable, products, productTypes, isNext, pageNu
     product.prices[index] = data
     self.updateCartProduct(productTypeId, productIndex, index, data.count)
     self.productTypeProducts[productTypeId].splice(productIndex, 1, product)
-    // $('#dish-sticky-bar').addClass('top')
-    // console.log(self.products[productTypeId]()[productIndex])
     // 增加产品数量
   }
 
@@ -162,6 +161,7 @@ const DiancanModel = function (cartTable, products, productTypes, isNext, pageNu
           productsInfo.push(productInfo)
         }
       }
+      self.settlementButtonDisable(true)
       $.form('/orders/add', {
         productsInfo: JSON.stringify(productsInfo),
         cartTableId: cartTable.id
@@ -175,50 +175,24 @@ if ($('#diancan').length) {
   let diancanModel = new DiancanModel(cartTable, products, productTypes, isNext, pageNumber)
   ko.applyBindings(diancanModel, document.getElementById('diancan'))
 
-  $('#dishOrderB').on('click', '.add', function (e) {
-    let obj = $(this)
-    let q = parseInt(obj.prev().text()) + 1
-    obj.prev().text(q).css('visibility', 'visible').prev().css('visibility', 'visible').parents('tr').addClass('selected')
-    $('#finalOrder').addClass('show')
-    $('#dish-sticky-bar').addClass('top')
-  })
+  // $('#dishOrderB').on('click', '.add', function (e) {
+  //   let obj = $(this)
+  //   let q = parseInt(obj.prev().text()) + 1
+  //   obj.prev().text(q).css('visibility', 'visible').prev().css('visibility', 'visible').parents('tr').addClass('selected')
+  //   $('#finalOrder').addClass('show')
+  //   $('#dish-sticky-bar').addClass('top')
+  // })
 
-  $('#dishOrderB').on('click', '.subtract', function (e) {
-    let obj = $(this)
-    let q = parseInt(obj.next().text()) - 1
-    obj.next().text(q)
-    if (q === 0) {
-      obj.css('visibility', 'hidden').next().text(q).css('visibility', 'hidden').parents('tr').removeClass('selected')
-      $('#finalOrder').removeClass('show')
-      $('#dish-sticky-bar').removeClass('top')
-    }
-  })
-
-  let orderStatus = false
-  $('#finalTotalB1').on('click', () => {
-    if (!orderStatus) {
-      if ($('#finalTotalB b').text !== '0') {
-        $('.article-item--dish--b').each((i, e) => {
-          if ($(e).find('tr.selected').length) {
-            $(e).find('tr:not(".selected")').hide()
-          } else {
-            $(e).hide()
-          }
-        })
-        $('#dish-sticky-bar').hide()
-        $('#dish-label').hide()
-        orderStatus = !orderStatus
-        $('#finalOrder').addClass('detail')
-      }
-    } else {
-      $('.article-item--dish--b').show()
-      $('.article-item--dish--b tr').show()
-      $('#dish-sticky-bar').show()
-      $('#dish-label').show()
-      orderStatus = !orderStatus
-      $('#finalOrder').removeClass('detail')
-    }
-  })
+  // $('#dishOrderB').on('click', '.subtract', function (e) {
+  //   let obj = $(this)
+  //   let q = parseInt(obj.next().text()) - 1
+  //   obj.next().text(q)
+  //   if (q === 0) {
+  //     obj.css('visibility', 'hidden').next().text(q).css('visibility', 'hidden').parents('tr').removeClass('selected')
+  //     $('#finalOrder').removeClass('show')
+  //     $('#dish-sticky-bar').removeClass('top')
+  //   }
+  // })
 
   $('#dish-label').on('click', function () {
     $('#dish-label').toggleClass('show')

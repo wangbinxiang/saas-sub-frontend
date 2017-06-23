@@ -39,13 +39,10 @@
       </div>
     <% } %>
   </div>
-
-  
-
   <div id="finalOrder"  data-bind="css: { show: showSettlement }" class="fixOpts fixOpts--b">
       <span id="finalTotalB" data-bind="click: toggleCartProduct">￥<b data-bind="text:totalPrice">0</b></span>
       <a class="filter" id="dish-label"></a>
-      <a data-bind="click: settleAccounts">结算</a>
+      <button data-bind="click: settleAccounts, disable: settlementButtonDisable">结算</button>
   </div>
 </div>
 <script>

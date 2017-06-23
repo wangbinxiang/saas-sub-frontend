@@ -58,14 +58,15 @@ if (Foundation.MediaQuery.current === 'small') {
 
 var lastScrollTop = 0
 //  手机版向下滚动时，header自动隐藏
-if (Foundation.MediaQuery.current === 'small') {
-  $(window).scroll(function (event) {
+$(window).scroll(function (event) {
+    if (Foundation.MediaQuery.current == 'small') {
+    
     var st = $(this).scrollTop()
-    if (st > lastScrollTop && st > 60 && !$('#responsive-menu').is(':visible')) {
+    if (st > lastScrollTop && st > 60 && !$('#nav-menu-wrap').hasClass('show')) {
       $('#headerGlobal').addClass('hidee')
     } else {
       $('#headerGlobal').removeClass('hidee')
     }
     lastScrollTop = st
-  })
-}
+  }
+})
