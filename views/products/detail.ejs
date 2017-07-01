@@ -99,7 +99,7 @@
     <img src="/qrcode/relationship?productId=<%- product.id %>">
 <div>
 <% } %>
-<% if( shopInfo && shopInfo.kefuId > 0) {%>
+<% if( shopInfo && shopInfo.kefuId > 0 && shopInfo.id === '10021') {%>
     <script type="text/javascript" charset="utf-8" src="http://free.appkefu.com/AppKeFu/float/wap/float.php?wg=<%- shopInfo.kefuId %>&robot=false"></script>
 <% } %>
 <script>
