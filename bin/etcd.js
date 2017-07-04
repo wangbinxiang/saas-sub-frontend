@@ -135,7 +135,8 @@ if (process.env.ETCD_ENV) {
       '10022': '',
       '10026': 'garden',
       '10027': 'garden',
-      '10034': 'blue'
+      '10034': 'blue',
+      '10039': 'red'
     },
     'layout': {
       '10002': '',
