@@ -19,7 +19,7 @@ export default class ProductProxyRequestJsonApi extends BaseRequest {
   constructor (feature, originData) {
     const host = productApiServiceLocation()
     super(host, feature, originData)
-    // this.dataType = 'products'
+    this.dataType = 'products'
   }
 
   /**

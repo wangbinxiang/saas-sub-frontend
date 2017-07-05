@@ -8,7 +8,6 @@ import {
 export default class ProductProxyTranslator extends Translator {
   readData (data, included) {
     const bodyReader = new ProductProxyJsonApiBodyReader(data, included)
-
     const source = bodyReader.value('source')
     const id = bodyReader.value('id')
     const productId = bodyReader.value('product').id

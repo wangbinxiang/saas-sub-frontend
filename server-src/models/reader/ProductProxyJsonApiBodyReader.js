@@ -8,4 +8,7 @@ import JsonApiBodyRelationshipReader from '../../libs/JsonApiBodyRelationshipRea
  * @extends {JsonApiBodyRelationshipReader}
  */
 export default class ProductProxyJsonApiBodyReader extends JsonApiBodyRelationshipReader {
+  constructor (...args) {
+    super(...args)
+  }
 }

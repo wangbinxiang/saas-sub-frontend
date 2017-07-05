@@ -1,0 +1,33 @@
+<%- include('../layout/header') -%>
+  <div class="fgarden"></div>
+  <% if(products) { %>
+    <div class="masonry-wrap-outer clearfix">
+      <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="foreach:products">
+        <div class="column">
+          <a target="_blank" class="masonry-item" data-bind="attr:{href: '/products/' + id}">
+                <img data-bind="attr:{src: imgHost + logo + imgStyle}" />
+                <b data-bind="text: name"></b>
+                <em data-bind="text: feature"><br /></em>
+                <span> ￥<strong data-bind="text: minPrice"></strong> <small>起</small></span>
+                <i class="small expanded button">查看详情</i>
+            </a>
+        </div>
+      </div>
+    </div>
+    <% } else {%>
+      <div class="masonry-wrap-outer clearfix">
+        <span>未找到与关键词匹配的商品</span>
+      </div>
+      <%}%>
+        <div class="list-button row column clearfix">
+          <a class="button large btnMore" data-bind="click: more, visible: isNext()">显示更多商品</a>
+        </div>
+
+        <script>
+          var data = <%- JSON.stringify(products) %>;
+          var pageno = <%- number %>;
+          var isnext = <%- isNext %>;
+          var imgHost = '<%- imgHost %>';
+          var imgStyle = '<%- imgStyle %>';
+        </script>
+        <%- include('../layout/footer') -%>

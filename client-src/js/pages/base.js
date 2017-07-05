@@ -81,7 +81,7 @@ function search () {
   const keyword = $('#topBarSearchInput').val()
 
   if (keyword !== '') {
-    const rediret = '/search/?keyword=' + keyword
+    const rediret = '/search?keyword=' + keyword
 
     window.location.href = rediret
   }
