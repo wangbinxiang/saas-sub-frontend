@@ -16,7 +16,10 @@ export async function products (ctx, next) {
 
   const searchService = await new SearchService()
 
-  let result = await searchService.index(number, size, keyword)
+  let result = await searchService.index(ctx._subId, number, size, keyword)
+
+  console.log(result)
+
   if (result !== null) {
     let page = result.page
     products = result.products

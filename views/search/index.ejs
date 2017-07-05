@@ -4,7 +4,7 @@
     <div class="masonry-wrap-outer clearfix">
       <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="foreach:products">
         <div class="column">
-          <a target="_blank" class="masonry-item" data-bind="attr:{href: '/products/' + id}">
+          <a target="_blank" class="masonry-item" data-bind="attr:{href: '/products/' + productId + (source? '/' + source: '')}">
                 <img data-bind="attr:{src: imgHost + logo + imgStyle}" />
                 <b data-bind="text: name"></b>
                 <em data-bind="text: feature"><br /></em>

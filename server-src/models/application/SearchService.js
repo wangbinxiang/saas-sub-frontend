@@ -6,9 +6,11 @@ export default class ProductProxyService {
     this.productProxyAdapter = new ProductProxyAdapter()
   }
 
-  async index (number, size, keyword) {
+  async index (userId, number, size, keyword) {
     const filters = {
-      name: keyword
+      userId: userId,
+      name: keyword,
+      status: 2
     }
     const pages = {
       number,
