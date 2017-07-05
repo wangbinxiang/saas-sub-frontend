@@ -1,7 +1,6 @@
 import 'foundation-sites'
-if (module.hot) {
-  module.hot.accept()
-}
+import lodash from 'lodash'
+
 $(document).foundation()
 
 if ($('#responsive-menu-toggler').length) {
@@ -81,8 +80,7 @@ function search () {
   const keyword = $('#topBarSearchInput').val()
 
   if (keyword !== '') {
-    const rediret = '/search?keyword=' + keyword
-
+    const rediret = '/search?keyword=' + encodeURIComponent(keyword)
     window.location.href = rediret
   }
 }

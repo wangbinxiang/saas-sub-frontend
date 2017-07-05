@@ -12,7 +12,7 @@ export async function products (ctx, next) {
 
   const size = ctx.query.size ? ctx.query.size : 20
 
-  const keyword = ctx.query.keyword
+  const keyword = encodeURIComponent(ctx.query.keyword)
 
   const searchService = await new SearchService()
 
