@@ -59,8 +59,7 @@ if (Foundation.MediaQuery.current === 'small') {
 var lastScrollTop = 0
 //  手机版向下滚动时，header自动隐藏
 $(window).scroll(function (event) {
-    if (Foundation.MediaQuery.current == 'small') {
-    
+  if (Foundation.MediaQuery.current === 'small') {
     var st = $(this).scrollTop()
     if (st > lastScrollTop && st > 60 && !$('#nav-menu-wrap').hasClass('show')) {
       $('#headerGlobal').addClass('hidee')
@@ -70,3 +69,20 @@ $(window).scroll(function (event) {
     lastScrollTop = st
   }
 })
+
+// 头部搜索框
+$('#topBarSearch').click(search)
+$('#topBarSearchInput').keypress(function (e) {
+  if (e.keyCode === 13) {
+    search()
+  }
+})
+function search () {
+  const keyword = $('#topBarSearchInput').val()
+
+  if (keyword !== '') {
+    const rediret = '/search/?keyword=' + keyword
+
+    window.location.href = rediret
+  }
+}
