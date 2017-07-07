@@ -69,6 +69,13 @@ $(window).scroll(function (event) {
   }
 })
 
+$('#topBarSearch').click(function () {
+  if (!Foundation.MediaQuery.atLeast('medium')) {
+    $(this).toggleClass('even')
+    $('#topBarSearchInput').toggleClass('even')
+  }
+})
+
 // 头部搜索框
 $('#topBarSearch').click(search)
 $('#topBarSearchInput').keypress(function (e) {
@@ -77,8 +84,7 @@ $('#topBarSearchInput').keypress(function (e) {
   }
 })
 function search () {
-  const keyword = $('#topBarSearchInput').val()
-
+  const keyword = lodash.trim($('#topBarSearchInput').val())
   if (keyword !== '') {
     const rediret = '/search?keyword=' + encodeURIComponent(keyword)
     window.location.href = rediret
