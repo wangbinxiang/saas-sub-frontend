@@ -2,22 +2,23 @@ import {
   unescapeData
 } from '../vendors/tools/string'
 import './base.js'
-
 if (module.hot) {
   module.hot.accept()
 }
 
-const ProductsModel = function (products, isnext, pageno) {
+const ProductsModel = function (products, isnext, pageno, keyword) {
   const self = this
   unescapeData(products, 'name')
   this.products = ko.observableArray(products)
   this.isNext = ko.observable(isnext)
+  this.keyword = ko.observable(keyword)
 
   this.more = () => {
+    const keyword = $('#keyword').val()
     pageno++
     $.ajax({
       method: 'GET',
-      url: '/search?number=' + pageno,
+      url: '/search?keyword=' + keyword + '&number=' + pageno,
       dataType: 'json'
     })
       .done(function (respones) {
@@ -30,5 +31,5 @@ const ProductsModel = function (products, isnext, pageno) {
       })
   }
 }
-let productsModel = new ProductsModel(data, isnext, pageno)
+let productsModel = new ProductsModel(data, isnext, pageno, keyword)
 ko.applyBindings(productsModel)

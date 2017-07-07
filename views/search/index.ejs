@@ -1,5 +1,6 @@
 <%- include('../layout/header') -%>
   <div class="fgarden"></div>
+  <input type="hidden" id="keyword" data-bind="value: keyword">
   <% if(products) { %>
     <div class="masonry-wrap-outer clearfix">
       <div class="small-up-1 medium-up-3 large-up-4 xxlarge-up-5 masonry-wrap" id="masonryWrap" data-bind="foreach:products">
@@ -29,5 +30,6 @@
           var isnext = <%- isNext %>;
           var imgHost = '<%- imgHost %>';
           var imgStyle = '<%- imgStyle %>';
+          var keyword = '<%- keyword %>';
         </script>
         <%- include('../layout/footer') -%>
