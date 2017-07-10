@@ -30,8 +30,8 @@
                 <strong><a href="/"><img src="<%- typeof shopInfo !== 'undefined'?  shopInfo.logo: '' %>" class="saLogo" /></a></strong>
                 <div class="top-bar-fix">
                     <ul class="menu">
-                        <li><input class="show-for-medium" type="search" placeholder="搜索想要的" id="topBarSearchInput"></li>
-                        <li><button type="button" class="button material-icons mi-search" id="topBarSearch"></button></li>
+                        <li><input value="<%- typeof searchKeyword !== 'undefined'? searchKeyword: '' %>" class="show-for-medium <%- typeof searchKeyword !== 'undefined'? 'even': '' %>" type="search" placeholder="输入你想要的" id="topBarSearchInput"></li>
+                        <li><button type="button" class="<%- typeof searchKeyword !== 'undefined'? 'even': '' %> button material-icons mi-search" id="topBarSearch"></button></li>
                         <li data-toggle="userShortcuts">
                             <a class="user">
                             <% if(typeof user !== 'undefined' && typeof avatarImgHost !== 'undefined' && user.avatar) { %>

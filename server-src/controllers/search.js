@@ -13,6 +13,7 @@ export async function products (ctx, next) {
   const size = ctx.query.size ? ctx.query.size : 20
 
   const keyword = encodeURIComponent(ctx.query.keyword)
+  const searchKeyword = ctx.query.keyword
 
   const searchService = await new SearchService()
 
@@ -47,6 +48,7 @@ export async function products (ctx, next) {
       pageJs,
       number,
       keyword,
+      searchKeyword,
       imgHost,
       imgStyle,
       imgListStyle,

@@ -1,19 +1,22 @@
 import {
-  unescapeData
+  unescapeDataCurryRight
 } from '../vendors/tools/string'
 import './base.js'
 if (module.hot) {
   module.hot.accept()
 }
 
+const unescapeDataNameFeature = unescapeDataCurryRight(['name', 'feature'])
+
 const ProductsModel = function (products, isnext, pageno, keyword) {
   const self = this
-  unescapeData(products, 'name')
+  unescapeDataNameFeature(products)
   this.products = ko.observableArray(products)
   this.isNext = ko.observable(isnext)
   this.keyword = ko.observable(keyword)
 
   this.more = () => {
+    self.isNext(false)
     const keyword = $('#keyword').val()
     pageno++
     $.ajax({
@@ -23,7 +26,7 @@ const ProductsModel = function (products, isnext, pageno, keyword) {
     })
       .done(function (respones) {
         var products = respones.products
-        unescapeData(products, 'name')
+        unescapeDataNameFeature(products)
         for (let product of products) {
           self.products.push(product)
         }
