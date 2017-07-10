@@ -46,6 +46,7 @@ export async function products (ctx, next) {
       title,
       pageJs,
       number,
+      keyword,
       imgHost,
       imgStyle,
       imgListStyle,
