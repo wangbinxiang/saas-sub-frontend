@@ -29,6 +29,8 @@ import routerUsers from './router/users'
 
 import routerSearch from './router/search'
 
+import routerDeliveryInformations from './router/deliveryInformations'
+
 const router = new Router()
 
 router.use('', routerAuthenticate.routes())
@@ -45,5 +47,6 @@ router.use('', routerGarden.routes())
 router.use('', routerAttachments.routes())
 router.use('', routerUsers.routes())
 router.use('', routerSearch.routes())
+router.use('', routerDeliveryInformations.routes())
 
 export default router
