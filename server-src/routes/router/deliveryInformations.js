@@ -6,6 +6,13 @@ import {
   del
 } from '../../controllers/deliveryInformations'
 import {
+  indexValidation,
+  addValidation,
+  editRequestBodyValidation,
+  editParamsValidation,
+  delParamsValidation
+} from '../../validations/deliveryInformationsValidation'
+import {
   inWechatRequiresLogin
 } from '../../middlewares/authorization'
 
@@ -18,11 +25,11 @@ router.use(inWechatRequiresLogin)
 router.prefix('/delivery-informations')
 
 // 地址列表
-router.get('/', index)
+router.get('/', indexValidation, index)
 //
-router.post('/', add)
+router.post('/', addValidation, add)
 //
-router.put('/:id', edit)
+router.put('/:id', editRequestBodyValidation, editParamsValidation, edit)
 //
-router.del('/', del)
+router.del('/', delParamsValidation, del)
 export default router
