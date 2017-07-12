@@ -1,25 +1,25 @@
-import ArticlesService from '../models/application/ArticlesService';
-import nl2br from 'nl2br';
-import config from 'config';
+import ArticlesService from '../models/application/ArticlesService'
+import nl2br from 'nl2br'
+import config from 'config'
 import {
     detailStyle
-} from '../tools/imgStyle';
+} from '../tools/imgStyle'
 
-export async function detail(ctx, next) {
-	//文章id
-	const id = ctx.params.id;
-	const articlesService = new ArticlesService();
-	const article = await articlesService.detail(id, ctx._subId);
-	if (article === null) {
-	    await next();
-	} else {
-	    const title = article.title + ' - ' + ctx._shop.title;
+export async function detail (ctx, next) {
+	// 文章id
+  const id = ctx.params.id
+  const articlesService = new ArticlesService()
+  const article = await articlesService.detail(id, ctx._subId)
+  if (article === null) {
+	    await next()
+  } else {
+	    const title = article.title + ' - ' + ctx._shop.title
 
-	    const pageJs = webpackIsomorphicTools.assets().javascript.article;
+	    const pageJs = webpackIsomorphicTools.assets().javascript.article
 
-	    const imgHost = config.get('qiniu.bucket.subImg.url');
+	    const imgHost = config.get('qiniu.bucket.subImg.url')
 
-        const imgDetailStyle = detailStyle(ctx)
+    const imgDetailStyle = detailStyle(ctx)
 
 	    await ctx.render('articles/detail', {
 	        title,
@@ -27,7 +27,7 @@ export async function detail(ctx, next) {
 	        pageJs,
 	        nl2br,
 	        imgHost,
-            imgDetailStyle
-	    });
-	}
+      imgDetailStyle
+	    })
+  }
 }

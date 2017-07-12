@@ -1,19 +1,24 @@
-import DeliveryInfomationAdapter from '../adapter/DeliveryInfomationAdapter'
-import DeliveryInfomation from '../model/DeliveryInfomation'
-/**
- * 产品分类service类
- */
+import DeliveryInformationAdapter from '../adapter/DeliveryInformationAdapter'
+import DeliveryInformation from '../model/DeliveryInformation'
+import {
+  DELIVERY_INFORMATION_ERROR_MAX_COUNT
+} from '../../config/errorMessageConf'
+
+const checkDeliveryInformationCanAdd = Symbol('checkDeliveryInformationCanAdd')
+
 export default class DeliveryInfomationService {
   constructor () {
-    this.deliveryInfomationAdapter = new DeliveryInfomationAdapter()
+    this.deliveryInformationAdapter = new DeliveryInformationAdapter()
   }
 
   async index (idList, filters, pages) {
-    let result = await this.deliveryInfomationAdapter.get({
+    const sort = '-id'
+    let result = await this.deliveryInformationAdapter.get({
       idList,
       filters,
-      pages
-    }, DeliveryInfomation)
+      pages,
+      sort
+    }, DeliveryInformation)
 
     if (result == null) {
       return result
@@ -25,14 +30,35 @@ export default class DeliveryInfomationService {
   }
 
   async get (id) {
-    let deliveryInfomations = await this.deliveryInfomationAdapter.get({
+    let deliveryInfomation = await this.deliveryInformationAdapter.get({
       idList: id
-    }, DeliveryInfomation)
-    return deliveryInfomations
+    }, DeliveryInformation)
+    return deliveryInfomation
+  }
+
+// 检查是否可以添加地址
+  async [checkDeliveryInformationCanAdd] (deliveryInformationsNumber) {
+    const err = deliveryInformationsNumber >= 10 ? DELIVERY_INFORMATION_ERROR_MAX_COUNT //  地址数量已达最大值
+    : null
+    return err
   }
 
   async add (userId, consignee, phone, province, city, district, address, postalCode) {
-    let result = await this.deliveryInfomationAdapter.add({
+    const filters = {
+      userId: userId,
+      status: 0
+    }
+    let deliveryInformations = await this.deliveryInformationAdapter.get({
+      filters
+    }, DeliveryInformation)
+    const deliveryInformationsNumber = deliveryInformations.length
+    const err = await this[checkDeliveryInformationCanAdd](deliveryInformationsNumber)
+    if (err) {
+      return {
+        err
+      }
+    }
+    let result = await this.deliveryInformationAdapter.add({
       userId,
       consignee,
       phone,
@@ -41,12 +67,15 @@ export default class DeliveryInfomationService {
       district,
       address,
       postalCode
-    }, DeliveryInfomation)
-    return result
+    }, DeliveryInformation)
+    return {
+      err,
+      result
+    }
   }
 
   async edit (id, consignee, phone, province, city, district, address, postalCode) {
-    let result = await this.deliveryInfomationAdapter.edit({
+    let result = await this.deliveryInformationAdapter.edit({
       id,
       consignee,
       phone,
@@ -55,14 +84,14 @@ export default class DeliveryInfomationService {
       district,
       address,
       postalCode
-    }, DeliveryInfomation)
+    }, DeliveryInformation)
     return result
   }
 
   async del (id) {
-    let result = await this.deliveryInfomationAdapter.del({
+    let result = await this.deliveryInformationAdapter.del({
       id
-    }, DeliveryInfomation)
+    }, DeliveryInformation)
     return result
   }
 }

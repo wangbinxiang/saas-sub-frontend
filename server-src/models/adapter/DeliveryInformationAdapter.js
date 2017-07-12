@@ -9,10 +9,7 @@ import {
 } from '../../config/apiFeatureConf'
 import pageCLass from '../model/page'
 
-/**
- * 产品分类适配器
- */
-export default class CategoryAdapter extends RequestAdapter {
+export default class DeliverInformationAdapter extends RequestAdapter {
   constructor () {
     super()
     this.translator = new DeliveryInformationTranslator()
@@ -25,12 +22,14 @@ export default class CategoryAdapter extends RequestAdapter {
   get ({
         idList,
         filters,
-        pages
+        pages,
+        sort
     }, aDeliveryInformationClass) {
     this.buildRequest(DELIVERY_INFORMATION_GET, {
       idList,
       filters,
-      pages
+      pages,
+      sort
     })
 
         // 如果idList是数组 则需要数组形式的结果

@@ -1,13 +1,13 @@
 import Translator from '../../libs/Translator'
-import DeliveryInfomationJsonApiBodyReader from '../reader/DeliveryInfomationJsonApiBodyReader'
+import DeliveryInformationJsonApiBodyReader from '../reader/DeliveryInformationJsonApiBodyReader'
 
-export default class CategoryTranslator extends Translator {
+export default class DeliverInformationTranslator extends Translator {
   constructor () {
     super()
   }
 
   readData (data) {
-    const bodyReader = new DeliveryInfomationJsonApiBodyReader(data)
+    const bodyReader = new DeliveryInformationJsonApiBodyReader(data)
 
     let id = bodyReader.value('id')
     let consignee = bodyReader.value('consignee')

@@ -1,8 +1,10 @@
 import Router from 'koa-router'
 import {
-  index
+  index,
+  add,
+  edit,
+  del
 } from '../../controllers/deliveryInformations'
-import navigation from '../../middlewares/navigation'
 import {
   inWechatRequiresLogin
 } from '../../middlewares/authorization'
@@ -15,6 +17,12 @@ router.use(inWechatRequiresLogin)
 // 路由前缀
 router.prefix('/delivery-informations')
 
-// 预览产品页面
-router.get('/', navigation, index)
+// 地址列表
+router.get('/', index)
+//
+router.post('/', add)
+//
+router.put('/:id', edit)
+//
+router.del('/', del)
 export default router
