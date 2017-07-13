@@ -12,38 +12,36 @@ const DeliveryInfomationModel = function (deliveryInformations, isNext, pageNumb
   self.isNext = ko.observable(isNext)
 
   self.add = function () {
-    const consignee = $('#newConsignee').val()
-    const phone = $('#newPhone').val()
-    const province = $('#newProvince').val()
-    const city = $('#newCity').val()
-    const district = $('#newDistrict').val()
-    const address = $('#newAddress').val()
-    const postalCode = $('#newPostalCode').val()
-    const _csrf = $('#_csrf').val()
-    if (address !== '') {
-      $.ajax({
-        method: 'POST',
-        url: '/delivery-information',
-        dataType: 'json',
-        data: { consignee, phone, province, city, district, address, postalCode, _csrf }
-      })
+    Foundation.reInit($('#addForm'))
+    $('#addForm').foundation('validateForm')
+    if ($('#addForm [data-invalid]').length === 0) {
+      const consignee = $('#newConsignee').val()
+      const phone = $('#newPhone').val()
+      const province = $('#newProvince').val()
+      const city = $('#newCity').val()
+      const district = $('#newDistrict').val()
+      const address = $('#newAddress').val()
+      const postalCode = $('#newPostalCode').val()
+      const _csrf = $('#_csrf').val()
+      if (address !== '') {
+        $.ajax({
+          method: 'POST',
+          url: '/delivery-information',
+          dataType: 'json',
+          data: { consignee, phone, province, city, district, address, postalCode, _csrf }
+        })
             .done(function (response) {
-              self.deliveryInformations.unshift({
-                id: response.id,
-                consignee: response.consignee,
-                phone: response.phone,
-                province: response.province,
-                city: response.city,
-                district: response.district,
-                address: response.address,
-                postalCode: response.postalCode
-              })
+              self.deliveryInformations.unshift(response)
               const option = {
                 status: 'success',
                 title: '成功',
                 note: '地址添加成功'
               }
               motionAlert(option)
+              self.deliveryInformations.unshift(response)
+              $('#submit_add').attr('disabled', false)
+              $('#addRole').foundation('close')
+              $('#addForm')[0].reset()
             })
             .fail(function (response) {
               const option = {
@@ -51,9 +49,11 @@ const DeliveryInfomationModel = function (deliveryInformations, isNext, pageNumb
                 note: response.responseJSON.message
               }
               motionAlert(option)
+              $('#submit_add').attr('disabled', false)
             })
+      }
+      $('#newAddress').val('')
     }
-    $('#newAddress').val('')
   }
 
   self.remove = function (deliveryInfomation) {
@@ -83,48 +83,52 @@ const DeliveryInfomationModel = function (deliveryInformations, isNext, pageNumb
   }
 
   self.save = function () {
-    let saveId = $('#editId').val()
-    let saveConsignee = $('#editConsignee').val()
-    let savePhone = $('#editPhone').val()
-    let saveProvince = $('#editProvince').val()
-    let saveCity = $('#editCity').val()
-    let saveDistrict = $('#editDistrict').val()
-    let saveAddress = $('#editAddress').val()
-    let savePostalCode = $('#editPostalCode').val()
-    $.ajax({
-      method: 'PUT',
-      url: '/delivery-informations/' + saveId,
-      dataType: 'json',
-      data: {
-        consignee: saveConsignee,
-        phone: savePhone,
-        province: saveProvince,
-        city: saveCity,
-        district: saveDistrict,
-        address: saveAddress,
-        postalCode: savePostalCode,
-        _csrf: $('#_csrf').val() }
-    })
+    Foundation.reInit($('#editForm'))
+    $('#editForm').foundation('validateForm')
+    if ($('#editForm [data-invalid]').length === 0) {
+      let saveId = $('#editId').val()
+      let saveConsignee = $('#editConsignee').val()
+      let savePhone = $('#editPhone').val()
+      let saveProvince = $('#editProvince').val()
+      let saveCity = $('#editCity').val()
+      let saveDistrict = $('#editDistrict').val()
+      let saveAddress = $('#editAddress').val()
+      let savePostalCode = $('#editPostalCode').val()
+      $.ajax({
+        method: 'PUT',
+        url: '/delivery-informations/' + saveId,
+        dataType: 'json',
+        data: {
+          consignee: saveConsignee,
+          phone: savePhone,
+          province: saveProvince,
+          city: saveCity,
+          district: saveDistrict,
+          address: saveAddress,
+          postalCode: savePostalCode,
+          _csrf: $('#_csrf').val() }
+      })
         .done(function (response) {
           $('#editRole').foundation('close')
           let deliveryInformationEdit = ko.utils.arrayFirst(self.deliveryInformations(), function (item) {
             return parseInt(response.id) === parseInt(item.id)
           })
-          let text = {
-            id: response.id,
-            consignee: response.consignee,
-            phone: response.phone,
-            province: response.province,
-            city: response.city,
-            district: response.district,
-            address: response.address,
-            postalCode: response.postalCode
+          let text = response
+          self.deliveryInformations.splice(self.deliveryInformations.indexOf(deliveryInformationEdit), 1, text)
+          $('#submit_edit').attr('disabled', false)
+          const option = {
+            status: 'success',
+            title: '成功',
+            note: '修改成功'
           }
-          self.deliveryInformations.splice(self.categories.indexOf(deliveryInformationEdit), 1, text)
+          motionAlert(option)
+          $('#editRole').foundation('close')
+          $('#editForm')[0].reset()
         })
         .fail(function (response) {
-
+          $('#submit_edit').attr('disabled', false)
         })
+    }
   }
 
   self.more = function () {

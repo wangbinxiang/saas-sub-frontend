@@ -20,8 +20,8 @@ export async function index (ctx, next) {
   const deliveryInformationService = new DeliveryInformationService()
   let page, deliveryInformations
 
-  let result = await deliveryInformationService.index('', filters, pages)
-
+  // let result = await deliveryInformationService.index('', filters, pages)
+  let result = null
   let isNext = false
 
   if (result === null) {

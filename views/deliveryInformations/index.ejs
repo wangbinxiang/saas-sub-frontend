@@ -14,113 +14,123 @@
     <button class="button button-unstyle" data-open="addRole">添加地址</button>
   </div>
 
-<!--添加地址模态框-->
+  <!--添加地址模态框-->
   <div class="reveal small" id="addRole" data-reveal>
-    <h3>添加地址</h3>
+    <form data-abide novalidate id="addForm">
+      <h3>添加地址</h3>
 
-    <div class="row">
-      <div class="medium-6 columns">
-        <label>
+      <div class="row">
+        <div class="medium-6 columns">
+          <label>
             收货人姓名
             <input type="text" id="newConsignee" required>
         </label>
-      </div>
-      <div class="medium-6 columns">
-        <label>
+        </div>
+        <div class="medium-6 columns">
+          <label>
             联系电话
             <input type="text" id="newPhone" required>
         </label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="medium-6 columns">
-        <label class="autoSelect">
+      <div class="row">
+        <div class="medium-6 columns">
+          <label class="autoSelect">
             <span>所在地区</span>
             <select id="newProvince"><option>请选择省</option></select>
             <select id="newCity"><option>请选择市</option></select>
             <select id="newDistrict"><option>请选择区</option></select>
         </label>
-      </div>
-      <div class="medium-6 columns">
-        <label>
+        </div>
+        <div class="medium-6 columns">
+          <label>
             邮政编码
             <input type="text" id="newPostalCode" required pattern="number">
+            <span class="form-error">
+                邮政编码无效
+            </span>
         </label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="small-12 columns">
-        <label>
+      <div class="row">
+        <div class="small-12 columns">
+          <label>
             详细地址
             <input type="text" id="newAddress" required>
             <span class="form-error">
                 详细地址不能为空
             </span>
         </label>
+        </div>
       </div>
-    </div>
-    <div class="row text-center form-submit-wrap">
-      <button class="button" data-bind="click: $root.add" data-close>保存</button>
-      <button class="button secondary" data-close>取消</button>
-    </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
+      <div class="row text-center form-submit-wrap">
+        <button class="button" id="submit_add" data-bind="click: $root.add">保存</button>
+        <button class="button secondary" data-close>取消</button>
+      </div>
+      <button class="close-button" data-close aria-label="Close modal" type="button">
         <span aria-hidden="true">&times;</span>
     </button>
+    </form>
   </div>
 
-<!--编辑地址模态框-->
+  <!--编辑地址模态框-->
   <div class="reveal small" id="editRole" data-reveal>
-    <h3>编辑地址</h3>
+    <form data-abide novalidate id="editForm">
+      <h3>编辑地址</h3>
 
-    <div class="row">
-      <input type="hidden" id="editId">
-      <div class="medium-6 columns">
-        <label>
+      <div class="row">
+        <input type="hidden" id="editId">
+        <div class="medium-6 columns">
+          <label>
             收货人姓名
             <input type="text" id="editConsignee" required>
         </label>
-      </div>
-      <div class="medium-6 columns">
-        <label>
+        </div>
+        <div class="medium-6 columns">
+          <label>
             联系电话
             <input type="text" id="editPhone" required>
         </label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="medium-6 columns">
-        <label class="autoSelect">
+      <div class="row">
+        <div class="medium-6 columns">
+          <label class="autoSelect">
             <span>所在地区</span>
             <select id="editProvince"><option>请选择省</option></select>
             <select id="editCity"><option>请选择市</option></select>
             <select id="editDistrict"><option>请选择区</option></select>
         </label>
-      </div>
-      <div class="medium-6 columns">
-        <label>
+        </div>
+        <div class="medium-6 columns">
+          <label>
             邮政编码
             <input type="text" id="editPostalCode" required pattern="number">
+            <span class="form-error">
+                邮政编码无效
+            </span>
         </label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="small-12 columns">
-        <label>
+      <div class="row">
+        <div class="small-12 columns">
+          <label>
             详细地址
             <input type="text" id="editAddress" required>
             <span class="form-error">
                 详细地址不能为空
             </span>
         </label>
+        </div>
       </div>
-    </div>
-    <div class="row text-center form-submit-wrap">
-      <button class="button" data-bind="click: $root.save" data-close>保存</button>
-      <button class="button secondary" data-close>取消</button>
-    </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
+      <div class="row text-center form-submit-wrap">
+        <button class="button" id="submit_edit" data-bind="click: $root.save">保存</button>
+        <button class="button secondary" data-close>取消</button>
+      </div>
+      <button class="close-button" data-close aria-label="Close modal" type="button">
         <span aria-hidden="true">&times;</span>
     </button>
+    </form>
   </div>
 
   <div class="row column">
@@ -151,12 +161,12 @@
   </div>
 
   <div class="list-button row column">
-      <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
+    <button class="button large btnMore" data-bind="click: more, visible: isNext()">加载更多</button>
   </div>
   <script>
     var deliveryInformations = <%- JSON.stringify(deliveryInformations) %>;
     var pageNumber = <%= number %>;
-    var isNext = <%= moreInfo %>;
+    var isNext = <%= isNext %>;
   </script>
 
   <%- include('../layout/footer') -%>
