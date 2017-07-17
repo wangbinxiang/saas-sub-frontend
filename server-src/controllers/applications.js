@@ -2,9 +2,9 @@ import ApplicationService from '../models/application/ApplicationService'
 import ProjectService from '../models/application/ProjectService'
 
 import {
-	PROJECT_STATUS_NORMAL,
-	PROJECT_STATUS_PUBLISH,
-	PROJECT_STATUS_DELETE,
+    PROJECT_STATUS_NORMAL,
+    PROJECT_STATUS_PUBLISH,
+    PROJECT_STATUS_DELETE,
     PROJECT_STATUS_NAMES,
     PROJECT_CATEGORY_INVEST,
     PROJECT_CATEGORY_FINACE,
@@ -12,9 +12,9 @@ import {
 } from '../config/projectConf'
 
 import {
-	APPLICATION_STATUS_NORMAL,
-	APPLICATION_STATUS_PAID,
-	APPLICATION_STATUS_DECLINE,
+    APPLICATION_STATUS_NORMAL,
+    APPLICATION_STATUS_PAID,
+    APPLICATION_STATUS_DECLINE,
     APPLICATION_STATUS_APPROVE,
     APPLICATION_STATUS_NAMES,
 
@@ -23,7 +23,7 @@ import {
     APPLICATION_ROLL_GUEST,
     APPLICATION_ROLL_NAMES,
     REPLY_SOURCE_APPLICATION,
-	REPLY_SOURCE_PROJECT
+    REPLY_SOURCE_PROJECT
 } from '../config/applicationConf'
 
 import nl2br from 'nl2br'
@@ -91,6 +91,7 @@ export async function showAdd (ctx, next) {
   const projectService = new ProjectService()
   const project = await projectService.get(projectId)
 
+  console.log(project.template.rules)
   if (project === null || project.prices[priceIndex] === undefined || project.userId != ctx._subId) {
 	    ctx.status = 404
     await ctx.render('404')
@@ -99,7 +100,7 @@ export async function showAdd (ctx, next) {
 
     const pageJs = webpackIsomorphicTools.assets().javascript.applicationAdd
 
-	    const csrf = ctx.csrf
+    const csrf = ctx.csrf
 
     const imgHost = config.get('qiniu.bucket.subImg.url')
     const imgUploadUrl = config.get('qiniu.bucket.subImg.uploadUrl')
@@ -107,11 +108,11 @@ export async function showAdd (ctx, next) {
     await ctx.render('application/add', {
       title,
       pageJs,
-		    csrf,
-		    project,
-		    priceIndex,
-		    imgHost,
-		    imgUploadUrl
+      csrf,
+      project,
+      priceIndex,
+      imgHost,
+      imgUploadUrl
     })
   }
 }
@@ -300,19 +301,19 @@ export async function detail (ctx, next) {
 				// 通过：恭喜您！您的申请已被批准。
 				// 拒绝：很抱歉！您的申请未获批准。
         switch (application.status) {
-        case APPLICATION_STATUS_NORMAL:
-          noticeTitle = '申请提交成功！感谢您的申请。'
-          break
-        case APPLICATION_STATUS_PAID:
-          noticeTitle = ''
-          break
-        case APPLICATION_STATUS_DECLINE:
-          noticeTitle = '申请已取消。'
-          break
-        case APPLICATION_STATUS_APPROVE:
-          noticeTitle = '恭喜您！您的申请已成功。'
-          break
-      }
+          case APPLICATION_STATUS_NORMAL:
+            noticeTitle = '申请提交成功！感谢您的申请。'
+            break
+          case APPLICATION_STATUS_PAID:
+            noticeTitle = ''
+            break
+          case APPLICATION_STATUS_DECLINE:
+            noticeTitle = '申请已取消。'
+            break
+          case APPLICATION_STATUS_APPROVE:
+            noticeTitle = '恭喜您！您的申请已成功。'
+            break
+        }
       }
 
 	        const title = '项目申请'

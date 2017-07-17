@@ -1,80 +1,90 @@
 <%- include('../layout/header') -%>
 
-<nav aria-label="You are here:" role="navigation" class="clearfix">
+  <nav aria-label="You are here:" role="navigation" class="clearfix">
     <ul class="breadcrumbs onionLink">
-        <li><a href="/">首页</a></li>
-        <li>
-            <span class="show-for-sr">Current: </span> 提交申请
-        </li>
+      <li><a href="/">首页</a></li>
+      <li>
+        <span class="show-for-sr">Current: </span> 提交申请
+      </li>
     </ul>
-</nav>
+  </nav>
 
-<h1 class="row column">提交申请</h1>
+  <h1 class="row column">提交申请</h1>
 
-<div class="row column blk-margin">
+  <div class="row column blk-margin">
     <div class="callout">
-        <p>
-            (ID)名称：<a target="_blank" href="/projects/<%= project.id %>">(<%= project.id %>)<%= project.name %></a> 规格: <%= project.prices[priceIndex].title %>; 金额: <%= project.prices[priceIndex].price %>
-        </p>
+      <p>
+        (ID)名称：<a target="_blank" href="/projects/<%= project.id %>">(<%= project.id %>)<%= project.name %></a> 规格:
+        <%= project.prices[priceIndex].title %>; 金额:
+          <%= project.prices[priceIndex].price %>
+      </p>
     </div>
-</div>
+  </div>
 
-<div class="row column">
+  <div class="row column">
     <form data-abide novalidate id="formGood">
-        <fieldset class="fieldset">
-            <legend><h4>申请用户信息</h4></legend>
-            <div class="row">
-                <div class="medium-6 columns">
-                    <label>
+      <fieldset class="fieldset">
+        <legend>
+          <h4>申请用户信息</h4>
+        </legend>
+        <div class="row">
+          <div class="medium-6 columns">
+            <label>
                         姓名
                         <input type="text" id="realName" required value="">
                         <input type="hidden" id="projectId" name="projectId" value="<%= project.id %>" />
                         <input type="hidden" id="priceIndex" name="priceIndex" value="<%= priceIndex %>" />
                         <input type="hidden" id="_csrf" name="_csrf" value="<%= csrf %>" />
                     </label>
-                </div>
-                <div class="medium-6 columns">
-                    <label>
+          </div>
+          <div class="medium-6 columns">
+            <label>
                         联系电话
                         <input type="text" id="contactPhone" required value="" pattern="number">
                     </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="medium-6 columns">
-                    <label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="medium-6 columns">
+            <label>
                         公司名称
                         <input type="text" id="companyName" value="">        
                     </label>
-                </div>
-                <div class="medium-6 columns">
-                    <label>
+          </div>
+          <div class="medium-6 columns">
+            <label>
                         公司地址
                         <input type="text" id="companyAddress" value="">
                     </label>
-                </div>
-            </div>
-        </fieldset>
-        
-        <div data-abide-error class="alert callout" style="display: none;">
-            <p><i class="fi-alert"></i> 请填写完整用户信息</p>
+          </div>
         </div>
-        <fieldset class="fieldset" id="fieldAddress">
-            <legend><h4>申请信息</h4></legend>
-            <textarea rows="5" id="information" placeholder="申请说明"></textarea>
-            <label>上传文件仅支持rar, zip, pdf, word格式，文件大小不超过50M，最多5个文件。</label>
-            <div class="dropzone dropzone-single" id="attachmentUploader"></div>
-        </fieldset>
+      </fieldset>
+
+      <div data-abide-error class="alert callout" style="display: none;">
+        <p><i class="fi-alert"></i> 请填写完整用户信息</p>
+      </div>
+      <fieldset class="fieldset" id="fieldAddress">
+        <legend>
+          <h4>申请信息</h4>
+        </legend>
+        <div class="row">
+          <div class="class="medium-12 columns"" data-bind="foreach: ">
+          </div>
+        </div>
+        <!--<textarea rows="5" id="information" placeholder="申请说明"></textarea>-->
+        <label>上传文件仅支持rar, zip, pdf, word格式，文件大小不超过50M，最多5个文件。</label>
+        <div class="dropzone dropzone-single" id="attachmentUploader"></div>
+      </fieldset>
     </form>
-</div>
+  </div>
 
-<div class="row text-center form-submit-wrap blk-margin" id="formButton">
-	<button data-bind="disable: submit" class="button large blk-margin blk-margin-bottom" id="saveGood">确认并提交申请</button>
-</div>
+  <div class="row text-center form-submit-wrap blk-margin" id="formButton">
+    <button data-bind="disable: submit" class="button large blk-margin blk-margin-bottom" id="saveGood">确认并提交申请</button>
+  </div>
 
-<script>
+  <script>
     var projectId = <%= project.id %>;
     var imgHost = '<%= imgHost %>';
     var imgUploadUrl = '<%= imgUploadUrl %>';
-</script>
-<%- include('../layout/footer') -%>
+  </script>
+  <%- include('../layout/footer') -%>
