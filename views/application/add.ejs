@@ -14,9 +14,7 @@
   <div class="row column blk-margin">
     <div class="callout">
       <p>
-        (ID)名称：<a target="_blank" href="/projects/<%= project.id %>">(<%= project.id %>)<%= project.name %></a> 规格:
-        <%= project.prices[priceIndex].title %>; 金额:
-          <%= project.prices[priceIndex].price %>
+        (ID)名称：<a target="_blank" data-bind="attr: {href: '/projects/' + project.id}"><span data-bind="text: '(' + project.id + ')' + project.name"></span></a> 规格:<span data-bind="text: title"></span>; 金额:<span data-bind="text: price"></span>
       </p>
     </div>
   </div>
@@ -32,8 +30,8 @@
             <label>
                         姓名
                         <input type="text" id="realName" required value="">
-                        <input type="hidden" id="projectId" name="projectId" value="<%= project.id %>" />
-                        <input type="hidden" id="priceIndex" name="priceIndex" value="<%= priceIndex %>" />
+                        <input type="hidden" id="projectId" name="projectId" data-bind="value: project.id" />
+                        <input type="hidden" id="priceIndex" name="priceIndex" data-bind="value: priceIndex" />
                         <input type="hidden" id="_csrf" name="_csrf" value="<%= csrf %>" />
                     </label>
           </div>
@@ -68,7 +66,19 @@
           <h4>申请信息</h4>
         </legend>
         <div class="row">
-          <div class="class="medium-12 columns"" data-bind="foreach: ">
+          <div class="class="medium-12 columns"" data-bind="foreach: rules">
+            <div>
+              <span data-bind="text: data.name"></span>
+              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
+              <input type="text" >
+              </div>
+              <div data-bind="if: type !== '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
+                <div data-bind="foreach: data.options">
+                    <input data-bind="attr: { type: $parent.type, name: $parent.type + $parentContext.$index() }, value: $index() ">
+                    <span data-bind="text: name"></span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!--<textarea rows="5" id="information" placeholder="申请说明"></textarea>-->
@@ -83,8 +93,10 @@
   </div>
 
   <script>
-    var projectId = <%= project.id %>;
+    var project = <%- JSON.stringify(project)%>;
+    var priceIndex = <%- JSON.stringify(priceIndex)%>;
     var imgHost = '<%= imgHost %>';
     var imgUploadUrl = '<%= imgUploadUrl %>';
+    var PROJECT_APPLICATION_RULE_TEXT = <%= PROJECT_APPLICATION_RULE_TEXT %>
   </script>
   <%- include('../layout/footer') -%>

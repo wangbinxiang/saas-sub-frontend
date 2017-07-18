@@ -28,7 +28,6 @@ export default class ProjectTranslator extends Translator {
     const statusTime = bodyReader.value('statusTime')
     const status = bodyReader.value('status')
     const userId = bodyReader.value('saasUsers')
-
     return {
       id,
       name,

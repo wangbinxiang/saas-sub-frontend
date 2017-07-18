@@ -8,7 +8,8 @@ import {
     PROJECT_STATUS_NAMES,
     PROJECT_CATEGORY_INVEST,
     PROJECT_CATEGORY_FINACE,
-    PROJECT_CATEGORY_NAMES
+    PROJECT_CATEGORY_NAMES,
+    PROJECT_APPLICATION_RULE_TEXT
 } from '../config/projectConf'
 
 import {
@@ -91,7 +92,6 @@ export async function showAdd (ctx, next) {
   const projectService = new ProjectService()
   const project = await projectService.get(projectId)
 
-  console.log(project.template.rules)
   if (project === null || project.prices[priceIndex] === undefined || project.userId != ctx._subId) {
 	    ctx.status = 404
     await ctx.render('404')
@@ -112,7 +112,8 @@ export async function showAdd (ctx, next) {
       project,
       priceIndex,
       imgHost,
-      imgUploadUrl
+      imgUploadUrl,
+      PROJECT_APPLICATION_RULE_TEXT
     })
   }
 }

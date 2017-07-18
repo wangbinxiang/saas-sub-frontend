@@ -1,7 +1,7 @@
-import RequestAdapter from '../../libs/RequestAdapter';
-import ApplicationTranslator from '../translator/ApplicationTranslator';
-import ReplyTranslator from '../translator/ReplyTranslator';
-import ApplicationRequestJsonApi from '../request/ApplicationRequestJsonApi';
+import RequestAdapter from '../../libs/RequestAdapter'
+import ApplicationTranslator from '../translator/ApplicationTranslator'
+import ReplyTranslator from '../translator/ReplyTranslator'
+import ApplicationRequestJsonApi from '../request/ApplicationRequestJsonApi'
 import {
 	APPLICATION_GET,
 	APPLICATION_ADD,
@@ -10,159 +10,152 @@ import {
 	APPLICATION_DECLINE,
 	APPLICATION_REPLY,
 	APPLICATION_REPLY_GET
-} from '../../config/apiFeatureConf';
-import pageCLass from '../model/page';
+} from '../../config/apiFeatureConf'
+import pageCLass from '../model/page'
 /**
  * 产品适配器
  */
 export default class ApplicationAdapter extends RequestAdapter {
-	constructor() {
-		super();
-		this.translator = new ApplicationTranslator();
-	}
+  constructor () {
+    super()
+    this.translator = new ApplicationTranslator()
+  }
 
-	buildRequest(apiFeature, data) {
-		this.requestObject = new ApplicationRequestJsonApi(apiFeature, data);
-	}
+  buildRequest (apiFeature, data) {
+    this.requestObject = new ApplicationRequestJsonApi(apiFeature, data)
+  }
 
-
-	get({
+  get ({
 		idList,
 		filters,
 		pages,
 		sort
 	}, aApplicationClass) {
-		this.buildRequest(APPLICATION_GET, {
-			idList,
-			filters,
-			pages,
-			sort
-		});
+    this.buildRequest(APPLICATION_GET, {
+      idList,
+      filters,
+      pages,
+      sort
+    })
 
-		//如果idList是数组 则需要数组形式的结果
-		this.needArrayResult(idList)
+		// 如果idList是数组 则需要数组形式的结果
+    this.needArrayResult(idList)
 
-		this.translator.pageClass = pageCLass;
+    this.translator.pageClass = pageCLass
 
-		this.activeClass = aApplicationClass;
+    this.activeClass = aApplicationClass
 
-		return this.request();
-	}
+    return this.request()
+  }
 
-	add({
-		userId,
-		projectId,
-		realName,
-		contactPhone,
-		identifyCardNumber,
-		companyName,
-		companyAddress,
-		information,
-		priceIndex
-	}, aApplicationClass) {
-		this.buildRequest(APPLICATION_ADD, {
-			userId,
-			projectId,
-			realName,
-			contactPhone,
-			identifyCardNumber,
-			companyName,
-			companyAddress,
-			information,
-			priceIndex
-		});
+  add ({
+    userId,
+    projectId,
+    realName,
+    contactPhone,
+    identifyCardNumber,
+    companyName,
+    companyAddress,
+    information,
+    priceIndex
+  }, aApplicationClass) {
+    this.buildRequest(APPLICATION_ADD, {
+      userId,
+      projectId,
+      realName,
+      contactPhone,
+      identifyCardNumber,
+      companyName,
+      companyAddress,
+      information,
+      priceIndex
+    })
 
-		this.activeClass = aApplicationClass;
+    this.activeClass = aApplicationClass
 
-		return this.request();
+    return this.request()
+  }
 
-	}
-
-
-	finish({
+  finish ({
 		id
 	}, aApplicationClass) {
-		this.buildRequest(APPLICATION_FINISH, {
-			id
-		});
+    this.buildRequest(APPLICATION_FINISH, {
+      id
+    })
 
-		this.activeClass = aApplicationClass;
+    this.activeClass = aApplicationClass
 
-		return this.request();
-	}
+    return this.request()
+  }
 
-	
-	approve({
+  approve ({
 		id
 	}, aApplicationClass) {
-		this.buildRequest(APPLICATION_APPROVE, {
-			id
-		});
+    this.buildRequest(APPLICATION_APPROVE, {
+      id
+    })
 
-		this.activeClass = aApplicationClass;
+    this.activeClass = aApplicationClass
 
-		return this.request();
-	}
+    return this.request()
+  }
 
-	decline({
+  decline ({
 		id
 	}, aApplicationClass) {
-		this.buildRequest(APPLICATION_DECLINE, {
-			id
-		});
+    this.buildRequest(APPLICATION_DECLINE, {
+      id
+    })
 
-		this.activeClass = aApplicationClass;
+    this.activeClass = aApplicationClass
 
-		return this.request();
-	}
+    return this.request()
+  }
 
-	reply({
+  reply ({
 		id,
 		userId,
 		source,
 		content
 	}, aReplyClass) {
+    this.translator = new ReplyTranslator()
 
-		this.translator = new ReplyTranslator()
+    this.buildRequest(APPLICATION_REPLY, {
+      id,
+      userId,
+      source,
+      content
+    })
 
-		this.buildRequest(APPLICATION_REPLY, {
-			id,
-			userId,
-			source,
-			content
-		});
+    this.activeClass = aReplyClass
 
-		this.activeClass = aReplyClass;
+    return this.request()
+  }
 
-		return this.request();
-
-	}
-
-	getReplies({
+  getReplies ({
 		id,
 		idList,
 		filters,
 		pages,
 		sort
 	}, aReplyClass) {
+    this.translator = new ReplyTranslator()
 
-		this.translator = new ReplyTranslator()
-		
-		this.buildRequest(APPLICATION_REPLY_GET, {
-			id,
-			idList,
-			filters,
-			pages,
-			sort
-		});
+    this.buildRequest(APPLICATION_REPLY_GET, {
+      id,
+      idList,
+      filters,
+      pages,
+      sort
+    })
 
-		//如果idList是数组 则需要数组形式的结果
-		this.needArrayResult(idList)
+		// 如果idList是数组 则需要数组形式的结果
+    this.needArrayResult(idList)
 
-		this.translator.pageClass = pageCLass;
+    this.translator.pageClass = pageCLass
 
-		this.activeClass = aReplyClass;
+    this.activeClass = aReplyClass
 
-		return this.request();
-	}
+    return this.request()
+  }
 }
