@@ -9,7 +9,9 @@ import {
     PROJECT_CATEGORY_INVEST,
     PROJECT_CATEGORY_FINACE,
     PROJECT_CATEGORY_NAMES,
-    PROJECT_APPLICATION_RULE_TEXT
+    PROJECT_APPLICATION_RULE_TEXT,
+    PROJECT_APPLICATION_RULE_CHECKBOX,
+    PROJECT_APPLICATION_RULE_RADIO
 } from '../config/projectConf'
 
 import {
@@ -113,7 +115,9 @@ export async function showAdd (ctx, next) {
       priceIndex,
       imgHost,
       imgUploadUrl,
-      PROJECT_APPLICATION_RULE_TEXT
+      PROJECT_APPLICATION_RULE_TEXT,
+      PROJECT_APPLICATION_RULE_CHECKBOX,
+      PROJECT_APPLICATION_RULE_RADIO
     })
   }
 }
@@ -135,6 +139,7 @@ export async function add (ctx, next) {
     const companyName = ctx.request.body.companyName // string
     const companyAddress = ctx.request.body.companyAddress // string
     const information = ctx.request.body.information // string
+    console.log(information)
 
     const applicationService = new ApplicationService()
     const application = await applicationService.add(userId, projectId, realName, contactPhone, identifyCardNumber, companyName, companyAddress, information, priceIndex)
@@ -252,7 +257,7 @@ export async function detail (ctx, next) {
   const result = await applicationService.detail(id)
 
   if (result === null) {
-	    await next()
+    await next()
   } else {
     const { application, project, applicationContract } = result
     let role

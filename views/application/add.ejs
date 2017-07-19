@@ -65,23 +65,33 @@
         <legend>
           <h4>申请信息</h4>
         </legend>
-        <div class="row">
+        <div class="row" data-bind="visible: haveRules">
           <div class="class="medium-12 columns"" data-bind="foreach: rules">
+          <label>
             <div>
               <span data-bind="text: data.name"></span>
               <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
-              <input type="text" >
+                <input type="text" data-bind="attr: {name: type + $index()}" required>
               </div>
-              <div data-bind="if: type !== '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
+              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_CHECKBOX %>'">
                 <div data-bind="foreach: data.options">
-                    <input data-bind="attr: { type: $parent.type, name: $parent.type + $parentContext.$index() }, value: $index() ">
+                    <input type="checkbox" data-bind="attr: { name: $parent.type + $parentContext.$index() }, value: $index() " data-validator="check_limit">
+                    <span data-bind="text: name"></span>
+                </div>
+              </div>
+              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_RADIO %>'">
+                <div data-bind="foreach: data.options">
+                    <input type="radio" data-bind="attr: { name: $parent.type + $parentContext.$index() }, value: $index() " required>
                     <span data-bind="text: name"></span>
                 </div>
               </div>
             </div>
+            </label>
           </div>
         </div>
-        <!--<textarea rows="5" id="information" placeholder="申请说明"></textarea>-->
+        <div data-bind="visible: haveNoRules">
+        <textarea rows="5" id="information" placeholder="申请说明"></textarea>
+        </div>
         <label>上传文件仅支持rar, zip, pdf, word格式，文件大小不超过50M，最多5个文件。</label>
         <div class="dropzone dropzone-single" id="attachmentUploader"></div>
       </fieldset>
@@ -97,6 +107,8 @@
     var priceIndex = <%- JSON.stringify(priceIndex)%>;
     var imgHost = '<%= imgHost %>';
     var imgUploadUrl = '<%= imgUploadUrl %>';
-    var PROJECT_APPLICATION_RULE_TEXT = <%= PROJECT_APPLICATION_RULE_TEXT %>
+    var PROJECT_APPLICATION_RULE_TEXT = '<%= PROJECT_APPLICATION_RULE_TEXT %>';
+    var PROJECT_APPLICATION_RULE_CHECKBOX = '<%= PROJECT_APPLICATION_RULE_CHECKBOX %>';
+    var PROJECT_APPLICATION_RULE_RADIO = '<%= PROJECT_APPLICATION_RULE_RADIO %>';
   </script>
   <%- include('../layout/footer') -%>

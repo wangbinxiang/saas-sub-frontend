@@ -1,13 +1,36 @@
 import './base.js'
 import md5 from 'md5'
+import {
+    PROJECT_APPLICATION_RULE_TEXT,
+    PROJECT_APPLICATION_RULE_CHECKBOX,
+    PROJECT_APPLICATION_RULE_RADIO
+} from '../../../server-src/config/projectConf'
 
 if (module.hot) {
   module.hot.accept()
 }
 
+Foundation.Abide.defaults.validators['check_limit'] = function (element, required, parent) {
+  if (parent.find(':checked').length >= 1) {
+    return true
+  } else {
+    return false
+  }
+}
+
 const ApplicationModel = function (project, priceIndex) {
   this.priceIndex = ko.observable(priceIndex)
   this.rules = ko.observableArray(project.template.rules)
+  if (project.template.rules) {
+    this.haveRules = ko.observable(true)
+    this.haveNoRules = ko.observable(false)
+  } else {
+    this.haveRules = ko.observable(false)
+    this.haveNoRules = ko.observable(true)
+  }
+
+  console.log(project.template.rules)
+
   this.title = ko.observable(project.prices[priceIndex].title)
   this.price = ko.observable(project.prices[priceIndex].price)
 
@@ -96,6 +119,31 @@ const ApplicationModel = function (project, priceIndex) {
     Foundation.reInit($('#formGood'))
     $('#formGood').foundation('validateForm')
 
+    let applicationInfo
+    const rules = project.template.rules
+    // 投标规则数组
+    if (rules) {
+      const rulesInfo = []
+      for (let i in rules) {
+        if (rules[i].type === PROJECT_APPLICATION_RULE_TEXT) {
+          rulesInfo.push({ value: $('[name=' + PROJECT_APPLICATION_RULE_TEXT + i + ']').val() })
+        }
+        if (rules[i].type === PROJECT_APPLICATION_RULE_CHECKBOX) {
+          const checkArray = []
+          $('[name=' + PROJECT_APPLICATION_RULE_CHECKBOX + i + ']:checked').each(function () {
+            checkArray.push($(this).val())
+          })
+          rulesInfo.push({ value: checkArray })
+        }
+        if (rules[i].type === PROJECT_APPLICATION_RULE_RADIO) {
+          rulesInfo.push({ value: $('[name=' + PROJECT_APPLICATION_RULE_RADIO + i + ']:checked').val() })
+        }
+      }
+      applicationInfo = rulesInfo
+    } else {
+      applicationInfo = $('#information').val()
+    }
+
     if ($('[data-invalid]').length === 0) {
       formButton.submit(true)
       $('#saveGood').text('正在提交申请')
@@ -108,7 +156,7 @@ const ApplicationModel = function (project, priceIndex) {
       const identifyCardNumber = $('#identifyCardNumber').val()
       const companyName = $('#companyName').val()
       const companyAddress = $('#companyAddress').val()
-      const information = [attachments.attachments]// 申请信息和附件
+      const information = [applicationInfo, attachments.attachments]// 申请信息和附件
 
       $.ajax({
         method: 'POST',
