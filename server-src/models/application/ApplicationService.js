@@ -6,12 +6,12 @@ import Project from '../model/Project'
 import ApplicationContractAdapter from '../adapter/ApplicationContractAdapter'
 import ApplicationContract from '../model/ApplicationContract'
 import {
-	REPLY_SOURCE_APPLICATION,
-	REPLY_SOURCE_PROJECT
+  REPLY_SOURCE_APPLICATION,
+  REPLY_SOURCE_PROJECT
 } from '../../config/applicationConf'
 import lodash from 'lodash'
 import {
-	checkResourcesOwner
+  checkResourcesOwner
 } from '../../libs/helper'
 
 export default class ApplicationService {
@@ -28,15 +28,15 @@ export default class ApplicationService {
     }, Application)
 
     if (result == null) {
-			// 没有获取数据 直接返回空
+      // 没有获取数据 直接返回空
       return result
     } else {
       const {
-				page,
-				result: applications
-			} = result
+        page,
+        result: applications
+      } = result
 
-			// 返回 分页 和 Products 数据
+      // 返回 分页 和 Products 数据
       return {
         page,
         applications
@@ -44,14 +44,14 @@ export default class ApplicationService {
     }
   }
 
-	/**
-	 * 根据id获取product
-	 * @author wangbinxiang
-	 * @date   2016-10-26T12:07:37+0800
-	 * @param  { int or array[int]}                 idList product.id
-	 * @param  {int }                          userId 产品拥有者id,用来验证查询的数据是否是该用户
-	 * @return { null or object }              返回空 或者 product
-	 */
+  /**
+   * 根据id获取product
+   * @author wangbinxiang
+   * @date   2016-10-26T12:07:37+0800
+   * @param  { int or array[int]}                 idList product.id
+   * @param  {int }                          userId 产品拥有者id,用来验证查询的数据是否是该用户
+   * @return { null or object }              返回空 或者 product
+   */
   async get (idList) {
     const application = await this.applicationAdapter.get({
       idList
@@ -72,15 +72,21 @@ export default class ApplicationService {
     if (application === null) {
       return null
     } else {
-			// 获取项目信息
+      // 获取项目信息
       const projectAdapter = new ProjectAdapter()
       const project = await projectAdapter.get({
         idList: application.projectId
       }, Project)
+      if (project.template.rules) {
+        for (let i in project.template.rules) {
+          const rules = project.template.rules
+          rules[i].data.value = application.information[0][i].value
+        }
+      }
 
       let applicationContract = null
 
-			// 获取合同信息
+      // 获取合同信息
       if (application.contractId > 0) {
         const applicationContractAdapter = new ApplicationContractAdapter()
         applicationContract = await applicationContractAdapter.get({
@@ -106,15 +112,15 @@ export default class ApplicationService {
     }, Reply)
 
     if (result == null) {
-			// 没有获取数据 直接返回空
+      // 没有获取数据 直接返回空
       return result
     } else {
       const {
-				page,
-				result: replies
-			} = result
+        page,
+        result: replies
+      } = result
 
-			// 返回 分页 和 Products 数据
+      // 返回 分页 和 Products 数据
       return {
         page,
         replies
@@ -177,7 +183,7 @@ export default class ApplicationService {
       return null
     } else {
       let source
-			// 检查回复来源
+      // 检查回复来源
       if (application.userId === userId) {
         source = REPLY_SOURCE_APPLICATION
       } else {

@@ -1,5 +1,9 @@
 import './base.js'
+import lodash from 'lodash'
 import '../vendors/ko.bindingHandlers'
+import {
+    PROJECT_APPLICATION_RULE_CHECKBOX
+} from '../../../server-src/config/projectConf'
 if (module.hot) {
   module.hot.accept()
 }
@@ -16,6 +20,34 @@ const RepliesModel = function (data, hostId, applicantId) {
 const repliesModel = new RepliesModel(null, hostId, applicantId)
 if (document.getElementById('replies')) {
   ko.applyBindings(repliesModel, document.getElementById('replies'))
+}
+
+// 投标规则模型
+const ApplicationRulesModel = function (project, application) {
+  if (project.template.rules) {
+    this.rules = ko.observableArray(project.template.rules)
+    this.applicationInfo = ko.observableArray(application.information[0])
+    for (let rule of project.template.rules) {
+      if (rule.type === PROJECT_APPLICATION_RULE_CHECKBOX) {
+        let options = rule.data.options
+        let checkedValue = rule.data.value
+        for (let i in options) {
+          if (lodash.indexOf(checkedValue, String(i)) >= 0) {
+            options[i].isChecked = true
+          } else {
+            options[i].isChecked = false
+          }
+        }
+      }
+    }
+  } else {
+    this.applicationInfo = ko.observable(application.information[0])
+  }
+}
+const applicationRulesModel = new ApplicationRulesModel(project, application)
+
+if (document.getElementById('applicationInfo')) {
+  ko.applyBindings(applicationRulesModel, document.getElementById('applicationInfo'))
 }
 
 $.ajax({

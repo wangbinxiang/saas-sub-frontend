@@ -67,11 +67,38 @@
     </fieldset>
     <fieldset class="fieldset">
         <legend><h4>申请信息</h4></legend>
-        <small><%- application._createTimeDate %></small>
-        <!--<div><%- application.information[0]? nl2br(application.information[0].replace(/ /g, '&nbsp;')):'' %></div> //-->
+        <small>申请时间：<%- application._createTimeDate %></small>
         <% if(application.information[0]){ %>
-        
-        <%}%>
+        <div id="applicationInfo">
+            
+            <% if(project.template.rules === undefined || project.template.rules === '') {%>
+            <div>
+            <%- application.information[0]? nl2br(application.information[0].replace(/ /g, '&nbsp;')):'' %>
+            </div>
+            <%}%>
+
+            <% if(project.template.rules) {%>
+            <div data-bind="foreach: rules">
+             <span data-bind="text: data.name"></span>
+              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
+                <input type="text" data-bind="attr: {name: type + $index()}, value: data.value " disabled>
+              </div>
+              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_CHECKBOX %>'">
+                <div data-bind="foreach: data.options">
+                    <input type="checkbox" data-bind="attr: { name: $parent.type + $parentContext.$index(), checked: isChecked === true ? 'checked' : false }, value: $index() " disabled>
+                    <span data-bind="text: name"></span>
+                </div>
+              </div>
+              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_RADIO %>'">
+                <div data-bind="foreach: data.options">
+                    <input type="radio" data-bind="attr: { name: $parent.type + $parentContext.$index(), checked: $index() === +$parent.data.value ? 'checked' : false}, value: $index() " disabled>
+                    <span data-bind="text: name"></span>
+                </div>
+              </div>
+            </div>
+            <%}%>
+        </div>
+        <% } %>
         <% if(application.information[1]){ %>
             <p><br /><strong>附件下载</strong>
             <% for(let attachment of application.information[1]){ %>
@@ -81,10 +108,14 @@
         <% } %>
     </fieldset>
     <% if(application.status === APPLICATION_STATUS_NORMAL) { %>
-        <% if(applicationContract) { %>
+        <% if(applicationContract) {%>
             <form data-abide="ajax" id="contractForm" novalidate>
                 <fieldset class="fieldset" id="contractInfo">
-                    <legend><h4>合同及支付信息</h4></legend>
+                <legend>
+                  <h4>
+                    合同及支付信息
+                  </h4>
+                </legend>
                     <div class="row">
                         <div class="medium-3 columns">
                             <label>
@@ -148,7 +179,9 @@
     <% } else { %>
         <% if(applicationContract) { %>
             <fieldset class="fieldset" id="contractInfo">
-                <legend><h4>合同及支付信息</h4></legend>
+                <legend><h4>
+                合同及支付信息
+                </h4></legend>
                 <div class="row">
                     <div class="medium-3 columns">
                         <label>
@@ -196,9 +229,14 @@
     var projectId = <%- project.id %>;
     var applicationId = <%- application.id %>;
     var applicationContract = <%- JSON.stringify(applicationContract) %>;
+    var project = <%- JSON.stringify(project) %>;
+    var application = <%- JSON.stringify(application) %>;
     var hostId = <%- hostId %>;
     var applicantId = <%- applicantId %>;
     var imgHost = '<%- imgHost %>';
     var imgUploadUrl = '<%- imgUploadUrl %>';
+    var PROJECT_APPLICATION_RULE_TEXT = '<%= PROJECT_APPLICATION_RULE_TEXT %>';
+    var PROJECT_APPLICATION_RULE_CHECKBOX = '<%= PROJECT_APPLICATION_RULE_CHECKBOX %>';
+    var PROJECT_APPLICATION_RULE_RADIO = '<%= PROJECT_APPLICATION_RULE_RADIO %>';
 </script>
 <%- include('../layout/footer') -%>

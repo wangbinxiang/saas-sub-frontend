@@ -1,6 +1,9 @@
 import './base.js'
 import md5 from 'md5'
 import {
+  motionAlert
+} from '../vendors/motion-alert'
+import {
     PROJECT_APPLICATION_RULE_TEXT,
     PROJECT_APPLICATION_RULE_CHECKBOX,
     PROJECT_APPLICATION_RULE_RADIO
@@ -28,8 +31,6 @@ const ApplicationModel = function (project, priceIndex) {
     this.haveRules = ko.observable(false)
     this.haveNoRules = ko.observable(true)
   }
-
-  console.log(project.template.rules)
 
   this.title = ko.observable(project.prices[priceIndex].title)
   this.price = ko.observable(project.prices[priceIndex].price)
@@ -165,11 +166,20 @@ const ApplicationModel = function (project, priceIndex) {
         data: { _csrf, projectId, priceIndex, realName, contactPhone, identifyCardNumber, companyName, companyAddress, information }
       })
         .done(function (response) {
-          window.alert('提交成功')
+          const option = {
+            status: 'success',
+            title: '成功',
+            note: '提交成功'
+          }
+          motionAlert(option)
           window.location.href = '/applications/' + response.id
         })
         .fail(function (response) {
-          window.alert('提交失败！')
+          const option = {
+            title: '错误',
+            note: '提交失败！'
+          }
+          motionAlert(option)
           formButton.submit(false)
           $('#saveGood').attr('disabled', false)
           $('#saveGood').text('确认并提交申请')
