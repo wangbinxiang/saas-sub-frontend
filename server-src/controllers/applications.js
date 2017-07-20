@@ -35,7 +35,7 @@ import config from 'config'
 export async function index (ctx, next) {
   let number = ctx.query.number ? ctx.query.number : 1
 
-  let size = ctx.query.size ? ctx.query.size : 2
+  let size = ctx.query.size ? ctx.query.size : 20
 
   const flag = !!ctx.query.flag
 
