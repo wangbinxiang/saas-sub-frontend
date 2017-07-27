@@ -14,9 +14,19 @@ if (module.hot) {
 }
 
 Foundation.Abide.defaults.validators['check_limit'] = function (element, required, parent) {
-  if (parent.find(':checked').length >= 1) {
+  if ($('input[name=' + element.attr('name') + ']:checked').length >= 1) {
+    //   group.find(':checkbox').each(function() {
+    //     $(this).removeClass('is-invalid-input').removeAttr('data-invalid');
+    //   });
+    // parent.parent().children().find($('.is-invalid-input'))
+    parent.parent().find($('.is-invalid-label')).removeClass('is-invalid-label')
+    parent.parent().find($('.is-invalid-input')).removeClass('is-invalid-input').removeAttr('data-invalid')
+    console.log(parent.parent().find($('.is-invalid-label')).length)
+    console.log(parent.parent().find($('.is-invalid-input')).length)
     return true
   } else {
+    parent.parent().find('label').addClass('is-invalid-label')
+    parent.parent().find('input').addClass('is-invalid-input').attr('data-invalid')
     return false
   }
 }
@@ -144,7 +154,6 @@ const ApplicationModel = function (project, priceIndex) {
     } else {
       applicationInfo = $('#information').val()
     }
-
     if ($('[data-invalid]').length === 0) {
       formButton.submit(true)
       $('#saveGood').text('正在提交申请')

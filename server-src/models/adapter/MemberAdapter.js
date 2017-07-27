@@ -1,5 +1,6 @@
 import RequestAdapter from '../../libs/RequestAdapter'
 import MemberTranslator from '../translator/MemberTranslator'
+import MemberGroupTranslator from '../translator/MemberGroupTranslator'
 import MemberRequestJsonApi from '../request/MemberRequestJsonApi'
 import pageCLass from '../model/page'
 import {
@@ -11,7 +12,8 @@ import {
   MEMBER_PARENT,
   MEMBER_CHILDREN,
   MEMBER_UPDATE_AVATAR,
-  MEMBER_BIND_PARENT
+  MEMBER_BIND_PARENT,
+  MEMBER_USER_GROUP
 } from '../../config/apiFeatureConf'
 
 export default class MemberAdapter extends RequestAdapter {
@@ -192,6 +194,22 @@ export default class MemberAdapter extends RequestAdapter {
     })
 
     this.activeClass = aMemberClass
+
+    return this.request()
+  }
+
+  userGroup ({
+    id,
+    shopId
+  }, aMemberGroupClass) {
+    this.translator = new MemberGroupTranslator()
+
+    this.buildRequest(MEMBER_USER_GROUP, {
+      id,
+      shopId
+    })
+
+    this.activeClass = aMemberGroupClass
 
     return this.request()
   }

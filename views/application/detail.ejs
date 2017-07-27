@@ -1,4 +1,13 @@
 <%- include('../layout/header') -%>
+<style>
+.rulesOptions {
+  display:inline-block;
+  padding:0 5px 0 0;
+  margin-right:25px;
+  height:50px;
+  line-height:50px;
+}
+</style>
 <div class="show-for-small-only small-header-margin-top"></div>
 <nav aria-label="You are here:" role="navigation" class="clearfix">
     <ul class="breadcrumbs onionLink">
@@ -72,27 +81,33 @@
         <div id="applicationInfo">
             
             <% if(project.template.rules === undefined || project.template.rules === '') {%>
-            <div>
-            <%- application.information[0]? nl2br(application.information[0].replace(/ /g, '&nbsp;')):'' %>
-            </div>
+              <div>
+                <%- application.information[0]? nl2br(application.information[0].replace(/ /g, '&nbsp;')):'' %>
+              </div>
             <%}%>
 
             <% if(project.template.rules) {%>
             <div data-bind="foreach: rules">
-             <span data-bind="text: data.name"></span>
-              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
-                <input type="text" data-bind="attr: {name: type + $index()}, value: data.value " disabled>
-              </div>
-              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_CHECKBOX %>'">
-                <div data-bind="foreach: data.options">
-                    <input type="checkbox" data-bind="attr: { name: $parent.type + $parentContext.$index(), checked: isChecked === true ? 'checked' : false }, value: $index() " disabled>
-                    <span data-bind="text: name"></span>
+              <div class="medium-12 columns">
+              <span data-bind="text: data.name"></span>
+                <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_TEXT %>'">
+                  <p  class="rulesOptions" data-bind="text: data.value "></p>
                 </div>
-              </div>
-              <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_RADIO %>'">
-                <div data-bind="foreach: data.options">
-                    <input type="radio" data-bind="attr: { name: $parent.type + $parentContext.$index(), checked: $index() === +$parent.data.value ? 'checked' : false}, value: $index() " disabled>
-                    <span data-bind="text: name"></span>
+                <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_CHECKBOX %>'">
+                  <div data-bind="foreach: data.options">
+                    <label class="rulesOptions">
+                      <input type="checkbox" data-bind="attr: { name: $parent.type + $parentContext.$index(), checked: isChecked === true ? 'checked' : false }, value: $index() " disabled>
+                      <span data-bind="text: name"></span>
+                    </label>
+                  </div>
+                </div>
+                <div data-bind="if: type === '<%= PROJECT_APPLICATION_RULE_RADIO %>'">
+                  <div data-bind="foreach: data.options">
+                    <label class="rulesOptions">
+                      <input type="radio" data-bind="attr: { name: $parent.type + $parentContext.$index(), checked: $index() === +$parent.data.value ? 'checked' : false}, value: $index() " disabled>
+                      <span data-bind="text: name"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

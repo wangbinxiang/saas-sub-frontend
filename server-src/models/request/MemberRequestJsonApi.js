@@ -20,7 +20,8 @@ import {
   MEMBER_PARENT,
   MEMBER_CHILDREN,
   MEMBER_UPDATE_AVATAR,
-  MEMBER_BIND_PARENT
+  MEMBER_BIND_PARENT,
+  MEMBER_USER_GROUP
 } from '../../config/apiFeatureConf'
 
 export default class MemberRequestJsonApi extends BaseRequest {
@@ -171,6 +172,12 @@ export default class MemberRequestJsonApi extends BaseRequest {
     this.buildData(attributes)
   }
 
+  userGroup () {
+    this.url = '/user/' + this.originData.id + '/shop/' + this.originData.shopId + '/userGroup'
+
+    this.method = GET
+  }
+
   buildFeature () {
     switch (this.feature) {
       case MEMBER_GET:
@@ -199,6 +206,9 @@ export default class MemberRequestJsonApi extends BaseRequest {
         break
       case MEMBER_BIND_PARENT:
         this.bindParent()
+        break
+      case MEMBER_USER_GROUP:
+        this.userGroup()
         break
       default:
         throw new Error('Invalid feature method')

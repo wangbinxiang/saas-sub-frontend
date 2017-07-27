@@ -22,7 +22,7 @@ export async function productType (ctx, next) {
     products,
     productType
   } = await channelService.productType(number, size, productTypeId, ctx._subId)
-
+  console.log(ctx.memberGroup)
   if (!productType) {
     // 404
     await next()
