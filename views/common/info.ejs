@@ -1,11 +1,21 @@
 <%- include('../layout/header') -%>
+<style>
+.info{
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: .9375rem;
+  padding-right: .9375rem;
+  padding-left:0;
+}@media screen and (min-width:40em){.info{padding-left:15px;}}
+</style>
     <nav aria-label="You are here:" role="navigation" class="clearfix">
         <ul class="breadcrumbs onionLink">
             <li><a href="/">首页</a></li>
         </ul>
     </nav>
-    <h1 class="row column user-margin"><%= title %></h1>
-    <div data-abide-error class="alert callout" >
-        <p><i class="fi-alert"></i><%= info %><a href="<%- typeof location !== 'undefined'? location: '/' %>">点击后将跳转</a></p>
+    <h1 class="row column user-margin"><%- title %></h1>
+    <div data-abide-error class=" alert callout" >
+        <p class="info"><i class="fi-alert"></i><%- info %><a id="redirect" href="<%- typeof location !== 'undefined'? location: '/' %>">点击或<span id="time">2</span>秒后将跳转</a></p>
     </div>
 <%- include('../layout/footer') -%>
