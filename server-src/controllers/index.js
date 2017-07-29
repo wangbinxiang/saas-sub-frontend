@@ -2,6 +2,7 @@ import IndexService from '../models/application/IndexService'
 import ProductService from '../models/application/ProductService'
 import ArticlesService from '../models/application/ArticlesService'
 import ProjectService from '../models/application/ProjectService'
+import PurchaseProductService from '../models/application/PurchaseProductService'
 import {
     PROJECT_STATUS_PUBLISH,
     PROJECT_CATEGORY_B2C
@@ -16,7 +17,7 @@ import {
     SHOP_SLIDES_TYPE_PRODUCT,
     SHOP_SLIDES_TYPE_ARTICLE,
     SHOP_SLIDES_TYPE_PROJECT,
-    SHOP_SLIDES_TYPE_NAMES
+    SHOP_SLIDES_TYPE_PURCHASE
 } from '../config/shopConf'
 
 import {
@@ -39,9 +40,10 @@ export async function index (ctx, next) {
   let slidesData = []
 
   if (ctx._shop.slides && ctx._shop.slides.length) {
-    let productIds = []
-    let articleIds = []
-    let projectIds = []
+    const productIds = []
+    const articleIds = []
+    const projectIds = []
+    const purchaseIds = []
 
     for (let val of ctx._shop.slides) {
       if (lodash.isString(val)) {
@@ -56,6 +58,9 @@ export async function index (ctx, next) {
             break
           case SHOP_SLIDES_TYPE_PROJECT:
             projectIds.push(val.id)
+            break
+          case SHOP_SLIDES_TYPE_PURCHASE:
+            purchaseIds.push(val.id)
             break
         }
       }
@@ -105,6 +110,22 @@ export async function index (ctx, next) {
             title: projects[i].name,
             img: imgHost + projects[i].logo,
             url: '/projects/' + projects[i].id
+          })
+        }
+      }
+    }
+
+    if (purchaseIds.length > 0) {
+      const purchaseProductService = new PurchaseProductService()
+      const purchases = await purchaseProductService.get(purchaseIds)
+      if (purchases) {
+        for (let i in purchases) {
+          slidesData.push({
+            slideType: SHOP_SLIDES_TYPE_PROJECT,
+            id: purchases[i].id,
+            title: purchases[i].name,
+            img: imgHost + purchases[i].logo,
+            url: '/products/' + purchases[i].id + '/1'
           })
         }
       }

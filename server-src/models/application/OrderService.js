@@ -74,7 +74,6 @@ export default class OrderService {
         idList: productId,
         include
       }, Product)
-      console.log(product)
       if (product === null || !product.isOnSale() || (!checkOther(productId, shopId) && !checkResourcesOwner(product, 'userId', shopId))) {
         return null
       }
@@ -125,7 +124,7 @@ export default class OrderService {
     const cartTable = await cartTableAdapter.get({
       idList: cartTableId
     }, CartTable)
-    
+
     if (cartTable === null || !checkResourcesOwner(cartTable, 'shopId', shopId)) {
       return null
     }
