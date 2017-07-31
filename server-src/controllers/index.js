@@ -223,6 +223,10 @@ export async function index (ctx, next) {
       const productService = new ProductService()
       const otherProducts = await productService.list(otherIds)
       if (otherProducts) {
+        lodash.map(otherProducts, function (product) {
+          product.productId = product.id
+          return product
+        })
         products = products ? lodash.concat(products, otherProducts) : otherProducts
       }
     }
