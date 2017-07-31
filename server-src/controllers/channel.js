@@ -46,6 +46,7 @@ export async function productType (ctx, next) {
         if (otherProducts) {
           lodash.map(otherProducts, function (product) {
             product.productId = product.id
+            product.source = 0
             return product
           })
           if (products) {
