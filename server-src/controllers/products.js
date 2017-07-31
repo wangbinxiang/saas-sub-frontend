@@ -8,6 +8,13 @@ import {
   detailSlideStyle,
   detailStyle
 } from '../tools/imgStyle'
+import {
+  verifyPermission
+} from '../tools/permission'
+import {
+  PERMISSION_PRODUCT_TYPE_DETAIL_SHOW,
+  PERMISSION_PRODUCT_TYPE_TRADE
+} from '../config/memberGroupConf'
 
 /**
  * 产品详情页面
@@ -28,6 +35,9 @@ export async function detail (ctx, next) {
   if (product === null) {
     await next()
   } else {
+    // ctx.memberGroup.purview = { [PERMISSION_PRODUCT_TYPE_DETAIL_SHOW]: [product.productTypeId] }
+    const pagePermission = verifyPermission(ctx.memberGroup, PERMISSION_PRODUCT_TYPE_DETAIL_SHOW, product.productTypeId)
+
     if (product.isOnSale()) {
       const imgDetailSlideStyle = detailSlideStyle(ctx)
       const imgDetailStyle = detailStyle(ctx)
@@ -42,6 +52,13 @@ export async function detail (ctx, next) {
 
       const showRebate = !!isAuthRelationship(ctx)
 
+      // 交易权限
+      // ctx.memberGroup.purview = { [PERMISSION_PRODUCT_TYPE_TRADE]: [product.productTypeId] }
+      let tradePermission = null
+      if (pagePermission) {
+        tradePermission = verifyPermission(ctx.memberGroup, PERMISSION_PRODUCT_TYPE_TRADE, product.productTypeId)
+      }
+
       await ctx.render('products/detail', {
         title,
         isPruchase,
@@ -53,7 +70,9 @@ export async function detail (ctx, next) {
         showRelationship,
         imgDetailSlideStyle,
         imgDetailStyle,
-        showRebate
+        showRebate,
+        pagePermission,
+        tradePermission
       })
     } else {
       await ctx.render('common/info', {

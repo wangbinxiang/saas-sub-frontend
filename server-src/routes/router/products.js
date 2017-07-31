@@ -9,11 +9,16 @@ import navigation from '../../middlewares/navigation'
 import {
   inWechatRequiresLogin
 } from '../../middlewares/authorization'
+import {
+  permission
+} from '../../middlewares/permission/'
 
 const router = Router()
 
 // 需要登陆
 router.use(inWechatRequiresLogin)
+
+router.use(permission)
 
 // 路由前缀
 router.prefix('/products')

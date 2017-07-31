@@ -9,26 +9,32 @@
     </ul>
 </nav>
 <h1 class="row pageHeader"><%- article.title %></h1>
+
 <div class="column row article-detail">
     <div class="row column">
         <div class="profile-main">
-        <% for(let description of article.content) { %>
-            <% if (description.type === "image" && description.value){ %>
-                <% if (description.value.url){ %>
-                    <% if (description.value.link){ %>
-                        <a target="_blank" href="<%- 'http://' + description.value.link %>" class="image-link-"><img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
-                    <% } else { %>
-                        <img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" />
-                    <% } %>
-                <% } %>
-            <% } else if (description.type === "text" && description.value) { %>
-                <% if(description.value.title != ''){ %>
-                <h6<% if (description.value.isAlert == "true") { %> class="alert"<% } %>><%- description.value.title.replace(/ /g, '&nbsp;') %></h6>
-                <% } %>
-                <p<% if (description.value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(description.value.desc.replace(/ /g, '&nbsp;')) _%></p>
-            <% } %>
+        <% if (pagePermission) { %>
+          <% for(let description of article.content) { %>
+              <% if (description.type === "image" && description.value){ %>
+                  <% if (description.value.url){ %>
+                      <% if (description.value.link){ %>
+                          <a target="_blank" href="<%- 'http://' + description.value.link %>" class="image-link-"><img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                      <% } else { %>
+                          <img src="<%- imgHost + description.value.url %><%- imgDetailStyle %>" />
+                      <% } %>
+                  <% } %>
+              <% } else if (description.type === "text" && description.value) { %>
+                  <% if(description.value.title != ''){ %>
+                  <h6<% if (description.value.isAlert == "true") { %> class="alert"<% } %>><%- description.value.title.replace(/ /g, '&nbsp;') %></h6>
+                  <% } %>
+                  <p<% if (description.value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(description.value.desc.replace(/ /g, '&nbsp;')) _%></p>
+              <% } %>
+          <% } %>
+        <% } else { %>
+          <p style="text-align:center;color:#eb7350;margin-top:30px;">您没有权限查看内容详情</p>
         <% } %>
         </div>
     </div>
 </div>
+
 <%- include('../layout/footer') -%>
