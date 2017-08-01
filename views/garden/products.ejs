@@ -24,10 +24,12 @@
     <div class="top-bar hot-bar clearfix">
         <ul class="dropdown menu index" data-dropdown-menu id="tagFilter">
             <li class="menu-text"><%- info.channelName %></li>
-            <% for(let i of info.productTypes) { %>
-            <li>
-                <a target="_blank" href="/channel/productTypes/<%- i.id %>"><%- i.name %></a>
-            </li>
+            <% if(info.productTypes) { %>
+              <% for(let i of info.productTypes) { %>
+              <li>
+                  <a target="_blank" href="/channel/productTypes/<%- i.id %>"><%- i.name %></a>
+              </li>
+              <% } %>
             <% } %>
         </ul>
     </div>

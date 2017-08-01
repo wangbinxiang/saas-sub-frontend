@@ -1,19 +1,30 @@
-import Router from 'koa-router';
-import { articles, products, projects } from '../../controllers/garden';
-import navigation from '../../middlewares/navigation';
-const router = Router();
-import { inWechatRequiresLogin } from '../../middlewares/authorization';
+import Router from 'koa-router'
+import {
+  articles,
+  products,
+  projects
+} from '../../controllers/garden'
+import navigation from '../../middlewares/navigation'
+import {
+  inWechatRequiresLogin
+} from '../../middlewares/authorization'
+import {
+  permission
+} from '../../middlewares/permission/'
 
-//路由前缀
-router.prefix('/garden');
+const router = Router()
+// 路由前缀
+router.prefix('/garden')
 
-//需要登陆
-router.use(inWechatRequiresLogin);
+// 需要登陆
+router.use(inWechatRequiresLogin)
 
-router.get('/articles', navigation, articles);
+router.use(permission)
 
-router.get('/products/:id', navigation, products);
+router.get('/articles', navigation, articles)
 
-router.get('/projects/:id', navigation, projects);
+router.get('/products/:id', navigation, products)
 
-export default router;
+router.get('/projects/:id', navigation, projects)
+
+export default router
