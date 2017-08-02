@@ -46,7 +46,7 @@ export default class MemberService {
 
   async wechatLogin (openid, nickName, shopId, unionId, headimgurl) {
     let member
-    member = await this.userAdapter.wechatLogin(unionId, Member)
+    member = await this.userAdapter.wechatLogin({ unionId, shopId }, Member)
 
     if (member) {
       if (member.noAvatar()) {
@@ -100,7 +100,7 @@ export default class MemberService {
   async wechatRelationshipLogin (openid, nickName, shopId, parentId, unionId, headimgurl) {
     let member = null
     let success = false // 关联是否成功标示
-    member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member)
+    member = await this.userAdapter.wechatRelationshipLogin({ unionId, parentId, shopId }, Member)
 
     if (member) {
       const avatarResult = await qiniuUpload(headimgurl)
@@ -157,7 +157,7 @@ export default class MemberService {
     let member = null
     let success = false // 关联是否成功标示
 
-    member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member)
+    member = await this.userAdapter.wechatSourceRelationshipLogin({ unionId, source, sourceId, parentId, shopId }, Member)
     if (member) {
       if (member.noAvatar()) {
         // member没有头像就上传

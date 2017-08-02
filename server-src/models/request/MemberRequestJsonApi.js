@@ -124,7 +124,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
 
     let attributes = {
       unionId: this.originData.unionId,
-      parentId: this.originData.parentId
+      parentId: this.originData.parentId,
+      shopId: this.originData.shopId
     }
 
     this.buildData(attributes)
@@ -142,7 +143,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
       unionId: this.originData.unionId,
       source: this.originData.source,
       sourceId: this.originData.sourceId,
-      parentId: this.originData.parentId
+      parentId: this.originData.parentId,
+      shopId: this.originData.shopId
     }
 
     this.buildData(attributes)

@@ -134,9 +134,10 @@ export default class MemberAdapter extends RequestAdapter {
 
   // 普通微信登陆和关系微信登陆分开
   // 验证用户 async函数
-  wechatLogin (unionId, aUserClass) {
+  wechatLogin ({ unionId, shopId }, aUserClass) {
     this.buildRequest(MEMBER_LOGIN, {
-      unionId
+      unionId,
+      shopId
     })
 
     this.activeClass = aUserClass
@@ -145,10 +146,11 @@ export default class MemberAdapter extends RequestAdapter {
   }
 
   // 关系类型登陆
-  wechatRelationshipLogin (unionId, parentId, aUserClass) {
+  wechatRelationshipLogin ({ unionId, parentId, shopId }, aUserClass) {
     this.buildRequest(MEMBER_LOGIN, {
       unionId,
-      parentId
+      parentId,
+      shopId
     })
 
     this.activeClass = aUserClass
@@ -157,11 +159,12 @@ export default class MemberAdapter extends RequestAdapter {
   }
 
   // 第三方网站关系类型登陆
-  wechatSourceRelationshipLogin (unionId, source, sourceId, parentId, aUserClass) {
+  wechatSourceRelationshipLogin ({ unionId, source, sourceId, parentId, shopId }, aUserClass) {
     this.buildRequest(MEMBER_SOURCE_LOGIN, {
       unionId,
       source,
-      sourceId
+      sourceId,
+      shopId
       // parentId
     })
 
