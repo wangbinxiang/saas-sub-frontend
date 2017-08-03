@@ -9,98 +9,101 @@
     </ul>
 </nav>
 <h1 class="row pageHeader"><%- product.name %></h1>
-<div class="expanded row detail-top">
-    <div class="large-6 medium-12 columns">
-        
+<% if (pagePermission) { %>
+  <div class="expanded row detail-top">
+      <div class="large-6 medium-12 columns">
+          <div class="good-carousel">
+              <% for(let slide of product.slides) { %>
+                  <a><img src="<%- imgHost +  slide %><%- imgDetailSlideStyle %>" /></a>
+              <% } %>
+          </div>
 
-        <div class="good-carousel">
-            <% for(let slide of product.slides) { %>
-                <a><img src="<%- imgHost +  slide %><%- imgDetailSlideStyle %>" /></a>
-            <% } %>
-        </div>
+      </div>
+      <div class="large-6 medium-12 columns">
+          <div class="clearfix detailPrice">
+              <div class="p-margin-bottom lbPrice" id="priceStatDiv" style="display:<%- product.prices.length > 0 && showRebate && product.prices[0].rebate > 0? 'none': '' %>;">
+                  单价￥<b class="stat" id="priceStat"><%- product.prices.length > 0 ? product.prices[0].price : '' %></b>
+              </div>
+              <div class="small-6 columns medium-text-center" id="priceRelationshipDiv" style="display:<%- !showRebate || product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
+                  <label>单价</label>￥<b class="stat" id="priceRelationship"><%- product.prices.length > 0 ? product.prices[0].price : '' %></b>
+              </div>
+              <div class="small-6 columns medium-text-center" id="rebateRelationshipDiv" style="display:<%- !showRebate || product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
+                  <label>分享分红</label>￥<b class="stat" id="rebateRelationship"><%- product.prices.length > 0 ? product.prices[0].rebate : '' %></b>
+              </div>
+              <div class=" filter-bar filter-bar--sku" id="skuBar">
+                  <div class="button-group single" id="priceLabels">
+                      <% for(let i in product.prices) { %>
+                      <a class="button<%-i == 0 ? ' checked' : '' %>" data-price="<%- product.prices[i].price %>" <% if(product.prices[i].rebate) { %>data-rebate="<%- product.prices[i].rebate %>"<% } %> ><%- product.prices[i].title %></a>
+                      <% } %>
+                  </div>
+              </div>
+              <div class="input-group p-margin-bottom input-group--quantity">
+                  <span class="input-group-label">数量</span> 
+                  <input type="number" class="input-group-field" min="1" value="1" id="orderNumber" />
+              </div>
+              <div class="small-12 small-centered large-uncentered clearfix button-book">
+                  <% if(__IN_WECHAT__ && product.isOnSale() && product.prices && product.prices.length && tradePermission) { %>
+                  <button class="expanded large button" id="orderNow" >立即订购</button>
+                  <% } else { %>
+                      <b><%- 
+                          !__IN_WECHAT__? '此商品暂时只支持微信端购买':
+                          !tradePermission? '您没有此商品的交易权限':
+                          !product.isOnSale()? '此商品已下架暂时无法购买':
+                          !product.prices || product.prices.length === 0? '此商品赞无有效价格' :'';
+                      %></b><br />
+                  <% } %>
+              </div>
+          </div>
+          <p class="detailFeature"><%- nl2br(product.feature) %></p>
+      </div>
+  </div>
+  <% if(__IN_WECHAT__ && typeof user === 'undefined') {%>
+      <div class="reveal tiny" id="cartAlert" data-reveal>
+          <h3>一键微信登录</h3>
+          <p>
+              该操作要求登录。
+          </p>
+          <div class="row text-center form-submit-wrap">
+              <a class="button" href="<%- __AUTH_WECHAT_LINK__ %>">登录微信</a>
+              <button class="button secondary" data-close>取消</button>
+          </div>
+          <button class="close-button" data-close aria-label="Close modal" type="button">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  <% } %>
 
-    </div>
-    <div class="large-6 medium-12 columns">
-        <div class="clearfix detailPrice">
-            <div class="p-margin-bottom lbPrice" id="priceStatDiv" style="display:<%- product.prices.length > 0 && showRebate && product.prices[0].rebate > 0? 'none': '' %>;">
-                单价￥<b class="stat" id="priceStat"><%- product.prices.length > 0 ? product.prices[0].price : '' %></b>
-            </div>
-            <div class="small-6 columns medium-text-center" id="priceRelationshipDiv" style="display:<%- !showRebate || product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
-                <label>单价</label>￥<b class="stat" id="priceRelationship"><%- product.prices.length > 0 ? product.prices[0].price : '' %></b>
-            </div>
-            <div class="small-6 columns medium-text-center" id="rebateRelationshipDiv" style="display:<%- !showRebate || product.prices.length == 0 || product.prices[0].rebate == 0 || !product.prices[0].rebate? 'none': '' %>;">
-                <label>分享分红</label>￥<b class="stat" id="rebateRelationship"><%- product.prices.length > 0 ? product.prices[0].rebate : '' %></b>
-            </div>
-            <div class=" filter-bar filter-bar--sku" id="skuBar">
-                <div class="button-group single" id="priceLabels">
-                    <% for(let i in product.prices) { %>
-                    <a class="button<%-i == 0 ? ' checked' : '' %>" data-price="<%- product.prices[i].price %>" <% if(product.prices[i].rebate) { %>data-rebate="<%- product.prices[i].rebate %>"<% } %> ><%- product.prices[i].title %></a>
-                    <% } %>
-                </div>
-            </div>
-            <div class="input-group p-margin-bottom input-group--quantity">
-                <span class="input-group-label">数量</span> 
-                <input type="number" class="input-group-field" min="1" value="1" id="orderNumber" />
-            </div>
-            <div class="small-12 small-centered large-uncentered clearfix button-book">
-                <% if(__IN_WECHAT__ && product.isOnSale() && product.prices && product.prices.length) { %>
-                <button class="expanded large button" id="orderNow" >立即订购</button>
-                <% } else { %>
-                    <b>此商品<%- 
-                        !__IN_WECHAT__? '暂时只支持微信端购买':
-                        !product.isOnSale()? '已下架暂时无法购买':
-                        !product.prices || product.prices.length === 0? '赞无有效价格' :'';
-                    %></b><br />
-                <% } %>
-            </div>
-        </div>
-        <p class="detailFeature"><%- nl2br(product.feature) %></p>
-    </div>
-</div>
-<% if(__IN_WECHAT__ && typeof user === 'undefined') {%>
-    <div class="reveal tiny" id="cartAlert" data-reveal>
-        <h3>一键微信登录</h3>
-        <p>
-            该操作要求登录。
-        </p>
-        <div class="row text-center form-submit-wrap">
-            <a class="button" href="<%- __AUTH_WECHAT_LINK__ %>">登录微信</a>
-            <button class="button secondary" data-close>取消</button>
-        </div>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<% } %>
-
-<div class="precautions-outer row column">
-    <div class="profile-main">
-    <% for(var i = 0; i < product.description.length; i++) { %>
-        <% if (product.description[i].type == "image" && product.description[i].value){ %>
-            <% if (product.description[i].value.url){ %>
-                <% if (product.description[i].value.link){ %>
-                    <a href="<%- 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%- imgHost + product.description[i].value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
-                <% } else { %>
-                    <img src="<%- imgHost + product.description[i].value.url %><%- imgDetailStyle %>" />
-                <% } %>
-            <% } %>
-        <% } else if (product.description[i].type == "text" && product.description[i].value) { %>
-            <% if(product.description[i].value.title != ''){ %>
-            <h6<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- product.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
-            <% } %>
-            <p<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
-        <% } %>
-    <% } %>
-    </div>
-</div>
-<% if( showRelationship && typeof user !== 'undefined') {%>
-<div class="text-center">
-    <h3>扫码加入会员</h3>
-    <img src="/qrcode/relationship?productId=<%- product.id %>">
-<div>
-<% } %>
-<% if( shopInfo && shopInfo.kefuId > 0 && shopInfo.id === '10021') {%>
-    <script type="text/javascript" charset="utf-8" src="http://free.appkefu.com/AppKeFu/float/wap/float.php?wg=<%- shopInfo.kefuId %>&robot=false"></script>
+  <div class="precautions-outer row column">
+      <div class="profile-main">
+      <% for(var i = 0; i < product.description.length; i++) { %>
+          <% if (product.description[i].type == "image" && product.description[i].value){ %>
+              <% if (product.description[i].value.url){ %>
+                  <% if (product.description[i].value.link){ %>
+                      <a href="<%- 'http://' + product.description[i].value.link %>" class="image-link-"><img src="<%- imgHost + product.description[i].value.url %><%- imgDetailStyle %>" /><p style="position:absolute;margin-top:-25px;color:white;background-color:#660022;">点击查看详情</p></a>
+                  <% } else { %>
+                      <img src="<%- imgHost + product.description[i].value.url %><%- imgDetailStyle %>" />
+                  <% } %>
+              <% } %>
+          <% } else if (product.description[i].type == "text" && product.description[i].value) { %>
+              <% if(product.description[i].value.title != ''){ %>
+              <h6<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- product.description[i].value.title.replace(/ /g, '&nbsp;') %></h6>
+              <% } %>
+              <p<% if (product.description[i].value.isAlert == "true") { %> class="alert"<% } %>><%- nl2br(product.description[i].value.desc.replace(/ /g, '&nbsp;')) %></p>
+          <% } %>
+      <% } %>
+      </div>
+  </div>
+  <% if( showRelationship && typeof user !== 'undefined') {%>
+  <div class="text-center">
+      <h3>扫码加入会员</h3>
+      <img src="/qrcode/relationship?productId=<%- product.id %>">
+  <div>
+  <% } %>
+  <% if( shopInfo && shopInfo.kefuId > 0 && shopInfo.id === '10021') {%>
+      <script type="text/javascript" charset="utf-8" src="http://free.appkefu.com/AppKeFu/float/wap/float.php?wg=<%- shopInfo.kefuId %>&robot=false"></script>
+  <% } %>
+<% } else { %>
+  <p style="text-align:center;color:#eb7350;margin-top:30px;">您没有权限查看内容详情</p>
 <% } %>
 <script>
   var isPruchase = <%- isPruchase %>;

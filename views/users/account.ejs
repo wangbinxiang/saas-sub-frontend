@@ -1,0 +1,45 @@
+<%- include('../layout/header') -%>
+<nav aria-label="You are here:" role="navigation" class="clearfix">
+    <ul class="breadcrumbs onionLink">
+        <li><a href="/">首页</a></li>
+        <li>
+            <span class="show-for-sr">Current: </span> 用户中心 - 账号信息
+        </li>
+    </ul>
+</nav>
+
+<h1 class="row column user-margin">账号信息</h1>
+
+<div class="row column">
+    <fieldset class="fieldset" >
+        <legend><h4>账号信息</h4></legend>
+        <div class="row">
+            <div class="medium-4 columns">
+                <label class="autoSelect">Id：<%- member.id%></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <label>用户名：<%- member.userName%></label>
+            </div>
+            <div class="medium-6 columns">
+                <label>昵称：<%- member.nickName%></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <label>手机号：<%- member.cellPhone? member.cellPhone: '未绑定'%></label>
+            </div>
+            <div class="medium-6 columns">
+                <label></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-8 columns">
+                <label>用户组：<%- memberGroup.name%></label>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<%- include('../layout/footer') -%>

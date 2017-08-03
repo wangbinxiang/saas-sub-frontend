@@ -10,6 +10,9 @@ import navigation from '../../middlewares/navigation'
 import {
   inWechatRequiresLogin
 } from '../../middlewares/authorization'
+import {
+  permission
+} from '../../middlewares/permission/'
 
 const router = Router()
 
@@ -18,6 +21,8 @@ router.prefix('/channel')
 
 // 需要登陆
 router.use(inWechatRequiresLogin)
+
+router.use(permission)
 
 router.get('/productTypes/:id', navigation, productType)
 

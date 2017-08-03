@@ -20,7 +20,8 @@ import {
   MEMBER_PARENT,
   MEMBER_CHILDREN,
   MEMBER_UPDATE_AVATAR,
-  MEMBER_BIND_PARENT
+  MEMBER_BIND_PARENT,
+  MEMBER_USER_GROUP
 } from '../../config/apiFeatureConf'
 
 export default class MemberRequestJsonApi extends BaseRequest {
@@ -123,7 +124,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
 
     let attributes = {
       unionId: this.originData.unionId,
-      parentId: this.originData.parentId
+      parentId: this.originData.parentId,
+      shopId: this.originData.shopId
     }
 
     this.buildData(attributes)
@@ -141,7 +143,8 @@ export default class MemberRequestJsonApi extends BaseRequest {
       unionId: this.originData.unionId,
       source: this.originData.source,
       sourceId: this.originData.sourceId,
-      parentId: this.originData.parentId
+      parentId: this.originData.parentId,
+      shopId: this.originData.shopId
     }
 
     this.buildData(attributes)
@@ -169,6 +172,12 @@ export default class MemberRequestJsonApi extends BaseRequest {
     }
 
     this.buildData(attributes)
+  }
+
+  userGroup () {
+    this.url = '/user/' + this.originData.id + '/shop/' + this.originData.shopId + '/userGroup'
+
+    this.method = GET
   }
 
   buildFeature () {
@@ -199,6 +208,9 @@ export default class MemberRequestJsonApi extends BaseRequest {
         break
       case MEMBER_BIND_PARENT:
         this.bindParent()
+        break
+      case MEMBER_USER_GROUP:
+        this.userGroup()
         break
       default:
         throw new Error('Invalid feature method')

@@ -1,6 +1,6 @@
-import ProductAdapter from '../adapter/ProductAdapter'
+// import ProductAdapter from '../adapter/ProductAdapter'
 import ProductTypeAdapter from '../adapter/ProductTypeAdapter'
-import Product from '../model/Product'
+// import Product from '../model/Product'
 import ProductType from '../model/ProductType'
 import CategoryAdapter from '../adapter/CategoryAdapter'
 import Category from '../model/Category'
@@ -16,6 +16,14 @@ import config from 'config'
 import lodash from 'lodash'
 
 import {
+  verifyPermission
+} from '../../tools/permission'
+import {
+  PERMISSION_PRODUCT_TYPE_SHOW,
+  PERMISSION_PROJECT_TYPE_SHOW
+} from '../../config/memberGroupConf'
+
+import {
   ARTICLE_STATUS_PUBLISH
 } from '../../config/articleConf'
 
@@ -23,10 +31,10 @@ import {
   PRODUCT_STATUS_ON_SALE,
   PRODUCT_VISIBLE
 } from '../../config/productConf'
-import {
-  PRODUCT_PROXY_STATUS_ON_SALE,
-  PRODUCT_PROXY_VISIBLE
-} from '../../config/productProxyConf'
+// import {
+//   PRODUCT_PROXY_STATUS_ON_SALE,
+//   PRODUCT_PROXY_VISIBLE
+// } from '../../config/productProxyConf'
 
 import {
   PROJECT_STATUS_PUBLISH,
@@ -322,7 +330,7 @@ export default class ChannelService {
     }
   }
 
-  async gardenProducts (userId, id) {
+  async gardenProducts (userId, id, memberGroup) {
     let productTypes, slideProducts, products, channelName
 
     const layout = config.get('layout')
@@ -337,80 +345,69 @@ export default class ChannelService {
       const productTypeIds = lodash.split(channelInfo.typeIds, ',')
 
       if (productTypeIds) {
-        const productTypeAdapter = new ProductTypeAdapter()
-        const productTypeResult = await productTypeAdapter.get({
-          idList: productTypeIds
-        }, ProductType)
-
-        productTypes = productTypeResult
-      }
-
-      const pages = {
-        number: 1,
-        size: 40
-      }
-
-      const filters = {
-        productType: channelInfo.typeIds,
-        status: PRODUCT_STATUS_ON_SALE,
-        visible: PRODUCT_VISIBLE
-      }
-
-      const sort = '-id'
-
-      // const productAdapter = new ProductAdapter()
-      // const productsResult = await productAdapter.get({
-      //   filters,
-      //   pages,
-      //   sort
-      // }, Product)
-
-      // // console.log(productsResult)
-
-      // if (productsResult !== null) {
-      //   slideProducts = []
-      //   for (let i = 0; i < 5; i++) {
-      //     if (productsResult.result.length > 0) {
-      //       slideProducts.push(productsResult.result.shift())
-      //     }
-      //   }
-      //   products = productsResult.result
-      //   // products.push({
-      //   // 'name': shopLayout['product'][i]['name'],
-      //   // 'value': productsResult.result
-      //   // })
-      // }
-
-      const include = [
-        'product',
-        'product.referenceProduct',
-        'product.distributionProduct'
-      ]
-
-      const fields = {
-        'commonProducts': 'id,name,logo,feature,minPrice,maxPrice,status,visible'
-      }
-
-      const productProxyAdapter = new ProductProxyAdapter()
-      const productProxyResult = await productProxyAdapter.get({
-        pages,
-        filters,
-        include,
-        fields,
-        sort
-      }, ProductProxy)
-
-      if (productProxyResult !== null) {
-        slideProducts = []
-        for (let i = 0; i < 5; i++) {
-          if (productProxyResult.result.length > 0) {
-            slideProducts.push(productProxyResult.result.shift())
+        const idList = []
+        for (id of productTypeIds) {
+          // memberGroup.purview = { [PERMISSION_PRODUCT_TYPE_SHOW]: [id] }
+          const pagePermission = verifyPermission(memberGroup, PERMISSION_PRODUCT_TYPE_SHOW, id)
+          if (pagePermission) {
+            //  有权限访问该分类
+            idList.push(id)
           }
         }
-        products = productProxyResult.result
+
+        if (idList.length > 0) {
+          const productTypeAdapter = new ProductTypeAdapter()
+          const productTypeResult = await productTypeAdapter.get({
+            idList
+          }, ProductType)
+
+          if (productTypeResult) {
+            productTypes = productTypeResult
+
+            const pages = {
+              number: 1,
+              size: 40
+            }
+
+            const filters = {
+              productType: idList.join(','),
+              status: PRODUCT_STATUS_ON_SALE,
+              visible: PRODUCT_VISIBLE
+            }
+
+            const sort = '-id'
+            const include = [
+              'product',
+              'product.referenceProduct',
+              'product.distributionProduct'
+            ]
+
+            const fields = {
+              'commonProducts': 'id,name,logo,feature,minPrice,maxPrice,status,visible'
+            }
+
+            const productProxyAdapter = new ProductProxyAdapter()
+            const productProxyResult = await productProxyAdapter.get({
+              pages,
+              filters,
+              include,
+              fields,
+              sort
+            }, ProductProxy)
+
+            if (productProxyResult !== null) {
+              slideProducts = []
+              for (let i = 0; i < 5; i++) {
+                if (productProxyResult.result.length > 0) {
+                  slideProducts.push(productProxyResult.result.shift())
+                }
+              }
+              products = productProxyResult.result
+            }
+          }
+        }
       }
     }
-
     return {
       channelName,
       productTypes,
@@ -419,7 +416,7 @@ export default class ChannelService {
     }
   }
 
-  async gardenProjects (userId, id) {
+  async gardenProjects (userId, id, memberGroup) {
     let channelInfo, projects
 
     const layout = config.get('layout')
@@ -429,27 +426,39 @@ export default class ChannelService {
     channelInfo = shopLayout['project'][id]
 
     if (channelInfo) {
-      const pages = {
-        number: 1,
-        size: 40
+      const idList = []
+      for (id of channelInfo['typeIds'].split(',')) {
+        // memberGroup.purview = { [PERMISSION_PROJECT_TYPE_SHOW]: [id] }
+        const pagePermission = verifyPermission(memberGroup, PERMISSION_PROJECT_TYPE_SHOW, id)
+        if (pagePermission) {
+            //  有权限访问该分类
+          idList.push(id)
+        }
       }
 
-      const filters = {
-        projectType: channelInfo['typeIds'],
-        status: PROJECT_STATUS_PUBLISH,
-        category: PROJECT_CATEGORY_B2C
-      }
-      const sort = '-id'
+      if (idList.length > 0) {
+        const pages = {
+          number: 1,
+          size: 40
+        }
 
-      const projectAdapter = new ProjectAdapter()
-      const projectResult = await projectAdapter.get({
-        filters,
-        pages,
-        sort
-      }, Project)
+        const filters = {
+          projectType: idList.join(','),
+          status: PROJECT_STATUS_PUBLISH,
+          category: PROJECT_CATEGORY_B2C
+        }
+        const sort = '-id'
 
-      if (projectResult !== null) {
-        projects = projectResult.result
+        const projectAdapter = new ProjectAdapter()
+        const projectResult = await projectAdapter.get({
+          filters,
+          pages,
+          sort
+        }, Project)
+
+        if (projectResult !== null) {
+          projects = projectResult.result
+        }
       }
     }
 

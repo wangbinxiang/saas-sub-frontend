@@ -57,11 +57,14 @@
                 <% if(typeof user === 'undefined') { %>
                 <a href="<%- __AUTH_WECHAT_LINK__ %>">微信登录</a>
                 <% } else if(typeof user !== 'undefined') { %>
+                    <a href="/users/account">账号信息</a>
                     <% if(shopInfo.relationship) { %>
                     <a href="/users/relationship">关联信息</a>
                     <% } %>
                     <a href="/orders">我的定单</a>
                     <a href="/applications">我的申请</a>
+                    <a href="/delivery-informations">地址管理</a>
+                    <a href="/logout">退出登录</a>
                 <% } %>
             </div>
             <div id="responsive-menu" class="menu-body">

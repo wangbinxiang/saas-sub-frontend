@@ -1,6 +1,7 @@
 import MemberAdapter from '../adapter/MemberAdapter'
 import Member from '../model/Member'
-import RequestJsonApiParamsError from '../../libs/error/RequestJsonApiParamsError'
+import MemberGroup from '../model/MemberGroup'
+// import RequestJsonApiParamsError from '../../libs/error/RequestJsonApiParamsError'
 import {
   qiniuUpload
 } from '../../tools/upload'
@@ -8,6 +9,24 @@ import {
 export default class MemberService {
   constructor () {
     this.userAdapter = new MemberAdapter()
+  }
+
+  async account (userId, shopId) {
+    // 获取用户信息
+    const member = await this.userAdapter.get({
+      idList: userId
+    }, Member)
+
+    const memberGroup = await this.userAdapter.userGroup({
+      id: userId,
+      shopId
+    }, MemberGroup)
+
+    // 获取用户组信息
+    return {
+      member,
+      memberGroup
+    }
   }
 
   async get (idList) {
@@ -46,7 +65,7 @@ export default class MemberService {
 
   async wechatLogin (openid, nickName, shopId, unionId, headimgurl) {
     let member
-    member = await this.userAdapter.wechatLogin(unionId, Member)
+    member = await this.userAdapter.wechatLogin({ unionId, shopId }, Member)
 
     if (member) {
       if (member.noAvatar()) {
@@ -100,7 +119,7 @@ export default class MemberService {
   async wechatRelationshipLogin (openid, nickName, shopId, parentId, unionId, headimgurl) {
     let member = null
     let success = false // 关联是否成功标示
-    member = await this.userAdapter.wechatRelationshipLogin(unionId, parentId, Member)
+    member = await this.userAdapter.wechatRelationshipLogin({ unionId, parentId, shopId }, Member)
 
     if (member) {
       const avatarResult = await qiniuUpload(headimgurl)
@@ -157,7 +176,7 @@ export default class MemberService {
     let member = null
     let success = false // 关联是否成功标示
 
-    member = await this.userAdapter.wechatSourceRelationshipLogin(unionId, source, sourceId, parentId, Member)
+    member = await this.userAdapter.wechatSourceRelationshipLogin({ unionId, source, sourceId, parentId, shopId }, Member)
     if (member) {
       if (member.noAvatar()) {
         // member没有头像就上传

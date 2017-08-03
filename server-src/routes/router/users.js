@@ -1,16 +1,17 @@
-import Router from 'koa-router';
-import { relationship } from '../../controllers/users';
-import { requiresLogin } from '../../middlewares/authorization';
-import navigation from '../../middlewares/navigation';
+import Router from 'koa-router'
+import { account, relationship } from '../../controllers/users'
+import { requiresLogin } from '../../middlewares/authorization'
+import navigation from '../../middlewares/navigation'
 
+const router = Router()
 
-const router = Router();
+// 路由前缀
+router.prefix('/users')
 
-//路由前缀
-router.prefix('/users');
+router.use(requiresLogin)
 
-router.use(requiresLogin);
+router.get('/account', navigation, account)
 
-router.get('/relationship', navigation, relationship);
+router.get('/relationship', navigation, relationship)
 
-export default router;
+export default router

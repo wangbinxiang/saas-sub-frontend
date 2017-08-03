@@ -35,6 +35,7 @@ app.use(convert(logger()))
 // session
 app.keys = ['saas-sub-frontend']
 app.use(convert(session({
+  key: 'saas-sub-frontend',
   store: memcacheSession(config.get('memcache')),
   rolling: true,
   cookie: {

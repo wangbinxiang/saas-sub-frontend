@@ -64,8 +64,10 @@ export const MEMBER_PARENT = Symbol('MEMBER_PARENT')
 export const MEMBER_CHILDREN = Symbol('MEMBER_CHILDREN')
 // 更新头像
 export const MEMBER_UPDATE_AVATAR = Symbol('MEMBER_UPDATE_AVATAR')
-
+// 绑定父关系
 export const MEMBER_BIND_PARENT = Symbol('MEMBER_BIND_PARENT')
+// 绑定用户组
+export const MEMBER_USER_GROUP = Symbol('MEMBER_USER_GROUP')
 
 // 获取用户账户余额
 export const ACCOUNT_GET = Symbol('ACCOUNT_GET')
@@ -175,3 +177,6 @@ export const PURCHASE_VISIBLE = Symbol('PURCHASE_VISIBLE')
 export const PURCHASE_INVISIBLE = Symbol('PURCHASE_INVISIBLE')
 // 撤销采购
 export const PURCHASE_DELETE = Symbol('PURCHASE_DELETE')
+
+// 获取前台用户组
+export const MEMBER_GROUP_GET = Symbol('MEMBER_GROUP_GET')

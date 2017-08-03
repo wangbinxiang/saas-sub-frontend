@@ -1,5 +1,6 @@
 import RequestAdapter from '../../libs/RequestAdapter'
 import MemberTranslator from '../translator/MemberTranslator'
+import MemberGroupTranslator from '../translator/MemberGroupTranslator'
 import MemberRequestJsonApi from '../request/MemberRequestJsonApi'
 import pageCLass from '../model/page'
 import {
@@ -11,7 +12,8 @@ import {
   MEMBER_PARENT,
   MEMBER_CHILDREN,
   MEMBER_UPDATE_AVATAR,
-  MEMBER_BIND_PARENT
+  MEMBER_BIND_PARENT,
+  MEMBER_USER_GROUP
 } from '../../config/apiFeatureConf'
 
 export default class MemberAdapter extends RequestAdapter {
@@ -132,9 +134,10 @@ export default class MemberAdapter extends RequestAdapter {
 
   // 普通微信登陆和关系微信登陆分开
   // 验证用户 async函数
-  wechatLogin (unionId, aUserClass) {
+  wechatLogin ({ unionId, shopId }, aUserClass) {
     this.buildRequest(MEMBER_LOGIN, {
-      unionId
+      unionId,
+      shopId
     })
 
     this.activeClass = aUserClass
@@ -143,10 +146,11 @@ export default class MemberAdapter extends RequestAdapter {
   }
 
   // 关系类型登陆
-  wechatRelationshipLogin (unionId, parentId, aUserClass) {
+  wechatRelationshipLogin ({ unionId, parentId, shopId }, aUserClass) {
     this.buildRequest(MEMBER_LOGIN, {
       unionId,
-      parentId
+      parentId,
+      shopId
     })
 
     this.activeClass = aUserClass
@@ -155,12 +159,13 @@ export default class MemberAdapter extends RequestAdapter {
   }
 
   // 第三方网站关系类型登陆
-  wechatSourceRelationshipLogin (unionId, source, sourceId, parentId, aUserClass) {
+  wechatSourceRelationshipLogin ({ unionId, source, sourceId, parentId, shopId }, aUserClass) {
     this.buildRequest(MEMBER_SOURCE_LOGIN, {
       unionId,
       source,
-      sourceId
-      // parentId
+      sourceId,
+      shopId,
+      parentId
     })
 
     this.activeClass = aUserClass
@@ -192,6 +197,22 @@ export default class MemberAdapter extends RequestAdapter {
     })
 
     this.activeClass = aMemberClass
+
+    return this.request()
+  }
+
+  userGroup ({
+    id,
+    shopId
+  }, aMemberGroupClass) {
+    this.translator = new MemberGroupTranslator()
+
+    this.buildRequest(MEMBER_USER_GROUP, {
+      id,
+      shopId
+    })
+
+    this.activeClass = aMemberGroupClass
 
     return this.request()
   }
