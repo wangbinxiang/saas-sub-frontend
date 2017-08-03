@@ -14,7 +14,7 @@ export default class MemberGroup {
     createTime,
     updateTime,
     statusTime,
-    shops
+    shop
   }) {
     this.id = id
     this.name = name
@@ -24,6 +24,6 @@ export default class MemberGroup {
     this.updateTime = updateTime
     this.statusTime = statusTime
     this.status = status
-    this.shopId = shops
+    this.shopId = shop
   }
 }

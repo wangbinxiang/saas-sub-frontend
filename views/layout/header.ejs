@@ -57,6 +57,7 @@
                 <% if(typeof user === 'undefined') { %>
                 <a href="<%- __AUTH_WECHAT_LINK__ %>">微信登录</a>
                 <% } else if(typeof user !== 'undefined') { %>
+                    <a href="/users/account">账号信息</a>
                     <% if(shopInfo.relationship) { %>
                     <a href="/users/relationship">关联信息</a>
                     <% } %>

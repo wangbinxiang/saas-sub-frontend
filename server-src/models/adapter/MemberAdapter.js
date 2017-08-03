@@ -164,8 +164,8 @@ export default class MemberAdapter extends RequestAdapter {
       unionId,
       source,
       sourceId,
-      shopId
-      // parentId
+      shopId,
+      parentId
     })
 
     this.activeClass = aUserClass

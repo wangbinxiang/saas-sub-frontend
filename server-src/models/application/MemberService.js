@@ -1,6 +1,7 @@
 import MemberAdapter from '../adapter/MemberAdapter'
 import Member from '../model/Member'
-import RequestJsonApiParamsError from '../../libs/error/RequestJsonApiParamsError'
+import MemberGroup from '../model/MemberGroup'
+// import RequestJsonApiParamsError from '../../libs/error/RequestJsonApiParamsError'
 import {
   qiniuUpload
 } from '../../tools/upload'
@@ -8,6 +9,24 @@ import {
 export default class MemberService {
   constructor () {
     this.userAdapter = new MemberAdapter()
+  }
+
+  async account (userId, shopId) {
+    // 获取用户信息
+    const member = await this.userAdapter.get({
+      idList: userId
+    }, Member)
+
+    const memberGroup = await this.userAdapter.userGroup({
+      id: userId,
+      shopId
+    }, MemberGroup)
+
+    // 获取用户组信息
+    return {
+      member,
+      memberGroup
+    }
   }
 
   async get (idList) {

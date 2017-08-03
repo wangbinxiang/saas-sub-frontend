@@ -5,11 +5,11 @@
  * @param  {[type]}                 ctx [description]
  * @return {[type]}                     [description]
  */
-export function inWehcat(ctx) {
-	if (ctx.state.__IN_WECHAT__ === true) {
-		return true;
-	}
-	return false;
+export function inWehcat (ctx) {
+  if (ctx.state.__IN_WECHAT__ === true) {
+    return true
+  }
+  return false
 }
 
 /**
@@ -19,15 +19,13 @@ export function inWehcat(ctx) {
  * @param  {[type]}                 ctx [description]
  * @return {[type]}                     [description]
  */
-export function notInWechat(ctx) {
-	if (ctx.state.__IN_WECHAT__ === false) {
-		return true;
-	}
-	return false;
+export function notInWechat (ctx) {
+  if (ctx.state.__IN_WECHAT__ === false) {
+    return true
+  }
+  return false
 }
 
-
-export function isWeixinBrowser(userAgent){
-  return /micromessenger/.test(userAgent.toLowerCase());
+export function isWeixinBrowser (userAgent) {
+  return /mobile.*?micromessenger/.test(userAgent.toLowerCase())
 }
-

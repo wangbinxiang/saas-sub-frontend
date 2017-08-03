@@ -19,8 +19,6 @@ export async function detail (ctx, next) {
   if (article === null) {
     await next()
   } else {
-    ctx.memberGroup.purview = { [PERMISSION_CATEGORY_DETAIL_SHOW]: [article.categoryId] }
-
     const pagePermission = verifyPermission(ctx.memberGroup, PERMISSION_CATEGORY_DETAIL_SHOW
 , article.categoryId)
 
