@@ -43,7 +43,7 @@ export async function handlerHostToSubId (ctx, next) {
 
     const shopService = new ShopService()
     let shop = await shopService.get(subId)
-    if (shop.id === subId) {
+    if (shop && shop.id === subId) {
       ctx._subId = subId
       ctx._shop = shop
       const imgHost = config.get('qiniu.bucket.subImg.url')
