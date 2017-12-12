@@ -9,7 +9,6 @@ if (process.env.ETCD_ENV) {
   } else {
     etcdHost = 'http://etcd.etcd-ha:2379'
   }
-  var etcdAttachment
   var etcdProduct
   var etcdShop
   var etcdMemcacheHost
@@ -42,7 +41,6 @@ if (process.env.ETCD_ENV) {
   if (process.env.ETCD_ENV === 'production') {
     hostHub = 'hub.hitongxue.net'
 
-    etcdAttachment = '/saas/production/services/attachment/url'
     etcdProduct = '/saas/production/services/product/url'
     etcdShop = '/saas/production/services/shop/url'
     etcdMemcacheHost = '/saas/production/frontend/memcached/host'
@@ -60,7 +58,6 @@ if (process.env.ETCD_ENV) {
   } else if (process.env.ETCD_ENV === 'sandbox') {
     hostHub = 'hub.dianshangwan.com'
 
-    etcdAttachment = '/saas/sandbox/services/attachment/url'
     etcdProduct = '/saas/sandbox/services/product/url'
     etcdShop = '/saas/sandbox/services/shop/url'
     etcdMemcacheHost = '/saas/sandbox/frontend/memcached/host'
@@ -73,7 +70,6 @@ if (process.env.ETCD_ENV) {
 
   var etcd = new Etcd(etcdHost)
 
-  var attachmentUrl = etcd.getSync(etcdAttachment)
   var productUrl = etcd.getSync(etcdProduct)
   var shopUrl = etcd.getSync(etcdShop)
   var memcacheHost = etcd.getSync(etcdMemcacheHost)
@@ -85,7 +81,6 @@ if (process.env.ETCD_ENV) {
 
   memberUrl = memberUrl.body.node.value
   orderUrl = orderUrl.body.node.value
-  attachmentUrl = attachmentUrl.body.node.value
   productUrl = productUrl.body.node.value
   shopUrl = shopUrl.body.node.value
   memcacheHost = memcacheHost.body.node.value
@@ -118,7 +113,6 @@ if (process.env.ETCD_ENV) {
   var obj = {
     'hostMapping': hostMapping,
     'apiServiceLocation': {
-      'attachment': attachmentUrl,
       'product': productUrl,
       'shop': shopUrl,
       'order': orderUrl,
