@@ -39,7 +39,7 @@ if (process.env.ETCD_ENV) {
   var hostHub = ''
 
   if (process.env.ETCD_ENV === 'production') {
-    hostHub = 'hub.hitongxue.net'
+    hostHub = 'hub.yundianshang.cc'
 
     etcdProduct = '/saas/production/services/product/url'
     etcdShop = '/saas/production/services/shop/url'
