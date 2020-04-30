@@ -71,7 +71,7 @@
     "imagesloaded": "^4.1.1",
     "jcarousel": "^0.3.4",
     "joi": "^9.0.4",
-    "jquery": "^2.2.4",
+    "jquery": "^3.5.0",
     "jquery-bridget": "^2.0.1",
     "jquery-touchswipe": "^1.6.15",
     "knockout": "^3.4.0",
