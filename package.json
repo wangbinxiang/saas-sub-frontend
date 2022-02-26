@@ -105,7 +105,7 @@
     "qrcode_js": "^1.0.0",
     "request": "^2.81.0",
     "request-json": "^0.6.1",
-    "url-parse": "^1.1.8",
+    "url-parse": "^1.5.8",
     "uuid": "^3.0.1",
     "webpack-isomorphic-tools": "^2.5.8",
     "wechat-pay": "^0.2.4"
